@@ -1,6 +1,12 @@
-# Deployment proof: required gate not met
+# Public illustrative demo verified; mandatory GCP gate pending
 
-**No actual Vertex AI Agent Engine / reasoningEngines deployment has been verified. No public web URL or successful local/remote Gemini call is claimed.** Localhost, the Electron package, a repository link, the Cloud Console page and live GitHub calls are not substitutes for that gate.
+**Public URL:** https://campuspulse-relay-demo.onrender.com . Render service `srv-dbajs73bc2fs73bm9mfg`, free Docker compute plan, Frankfurt, one instance, automatic deploys off. Final deploy `dep-dbajuau1egvs73b0ik60` is live at commit `dcb74dc63edac520e6a0362aedf52c5f1ca20e94`. The provider's status, live health endpoint and fresh-browser acceptance agree on that commit. Both frontend and Python backend run on the host; browser requests stay on this HTTPS origin.
+
+Hosted acceptance passed a new permitted document upload and exact source read-back; explicit conflict resolution; constrained planning and isolated what-if; simulated Calendar preview/approval/read-back receipt; execution visualization; a real backend GitHub read; EN/RU/Kazakh, automated AA checks and 390-pixel mobile layout; refresh; cross-visitor source denial/receipt isolation; CSRF and blocked internal/Google/MCP routes; useful disconnected-Gemini failure; and fresh-demo reset. A repeated-session metadata label was corrected and the final deploy's entire browser flow passed again. Evidence: `docs/evidence/public-deployment.json`, `public-demo-browser.json` and `public-preflight.json`.
+
+Storage is temporary SQLite. Isolated sessions last at most two hours and can reset sooner on inactivity, restart or redeploy. The UI discloses this in all three languages. Actual idle reset timing was not measured; lifecycle limits come from [Render's documentation](https://render.com/docs/free). No paid datastore, disk, upgrade or GCP resource was provisioned.
+
+**No actual Vertex AI Agent Engine / reasoningEngines deployment or successful Gemini call has been verified.** The Render demo disables real Google connections and uses the illustrative Calendar adapter. It does not meet the mandatory GCP/model/cloud-to-MCP/real Calendar/judge gates below. The preserved Windows app, public demo and live GitHub observations do not substitute for those gates.
 
 Read-only inspection on 19 October 2026 (Asia/Qyzylorda): portable Google Cloud CLI 589.0.0 is under `.local/tools` on D:. `gcloud auth list` returned no accounts; project listing failed because no account was active. ADC preflight returned DefaultCredentialsError. No billable resources were provisioned.
 

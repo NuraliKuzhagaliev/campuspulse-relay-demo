@@ -1,0 +1,68 @@
+{
+  "provider": "Render",
+  "public_url": "https://campuspulse-relay-demo.onrender.com",
+  "service_id": "srv-dbajs73bc2fs73bm9mfg",
+  "service_plan": "free",
+  "region": "frankfurt",
+  "runtime": "Docker: React frontend + FastAPI Python backend",
+  "auto_deploy": false,
+  "deploy_id": "dep-dbajuau1egvs73b0ik60",
+  "deployed_commit": "dcb74dc63edac520e6a0362aedf52c5f1ca20e94",
+  "status": "live",
+  "finished_at": "2026-10-18T21:51:23.330279Z",
+  "verified_at": "2026-10-18T21:52:57.157291+00:00",
+  "verified": true,
+  "health": {
+    "ok": true,
+    "version": "0.1.1",
+    "mode": "public_demo",
+    "agent_configured": false,
+    "agent_verified": false,
+    "time": "2026-10-18T21:54:19.870617+00:00",
+    "deployed_commit": "dcb74dc63edac520e6a0362aedf52c5f1ca20e94",
+    "demo": {
+      "public": true,
+      "storage": "temporary",
+      "session_seconds": 7200,
+      "max_upload_mib": 2,
+      "max_sources": 12,
+      "github_cache_seconds": 300,
+      "calendar": "illustrative_local_adapter",
+      "gemini": "pending",
+      "mandatory_gcp": "pending"
+    }
+  },
+  "browser_evidence": "docs/evidence/public-demo-browser.json",
+  "github_read": {
+    "repository": "NuraliKuzhagaliev/campuspulse-relay-demo",
+    "commit": "dcb74dc63edac520e6a0362aedf52c5f1ca20e94",
+    "blob": "f08157273402f59aec8289366aef4b0d7623d66c",
+    "fetched_at": "2026-10-18T21:52:00.498512+00:00",
+    "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/blob/dcb74dc63edac520e6a0362aedf52c5f1ca20e94/coursework.md",
+    "cache_age_seconds": 30.53
+  },
+  "initial_deploy": {
+    "id": "dep-dbajs7jbc2fs73bm9oog",
+    "commit": "8df24389fe3f3bd415cab31a124ce4e290493171",
+    "status": "live",
+    "browser_evidence": "docs/evidence/public-demo-browser-initial.json"
+  },
+  "deployment_fix": "Repeated session responses now consistently report public_demo; targeted and complete hosted flows passed afterward.",
+  "storage": "ephemeral SQLite; two-hour sessions; earlier reset on inactivity, restart or redeploy",
+  "idle_spin_down_minutes": 15,
+  "cold_start_duration_measured": false,
+  "idle_reset_live_tested": false,
+  "expiry_cleanup_unit_tested": true,
+  "google_runtime_enabled": false,
+  "real_calendar_enabled": false,
+  "mandatory_gcp_status": "pending_organizer_credit_activation_and_verification",
+  "gcp_resources_provisioned": false,
+  "paid_upgrades_or_payment_methods_added": false,
+  "personal_spending_authorized_usd": 0,
+  "limitations": [
+    "Illustrative Calendar adapter only. Gemini/Agent Engine, real Calendar and mandatory GCP acceptance remain pending.",
+    "Temporary storage: two-hour sessions, with earlier resets possible on inactivity/restarts/redeploys.",
+    "GitHub public observations may be reused for five minutes while retaining their original commit/fetch time."
+  ],
+  "github_read_note": "The initial hosted verification triggered a direct read (cache age 0). The final deployed revision returned a real public observation cached for 30.53 seconds, retaining the original commit/blob/fetch time."
+}

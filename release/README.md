@@ -1,6 +1,6 @@
 # CampusPulse RELAY 0.1.1 — local release candidate
 
-All project-controlled files are under D:\projects\CampusPulseRELAY. This package is not a completed cloud submission. Agent Engine/Gemini/public web/live Calendar verification is pending organizer credit activation and account access. Personal cloud spending is not authorized.
+All local project-controlled files are under D:\projects\CampusPulseRELAY. The complete illustrative web demo is verified at https://campuspulse-relay-demo.onrender.com on Render free hosting. The mandatory GCP/Agent Engine/Gemini/real Calendar submission remains pending organizer credits and account access. Uncovered personal cloud spending is not authorized.
 
 ## Open and run
 
@@ -11,6 +11,10 @@ Install `windows/CampusPulse-RELAY-0.1.1-x64-setup.exe`, or run the portable exe
 To uninstall, close the app from its tray menu and run the uninstaller in its D: installation folder or Windows Installed apps. User data on D: is retained. Review/export it before any cleanup. `scripts/cleanup.ps1` defaults to a dry run and only targets explicitly named project-owned locations.
 
 ## Deliverables and evidence
+
+The original local 0.1.0 and corrected 0.1.1 artifact sets remain preserved under versions/ with their original manifests and hashes. The public deployment is recorded separately by provider, URL and exact deployed commit in manifest.json; it does not overwrite or reclassify the verified installed Windows artifacts.
+
+The updated public-demo presentation is `presentation/CampusPulse-RELAY-0.1.1-public-demo.pptx` with its rendered PDF. Both contain the actual public URL, observed acceptance and the pending mandatory GCP gate. The earlier native-verified deck remains unchanged.
 
 - Windows setup and portable executables; actual hashes are in manifest.json.
 - Source ZIP at the pinned source commit, excluding credentials, input attachments, environments and caches. Generated manifest/test-summary rollups are distributed alongside the archive to avoid circular hashes or stale embedded metadata; detailed test evidence remains in its docs/ folder.

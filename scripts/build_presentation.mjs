@@ -8,10 +8,13 @@ const root = process.cwd();
 const releaseVersion=JSON.parse(await fs.readFile(path.join(root,"package.json"),"utf8")).version;
 let nativeResult={};
 try {nativeResult=JSON.parse(await fs.readFile(path.join(root,"docs/evidence/desktop-native-result.json"),"utf8"));}catch{}
+let publicDeployment={};
+try {publicDeployment=JSON.parse(await fs.readFile(path.join(root,"docs/evidence/public-deployment.json"),"utf8"));}catch{}
+const publicVerified=publicDeployment.verified===true;
 const nativeVerified=nativeResult.status==="passed_with_human_interaction";
 const nativeImportVerified=nativeResult.picker?.exact_source_observed===true;
 const nativeSummary=nativeVerified?"Real picker import verified. User confirmed the bottom-right Windows banner.":nativeImportVerified?"Real picker import verified. OS notification visibility still pending.":"Picker appearance confirmed. Real import recheck and OS visibility pending.";
-const stem=`CampusPulse-RELAY-${releaseVersion}${nativeVerified?"-native-verified":nativeImportVerified?"-picker-verified":""}`;
+const stem=`CampusPulse-RELAY-${releaseVersion}${publicVerified?"-public-demo":nativeVerified?"-native-verified":nativeImportVerified?"-picker-verified":""}`;
 process.env.RELAY_PRESENTATION_STEM=stem;
 
 const runtime =
@@ -139,7 +142,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
   );
   text(
     s,
-    "Local release candidate /  cloud acceptance gate remains blocked",
+    publicVerified?"Public illustrative web demo / mandatory GCP acceptance remains pending":"Local release candidate /  cloud acceptance gate remains blocked",
     68,
     664,
     1120,
@@ -149,7 +152,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
   );
   note(
     s,
-    "Short opening: When an academic deadline changes, the rest of the week should not collapse. RELAY keeps evidence, constraints and external effects connected. Current status is a local release candidate; do not imply the required managed deployment is live. Sources: supplied Topic 2 brief pages 3-4; docs/deployment_proof.md.",
+    "When a deadline changes, RELAY connects evidence, constraints and approved effects. The public illustrative Render deployment is separate from the required managed GCP deployment. Do not imply Gemini or real Calendar acceptance. Sources: supplied Topic 2 brief pages 3-4, docs/deployment_proof.md, docs/evidence/public-deployment.json.",
   );
 }
 {
@@ -413,7 +416,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
     "A product a judge can inspect.",
     "VERIFICATION, NOT A SUCCESS ANIMATION",
   );
-  text(s, "56", 64, 239, 330, 100, 84, C.blue, true);
+  text(s, publicVerified?"61":"56", 64, 239, 330, 100, 84, C.blue, true);
   text(s, "Python tests passed", 69, 349, 400, 42, 28, C.ink, true);
   text(
     s,
@@ -425,8 +428,8 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
     24,
     C.muted,
   );
-  text(s, "8", 690, 239, 330, 100, 84, C.ink, true);
-  text(s, "Browser scenarios passed", 695, 349, 480, 42, 28, C.ink, true);
+  text(s, publicVerified?"8 + 1":"8", 690, 239, 330, 100, 84, C.ink, true);
+  text(s, publicVerified?"Browser scenarios + public flow":"Browser scenarios passed", 695, 349, 480, 42, 28, C.ink, true);
   text(
     s,
     "EN / RU / Kazakh operational workflows,\noriginal quotes, errors and automated AA rules.",
@@ -439,7 +442,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
   );
   text(
     s,
-    `Windows ${releaseVersion}: both import paths, refresh and cache pass regression.\n${nativeSummary}\nLive Google consent, Calendar and Agent Engine acceptance remain pending.`,
+    publicVerified?`Windows ${releaseVersion}: real picker import and visible notification verified.\nPublic demo: import, what-if, receipts, languages and visitor isolation verified.\nGemini/Agent Engine and real Calendar acceptance remain pending.`:`Windows ${releaseVersion}: both import paths, refresh and cache pass regression.\n${nativeSummary}\nLive Google consent, Calendar and Agent Engine acceptance remain pending.`,
     64,
     563,
     1150,
@@ -457,10 +460,10 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
     "What works. What still needs proof.",
     "HONEST RELEASE READINESS",
   );
-  text(s, "Working locally", 64, 236, 500, 50, 33, C.ink, true);
+  text(s, publicVerified?"Public demo + Windows":"Working locally", 64, 236, 500, 50, 33, C.ink, true);
   text(
     s,
-    "Evidence and conflict resolution\nValidated recovery and what-if\nServer change radar + real GitHub\nApproved local actions + receipts\nCited packets + Windows continuity",
+    publicVerified?"File import + cited evidence\nValidated planning and what-if\nReal hosted GitHub reads\nSimulated Calendar + receipts\nEN / RU / Kazakh + visitor isolation":"Evidence and conflict resolution\nValidated recovery and what-if\nServer change radar + real GitHub\nApproved local actions + receipts\nCited packets + Windows continuity",
     64,
     309,
     540,
@@ -471,7 +474,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
   rect(s, 670, 232, 546, 341, C.navy, true);
   text(
     s,
-    "Cloud acceptance gate: BLOCKED",
+    "Mandatory GCP gate: PENDING",
     697,
     262,
     493,
@@ -490,7 +493,10 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
     23,
     "#D3E0E7",
   );
-  text(
+  if(publicVerified){
+    text(s,publicDeployment.public_url,64,598,1145,30,24,C.blue,true);
+    text(s,"Temporary sessions and storage. Calendar simulated. Managed AI remains pending.",64,635,1145,24,17,C.muted);
+  }else text(
     s,
     "Next: verify organizer credits and project eligibility, then deploy and test the actual managed path.",
     64,
@@ -550,7 +556,7 @@ const result = await finalizePresentation({
   requiredNativeTableOwnerSlides: [],
   fontPolicy: { basis: "design", families: ["Arial"] },
   verifyArtifactToolImport: true,
-  receiptPath: path.join(build, `validation-${releaseVersion}-${nativeVerified?"verified":"pending"}.json`),
+  receiptPath: path.join(build, `validation-${releaseVersion}-${publicVerified?"public-demo":nativeVerified?"verified":"pending"}.json`),
 });
 console.log(
   JSON.stringify(
@@ -565,4 +571,4 @@ console.log(
   ),
 );
 
-await fs.writeFile(path.join(root,"docs/evidence/presentation.json"), JSON.stringify({version:releaseVersion,slides:8,native_status:nativeResult.status||"pending",pptx:path.join(output,stem+".pptx"),pdf:path.join(output,stem+".pdf"),validation:path.join(build,`validation-${releaseVersion}-${nativeVerified?"verified":"pending"}.json`)},null,2));
+await fs.writeFile(path.join(root,publicVerified?"docs/evidence/public-presentation.json":"docs/evidence/presentation.json"), JSON.stringify({version:releaseVersion,slides:8,native_status:nativeResult.status||"pending",public_demo_verified:publicVerified,public_url:publicDeployment.public_url||null,pptx:path.join(output,stem+".pptx"),pdf:path.join(output,stem+".pdf"),validation:path.join(build,`validation-${releaseVersion}-${publicVerified?"public-demo":nativeVerified?"verified":"pending"}.json`)},null,2));

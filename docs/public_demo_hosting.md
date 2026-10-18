@@ -1,5 +1,7 @@
 # Public illustrative deployment
 
+**Verified live URL:** https://campuspulse-relay-demo.onrender.com . Deployed commit `dcb74dc63edac520e6a0362aedf52c5f1ca20e94`, Render service `srv-dbajs73bc2fs73bm9mfg`, deploy `dep-dbajuau1egvs73b0ik60`. The full requested browser flow passed on this final revision; its health response and provider record match. Open the URL and choose **Enter public demo**. No sign-in is needed for an isolated illustrative visitor workspace.
+
 The public demo uses the existing React frontend and FastAPI Python gateway in one service, with relative `/api` calls. It does not require a local server or expose the separate MCP server. This deployment remains separate from the mandatory GCP/Vertex AI Agent Engine acceptance gate.
 
 The selected hosting path is a Render **free** Docker web service, in the owner-confirmed workspace. No paid database, disk, worker, upgrade, model service or GCP resource is requested. The service configuration is created directly through Render MCP using `infra/Dockerfile.public`; no Blueprint manages it. Automatic deploys are disabled so documentation/evidence commits do not reset visitor workspaces or spend build quota.

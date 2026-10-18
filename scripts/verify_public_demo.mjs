@@ -116,6 +116,8 @@ try{
   await page.getByTestId("language").selectOption("en");
   await page.getByRole("button",{name:"Start a fresh demo",exact:true}).click();
   await expect(page.getByRole("button",{name:"Enter public demo",exact:true})).toBeVisible();
+  await page.setViewportSize({width:1280,height:720});
+  await page.screenshot({path:path.join(screenshots,"public-entry-1280.png"),fullPage:false});
   const reset=await (await page.request.get("/api/state")).json();
   assert.notEqual(reset.workspace_id,tenant);assert(!reset.sources.some(s=>s.id===imported.id));
   assert.equal((await page.request.get("/api/sources/"+imported.id)).status(),403);

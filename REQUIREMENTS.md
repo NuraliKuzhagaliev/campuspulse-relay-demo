@@ -8,11 +8,11 @@ Statuses distinguish local implementation from actual cloud/external acceptance.
 | R02 Gemini core | relay/agent.py; assistant composer | pinned SDK imports, ADK/RunConfig/toolset signatures | No actual local/remote Gemini call: BLOCKED on GCP |
 | R03 custom function tools + MCP | scheduler.py, mcp_server.py; inspector | actual initialize/list/call; solver invariants | Genuine local MCP with 12 discovered tools; final live GitHub status and immutable file calls pass after quota reset; source change proof retained; cloud-agent MCP calls BLOCKED |
 | R04 real reasoningEngine/API | scripts/deploy_reasoning_engine.py, deploy-cloud.ps1 | local SDK schema checks | No deployed resource/revision/API: BLOCKED |
-| R05 web → remote agent visualization | gateway.py /api/chat, src/App.tsx | complete local browser workflow and disconnected-agent failure | Local UI works; public URL/remote path BLOCKED |
+| R05 web → remote agent visualization | gateway.py /api/chat, src/App.tsx | complete local browser workflow and disconnected-agent failure | Public frontend/Python demo verified on Render; actual Gemini/Agent Engine remote path remains BLOCKED |
 | R06 source/reproducibility | full repo, locks, infra, scripts, README | builds, tests, local smoke | GitHub source publication tracked in release/manifest.json; cloud scripts unexecuted |
 | R07 presentation | scripts/build_presentation.mjs; release/presentation | eight-slide editable PPTX, package/font/geometry validation, slide renders/PDF | Local presentation artifact; cloud status disclosed |
 | R08 five evaluation criteria | this matrix, architecture, tool catalog, proof and test docs | no invented judging weights | Evidence indexed; cloud criterion remains unmet |
-| U01 web + real Windows | React + sandboxed Electron / NSIS + portable | installed executable smoke; source/import/cache checks | See docs/evidence/desktop-smoke.json; default gateway localhost, cloud connection pending |
+| U01 web + real Windows | React + sandboxed Electron / NSIS + portable | installed executable smoke; source/import/cache checks | Corrected installed Windows release preserved. Full illustrative web demo verified on Render; mandatory GCP connection pending |
 | U02 F1-F5 | rows below | targeted tests + local UI | Local implementation verified; external gates remain |
 | U03 autonomous AI coding / honesty | status/evidence/journal/scripts | actual measurements, no fabricated model output | Human account consent and spending approval still required |
 | U04 visual design | tokenized CSS, bundled Inter, icons, responsive views | 1440/1280/1024/mobile screenshots, keyboard palette, reduced motion, automated AA primary states | Real screenshots, not concept artwork; complete certification not claimed |
@@ -26,3 +26,5 @@ Statuses distinguish local implementation from actual cloud/external acceptance.
 | F8 judge inspector | RunRail / Activity | durable ordered events and actual durations | Local execution is real and labeled; no remote revision is invented |
 
 Do not turn a blocked live row green because a local fixture, recording, deployment script or Cloud Console screenshot exists. Update this ledger only from actual results.
+
+Public illustrative acceptance: https://campuspulse-relay-demo.onrender.com . Frontend and Python backend at `dcb74dc63edac520e6a0362aedf52c5f1ca20e94` passed the requested upload/evidence/conflict, plan/what-if, simulated approval/receipt, execution, real hosted GitHub read, three languages, mobile/refresh, CSRF, visitor isolation and reset checks. Real judge Calendar/Gemini acceptance remains separate and pending. See `docs/evidence/public-deployment.json` and `public-demo-browser.json`.
