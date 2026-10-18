@@ -1,15 +1,15 @@
 {
-  "checked_at": "2026-10-18T20:33:29.150338+00:00",
+  "checked_at": "2026-10-18T21:26:37.104968+00:00",
   "python": {
     "tests": 56,
     "failures": 0,
     "errors": 0,
-    "seconds": 5.713
+    "seconds": 9.583
   },
   "browser": {
-    "startTime": "2026-10-18T20:26:43.552Z",
-    "duration": 9698.974,
-    "expected": 5,
+    "startTime": "2026-10-18T21:17:20.160Z",
+    "duration": 16524.981,
+    "expected": 8,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0
@@ -17,6 +17,8 @@
   "production_build_passed": true,
   "pip_check_passed": true,
   "powershell_parse_passed": true,
+  "desktop_policy_tests": 2,
+  "installed_import_regression_passed": true,
   "cloud_model_calls": 0,
   "live_calendar_writes": 0
 }

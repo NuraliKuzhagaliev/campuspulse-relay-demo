@@ -1,15 +1,15 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "product": "CampusPulse RELAY",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "status": "local_release_candidate_cloud_pending",
-  "created_at": "2026-10-18T20:33:29.150338+00:00",
+  "created_at": "2026-10-18T21:26:37.104968+00:00",
   "project_root": "D:\\projects\\CampusPulseRELAY",
-  "source_commit": "738f802f4c0b99ae81051055c62d85333212d6ec",
+  "source_commit": "946c862b31c83e8bba8df423971dd1594e7926ab",
   "repository": {
     "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo",
     "branch": "main",
-    "source_commit": "738f802f4c0b99ae81051055c62d85333212d6ec",
+    "source_commit": "946c862b31c83e8bba8df423971dd1594e7926ab",
     "published": true
   },
   "urls": {
@@ -36,26 +36,72 @@
     "runtime_authorized": false,
     "note": "Connector/browser consent does not authorize the app's Calendar adapter. No primary-calendar changes."
   },
+  "preserved_release": {
+    "version": "0.1.0",
+    "directory": "D:\\projects\\CampusPulseRELAY\\release\\versions\\0.1.0",
+    "git_tag": "local-release-0.1.0",
+    "artifacts_hash_verified": 7,
+    "source_commit": "738f802f4c0b99ae81051055c62d85333212d6ec"
+  },
+  "enhancements": {
+    "F1": "locally_implemented",
+    "F2": "locally_implemented",
+    "F3": "locally_implemented",
+    "F4": "locally_implemented",
+    "F5": "locally_implemented",
+    "real_calendar_acceptance": "pending",
+    "real_gemini_acceptance": "pending"
+  },
+  "languages": {
+    "operational_ui": [
+      "en",
+      "ru",
+      "kk"
+    ],
+    "browser_flows_verified": true,
+    "original_evidence_and_exact_action_titles_preserved": true,
+    "live_model_acceptance": "pending"
+  },
   "verification": {
     "python": {
       "tests": 56,
       "failures": 0,
       "errors": 0,
-      "seconds": 5.713
+      "seconds": 9.583
     },
     "browser": {
-      "startTime": "2026-10-18T20:26:43.552Z",
-      "duration": 9698.974,
-      "expected": 5,
+      "startTime": "2026-10-18T21:17:20.160Z",
+      "duration": 16524.981,
+      "expected": 8,
       "skipped": 0,
       "unexpected": 0,
       "flaky": 0
     },
-    "installed_windows_passed": true,
+    "installed_windows_regression_passed": true,
+    "installed_import_regression_passed": true,
+    "desktop_policy_tests": 2,
+    "packaged_main_preload_policy_renderer_match": true,
+    "native_picker_appearance_confirmed_by_user": true,
+    "native_picker_import_exact_readback": true,
+    "native_import_stages": {
+      "request_completed": true,
+      "state_refresh_completed": true,
+      "snapshot_saved": true
+    },
+    "native_notification_visibility": true,
+    "native_notification_visibility_basis": "explicit_user_observation",
+    "native_notification_location": "bottom-right Windows banner",
+    "native_notification_click_observed": false,
+    "native_check_status": "passed_with_human_interaction",
+    "native_check_evidence": "docs/evidence/desktop-native-result.json",
+    "original_human_import_incident": "Rejected route was not logged historically; attribution remains unconfirmed.",
+    "reproduced_import_failure": "POST /api/import rejected before upload; native POST /api/import-native and GET /api/state succeeded.",
+    "corrected_import_behavior": "Both desktop selection paths use /api/import-native; exact content read-back, refresh/cache and retained rejection guards verified.",
     "windows_signature": "NotSigned",
     "mcp_protocol": "2025-11-25",
     "mcp_tools": 12,
     "mcp_final_calls_passed": true,
+    "mcp_checked_at": "2026-10-18T20:28:42.958639+00:00",
     "background_change_observed_seconds": 19.62,
     "background_latency_observations": 1,
     "background_is_cloud_hosted": false,
@@ -65,50 +111,52 @@
     "presentation_slides": 8,
     "presentation_native_editable": true,
     "presentation_pdf": "rendered_slide_pages",
-    "recording_seconds": 125.48
+    "recording_seconds": 125.48,
+    "recording_release": "0.1.0",
+    "recording_is_retained_local_backup": true
   },
   "artifacts": [
     {
       "kind": "windows_installer",
-      "relative_path": "windows/CampusPulse-RELAY-0.1.0-x64-setup.exe",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.1.0-x64-setup.exe",
-      "bytes": 118725653,
-      "sha256": "964c37e932fd792f639288783188817f36a5b516ca0d1e95f4342280b9c7e945"
+      "relative_path": "windows/CampusPulse-RELAY-0.1.1-x64-setup.exe",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.1.1-x64-setup.exe",
+      "bytes": 118743530,
+      "sha256": "7a6b2f1b151f6eb8cd3188c7dae376fc4116313cd39f117d2366c4369f2edd79"
     },
     {
       "kind": "windows_portable",
-      "relative_path": "windows/CampusPulse-RELAY-0.1.0-x64-portable.exe",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.1.0-x64-portable.exe",
-      "bytes": 118500446,
-      "sha256": "d10388e062f6c027716f23cb1440251a21cc50f90b4e24dc6012d94e2fab53f2"
+      "relative_path": "windows/CampusPulse-RELAY-0.1.1-x64-portable.exe",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.1.1-x64-portable.exe",
+      "bytes": 118518331,
+      "sha256": "f98daa763c9a0a9be0b1115b26740c2ffb8579ba76033ee68bffefa85b210bb2"
     },
     {
       "kind": "source_archive",
-      "relative_path": "source/CampusPulseRELAY-0.1.0-source.zip",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\source\\CampusPulseRELAY-0.1.0-source.zip",
-      "bytes": 1676817,
-      "sha256": "6debb6110b6cca1e97a952bd6df72fddc2d2b5ccf5e37c8d02e1f4c303222a80"
+      "relative_path": "source/CampusPulseRELAY-0.1.1-source.zip",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\source\\CampusPulseRELAY-0.1.1-source.zip",
+      "bytes": 2800884,
+      "sha256": "ca59527c80465eb504f012954cf1323c3b2232119bfbd5d4bb01dd1ee4759fb1"
     },
     {
       "kind": "web_frontend_build",
-      "relative_path": "web/CampusPulseRELAY-0.1.0-web-build.zip",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\web\\CampusPulseRELAY-0.1.0-web-build.zip",
-      "bytes": 1001249,
-      "sha256": "26be7bffcb340c1f8fcda2addc06d7879af5510080c84d6133a097035e1ab454"
+      "relative_path": "web/CampusPulseRELAY-0.1.1-web-build.zip",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\web\\CampusPulseRELAY-0.1.1-web-build.zip",
+      "bytes": 1022398,
+      "sha256": "151163aafb59b56fceb622b46ddc9bc4fd1a254e0596784589d0e25a2a6362ab"
     },
     {
       "kind": "editable_presentation",
-      "relative_path": "presentation/CampusPulse-RELAY-final.pptx",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-final.pptx",
-      "bytes": 52437,
-      "sha256": "09c9a0291f0d083023df43b41bb6b2e7bfd777e88341fbd1d0bee81d4833cd98"
+      "relative_path": "presentation/CampusPulse-RELAY-0.1.1-native-verified.pptx",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.1.1-native-verified.pptx",
+      "bytes": 52647,
+      "sha256": "94577833bc6354dc32834d7aaa701cff39e60c42f89e9938631078f60e11723d"
     },
     {
       "kind": "presentation_pdf",
-      "relative_path": "presentation/CampusPulse-RELAY-final.pdf",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-final.pdf",
-      "bytes": 366168,
-      "sha256": "3dfe31808738a2f09206b694b7193f87e71042e4a4ad2dcea051e4904f15d1ff"
+      "relative_path": "presentation/CampusPulse-RELAY-0.1.1-native-verified.pdf",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.1.1-native-verified.pdf",
+      "bytes": 369908,
+      "sha256": "96d3a047e2dd4d167cf87eadf0e0f6408e7cfe5b1b81d8e64b30d4f6d0fd4664"
     },
     {
       "kind": "recorded_local_demo",
@@ -118,13 +166,22 @@
       "sha256": "108cc307afa000d55db16c13ba6ae11898c2118fcffd23f7eb3339db4d9aee32"
     }
   ],
+  "source_archive_metadata": {
+    "generated_manifest_distributed_separately": true,
+    "omitted_generated_files": [
+      "release/manifest.json",
+      "docs/evidence/test-summary.json"
+    ]
+  },
   "instructions": {
     "run_gateway": "scripts/dev.ps1",
     "bootstrap": "scripts/bootstrap.ps1",
     "local_judge": "docs/judge_quickstart.md",
     "install_uninstall": "release/README.md",
     "after_credit_activation": "docs/cloud_setup.md",
-    "exclusive_judge_setup": "docs/judge_setup.md"
+    "exclusive_judge_setup": "docs/judge_setup.md",
+    "native_recheck": "docs/native_windows_check.md",
+    "import_diagnosis": "docs/desktop_import_fix.md"
   },
   "blockers": [
     "Organizer credits: activation, exact eligible project/billing account, balance and expiration are not confirmed. No personal spending authorized.",
@@ -134,8 +191,8 @@
   ],
   "limitations": [
     "Conservative explicit academic text extraction; no scanned OCR or general natural-language date inference.",
-    "UI translation is partial; live EN/RU/KK model evaluation is pending.",
-    "Desktop picker is instrumented in automated smoke; actual selected-file IO is tested. OS toast visibility is not asserted.",
+    "EN/RU/Kazakh operational UI is translated and tested. Original evidence and exact action titles remain verbatim. Live multilingual model evaluation is pending.",
+    "Automated desktop import regression substitutes the picker. Separate real picker import passed and the user confirmed the visible bottom-right Windows banner; no click/focus callback was observed. The Windows control helper failed before initialization.",
     "Unsigned Windows app; local connected operations need a running gateway.",
     "Guarded undo preserves edited events; deleted prior blocks require a fresh approval to restore.",
     "GitHub public quota requires backoff or a dedicated repository-scoped read credential."
