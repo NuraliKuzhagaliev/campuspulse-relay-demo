@@ -78,10 +78,12 @@ def test_public_body_limits_cover_streamed_uploads(demo):
 
 def test_public_reset_expiry_and_cache_preserve_isolation(demo):
     before=demo.get('/api/state').json()
+    assert demo.get('/api/events').json()['workspace_id']==before['workspace_id']
     reset=demo.post('/api/demo/reset').json()
     assert reset['tenant']!=before['workspace_id']
     assert gateway.store.list(before['workspace_id'],'sources')==[]
     demo.headers['X-Relay-CSRF']=reset['csrf']
+    assert demo.get('/api/events').json()['workspace_id']==reset['tenant']
     demo.get('/api/state')
     token=demo.cookies.get('relay_session')
     record=gateway.store.get('_server','sessions',digest(token))

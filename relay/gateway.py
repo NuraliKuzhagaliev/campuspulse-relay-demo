@@ -233,7 +233,7 @@ def state(svc=Depends(service)):
 
 @app.get('/api/events')
 def events(after:int=0,svc=Depends(service)):
-    return dict(events=store.events(svc.tenant,max(0,after)))
+    return dict(workspace_id=svc.tenant,events=store.events(svc.tenant,max(0,after)))
 
 
 @app.get('/api/sources/{source_id}')

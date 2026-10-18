@@ -737,15 +737,23 @@ export default function App() {
     };
   }, []);
   useEffect(() => {
+    let polling=false,retired=false;
     const timer = setInterval(
       async () => {
-        if (!ready.current || document.hidden || offline) return;
+        if (!ready.current || document.hidden || offline || polling || retired) return;
+        polling=true;
+        const requestedTenant=tenantRef.current;
         try {
-          const events = await api<{ events: RunEvent[] }>(
+          const events = await api<{ workspace_id?:string; events: RunEvent[] }>(
             "/events?after=" + eventCursor.current,
           );
+          if(retired || requestedTenant!==tenantRef.current)return;
+          if(events.workspace_id && events.workspace_id!==tenantRef.current){
+            const session=await api<{csrf:string}>('/session');setCsrf(session.csrf);
+            await refresh();return;
+          }
           if (events.events.length) {
-            eventCursor.current = events.events.at(-1)!.sequence;
+            eventCursor.current = Math.max(eventCursor.current,events.events.at(-1)!.sequence);
             setData((d) =>
               d
                 ? {
@@ -764,13 +772,12 @@ export default function App() {
                 : d,
             );
           }
-        } catch {
-          setOffline(true);
-        }
+        } catch {if(!retired && requestedTenant===tenantRef.current)setOffline(true);}
+        finally{polling=false;}
       },
       busy ? 1000 : 3000,
     );
-    return () => clearInterval(timer);
+    return () => {retired=true;clearInterval(timer);};
   }, [offline, busy]);
   useEffect(() => {
     function key(e: KeyboardEvent) {
