@@ -24,6 +24,7 @@ def sha(path):
 
 commit=git('rev-parse','HEAD')
 version=read('package.json')['version']
+assert version=='0.1.1','Historical local 0.1.1 recorder only; use package_continuation.py for 0.2.0.'
 source=RELEASE/f'source/CampusPulseRELAY-{version}-source.zip'
 source.parent.mkdir(parents=True,exist_ok=True)
 subprocess.run(['git','archive','--format=zip','--prefix=CampusPulseRELAY/',

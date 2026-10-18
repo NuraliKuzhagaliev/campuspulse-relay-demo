@@ -6,6 +6,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 assert ROOT.drive.upper()=='D:'
+assert json.loads((ROOT/'package.json').read_text(encoding='utf-8'))['version']=='0.1.1','Historical 0.1.1 recorder only; use package_continuation.py for 0.2.0.'
 def read(relative):return json.loads((ROOT/relative).read_text(encoding='utf-8-sig'))
 def sha(path):
     with path.open('rb') as stream:return hashlib.file_digest(stream,'sha256').hexdigest()

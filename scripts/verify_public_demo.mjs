@@ -36,7 +36,7 @@ try{
   const tenant=state.workspace_id;
   const due=new Date(state.settings.anchor+"T12:00:00Z");due.setUTCDate(due.getUTCDate()+2);
   const marker=path.basename(folder),name="public-unseen-"+marker+".md";
-  const contents=`Assignment: Network Security lab\nCourse: Independent public verification ${marker}\nDue: ${due.toISOString().slice(0,10)}T18:00:00+05:00\nEffort: 240 minutes\nRubric:\n- [ ] Explain original evidence marker ${marker}\n- [ ] Keep this uploaded requirement verbatim\n`;
+  const contents=`Assignment: Network Security lab\nCourse: Network Security\nDue: ${due.toISOString().slice(0,10)}T18:00:00+05:00\nEffort: 240 minutes\nRubric:\n- [ ] Explain original evidence marker ${marker}\n- [ ] Keep this uploaded requirement verbatim\n`;
   const fixture=path.join(folder,name);await fs.writeFile(fixture,contents,"utf8");
   await page.locator('input[type="file"]').setInputFiles(fixture);
   await expect(page.locator(".source-list").getByText(name,{exact:true})).toBeVisible();

@@ -29,3 +29,12 @@ The user confirmed picker appearance. The reported unsupported-request error was
 The installer and portable app are unsigned. Notification registration uses the application's `dev.campuspulse.relay` AppUserModelID and the installed shortcut; this follows [Electron's Windows notification guidance](https://www.electronjs.org/docs/latest/tutorial/notifications#windows). The completed run's actual visibility was confirmed by the user. OS dialog buttons follow the Windows display language; app-controlled picker titles, filters, tray items and notification text follow the selected EN/RU/Kazakh UI language. Native callback logs contain IDs, event types, language and timestamps, without private document text or filesystem paths.
 
 No native UI screenshot was obtained through the failed helper. Renderer screenshots are labeled as renderer evidence. Google consent, real Calendar write/read-back and Gemini/Agent Engine acceptance remain pending organizer credits and verified account access.
+
+
+## 0.2.0 observation boundary
+
+Actual installed 0.2.0 package, both instrumented import paths, narrow IPC, task/plan/rescue/preflight/approval/read-back/undo, source/export/conversation, resized window and locale/reopen checks passed. No new real native-picker appearance, banner visibility or notification click/focus observation is inferred. The separate 0.1.1 human picker/banner proof is preserved unchanged; click/focus remains unverified.
+
+If a new human native check is performed, keep the same verification profile and select the existing sample:
+`D:\projects\CampusPulseRELAY\.local\native-verification\0.1.1-mvebaaui\native-picker-mvebaaui.md`.
+Start the installed 0.2.0 app with RELAY_DESKTOP_DATA set to that folder's `profile`, enter the illustrative workspace, then Connections → Import a file. Record separately: picker appearance, source import/read-back, refresh, and notification visibility. Use Connections → Send test notification, then click the actual Windows banner or Notification Center entry and record whether the app receives focus. Do not change Windows settings or relabel dispatch as visibility. Record version 0.2.0 and actual observation time separately from the historical 0.1.1 human report. No Google/GCP sign-in is needed for this check.

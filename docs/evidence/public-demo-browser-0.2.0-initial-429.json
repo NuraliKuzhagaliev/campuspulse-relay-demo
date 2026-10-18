@@ -1,0 +1,27 @@
+{
+  "checked_at": "2026-10-18T22:40:41.913Z",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "version": "0.2.0",
+  "fresh_browser_context": true,
+  "checks": {
+    "demo_entry": true,
+    "capability_cookie": {
+      "secure": true,
+      "httpOnly": true,
+      "sameSite": "Strict"
+    },
+    "new_upload_exact_evidence": true,
+    "explicit_assignment_mapping": true,
+    "conflict_resolved": true,
+    "plan_and_isolated_what_if": true,
+    "illustrative_approval_receipt_and_execution": true
+  },
+  "limitations": [
+    "Illustrative Calendar adapter only. Gemini/Agent Engine, real Calendar and mandatory GCP acceptance remain pending.",
+    "Temporary storage: two-hour sessions, with earlier resets possible on inactivity/restarts/redeploys.",
+    "GitHub public observations may be reused for five minutes while retaining their original commit/fetch time."
+  ],
+  "deployed_commit": "a86bd9ce2aa0fad076b930bf3d5704abbb7d76b4",
+  "passed": false,
+  "error": "AssertionError [ERR_ASSERTION]: {\"error\":{\"code\":\"UPSTREAM_RATE_LIMITED\",\"message\":\"GitHub API quota reached. The last observation is retained; no fresh read is claimed.\",\"details\":{\"retry_at_epoch\":1792363745.0}}}\n\n429 !== 200\n"
+}

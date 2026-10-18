@@ -8,13 +8,15 @@ const root = process.cwd();
 const releaseVersion=JSON.parse(await fs.readFile(path.join(root,"package.json"),"utf8")).version;
 let nativeResult={};
 try {nativeResult=JSON.parse(await fs.readFile(path.join(root,"docs/evidence/desktop-native-result.json"),"utf8"));}catch{}
+const slideCount=10;
+process.env.RELAY_PRESENTATION_SLIDES=String(slideCount);
 let publicDeployment={};
-try {publicDeployment=JSON.parse(await fs.readFile(path.join(root,"docs/evidence/public-deployment.json"),"utf8"));}catch{}
+try {publicDeployment=JSON.parse(await fs.readFile(path.join(root,`docs/evidence/public-deployment-${releaseVersion}.json`),"utf8"));}catch{}
 const publicVerified=publicDeployment.verified===true;
 const nativeVerified=nativeResult.status==="passed_with_human_interaction";
 const nativeImportVerified=nativeResult.picker?.exact_source_observed===true;
 const nativeSummary=nativeVerified?"Real picker import verified. User confirmed the bottom-right Windows banner.":nativeImportVerified?"Real picker import verified. OS notification visibility still pending.":"Picker appearance confirmed. Real import recheck and OS visibility pending.";
-const stem=`CampusPulse-RELAY-${releaseVersion}${publicVerified?"-public-demo":nativeVerified?"-native-verified":nativeImportVerified?"-picker-verified":""}`;
+const stem=`CampusPulse-RELAY-${releaseVersion}-quality-verified`;
 process.env.RELAY_PRESENTATION_STEM=stem;
 
 const runtime =
@@ -246,7 +248,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
 }
 {
   const s = slide(
-    "The managed agent stays on the query path.",
+    "Managed-agent path prepared; live gate pending.",
     "ARCHITECTURE & TRUST",
   );
   const boxes = [
@@ -357,6 +359,26 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
   );
 }
 {
+  const s=slide("Restore feasibility with a permitted change.","D1 / MINIMAL RESCUE");
+  tag(s,"120 MIN TOTAL SHORTAGE",64,238,305);
+  tag(s,"60 MIN BEFORE LAB DEADLINE",405,238,390);
+  text(s,"Friday alone cannot fix Wednesday.",64,308,1130,70,40,C.ink,true);
+  const cards=[['01 / OFFER','Student permits Tuesday 16–17 and Friday 17–18. No protected commitment or deadline changes.'],['02 / COMPARE','Bounded deterministic combinations. Minimum claimed only within a completed offered search.'],['03 / CHOOSE','Show added time and accepted-block movement. Read current busy state; require a fresh approval.']];
+  cards.forEach(([title,body],i)=>{const x=64+i*388;rect(s,x,414,360,184,i===2?C.navy:'#E7EDE1',true);text(s,title,x+18,432,324,36,22,i===2?C.mint:C.ink,true);text(s,body,x+18,480,324,100,21,i===2?'#D3E0E7':C.muted)});
+  note(s,'Reference fixture: Lab240 due Wednesday18, ML180 Friday18, Web120 Friday20. Removing Wednesday leaves420 capacity and120 total shortage; only180 minutes remain before the lab deadline, so lab shortage60. Friday-only additions cannot help. The bounded search covers up to five student-offered windows; no global minimum outside those candidates is claimed. Tests: tests/test_continuation.py and tests/browser/challenge.spec.ts. All Calendar writes remain illustrative until real consent/read-back acceptance.');
+}
+{
+  const s=slide("A draft you can check. A judge who can explore.","D2 / SUBMISSION PREFLIGHT · D3 / JUDGE CHALLENGE");
+  text(s,"Observable requirements",64,243,540,48,32,C.ink,true);
+  text(s,"Filename / format / named sections\nWord bounds / actual PDF page counts\nExact requirement -> observed metadata",64,314,540,140,25,C.muted);
+  tag(s,"VERIFIED / MISSING / REVIEW / UNKNOWN",64,489,536);
+  text(s,"Structure is not semantic correctness.\nNo grade prediction or auto-submission.",64,553,540,72,23,C.muted);
+  rect(s,672,234,544,387,C.navy,true);
+  text(s,"Try your own\npermitted brief.",699,262,488,76,33,C.mint,true);
+  text(s,"Own visitor workspace and source versions\nExplicit course / term / assignment mapping\nChange a constraint and compare a rescue\nFresh approval -> read-back evidence\nEN / RU / Kazakh throughout",699,365,482,204,24,'#D3E0E7');
+  note(s,'Preflight checks selected text PDF, Markdown or TXT against cited structured requirements. Heading/image presence never proves correctness. Exceptions and semantics need review. Missing work may become an extra-effort scenario with a student-provided estimate. Judge route is independently verified with a new brief; mandatory unscripted Gemini/real Calendar judge acceptance remains blocked on organizer credits. Source identity migration and conversation contracts are verified locally, not substituted for cloud requirements.');
+}
+{
   const s = slide(
     "Real tools. Inspectable observations.",
     "LOCAL PROTOCOL + LIVE EXTERNAL EVIDENCE",
@@ -377,7 +399,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
   text(s, "Live GitHub", 64, 423, 450, 40, 31, C.ink, true);
   text(
     s,
-    "12 tools discovered; final calls pass.\nLive status + immutable repository file read.",
+    "13 tools discovered; final calls pass.\nLive status + immutable repository file read.",
     64,
     479,
     525,
@@ -385,7 +407,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
     25,
     C.muted,
   );
-  text(s, "Real change observed", 685, 423, 490, 40, 31, C.ink, true);
+  text(s, "Historical local change", 685, 423, 490, 40, 31, C.ink, true);
   text(
     s,
     "19.62 seconds /  one impact run\nDuplicate refresh: no second run.",
@@ -408,7 +430,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
   );
   note(
     s,
-    "Evidence: docs/evidence/mcp-smoke.json and radar-live-proof.json. Latency uses a same-host monotonic clock from connector-write dispatch to server source observation; it includes connector request latency and is one observation, not a median or p95. The source is the dedicated owned demonstration repository: https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo . Do not describe illustrative material as real coursework or local polling as hosted autonomy.",
+    "Evidence: docs/evidence/mcp-smoke-0.2.0.json and radar-live-proof.json. Latency uses a same-host monotonic clock from connector-write dispatch to server source observation; it includes connector request latency and is one observation, not a median or p95. The source is the dedicated owned demonstration repository: https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo . Do not describe illustrative material as real coursework or local polling as hosted autonomy.",
   );
 }
 {
@@ -416,7 +438,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
     "A product a judge can inspect.",
     "VERIFICATION, NOT A SUCCESS ANIMATION",
   );
-  text(s, publicVerified?"61":"56", 64, 239, 330, 100, 84, C.blue, true);
+  text(s, "76", 64, 239, 330, 100, 84, C.blue, true);
   text(s, "Python tests passed", 69, 349, 400, 42, 28, C.ink, true);
   text(
     s,
@@ -428,8 +450,8 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
     24,
     C.muted,
   );
-  text(s, publicVerified?"8 + 1":"8", 690, 239, 330, 100, 84, C.ink, true);
-  text(s, publicVerified?"Browser scenarios + public flow":"Browser scenarios passed", 695, 349, 480, 42, 28, C.ink, true);
+  text(s, publicVerified?"10 + 2":"10", 690, 239, 330, 100, 84, C.ink, true);
+  text(s, publicVerified?"Local flows + hosted gates":"Browser scenarios passed", 695, 349, 480, 42, 28, C.ink, true);
   text(
     s,
     "EN / RU / Kazakh operational workflows,\noriginal quotes, errors and automated AA rules.",
@@ -442,17 +464,17 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
   );
   text(
     s,
-    publicVerified?`Windows ${releaseVersion}: real picker import and visible notification verified.\nPublic demo: import, what-if, receipts, languages and visitor isolation verified.\nGemini/Agent Engine and real Calendar acceptance remain pending.`:`Windows ${releaseVersion}: both import paths, refresh and cache pass regression.\n${nativeSummary}\nLive Google consent, Calendar and Agent Engine acceptance remain pending.`,
+    publicVerified?`Windows ${releaseVersion}: installed contracts, both imports and persistence pass.\n0.1.1 human picker / banner proof retained; click/focus remains unverified.\nPublic demo: import, what-if, receipts, languages and visitor isolation verified.\nGemini/Agent Engine and real Calendar acceptance remain pending.`:`Windows ${releaseVersion}: both import paths, refresh and cache pass regression.\n0.1.1 human picker/banner proof retained; click/focus remains unverified.\nLive Google consent, Calendar and Agent Engine acceptance remain pending.`,
     64,
     563,
     1150,
-    75,
-    22,
+    88,
+    19,
     C.muted,
   );
   note(
     s,
-    "Counts come from the actual local suite and may be updated in docs/test_results.md. Two additional native IPC policy/redaction tests passed. Installed original failure: renderer file input sent POST /api/import, rejected before upload. Both desktop paths now use /api/import-native. The original human incident lacked route tracing, so its attribution remains unconfirmed. The regression explicitly substitutes the native picker. The actual unmodified picker import and OS notification visibility are recorded separately in docs/evidence/desktop-native-result.json. No live Gemini, Calendar, statistical reliability or zero-defect claim follows from local tests. Accessibility covers an automated subset at 1440x900, 1280x720, 1024x768 and 390x844.",
+    "Counts come from the actual local suite and may be updated in docs/test_results.md. Three native IPC policy/redaction/method-contract tests passed. New desktop checks do not establish a new human toast observation. Installed original failure: renderer file input sent POST /api/import, rejected before upload. Both desktop paths now use /api/import-native. The original human incident lacked route tracing, so its attribution remains unconfirmed. The regression explicitly substitutes the native picker. The actual unmodified picker import and OS notification visibility are recorded separately in docs/evidence/desktop-native-result.json. No live Gemini, Calendar, statistical reliability or zero-defect claim follows from local tests. Accessibility covers an automated subset at 1440x900, 1280x720, 1024x768 and 390x844.",
   );
 }
 {
@@ -508,7 +530,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
   );
   note(
     s,
-    "Do not present this local release candidate as a completed hackathon cloud submission. Current Cloud Console shows a trial prepayment requirement; credits are unconfirmed. The user declined personal spending. Wait for organizer credit activation, exact project eligibility, balance and expiration; explain uncovered costs before requesting approval. No new billing account or payment was attached. Student value is a hypothesis, not a measured grade or stress improvement. Full release ledger: REQUIREMENTS.md.",
+    "Do not present this local release candidate as a completed hackathon cloud submission. Earlier read-only Cloud Console inspection showed a trial prepayment requirement; organizer credits remain unconfirmed. The user declined personal spending. Wait for organizer credit activation, exact project eligibility, balance and expiration; explain uncovered costs before requesting approval. No new billing account or payment was attached. Student value is a hypothesis, not a measured grade or stress improvement. Full release ledger: REQUIREMENTS.md.",
   );
 }
 
@@ -552,16 +574,16 @@ const result = await finalizePresentation({
     "12192000,6858000",
     "--validate-heading-fit",
   ],
-  explicitTotalSlideCount: 8,
+  explicitTotalSlideCount: slideCount,
   requiredNativeTableOwnerSlides: [],
   fontPolicy: { basis: "design", families: ["Arial"] },
   verifyArtifactToolImport: true,
-  receiptPath: path.join(build, `validation-${releaseVersion}-${publicVerified?"public-demo":nativeVerified?"verified":"pending"}.json`),
+  receiptPath: path.join(build, `validation-${stem}.json`),
 });
 console.log(
   JSON.stringify(
     {
-      slides: 8,
+      slides: slideCount,
       pdf: path.join(output, stem+".pdf"),
       pptx: path.join(output, stem+".pptx"),
       validation: result,
@@ -571,4 +593,4 @@ console.log(
   ),
 );
 
-await fs.writeFile(path.join(root,publicVerified?"docs/evidence/public-presentation.json":"docs/evidence/presentation.json"), JSON.stringify({version:releaseVersion,slides:8,native_status:nativeResult.status||"pending",public_demo_verified:publicVerified,public_url:publicDeployment.public_url||null,pptx:path.join(output,stem+".pptx"),pdf:path.join(output,stem+".pdf"),validation:path.join(build,`validation-${releaseVersion}-${publicVerified?"public-demo":nativeVerified?"verified":"pending"}.json`)},null,2));
+await fs.writeFile(path.join(root,`docs/evidence/presentation-${releaseVersion}.json`), JSON.stringify({version:releaseVersion,slides:slideCount,native_status:nativeResult.status||"pending",native_human_proof_release:"0.1.1",public_demo_verified:publicVerified,public_url:publicDeployment.public_url||null,pptx:path.join(output,stem+".pptx"),pdf:path.join(output,stem+".pdf"),validation:path.join(build,`validation-${stem}.json`)},null,2));

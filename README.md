@@ -8,7 +8,7 @@
 
 This public illustrative demo is **separate from the mandatory GCP deployment**, which remains pending. No actual Vertex AI Agent Engine resource, successful Gemini call or real Calendar consent/write/read-back has been verified. Organizer credit eligibility/balance/expiration, GCP account/project/billing and OAuth setup remain external gates. No uncovered personal spending is authorized. Read [REQUIREMENTS.md](REQUIREMENTS.md), [BLOCKERS.md](BLOCKERS.md) and [deployment proof](docs/deployment_proof.md) before presenting it.
 
-Each browser session gets an isolated temporary workspace, with Secure/HttpOnly capability cookies and CSRF-protected writes. Sessions expire after two hours; idle spin-down, restarts and redeploys may reset them sooner. Render may need about a minute to wake after 15 minutes idle. Public imports are limited to 2 MiB and 12 sources including examples. Use sample documents. The **Start a fresh demo** control invalidates the old workspace. See [public hosting details](docs/public_demo_hosting.md), [actual deployment evidence](docs/evidence/public-deployment.json) and [browser acceptance](docs/evidence/public-demo-browser.json).
+Each browser session gets an isolated temporary workspace, with Secure/HttpOnly capability cookies and CSRF-protected writes. Sessions expire after two hours; idle spin-down, restarts and redeploys may reset them sooner. Render may need about a minute to wake after 15 minutes idle. Public imports are limited to 2 MiB and 12 sources including examples. Use sample documents. The **Start a fresh demo** control invalidates the old workspace. See [public hosting details](docs/public_demo_hosting.md), [actual deployment evidence](docs/evidence/public-deployment-0.2.0.json) and [browser acceptance](docs/evidence/public-demo-browser-0.2.0.json).
 
 Verified local capabilities include conflicts with exact page/ref evidence, constrained recovery and isolated what-if, durable source polling using the real demo repository, immutable approval/journal/read-back using a clearly labeled local Calendar adapter, and cited next-action packets. No fixture is described as a live Calendar or Gemini result.
 
@@ -32,7 +32,7 @@ cd D:\projects\CampusPulseRELAY
 
 Open [the local web client](http://127.0.0.1:8000). `bootstrap.ps1` installs the exact Python lock and `npm ci` lock. `dev.ps1` serves the built UI and API together. It binds to localhost. Run `.\scripts\run-mcp.ps1` in another terminal for the genuine Streamable HTTP MCP server.
 
-For Electron development, run `.\scripts\env.ps1` followed by `npm.cmd run desktop` while the gateway is running. The packaged application uses a local renderer; cloud credentials never enter it. The verified installed 0.1.1 app and its native fixes remain preserved with the local gateway. The separate public deployment verifies the browser client; hosted desktop OAuth/managed-agent acceptance remains pending.
+For Electron development, run `.\scripts\env.ps1` followed by `npm.cmd run desktop` while the gateway is running. The packaged application uses a local renderer; cloud credentials never enter it. The installed 0.2.0 package passes import, restricted IPC, task/plan/rescue/preflight/approval and persistence checks. Prior 0.1.1 native human proof and artifacts remain preserved. The separate public deployment verifies the browser client; hosted desktop OAuth/managed-agent acceptance remains pending.
 
 ## Inspect and test
 

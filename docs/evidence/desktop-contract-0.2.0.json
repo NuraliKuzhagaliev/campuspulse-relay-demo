@@ -1,8 +1,8 @@
 {
   "version": "0.2.0",
-  "checked_at": "2026-10-18T22:35:27.520Z",
+  "checked_at": "2026-10-18T22:49:11.113Z",
   "executable": "D:\\projects\\CampusPulseRELAY\\installed\\CampusPulse RELAY\\CampusPulse RELAY.exe",
-  "profile": "D:\\projects\\CampusPulseRELAY\\.local\\desktop-contract\\0.2.0-mveely1s",
+  "profile": "D:\\projects\\CampusPulseRELAY\\.local\\desktop-contract\\0.2.0-mvef3ljc",
   "checks": {
     "secure_installed_package": true,
     "task_packet_plan_scenario_rescue_approval_verify_undo": true,
@@ -37,16 +37,17 @@
       "matches_current_source": true
     },
     {
-      "file": "dist\\assets\\index-C-j1KeKm.js",
-      "sha256": "0c9ca430e4c49cb44669eca759f888c7d19c8b890e8ea4d5ada746aca75a3a70",
+      "file": "dist\\assets\\index-uK_DmUwi.js",
+      "sha256": "4ed9a5f7eff526d52a7663627871686e905cbc4b6ddfd7452590785e7637f523",
       "matches_current_source": true
     },
     {
       "file": "dist\\index.html",
-      "sha256": "052655589ee3ebad47fa8a4f95288a28b8f02e915c2cf88e2aab07800fcf3973",
+      "sha256": "e024a22c22861985df7789c2ccc5b309d8697ce1befd819388943c7768bf88ee",
       "matches_current_source": true
     }
   ],
+  "native_picker_used": false,
   "native_picker_substituted": false,
   "native_visibility_checked": false,
   "cloud_calls": 0,

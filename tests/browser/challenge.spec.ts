@@ -19,7 +19,7 @@ test("judge compares deadline rescue, chooses availability and reviews fresh app
   });
   await page.goto("/");
   await page
-    .getByRole("button", { name: "Explore illustrative workspace" })
+    .getByRole("button", { name: /^(Explore illustrative workspace|Enter public demo)$/ })
     .click();
   await page.getByRole("button", { name: "Evidence", exact: true }).click();
   await page
@@ -66,11 +66,11 @@ test("judge compares deadline rescue, chooses availability and reviews fresh app
     page.getByRole("button", { name: "Approve illustrative local actions" }),
   ).toBeVisible();
   await fs.writeFile(
-    ".local/logs/challenge-ui-metrics.json",
+    process.env.RELAY_TEST_BASE_URL?.startsWith("https:")?".local/logs/challenge-hosted-metrics.json":".local/logs/challenge-ui-metrics.json",
     JSON.stringify(
       {
         checked_at: new Date().toISOString(),
-        mode: "local_illustrative",
+        mode: process.env.RELAY_TEST_BASE_URL?.startsWith("https:")?"hosted_illustrative":"local_illustrative",
         observations: measurements,
         model_calls: 0,
         p95_reported: false,
@@ -86,7 +86,7 @@ test("unseen brief, explicit mapping, preflight, languages and responsive challe
 }) => {
   await page.goto("/");
   await page
-    .getByRole("button", { name: "Explore illustrative workspace" })
+    .getByRole("button", { name: /^(Explore illustrative workspace|Enter public demo)$/ })
     .click();
   const name = "judge-brief-" + Date.now() + ".md";
   await page.locator("input[type=file]").setInputFiles({
@@ -176,14 +176,14 @@ test("unseen brief, explicit mapping, preflight, languages and responsive challe
       ).violations,
     ).toEqual([]);
     await page.screenshot({
-      path: `docs/screenshots/challenge-${language}-390.png`,
+      path: `${process.env.RELAY_SCREENSHOT_DIR||"docs/screenshots"}/challenge-${language}-390.png`,
       fullPage: true,
     });
   }
   await page.getByTestId("language").selectOption("en");
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.screenshot({
-    path: "docs/screenshots/challenge-1440.png",
+    path: `${process.env.RELAY_SCREENSHOT_DIR||"docs/screenshots"}/challenge-1440.png`,
     fullPage: true,
   });
 });

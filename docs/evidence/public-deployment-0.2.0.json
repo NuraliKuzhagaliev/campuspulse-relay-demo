@@ -1,0 +1,52 @@
+{
+  "version": "0.2.0",
+  "provider": "Render",
+  "public_url": "https://campuspulse-relay-demo.onrender.com",
+  "service_id": "srv-dbajs73bc2fs73bm9mfg",
+  "service_plan": "free",
+  "region": "frankfurt",
+  "runtime": "Docker: React frontend + FastAPI Python backend",
+  "auto_deploy": false,
+  "deploy_id": "dep-dbakqb5g1s2s73cg8cq0",
+  "deployed_commit": "8e74950e2437e5b2af0159ae3c88bb31caa86a61",
+  "status": "live",
+  "finished_at": "2026-10-18T22:51:22.644312Z",
+  "verified": true,
+  "full_https_browser_acceptance": true,
+  "browser_evidence": "docs/evidence/public-demo-browser-0.2.0.json",
+  "hosted_challenge_evidence": "docs/evidence/hosted-challenge-0.2.0.json",
+  "google_runtime_enabled": false,
+  "real_calendar_enabled": false,
+  "mandatory_gcp_deployment": "pending_unconfirmed_organizer_credits",
+  "uncovered_personal_spending_authorized_usd": 0,
+  "storage": "ephemeral SQLite, one worker/instance; two-hour isolated capability sessions, earlier reset possible on host restart/redeploy/inactivity",
+  "initial_github_429_evidence": "docs/evidence/public-demo-browser-0.2.0-initial-429.json",
+  "github_retry_result": "Fresh immutable backend read succeeded after reported reset; cache_age_seconds=0",
+  "prior_live_runtime_commit": "a86bd9ce2aa0fad076b930bf3d5704abbb7d76b4",
+  "two_tab_reset_failure_before": "Actual focused second tab retained old source list beyond 10 seconds on a86bd9c; final regression passed on 8e74950.",
+  "health": {
+    "ok": true,
+    "version": "0.2.0",
+    "mode": "public_demo",
+    "agent_configured": false,
+    "agent_verified": false,
+    "agent": {
+      "configured": false,
+      "verified": false,
+      "resource": null
+    },
+    "time": "2026-10-18T22:53:30.079111+00:00",
+    "deployed_commit": "8e74950e2437e5b2af0159ae3c88bb31caa86a61",
+    "demo": {
+      "public": true,
+      "storage": "temporary",
+      "session_seconds": 7200,
+      "max_upload_mib": 2,
+      "max_sources": 12,
+      "github_cache_seconds": 300,
+      "calendar": "illustrative_local_adapter",
+      "gemini": "pending",
+      "mandatory_gcp": "pending"
+    }
+  }
+}
