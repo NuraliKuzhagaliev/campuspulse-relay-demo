@@ -1,0 +1,69 @@
+{
+  "name": "campuspulse-relay",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Evidence-linked academic recovery agent",
+  "author": "CampusPulse RELAY",
+  "license": "MIT",
+  "main": "desktop/main.cjs",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc -b && vite build",
+    "desktop": "electron .",
+    "package:win": "npm run build && electron-builder --win nsis portable --x64",
+    "test:ui": "playwright test"
+  },
+  "dependencies": {
+    "@fontsource/inter": "^5.2.8",
+    "lucide-react": "^0.468.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.56.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "electron": "^40.0.0",
+    "electron-builder": "^26.0.12",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.0"
+  },
+  "build": {
+    "appId": "dev.campuspulse.relay",
+    "productName": "CampusPulse RELAY",
+    "directories": {
+      "output": "release/windows",
+      "buildResources": "desktop"
+    },
+    "files": [
+      "dist/**/*",
+      "desktop/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "signAndEditExecutable": false,
+      "artifactName": "CampusPulse-RELAY-${version}-${arch}.${ext}",
+      "icon": "desktop/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "include": "desktop/installer.nsh",
+      "runAfterFinish": false,
+      "deleteAppDataOnUninstall": false,
+      "artifactName": "CampusPulse-RELAY-${version}-${arch}-setup.${ext}"
+    },
+    "portable": {
+      "artifactName": "CampusPulse-RELAY-${version}-${arch}-portable.${ext}"
+    }
+  }
+}

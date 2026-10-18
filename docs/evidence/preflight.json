@@ -1,0 +1,14 @@
+{
+  "checked_at": "2026-10-18T19:20:14.291661+00:00",
+  "project": null,
+  "region": "us-central1",
+  "agent_resource": null,
+  "checks": {
+    "adc": "unavailable"
+  },
+  "blockers": [
+    "Google Cloud ADC authentication required; run scripts/inspect-access.ps1 -Login, then scripts/connect-gcp.ps1 -ProjectId YOUR_PROJECT_ID."
+  ],
+  "exception_type": "DefaultCredentialsError",
+  "provisioned_resources": false
+}

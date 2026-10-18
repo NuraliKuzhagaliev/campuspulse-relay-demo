@@ -1,0 +1,17 @@
+.venv/
+.local/
+node_modules/
+dist/
+release/*
+!release/manifest.json
+!release/README.md
+.env
+.env.*
+!.env.example
+__pycache__/
+.pytest_cache/
+*.pyc
+inputs/*.txt
+inputs/*.pdf
+test-results/
+playwright-report/

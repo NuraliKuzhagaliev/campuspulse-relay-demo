@@ -1,0 +1,45 @@
+{
+  "checked_at": "2026-10-18T19:34:06.208385+00:00",
+  "baseline_commit": "afd91ce91a8228a54eb5852875cb19ca8c8d899a",
+  "observed_commit": "d9afbc553ca2199ac8f8c915632cded3b0c05e6e",
+  "changed": true,
+  "observed_at": "2026-10-18T19:32:08.807007+00:00",
+  "committed_at": "2026-10-18T19:33:14Z",
+  "triggered_runs": 1,
+  "cloud_hosted": false,
+  "gemini_connected": false,
+  "events": [
+    {
+      "sequence": 90,
+      "run_id": "change-dba26b95d57d5f670781f771",
+      "type": "run_started",
+      "timestamp": "2026-10-18T19:32:08.818617+00:00",
+      "summary": "A live repository source changed.",
+      "mode": "live",
+      "commit": "d9afbc553ca2199ac8f8c915632cded3b0c05e6e"
+    },
+    {
+      "sequence": 91,
+      "run_id": "change-dba26b95d57d5f670781f771",
+      "type": "decision_summary",
+      "timestamp": "2026-10-18T19:32:08.821048+00:00",
+      "summary": "Imported the revised evidence. Revalidating affected work; no silent calendar writes."
+    },
+    {
+      "sequence": 94,
+      "run_id": "change-dba26b95d57d5f670781f771",
+      "type": "source_conflict",
+      "timestamp": "2026-10-18T19:32:08.830396+00:00",
+      "summary": "Resolve the deadline conflict before repairing this week.",
+      "code": "SOURCE_CONFLICT"
+    }
+  ],
+  "observed_latency_seconds": 19.62,
+  "latency_method": "Same-host monotonic time from connector-write dispatch to server source observation; includes connector request latency.",
+  "duplicate_refresh": {
+    "changed": false,
+    "mode": "live",
+    "commit": "d9afbc553ca2199ac8f8c915632cded3b0c05e6e"
+  },
+  "passes": true
+}

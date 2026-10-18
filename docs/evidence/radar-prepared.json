@@ -1,0 +1,9 @@
+{
+  "workspace": "radar-live-demo-v3",
+  "prepared_at": "2026-10-18T19:31:21.999182+00:00",
+  "baseline_commit": "afd91ce91a8228a54eb5852875cb19ca8c8d899a",
+  "baseline_plan": "d00f67a09260feb56b9600b0",
+  "trigger": "server-side 60s polling",
+  "cloud_hosted": false,
+  "gemini_connected": false
+}

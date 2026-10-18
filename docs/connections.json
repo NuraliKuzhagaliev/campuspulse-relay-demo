@@ -1,0 +1,6 @@
+{
+  "checked_date": "2026-10-19",
+  "github": {"repository":"NuraliKuzhagaliev/campuspulse-relay-demo","url":"https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo","coursework_path":"coursework.md","initial_coursework_commit":"71085a92120a841ae53a666367cc917450a7285e","created_and_verified":true,"runtime_read_mode":"public GitHub REST"},
+  "calendar": {"name":"CampusPulse RELAY Demo","id":"44501b98c394287f85b47906c63f6d175019ff7e8a3c40679ac42c8dcd4f8aff@group.calendar.google.com","created_and_verified":true,"runtime_authorized":false,"note":"Connector/browser consent does not authorize the app's Calendar adapter. No primary-calendar changes."},
+  "gcp": {"cli_version":"589.0.0","cli_path":"D:/projects/CampusPulseRELAY/.local/tools/google-cloud-sdk/bin/gcloud.cmd","active_account":false,"project_selected":false,"adc":false,"resources_provisioned":false}
+}
