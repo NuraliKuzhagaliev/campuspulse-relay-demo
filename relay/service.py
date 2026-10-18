@@ -17,12 +17,15 @@ class RelayService:
 
     def settings(self):
         try:
-            return self.store.get(self.tenant,'meta','settings')
+            value=self.store.get(self.tenant,'meta','settings')
         except RelayError:
             if os.getenv('RELAY_MODE')=='cloud':
                 raise RelayError('AUTH_REQUIRED','Create or connect an isolated workspace first.')
             self.seed()
             return self.store.get(self.tenant,'meta','settings')
+        if value.get('mode')=='judge' and value.get('judge_expires',0)<clock.time():
+            raise RelayError('AUTH_REQUIRED','This judge workspace has expired. Its calendar is retired and is never reassigned to another visitor.')
+        return value
 
     def seed(self,anchor=None):
         if os.getenv('RELAY_MODE')=='cloud':
@@ -124,6 +127,7 @@ class RelayService:
         for override in self.store.list(self.tenant,'task_overrides'):
             if override['id'] in merged:
                 merged[override['id']].update(override['values'])
+                merged[override['id']]['user_overrides']=override['values']
         return list(merged.values())
 
     def resolve(self,conflict_id,fact_id):
@@ -152,6 +156,8 @@ class RelayService:
         payload=dict(tasks=self.tasks(),windows=s['windows'],busy=busy_intervals(events,s['timezone'],exclude_ids=own),
                      timezone=s['timezone'],daily_cap_minutes=s['daily_cap_minutes'])
         prior=self.latest_plan()
+        if scenario and prior and prior.get('invalidated'):
+            raise RelayError('STALE_PLAN','The baseline is outdated. Repair your week before comparing a scenario.')
         if prior and not prior.get('invalidated'):
             payload['baseline']=prior['blocks']
         if scenario:
@@ -199,16 +205,29 @@ class RelayService:
             calendar=self.calendar()
             events=calendar.list(min(w['start'] for w in s['windows']),max(w['end'] for w in s['windows']))
             calendar_mode=calendar.mode
-        return dict(settings=s,tasks=self.tasks(),sources=[{k:v for k,v in source.items() if k!='pages'} for source in self.sources()],
+        display_settings=dict(s,poll_seconds=max(30,int(os.getenv('RELAY_POLL_SECONDS','60' if os.getenv('RELAY_GITHUB_TOKEN') else '300'))))
+        return dict(workspace_id=self.tenant,settings=display_settings,tasks=self.tasks(),sources=[{k:v for k,v in source.items() if k!='pages'} for source in self.sources()],
                     conflicts=self.current_conflicts(),plan=self.latest_plan(),events=self.store.events(self.tenant),
                     calendar_events=events,calendar_mode=calendar_mode,
                     receipts=self.store.list(self.tenant,'receipts'),last_sync=now(),
                     agent=dict(configured=bool(os.getenv('RELAY_AGENT_RESOURCE')),resource=os.getenv('RELAY_AGENT_RESOURCE') or None,verified=False))
 
-    def sync_repo(self):
+    def sync_repo(self,force=True):
         s=self.settings()
+        interval=max(30,int(os.getenv('RELAY_POLL_SECONDS','60' if os.getenv('RELAY_GITHUB_TOKEN') else '300')))
+        self.store.put(self.tenant,'watermarks','github-poll',{'next_check_epoch':0},create=True)
+        poll=self.store.get(self.tenant,'watermarks','github-poll')
+        if not force and poll['next_check_epoch']>clock.time():
+            return dict(changed=False,mode='cached_poll',next_check_epoch=poll['next_check_epoch'])
+        if not force and not self.store.claim(self.tenant,'watermarks','github-poll',{'next_check_epoch':poll['next_check_epoch']},{'next_check_epoch':clock.time()+interval}):
+            return dict(changed=False,mode='coalesced_poll')
         repo=GitHub(s['github_repo'],s.get('github_ref','main'),os.getenv('RELAY_GITHUB_TOKEN'))
-        observation=repo.read(s.get('github_path','coursework.md'))
+        try:
+            observation=repo.read(s.get('github_path','coursework.md'))
+        except RelayError as exc:
+            if exc.code=='UPSTREAM_RATE_LIMITED':
+                self.store.put(self.tenant,'watermarks','github-poll',{'next_check_epoch':(exc.details or {}).get('retry_at_epoch',clock.time()+interval)})
+            raise
         sid='github-coursework'
         try:
             previous=self.store.get(self.tenant,'sources',sid)
@@ -239,7 +258,7 @@ class RelayService:
             from .limits import model_request
             from .auth import sign_context
             import vertexai
-            model_request(self.store,self.tenant)
+            model_request(self.store,self.tenant,judge=self.settings().get('mode')=='judge')
             resource=os.environ['RELAY_AGENT_RESOURCE']
             remote=vertexai.Client(project=os.environ['GOOGLE_CLOUD_PROJECT'],location=os.environ['GOOGLE_CLOUD_LOCATION']).agent_engines.get(name=resource)
             token=sign_context(self.tenant,os.environ['RELAY_MCP_URL'],os.environ['RELAY_CONTEXT_SECRET'])

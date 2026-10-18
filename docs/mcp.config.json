@@ -1,0 +1,6 @@
+{
+  "server": {"name":"CampusPulse RELAY","transport":"streamable-http","local_url":"http://127.0.0.1:8001/mcp/","cloud_url_env":"RELAY_MCP_URL"},
+  "authentication": {"machine":"Google Cloud Run ID token in cloud","workspace":"X-Relay-Context signed by the verified backend; never hard-code a token"},
+  "start_windows":".\\scripts\\run-mcp.ps1",
+  "smoke":".\\.venv\\Scripts\\python.exe scripts/smoke_mcp.py"
+}

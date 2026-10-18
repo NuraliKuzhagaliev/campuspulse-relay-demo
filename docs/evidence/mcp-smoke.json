@@ -1,11 +1,12 @@
 {
-  "checked_at": "2026-10-18T19:25:45.117147+00:00",
+  "checked_at": "2026-10-18T20:17:00.318713+00:00",
   "transport": "Streamable HTTP",
   "server": "http://127.0.0.1:8001/mcp/",
   "calls": [
     {
       "tool": "list_course_sources",
       "is_error": false,
+      "elapsed_ms": 23,
       "content": [
         {
           "type": "text",
@@ -17,11 +18,25 @@
     },
     {
       "tool": "get_assignment_repo_status",
-      "is_error": false,
+      "is_error": true,
+      "elapsed_ms": 752,
       "content": [
         {
           "type": "text",
-          "text": "{\n  \"mode\": \"live\",\n  \"repository\": \"NuraliKuzhagaliev/campuspulse-relay-demo\",\n  \"url\": \"https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo\",\n  \"ref\": \"main\",\n  \"commit\": \"71085a92120a841ae53a666367cc917450a7285e\",\n  \"updated_at\": \"2026-10-18T19:18:16Z\",\n  \"issues\": [],\n  \"fetched_at\": \"2026-10-18T19:25:47.907370+00:00\"\n}",
+          "text": "{\n  \"error\": {\n    \"code\": \"UPSTREAM_RATE_LIMITED\",\n    \"message\": \"GitHub API quota reached. The last observation is retained; no fresh read is claimed.\",\n    \"details\": {\n      \"retry_at_epoch\": 1792355289.0\n    }\n  }\n}",
+          "annotations": null,
+          "meta": null
+        }
+      ]
+    },
+    {
+      "tool": "read_assignment_repo_file",
+      "is_error": true,
+      "elapsed_ms": 7,
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"error\": {\n    \"code\": \"UPSTREAM_RATE_LIMITED\",\n    \"message\": \"GitHub public API quota is exhausted. Wait for reset or configure the dedicated repository read credential.\",\n    \"details\": {\n      \"retry_at_epoch\": 1792355289.0\n    }\n  }\n}",
           "annotations": null,
           "meta": null
         }
@@ -30,6 +45,7 @@
     {
       "tool": "read_course_source",
       "is_error": false,
+      "elapsed_ms": 8,
       "content": [
         {
           "type": "text",
@@ -47,6 +63,7 @@
     "read_course_source",
     "get_assignment_repo_status",
     "get_calendar_window",
+    "read_assignment_repo_file",
     "get_workspace_plan_inputs",
     "preview_study_blocks",
     "apply_approved_study_blocks",
@@ -54,5 +71,7 @@
     "undo_owned_study_blocks",
     "build_next_action_packet",
     "save_validated_plan"
-  ]
+  ],
+  "protocol_passed": true,
+  "all_calls_passed": false
 }

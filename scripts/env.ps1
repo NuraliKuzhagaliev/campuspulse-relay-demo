@@ -14,7 +14,7 @@ $env:ELECTRON_CACHE = Join-Path $RelayLocal 'cache/electron'
 $env:ELECTRON_BUILDER_CACHE = Join-Path $RelayLocal 'cache/electron-builder'
 $env:PLAYWRIGHT_BROWSERS_PATH = Join-Path $RelayLocal 'cache/playwright'
 $env:CLOUDSDK_CONFIG = Join-Path $RelayLocal 'gcloud'
-$env:CLOUDSDK_PYTHON = 'C:\Users\nural\AppData\Local\Programs\Python\Python313\python.exe'
+$env:CLOUDSDK_PYTHON = (Get-Command python -ErrorAction Stop).Source
 $env:PYTHONPYCACHEPREFIX = Join-Path $RelayLocal 'cache/pycache'
 $env:RELAY_DATA_DIR = Join-Path $RelayLocal 'data'
 $env:RELAY_DESKTOP_DATA = Join-Path $RelayLocal 'desktop'
@@ -31,7 +31,11 @@ if (Test-Path (Join-Path $RelayRoot '.env')) {
 if (!$env:RELAY_CONTEXT_SECRET -and $env:RELAY_MODE -ne 'cloud') {
     $RelaySecretFile = Join-Path $RelayLocal 'context-secret'
     if (!(Test-Path $RelaySecretFile)) {
-        [Convert]::ToHexString([Security.Cryptography.RandomNumberGenerator]::GetBytes(32)) | Set-Content -LiteralPath $RelaySecretFile -NoNewline
+        $RelaySecretBytes = New-Object byte[] 32
+        $RelayRandom = [Security.Cryptography.RandomNumberGenerator]::Create()
+        $RelayRandom.GetBytes($RelaySecretBytes)
+        $RelayRandom.Dispose()
+        [BitConverter]::ToString($RelaySecretBytes).Replace('-','') | Set-Content -LiteralPath $RelaySecretFile -NoNewline
     }
     $env:RELAY_CONTEXT_SECRET = Get-Content -LiteralPath $RelaySecretFile -Raw
 }

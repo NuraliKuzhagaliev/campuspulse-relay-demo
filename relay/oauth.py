@@ -74,12 +74,16 @@ def install(store,new_session,identity):
         flow=Flow.from_client_config(config,scopes=SCOPES,state=state,code_verifier=verifier)
         flow.redirect_uri=os.environ['RELAY_GATEWAY_URL']+'/auth/callback'
         url,_=flow.authorization_url(access_type='offline',include_granted_scopes='true',prompt='consent')
-        return RedirectResponse(url)
+        response=RedirectResponse(url)
+        response.set_cookie('relay_oauth_state',state,httponly=True,secure=True,samesite='lax',max_age=300)
+        return response
 
     @router.get('/auth/callback')
     def callback(request:Request,code:str|None=None,state:str|None=None,error:str|None=None):
         if error or not code or not state:
             raise RelayError('AUTH_REQUIRED','Google consent was cancelled or did not return a valid authorization code.')
+        if not secrets.compare_digest(request.cookies.get('relay_oauth_state',''),state):
+            raise RelayError('ACCESS_DENIED','OAuth callback is not bound to the browser that initiated it.')
         record=store.get('_server','oauth_states',digest(state))
         if record['expires']<time.time() or not store.claim('_server','oauth_states',digest(state),{'status':'pending'},{'status':'consumed'}):
             raise RelayError('AUTH_REQUIRED','OAuth state expired or was already used.')
@@ -113,6 +117,7 @@ def install(store,new_session,identity):
         else:
             result=RedirectResponse('/',status_code=303)
         result.raw_headers.extend(h for h in response.raw_headers if h[0].lower()==b'set-cookie')
+        result.delete_cookie('relay_oauth_state',secure=True,samesite='lax')
         result.headers['Referrer-Policy']='no-referrer';result.headers['Cache-Control']='no-store'
         return result
 

@@ -1,0 +1,29 @@
+{
+  "checked_at": "2026-10-18T20:27:03.998Z",
+  "executable": "D:\\projects\\CampusPulseRELAY\\installed\\CampusPulse RELAY\\CampusPulse RELAY.exe",
+  "installed_build": true,
+  "checks": {
+    "security": {
+      "nodeIntegration": false,
+      "contextIsolation": true,
+      "sandbox": true
+    },
+    "paths": {
+      "userData": "D:\\projects\\CampusPulseRELAY\\.local\\desktop-smoke",
+      "sessionData": "D:\\projects\\CampusPulseRELAY\\.local\\desktop-smoke\\session"
+    },
+    "nativeImport": "actual selected file read via restricted bridge; native picker stubbed",
+    "notificationDispatch": true,
+    "reopenPersistence": true,
+    "cachedOfflineView": true,
+    "offlineWritesDisabled": true,
+    "reconnectRevalidated": true
+  },
+  "limitations": [
+    "Google external-browser OAuth consent is not configured; the pairing route is implemented but not live-verified.",
+    "The native file picker is deterministically stubbed in this automated smoke; actual file IO/import is exercised.",
+    "Native notification dispatch is exercised; OS toast visibility is not asserted."
+  ],
+  "version": "0.1.0",
+  "passed": true
+}

@@ -16,7 +16,9 @@ mcp=FastMCP('CampusPulse RELAY',stateless_http=True,json_response=True,streamabl
 
 
 def svc():
-    return RelayService(store,tenant_context())
+    service=RelayService(store,tenant_context())
+    service.settings()  # Enforce workspace expiry for every tool, including source-only reads.
+    return service
 
 
 def result(fn,*args,**kwargs):
@@ -65,7 +67,11 @@ def get_calendar_window() -> dict:
 def read_assignment_repo_file(path:str='coursework.md') -> dict:
     """Read a bounded text file from the approved repository at an immutable commit. No arbitrary URL or code execution."""
     s=svc().settings()
-    return result(GitHub(s['github_repo'],s.get('github_ref','main'),os.getenv('RELAY_GITHUB_TOKEN')).read,path)
+    value=result(GitHub(s['github_repo'],s.get('github_ref','main'),os.getenv('RELAY_GITHUB_TOKEN')).read,path)
+    if 'text' in value:
+        value['truncated']=len(value['text'])>20000
+        value['text']=value['text'][:20000]
+    return value
 
 
 @mcp.tool()

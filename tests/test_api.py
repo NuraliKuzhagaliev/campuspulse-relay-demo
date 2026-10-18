@@ -49,3 +49,9 @@ def test_event_reconnect_order(client):
 
 def test_upload_path_rejected(client):
     assert client.post('/api/import',files={'file':('../escape.md',b'Assignment: Lab')}).status_code==403
+
+
+def test_oauth_callback_cannot_switch_an_unbound_browser_session(client):
+    r=client.get('/auth/callback',params={'code':'not-an-authorization-code','state':'attacker-state'})
+    assert r.status_code==403
+    assert 'browser' in r.json()['error']['message']

@@ -25,7 +25,7 @@ def main():
         'extra_packages':['relay'],
         'staging_bucket':os.environ['RELAY_STAGING_BUCKET'],
         'service_account':os.environ['RELAY_RUNTIME_SERVICE_ACCOUNT'],
-        'env_vars':{key:os.environ[key] for key in ['GOOGLE_CLOUD_PROJECT','GOOGLE_CLOUD_LOCATION','GEMINI_MODEL','RELAY_MCP_URL','RELAY_CONTEXT_SECRET']}|{'RELAY_MODE':'cloud'},
+        'env_vars':{key:os.environ[key] for key in ['GOOGLE_CLOUD_PROJECT','GOOGLE_CLOUD_LOCATION','GEMINI_MODEL','RELAY_MCP_URL']}|{'RELAY_MODE':'cloud','RELAY_CONTEXT_SECRET':vertexai.types.SecretRef(secret='relay-context',version='latest')},
         'min_instances':0,'max_instances':2,
     })
     from relay.domain import now

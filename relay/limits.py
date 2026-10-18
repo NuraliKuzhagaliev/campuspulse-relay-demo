@@ -16,7 +16,11 @@ def consume(store,scope,kind,window,limit):
     raise RelayError('UPSTREAM_RATE_LIMITED','Concurrent request limit reached. Retry shortly.')
 
 
-def model_request(store,tenant):
+def model_request(store,tenant,judge=False):
     consume(store,tenant,'minute',60,int(os.getenv('RELAY_REQUESTS_PER_MINUTE','8')))
     consume(store,tenant,'day',86400,int(os.getenv('RELAY_REQUESTS_PER_USER_DAY','100')))
-    consume(store,'_server','model-day',86400,int(os.getenv('RELAY_REQUESTS_TOTAL_DAY','300')))
+    total=int(os.getenv('RELAY_REQUESTS_TOTAL_DAY','300'))
+    reserve=max(0,min(total,int(os.getenv('RELAY_JUDGE_RESERVED_REQUESTS','100'))))
+    if not judge:
+        consume(store,'_server','personal-model-day',86400,max(0,total-reserve))
+    consume(store,'_server','model-day',86400,total)

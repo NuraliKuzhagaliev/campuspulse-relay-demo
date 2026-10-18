@@ -1,6 +1,7 @@
 import base64
 import os
 import re
+import time as monotime
 from datetime import datetime, time
 from urllib.parse import quote
 from zoneinfo import ZoneInfo
@@ -14,6 +15,7 @@ def upstream_error(status):
 
 
 class GitHub:
+    _public_backoff_until=0
     def __init__(self, repo, ref='main', token=None):
         if not re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+',repo or ''):
             raise RelayError('ACCESS_DENIED','Select an owner/repository before connecting GitHub.')
@@ -22,6 +24,8 @@ class GitHub:
         self.repo,self.ref,self.token = repo,ref,token
 
     def get(self,path):
+        if not self.token and monotime.time()<GitHub._public_backoff_until:
+            raise RelayError('UPSTREAM_RATE_LIMITED','GitHub public API quota is exhausted. Wait for reset or configure the dedicated repository read credential.',{'retry_at_epoch':GitHub._public_backoff_until})
         headers={'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'}
         if self.token:
             headers['Authorization']=f'Bearer {self.token}'
@@ -29,6 +33,15 @@ class GitHub:
             with httpx.Client(timeout=15,follow_redirects=False) as client:
                 with client.stream('GET',f'https://api.github.com/repos/{self.repo}/{path}',headers=headers) as r:
                     if r.status_code!=200:
+                        if r.status_code==429 or (r.status_code==403 and r.headers.get('x-ratelimit-remaining')=='0'):
+                            try:
+                                reset=float(r.headers.get('x-ratelimit-reset','0'))+60
+                            except ValueError:
+                                reset=monotime.time()+900
+                            reset=max(reset,monotime.time()+60)
+                            if not self.token:
+                                GitHub._public_backoff_until=reset
+                            raise RelayError('UPSTREAM_RATE_LIMITED','GitHub API quota reached. The last observation is retained; no fresh read is claimed.',{'retry_at_epoch':reset})
                         raise upstream_error(r.status_code)
                     body=b''
                     for chunk in r.iter_bytes():

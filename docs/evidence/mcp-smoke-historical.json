@@ -1,0 +1,58 @@
+{
+  "checked_at": "2026-10-18T19:25:45.117147+00:00",
+  "transport": "Streamable HTTP",
+  "server": "http://127.0.0.1:8001/mcp/",
+  "calls": [
+    {
+      "tool": "list_course_sources",
+      "is_error": false,
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"sources\": [\n    {\n      \"id\": \"ml-brief\",\n      \"title\": \"Machine Learning · report brief\",\n      \"version\": \"2f1365369bcaca0fc2410e36\",\n      \"fetched_at\": \"2026-10-18T19:25:45.105905+00:00\",\n      \"mode\": \"illustrative\",\n      \"remote\": null\n    },\n    {\n      \"id\": \"security-pdf\",\n      \"title\": \"Network Security · original brief\",\n      \"version\": \"544f72bad287362e37f2be3c\",\n      \"fetched_at\": \"2026-10-18T19:25:45.096462+00:00\",\n      \"mode\": \"illustrative\",\n      \"remote\": null\n    },\n    {\n      \"id\": \"security-repo\",\n      \"title\": \"Network Security · revised repo\",\n      \"version\": \"3d59531452b6fcba20721a8d\",\n      \"fetched_at\": \"2026-10-18T19:25:45.102706+00:00\",\n      \"mode\": \"illustrative\",\n      \"remote\": null\n    },\n    {\n      \"id\": \"web-brief\",\n      \"title\": \"Web Engineering · project brief\",\n      \"version\": \"74cb3670dd78e6fa05f7d1eb\",\n      \"fetched_at\": \"2026-10-18T19:25:45.109135+00:00\",\n      \"mode\": \"illustrative\",\n      \"remote\": null\n    }\n  ]\n}",
+          "annotations": null,
+          "meta": null
+        }
+      ]
+    },
+    {
+      "tool": "get_assignment_repo_status",
+      "is_error": false,
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"mode\": \"live\",\n  \"repository\": \"NuraliKuzhagaliev/campuspulse-relay-demo\",\n  \"url\": \"https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo\",\n  \"ref\": \"main\",\n  \"commit\": \"71085a92120a841ae53a666367cc917450a7285e\",\n  \"updated_at\": \"2026-10-18T19:18:16Z\",\n  \"issues\": [],\n  \"fetched_at\": \"2026-10-18T19:25:47.907370+00:00\"\n}",
+          "annotations": null,
+          "meta": null
+        }
+      ]
+    },
+    {
+      "tool": "read_course_source",
+      "is_error": false,
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"source_id\": \"security-pdf\",\n  \"page\": 1,\n  \"text\": \"Assignment: Network Security lab\\nCourse: Network Security\\nDue: 2026-10-22T18:00:00+05:00\\nEffort: 240 minutes\\nRubric:\\n- [ ] Explain the threat model\\n- [ ] Capture test evidence\\n- [ ] Document mitigations\",\n  \"truncated\": false,\n  \"version\": \"544f72bad287362e37f2be3c\",\n  \"fetched_at\": \"2026-10-18T19:25:45.096462+00:00\",\n  \"mode\": \"illustrative\",\n  \"remote\": null\n}",
+          "annotations": null,
+          "meta": null
+        }
+      ]
+    }
+  ],
+  "cloud_agent": false,
+  "protocol_version": "2025-11-25",
+  "tools": [
+    "list_course_sources",
+    "read_course_source",
+    "get_assignment_repo_status",
+    "get_calendar_window",
+    "get_workspace_plan_inputs",
+    "preview_study_blocks",
+    "apply_approved_study_blocks",
+    "verify_study_blocks",
+    "undo_owned_study_blocks",
+    "build_next_action_packet",
+    "save_validated_plan"
+  ]
+}

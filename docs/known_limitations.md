@@ -1,0 +1,16 @@
+# Known limitations — release candidate
+
+- Required live Agent Engine/Gemini/public web gate is not met. Cloud resource identity, remote API, actual model/tool loop and cloud MCP token renewal/restart remain unverified.
+- The dedicated Calendar exists, but the application has no live Calendar consent/shared identity yet. All current apply/read-back receipts use a clearly labeled illustrative local adapter. No personal-calendar events were changed.
+- OAuth external-browser pairing, encrypted credential storage, verified calendar selection, Firestore and authenticated Scheduler are implemented but require live integration testing. Judge isolation is implemented with one-use invitations, exclusive calendar leases, expiry and reserved request capacity; hosted Calendar access is unverified. A separate explicitly approved empty calendar is required per visitor, and is never automatically reassigned.
+- Text extraction is conservative, designed for explicit assignment sections, ISO timestamps with offsets, effort fields and checklist rubrics. General natural-language extraction is not implemented as a standalone local NLP model. Unknown/ambiguous dates remain null. Scanned OCR is not configured. No learning or grade prediction is made.
+- Local change radar has a real controlled repository edit proof. Hosted autonomy and real Calendar incremental sync are unverified; 410/pagination behavior is covered with deterministic connector tests.
+- Undo preserves edited/unrelated events. It removes unchanged events created by the selected receipt; deleted prior blocks require a fresh preview to restore, because old approvals cannot safely recreate them.
+- UI language support currently covers navigation/headlines and language selection for core prompts. Many operational labels remain English. EN/RU/KK model responses and citation-preserving translations have not been live-evaluated.
+- The Windows release is unsigned. Installation and smoke status are recorded in the manifest/evidence; do not claim code signing or recommend bypassing SmartScreen. Default gateway is localhost until a verified cloud URL exists. A running local gateway is required for connected local operations.
+- Automated desktop import uses an instrumented native picker but real selected-file IO. Native notification dispatch is tested separately from OS toast visibility. Human Google authentication is not automated.
+- Automated AA checks cover three primary states and explicit viewport/keyboard checks, not a complete accessibility certification. No assertion of defect-free behavior is made.
+- The presentation PDF uses rendered slide pages because the bundled native PDF exporter lacks standard-font data. Its PPTX retains editable native text and shapes.
+- No interviews, grade/stress improvements, calibrated success probabilities, p95 from one observation, award guarantee or world-first claim is supported.
+
+- Unauthenticated GitHub API quota was reached during final verification. Typed rate-limit errors/backoff preserve prior observations. Public polling now defaults to 300 seconds; authenticated polling may use 60 seconds. The measured 19.62-second historical proof used a 60-second controlled test.

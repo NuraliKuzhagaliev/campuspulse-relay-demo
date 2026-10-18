@@ -1,0 +1,11 @@
+{
+  "path": "D:\\projects\\CampusPulseRELAY\\release\\recordings\\CampusPulse-RELAY-recorded-local-demo.webm",
+  "recorded": true,
+  "mode": "local illustrative Calendar; attempted live GitHub fetch, quota-limited",
+  "cloud_proof": false,
+  "script": "scripts/record_demo.mjs",
+  "duration_target_seconds": 134,
+  "duration_seconds": 125.48,
+  "duration_measurement": "ffmpeg demuxed WebM duration",
+  "duration_is_target_only": false
+}

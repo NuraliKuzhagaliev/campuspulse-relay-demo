@@ -15,3 +15,5 @@ inputs/*.txt
 inputs/*.pdf
 test-results/
 playwright-report/
+*.tsbuildinfo
+installed/

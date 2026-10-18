@@ -1,8 +1,11 @@
-# External blockers
+# Remaining external gates
 
-- GCP project ID, existing billing/credit authorization and spending envelope are not supplied.
-- No Google Cloud ADC credentials. Run scripts/connect-gcp.ps1 once tooling is installed; login happens in the system browser. Credentials remain under .local/gcloud on D:.
-- No dedicated Calendar or owned allowlisted GitHub demo repository has been selected. Calendar needs explicit OAuth consent or a dedicated calendar shared with the runtime service identity.
-- No deployed reasoningEngines resource. Remote API, real model/tool loop, cloud MCP identity renewal and scheduled external-change proof remain unverified until access is available.
+1. **Google Cloud login / project:** the D: CLI has no active account or ADC. Run `scripts/inspect-access.ps1 -Login` and complete Google sign-in yourself. Browser inspection found Default Gemini Project (`gen-lang-client-0595303951`) and `algebraic-scholar-bjq9c`, with no dedicated CampusPulse project. Exact creation steps are in `docs/cloud_setup.md`.
+2. **Organizer credits / no personal spend:** the user declined USD 25 personal spending. Wait for tomorrow's expected activation instructions before final project/billing selection or billable provisioning. Verify eligibility for the exact project, balance and expiration. Do not assume an existing project is covered. Any uncovered cost needs separate approval. The existing account showed a prepayment requirement; no payment or billing attachment was made.
+3. **Live agent/web:** no real reasoningEngines resource/revision, remote API or public web URL has been verified. No successful Gemini call is claimed. Deployment code exists but must be executed, repaired if needed, and remotely tested after access.
+4. **Google OAuth / Calendar:** the dedicated CampusPulse RELAY Demo Calendar was created and verified, but app consent/shared runtime access is absent. The actual returned ID is in `docs/connections.json`. Configure the web OAuth client/external-browser pairing, select the authorized calendar, and test real approved writes/read-back/revocation. No personal Calendar events were changed.
+5. **Judge live access:** one-use invitation/exclusive calendar leasing, expiry, fixed targets, isolated uploads and reserved request capacity are implemented and tested locally. Live judge access still needs one explicitly approved empty calendar per visitor and verified runtime access. Calendars are never automatically reused. No shared account password is required. Hosted behavior remains unverified.
 
-No secret should be pasted in chat. Do not link a new billing account or incur cloud costs before an authorized project and budget are known.
+The dedicated GitHub repository was created and actual public reads/controlled edits verified. Local implementation, tests, MCP, desktop and presentation work continue independently. Actual outputs are in release/manifest.json and docs/evidence. No credentials belong in chat, Git, recordings or release bundles.
+
+GitHub public API quota was reached during final checks. Historical successful reads/change proof remain recorded; current calls must respect reset/backoff or use a repository-scoped read credential in RELAY_GITHUB_TOKEN.

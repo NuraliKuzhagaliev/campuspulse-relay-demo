@@ -34,11 +34,12 @@ async def lifespan(app):
                 continue # Authenticated Cloud Scheduler invokes /internal/sync for durable cloud execution.
             for workspace in store.list('_server','workspaces'):
                 svc=RelayService(store,workspace['id'])
-                if svc.settings().get('watch_enabled'):
-                    try:
-                        await asyncio.to_thread(svc.sync_repo)
+                try:
+                    if svc.settings().get('watch_enabled'):
+                        await asyncio.to_thread(svc.sync_repo,False)
                         await asyncio.to_thread(svc.sync_calendar)
-                    except RelayError as exc:
+                except RelayError as exc:
+                    if exc.code!='AUTH_REQUIRED':
                         store.event(workspace['id'],'radar-error','run_failed',summary=exc.message,code=exc.code)
     task=asyncio.create_task(poll())
     yield
@@ -63,7 +64,7 @@ async def validation_error(request,exc):
 async def protect(request,call_next):
     if request.headers.get('content-length','0').isdigit() and int(request.headers.get('content-length','0'))>11*1024*1024:
         return JSONResponse({'error':{'code':'UNSUPPORTED_INPUT','message':'Upload limit is 10 MiB.'}},status_code=413)
-    if request.method not in ('GET','HEAD','OPTIONS') and request.url.path.startswith('/api/') and request.url.path!='/api/auth/google':
+    if request.method not in ('GET','HEAD','OPTIONS') and request.url.path.startswith('/api/'):
         origin=request.headers.get('origin')
         allowed={str(request.base_url).rstrip('/'),os.getenv('RELAY_GATEWAY_URL',''),'http://127.0.0.1:5173','http://localhost:5173'}
         if origin and origin not in allowed:
@@ -95,12 +96,13 @@ def service(record=Depends(identity)):
     return RelayService(store,record['tenant'])
 
 
-def new_session(tenant):
+def new_session(tenant,expires=None):
     token,csrf=secrets.token_urlsafe(32),secrets.token_urlsafe(24)
-    store.put('_server','sessions',digest(token),dict(tenant=tenant,csrf=csrf,expires=time.time()+86400))
+    lifetime=max(1,int(min(expires or time.time()+86400,time.time()+86400)-time.time()))
+    store.put('_server','sessions',digest(token),dict(tenant=tenant,csrf=csrf,expires=time.time()+lifetime))
     store.put('_server','workspaces',tenant,{'id':tenant},create=True)
     response=JSONResponse(dict(csrf=csrf,tenant=tenant,mode='cloud' if CLOUD else 'local',authenticated=CLOUD))
-    response.set_cookie('relay_session',token,httponly=True,secure=CLOUD,samesite='strict',max_age=86400)
+    response.set_cookie('relay_session',token,httponly=True,secure=CLOUD,samesite='strict',max_age=lifetime)
     return response
 
 
@@ -113,8 +115,22 @@ def session(request:Request):
         except RelayError:
             pass
     if CLOUD:
-        raise RelayError('AUTH_REQUIRED','Sign in through Google in the system browser. Judge access is not configured yet.')
+        raise RelayError('AUTH_REQUIRED','Sign in through Google in the system browser, or use an owner-issued one-use judge invitation.')
     return new_session('local-'+secrets.token_hex(16))
+
+
+class JudgeInvitation(BaseModel):
+    invitation:str=Field(min_length=40,max_length=100)
+
+
+@app.post('/api/judge/claim')
+def judge_claim(body:JudgeInvitation,request:Request):
+    from .judge import claim
+    from .limits import consume
+    # Global bounded attempts plus cryptographic invitations; no URL tokens or public account passwords.
+    consume(store,'_server','judge-claim',60,60)
+    tenant,expires=claim(store,body.invitation)
+    return new_session(tenant,expires)
 
 
 class GoogleToken(BaseModel):
@@ -314,6 +330,8 @@ class CalendarSelection(BaseModel):
 
 @app.post('/api/connections/calendar')
 def select_calendar(body:CalendarSelection,svc=Depends(service)):
+    if svc.settings().get('mode')=='judge':
+        raise RelayError('ACCESS_DENIED','Judge sessions remain bound to their exclusive owner-approved demo calendar.')
     from .oauth import calendar_list
     calendars=calendar_list(store,svc.tenant)
     chosen=next((c for c in calendars if c['id']==body.calendar_id),None)
@@ -335,7 +353,7 @@ async def chat(body:Chat,svc=Depends(service)):
     if not resource:
         raise RelayError('AUTH_REQUIRED','The real Gemini Agent Engine is not connected. Local planning and evidence tools remain available.')
     from .limits import model_request
-    model_request(store,svc.tenant)
+    model_request(store,svc.tenant,judge=svc.settings().get('mode')=='judge')
     import vertexai
     client=vertexai.Client(project=os.environ['GOOGLE_CLOUD_PROJECT'],location=os.environ['GOOGLE_CLOUD_LOCATION'])
     remote=client.agent_engines.get(name=resource)
@@ -366,11 +384,12 @@ async def scheduled_sync(request:Request):
     results=[]
     for workspace in store.list('_server','workspaces'):
         svc=RelayService(store,workspace['id'])
-        if svc.settings().get('watch_enabled'):
-            try:
-                results.append(await asyncio.to_thread(svc.sync_repo))
+        try:
+            if svc.settings().get('watch_enabled'):
+                results.append(await asyncio.to_thread(svc.sync_repo,False))
                 results.append(await asyncio.to_thread(svc.sync_calendar))
-            except RelayError as exc:
+        except RelayError as exc:
+            if exc.code!='AUTH_REQUIRED':
                 results.append(exc.as_dict())
     return dict(results=results)
 
