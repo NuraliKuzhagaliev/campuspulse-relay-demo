@@ -122,6 +122,19 @@ def build_next_action_packet(task_id:str) -> dict:
 
 
 @mcp.tool()
+def propose_academic_extraction(source_id:str,candidates:list[dict]) -> dict:
+    """Propose cited fields from selected prose/tables (EN/RU/Kazakh). Each item needs field,value,page,exact quote,original_expression,context,assumptions; dates need timezone,year_explicit,ambiguity. Never applies inferred facts or confirms identity. UI confirmation remains mandatory."""
+    from .extraction import extraction_proposal
+    s=svc()
+    def propose():
+        source=store.get(s.tenant,'sources',source_id)
+        proposal=extraction_proposal(source,candidates)
+        store.put(s.tenant,'extraction_proposals',proposal['id'],proposal)
+        return proposal
+    return result(propose)
+
+
+@mcp.tool()
 def save_validated_plan(payload:dict) -> dict:
     """Build and persist the current workspace plan from server facts. Model-provided identities and input overrides are not accepted."""
     return result(svc().plan)

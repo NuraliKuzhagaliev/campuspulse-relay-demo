@@ -27,4 +27,20 @@ Statuses distinguish local implementation from actual cloud/external acceptance.
 
 Do not turn a blocked live row green because a local fixture, recording, deployment script or Cloud Console screenshot exists. Update this ledger only from actual results.
 
+## 0.2.0 continuation gates
+
+| Gate | Implemented | Locally verified | Live verified / blocked |
+|---|---|---|---|
+| A stable identity / migration | identity.py; source/term/key mappings; backups, alias review, plan invalidation, immutable history | Cross-course/semester, rename, missing context, explicit source reconciliation and preserved collision receipt/override regression | Real unseen cloud judge mapping pending |
+| B interval union | scheduler independent interval coverage, busy/deadline/pin checks retained | Actual build_recovery_plan adjacency/overlap/gap/DST regressions pass | Actual model-selected solver path pending |
+| Conversation / truthful outcomes | Durable bounded tenant history, new conversation, atomic lease/idempotency, partial/empty/unknown handling | Deterministic actual-gateway contracts pass; restart/expiry/foreign-tenant denial | Real multi-turn Gemini and required-tool failure pending |
+| Freshness / availability | Generated, fetched, last-success and failed-attempt fields; bounded resource/revision success evidence | Cached/failed snapshot freshness and signed-context lifetime contracts pass | Real managed availability, cold-start and machine-token renewal pending |
+| D1 Minimal Rescue | Offered additions, deadline/total bottlenecks, exhaustive bounded search, ranked remedy, fresh choice/revalidation | 120-minute total / 60-minute lab shortage, Friday-only rejection, no allowed relaxation, UI choice and fresh preview | Real Calendar action pending |
+| D2 Submission Preflight | Student-selected text draft, original requirements, observable filename/format/sections/word/PDF-page checks, review/unknown, declared exceptions, extra-effort recovery scenario | Compliant/wrong-name/missing-section, semantic unknown, declared exception; web and packaged IPC | No external submission offered; Gemini semantic review not claimed |
+| D3 Judge Challenge | Obvious EN/RU/Kazakh visitor route; own document/mapping, recovery, evidence and scoped reset | Fresh unseen brief and preflight, language/viewport/AA checks, independent tenant and public reset contracts | Isolated authenticated mandatory GCP judge batch blocked |
+| Prose extraction preparation | Gemini MCP proposal contract with exact page/quote/version, date expression, assumptions, context and ambiguity | EN/RU/Kazakh proposal/quote-rejection contracts; no automatic confirmation | Real model extraction + confirmation UX acceptance blocked; OCR unsupported |
+| Native parity | Exact method-specific IPC inventory, both import paths, workshop/approval/export/conversation | Installed 0.2.0 package comparison and contract results in versioned evidence | New real native dialog interaction/OS banner not re-observed; 0.1.1 human proof retained; click/focus unverified |
+
+See docs/defect_ledger.md, docs/evaluation_results.md, docs/contract_inventory.md and docs/live_acceptance_batch.md. F1–F5 remain **locally implemented**, with real Calendar and Gemini acceptance pending. This continuation does not provision paid GCP resources.
+
 Public illustrative acceptance: https://campuspulse-relay-demo.onrender.com . Frontend and Python backend at `dcb74dc63edac520e6a0362aedf52c5f1ca20e94` passed the requested upload/evidence/conflict, plan/what-if, simulated approval/receipt, execution, real hosted GitHub read, three languages, mobile/refresh, CSRF, visitor isolation and reset checks. Real judge Calendar/Gemini acceptance remains separate and pending. See `docs/evidence/public-deployment.json` and `public-demo-browser.json`.

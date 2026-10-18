@@ -8,11 +8,11 @@ import AxeBuilder from "@axe-core/playwright";
 const url=process.argv[2];
 assert(url && (url.startsWith("https://") || url==="http://127.0.0.1:8010"));
 const local=url.startsWith("http://127.");
-const proof={checked_at:new Date().toISOString(),url,version:"0.1.1",fresh_browser_context:true,checks:{},limitations:["Illustrative Calendar adapter only. Gemini/Agent Engine, real Calendar and mandatory GCP acceptance remain pending.","Temporary storage: two-hour sessions, with earlier resets possible on inactivity/restarts/redeploys.","GitHub public observations may be reused for five minutes while retaining their original commit/fetch time."]};
+const proof={checked_at:new Date().toISOString(),url,version:"0.2.0",fresh_browser_context:true,checks:{},limitations:["Illustrative Calendar adapter only. Gemini/Agent Engine, real Calendar and mandatory GCP acceptance remain pending.","Temporary storage: two-hour sessions, with earlier resets possible on inactivity/restarts/redeploys.","GitHub public observations may be reused for five minutes while retaining their original commit/fetch time."]};
 const folder=path.join(process.cwd(),".local/public-verification",Date.now().toString(36));
 await fs.mkdir(folder,{recursive:true});
-const output=local?".local/logs/public-demo-browser-local.json":"docs/evidence/public-demo-browser.json";
-const screenshots=local?folder:"docs/screenshots/public";
+const output=local?".local/logs/public-demo-browser-local.json":"docs/evidence/public-demo-browser-0.2.0.json";
+const screenshots=local?folder:"docs/screenshots/public-0.2.0";
 await fs.mkdir(screenshots,{recursive:true});
 const browser=await chromium.launch({headless:true});
 try{
@@ -46,6 +46,15 @@ try{
   state=await (await page.request.get("/api/state")).json();
   const imported=state.sources.find(s=>s.filename===name);assert(imported);
   proof.checks.new_upload_exact_evidence=true;
+  // Explicitly reconcile this selected upload; a matching title alone cannot merge coursework.
+  await page.getByRole("button",{name:"Confirm assignment mapping",exact:true}).click();
+  await page.locator(".mapping-panel").getByRole("combobox",{name:"Assignment",exact:true}).selectOption(imported.drafts[0].id);
+  await page.locator(".mapping-panel").getByRole("combobox",{name:"Existing assignment",exact:true}).selectOption(state.tasks.find(t=>t.title==="Network Security lab"&&t.identity.status==="confirmed").id);
+  await page.getByRole("button",{name:"Confirm mapping",exact:true}).click();
+  await expect(page.locator(".mapping-panel")).toHaveCount(0);
+  await page.getByRole("button",{name:"Evidence",exact:true}).click();
+  proof.checks.explicit_assignment_mapping=true;
+
   await page.locator(".fact-grid>div").filter({hasText:due.toISOString().slice(0,10)}).getByRole("button",{name:"Use this deadline"}).first().click();
   await expect(page.getByText("Choice recorded",{exact:true})).toBeVisible();
   proof.checks.conflict_resolved=true;

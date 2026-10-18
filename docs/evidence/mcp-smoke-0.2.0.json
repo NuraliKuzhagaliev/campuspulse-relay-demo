@@ -1,0 +1,78 @@
+{
+  "checked_at": "2026-10-18T22:36:30.688852+00:00",
+  "transport": "Streamable HTTP",
+  "server": "http://127.0.0.1:8001/mcp/",
+  "calls": [
+    {
+      "tool": "list_course_sources",
+      "is_error": false,
+      "elapsed_ms": 28,
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"sources\": [\n    {\n      \"id\": \"ml-brief\",\n      \"title\": \"Machine Learning · report brief\",\n      \"version\": \"2f1365369bcaca0fc2410e36\",\n      \"fetched_at\": \"2026-10-18T19:25:45.105905+00:00\",\n      \"mode\": \"illustrative\",\n      \"remote\": null\n    },\n    {\n      \"id\": \"security-pdf\",\n      \"title\": \"Network Security · original brief\",\n      \"version\": \"544f72bad287362e37f2be3c\",\n      \"fetched_at\": \"2026-10-18T19:25:45.096462+00:00\",\n      \"mode\": \"illustrative\",\n      \"remote\": null\n    },\n    {\n      \"id\": \"security-repo\",\n      \"title\": \"Network Security · revised repo\",\n      \"version\": \"3d59531452b6fcba20721a8d\",\n      \"fetched_at\": \"2026-10-18T19:25:45.102706+00:00\",\n      \"mode\": \"illustrative\",\n      \"remote\": null\n    },\n    {\n      \"id\": \"web-brief\",\n      \"title\": \"Web Engineering · project brief\",\n      \"version\": \"74cb3670dd78e6fa05f7d1eb\",\n      \"fetched_at\": \"2026-10-18T19:25:45.109135+00:00\",\n      \"mode\": \"illustrative\",\n      \"remote\": null\n    }\n  ]\n}",
+          "annotations": null,
+          "meta": null
+        }
+      ]
+    },
+    {
+      "tool": "get_assignment_repo_status",
+      "is_error": false,
+      "elapsed_ms": 1551,
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"mode\": \"live\",\n  \"repository\": \"NuraliKuzhagaliev/campuspulse-relay-demo\",\n  \"url\": \"https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo\",\n  \"ref\": \"main\",\n  \"commit\": \"d12c27699332f1bb6f2e35e3ef27c379581192f7\",\n  \"updated_at\": \"2026-10-18T22:00:07Z\",\n  \"issues\": [],\n  \"fetched_at\": \"2026-10-18T22:36:32.532606+00:00\"\n}",
+          "annotations": null,
+          "meta": null
+        }
+      ]
+    },
+    {
+      "tool": "read_assignment_repo_file",
+      "is_error": false,
+      "elapsed_ms": 1267,
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"text\": \"# CampusPulse RELAY illustrative coursework\\n\\nThis dedicated repository contains demonstration material, not a real university course. Live GitHub API reads are real. Dates use Asia/Almaty (UTC+05:00).\\n\\n## Assignment: Network Security lab\\nCourse: Network Security\\nDue: 2026-10-21T16:30:00+05:00\\nEffort: 240 minutes\\nRubric:\\n- [ ] Explain the threat model\\n- [ ] Capture test evidence\\n- [ ] Document mitigations\\n\\n## Assignment: ML report\\nCourse: Machine Learning\\nDue: 2026-10-23T18:00:00+05:00\\nEffort: 180 minutes\\nRubric:\\n- [ ] State the experiment\\n- [ ] Compare baseline metrics\\n- [ ] Discuss limitations\\n\\n## Assignment: Web project\\nCourse: Web Engineering\\nDue: 2026-10-23T20:00:00+05:00\\nEffort: 120 minutes\\nRubric:\\n- [ ] Implement the interface\\n- [ ] Show responsive states\\n- [ ] Include setup instructions\\n\",\n  \"commit\": \"d12c27699332f1bb6f2e35e3ef27c379581192f7\",\n  \"committed_at\": \"2026-10-18T22:00:07Z\",\n  \"blob\": \"f08157273402f59aec8289366aef4b0d7623d66c\",\n  \"url\": \"https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/blob/d12c27699332f1bb6f2e35e3ef27c379581192f7/coursework.md\",\n  \"fetched_at\": \"2026-10-18T22:36:33.799615+00:00\",\n  \"mode\": \"live\",\n  \"truncated\": false\n}",
+          "annotations": null,
+          "meta": null
+        }
+      ]
+    },
+    {
+      "tool": "read_course_source",
+      "is_error": false,
+      "elapsed_ms": 6,
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"source_id\": \"security-pdf\",\n  \"page\": 1,\n  \"text\": \"Assignment: Network Security lab\\nCourse: Network Security\\nDue: 2026-10-22T18:00:00+05:00\\nEffort: 240 minutes\\nRubric:\\n- [ ] Explain the threat model\\n- [ ] Capture test evidence\\n- [ ] Document mitigations\",\n  \"truncated\": false,\n  \"version\": \"544f72bad287362e37f2be3c\",\n  \"fetched_at\": \"2026-10-18T19:25:45.096462+00:00\",\n  \"mode\": \"illustrative\",\n  \"remote\": null\n}",
+          "annotations": null,
+          "meta": null
+        }
+      ]
+    }
+  ],
+  "cloud_agent": false,
+  "protocol_version": "2025-11-25",
+  "tools": [
+    "list_course_sources",
+    "read_course_source",
+    "get_assignment_repo_status",
+    "get_calendar_window",
+    "read_assignment_repo_file",
+    "get_workspace_plan_inputs",
+    "preview_study_blocks",
+    "apply_approved_study_blocks",
+    "verify_study_blocks",
+    "undo_owned_study_blocks",
+    "build_next_action_packet",
+    "propose_academic_extraction",
+    "save_validated_plan"
+  ],
+  "protocol_passed": true,
+  "all_calls_passed": true
+}

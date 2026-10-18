@@ -37,6 +37,14 @@ export type Task = {
   completion: string;
   gaps: string[];
   user_overrides?: Record<string, unknown>;
+  section_key: string;
+  identity: {
+    status: string;
+    course: string;
+    term: string | null;
+    assignment_key: string;
+    origin: string;
+  };
 };
 export type Block = {
   task_id: string;
@@ -127,7 +135,13 @@ export type Snapshot = {
   plan: Plan | null;
   events: RunEvent[];
   receipts: Receipt[];
-  last_sync: string;
+  last_sync: string | null;
+  snapshot_generated_at: string;
+  freshness: {
+    last_successful_sync: string | null;
+    source_fetched_at: string | null;
+    last_failed_attempt: { at: string; code: string } | null;
+  };
   agent: { configured: boolean; resource: string | null; verified: boolean };
   demo?: {
     public: boolean;

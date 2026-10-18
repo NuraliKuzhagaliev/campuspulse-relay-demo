@@ -12,6 +12,14 @@ Each browser session gets an isolated temporary workspace, with Secure/HttpOnly 
 
 Verified local capabilities include conflicts with exact page/ref evidence, constrained recovery and isolated what-if, durable source polling using the real demo repository, immutable approval/journal/read-back using a clearly labeled local Calendar adapter, and cited next-action packets. No fixture is described as a live Calendar or Gemini result.
 
+### 0.2.0 reliability and differentiation
+
+The continuation fixes cross-course assignment collisions and adjacent-window validation, with explicit course/term/assignment mappings and a deliberate legacy migration. Historical sources/plans/receipts remain traceable; ambiguous old overrides require review. Missing identity is a separate draft, never a guessed merge.
+
+**Judge challenge** exposes three scoped additions: **Minimal Rescue** compares student-permitted time additions with deadline-specific bottlenecks; **Submission Preflight** checks a selected draft's observable structure against exact requirement quotes and proposes extra-effort recovery; visitors can inspect their source versions, tools, plan changes and read-back. Semantic correctness, screenshot validity and grades are not inferred.
+
+Managed-agent preparation includes tenant-owned expiring multi-turn history, idempotent turns, typed complete/partial/failed/unknown outcomes, bounded waiting/context renewal and truthful freshness. The Gemini prose-extraction proposal contract is prepared; actual multilingual model behavior and confirmation UX acceptance remain pending credits. See [defect ledger](docs/defect_ledger.md), [evaluation](docs/evaluation_results.md), [contracts](docs/contract_inventory.md) and [12-scenario live batch](docs/live_acceptance_batch.md). Prior 0.1.0, corrected 0.1.1 and public 0.1.1 artifacts are preserved under `release/versions/`.
+
 ## Run on Windows, entirely under D:
 
 Prerequisites: existing Python 3.13, Node.js 22+, npm and Git. Existing runtime executables on C: may be read; project environments and outputs remain on D:. Windows and host applications can make system-managed writes.

@@ -1,6 +1,8 @@
 export type Language = "en" | "ru" | "kk";
+import { workshopTranslations } from './workshop-translations';
 // Operational UI only. Course titles, source quotations, original diagnostics and identifiers stay verbatim.
 export const translations = {
+  ...workshopTranslations,
   "Public illustrative demo": [
     "Публичный учебный пример",
     "Жалпыға ашық оқу үлгісі",

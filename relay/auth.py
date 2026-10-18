@@ -31,6 +31,21 @@ def verify_context(token,audience,secret):
         raise RelayError('ACCESS_DENIED','Invalid, expired or wrong-audience workspace context.') from exc
 
 
+class RunAuthorization:
+    """Renew transport context only within the initially verified signed run lifetime."""
+    def __init__(self,token,audience,secret,seconds=85):
+        self.tenant=verify_context(token,audience,secret)
+        encoded=token.split('.')[0]
+        claims=json.loads(base64.urlsafe_b64decode(encoded+'='*(-len(encoded)%4)))
+        self.until=min(claims['exp'],time.time()+seconds)
+        self.audience,self.secret=audience,secret
+
+    def context(self):
+        remaining=int(self.until-time.time())
+        if remaining<=0:raise RelayError('AUTH_REQUIRED','This run authorization expired; start a new authenticated request.')
+        return sign_context(self.tenant,self.audience,self.secret,seconds=min(120,remaining))
+
+
 def tenant_context():
     tenant=workspace_context.get()
     if not tenant:

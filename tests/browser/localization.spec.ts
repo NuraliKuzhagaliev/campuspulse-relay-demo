@@ -39,6 +39,7 @@ test("operational catalog preserves placeholders and covers rendered static copy
     "CampusPulse",
     "CampusPulse RELAY",
     "0.1",
+    "0.2",
     "SHA256",
     "EN",
     "RU",

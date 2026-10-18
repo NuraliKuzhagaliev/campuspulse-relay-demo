@@ -8,6 +8,23 @@ from .domain import PlanInput, RelayError, instant, digest
 UNIT = timedelta(minutes=30)
 
 
+def required_minutes(task, conservative=False):
+    return task.remaining_minutes if task.remaining_minutes is not None else (task.effort_max if conservative and task.effort_max else task.minutes)
+
+
+def interval_union(windows):
+    """Canonical UTC union, preserving every positive gap (including DST folds)."""
+    out = []
+    for a, z in sorted((instant(w.start), instant(w.end)) for w in windows):
+        if z <= a or z-a > timedelta(days=31):
+            raise RelayError('PARSE_FAILED', 'Study windows must be positive and at most 31 days.')
+        if out and a <= out[-1][1]:
+            out[-1] = (out[-1][0], max(out[-1][1], z))
+        else:
+            out.append((a, z))
+    return out
+
+
 def build_recovery_plan(payload: dict) -> dict:
     """Allocate validated 30-minute study units before hard deadlines. Never writes externally."""
     p = PlanInput.model_validate(payload)
@@ -33,7 +50,7 @@ def build_recovery_plan(payload: dict) -> dict:
         visited.add(tid)
     for tid in tasks:
         walk(tid)
-    missing = [t.id for t in p.tasks if t.minutes is None or t.due is None]
+    missing = [t.id for t in p.tasks if required_minutes(t,p.conservative) is None or (required_minutes(t,p.conservative)>0 and t.due is None)]
     if missing:
         raise RelayError('SOURCE_CONFLICT', 'A confirmed deadline and effort estimate are required before planning.', missing)
     for t in p.tasks:
@@ -44,10 +61,10 @@ def build_recovery_plan(payload: dict) -> dict:
         start, end = instant(w.start), instant(w.end)
         if end <= start or end - start > timedelta(days=31):
             raise RelayError('PARSE_FAILED', 'Study windows must be positive and at most 31 days.')
-        if start.minute % 30 or start.second or end.minute % 30 or end.second:
+        if start.astimezone(zone).minute % 30 or start.second or end.astimezone(zone).minute % 30 or end.second:
             raise RelayError('PARSE_FAILED', 'Study windows must align to 30-minute boundaries.')
         while start + UNIT <= end:
-            if not any(start < instant(b.end) and instant(b.start) < start + UNIT for b in p.busy):
+            if (not p.not_before or start >= instant(p.not_before)) and not any(start < instant(b.end) and instant(b.start) < start + UNIT for b in p.busy):
                 slots.add(start)
             start += UNIT
     if len(slots) > 1500:
@@ -55,10 +72,10 @@ def build_recovery_plan(payload: dict) -> dict:
     slots = sorted(slots)
     model = cp_model.CpModel()
     x = {}
-    required = {t.id: (t.effort_max if p.conservative and t.effort_max else t.minutes) // 30 for t in p.tasks}
+    required = {t.id: required_minutes(t,p.conservative) // 30 for t in p.tasks}
     for tid, task in tasks.items():
         for j, s in enumerate(slots):
-            if s + UNIT <= instant(task.due):
+            if required[tid] and s + UNIT <= instant(task.due):
                 x[tid, j] = model.new_bool_var(f'{tid}_{j}')
         model.add(sum(v for (t, _), v in x.items() if t == tid) <= required[tid])
     for j in range(len(slots)):
@@ -127,7 +144,10 @@ def build_recovery_plan(payload: dict) -> dict:
                                'Only the supplied study windows are available. Hard deadlines remain fixed.'],
                   input=p.model_dump())
     result['id'] = digest(result)[:24]
-    validate_plan(result)
+    try:
+        validate_plan(result)
+    except AssertionError as exc:
+        raise RelayError('PLAN_VALIDATION_FAILED', 'The returned allocation failed independent checks. No plan was accepted; review constraints and retry.') from exc
     return result
 
 
@@ -138,12 +158,15 @@ def validate_plan(plan: dict):
     used = []
     minutes, days = defaultdict(int), defaultdict(int)
     zone = ZoneInfo(p.timezone)
+    available = interval_union(p.windows)
     for b in plan['blocks']:
         a, z = instant(b['start']), instant(b['end'])
         if z <= a or (z-a).total_seconds() % 1800:
             raise AssertionError('Invalid block duration')
-        if not any(instant(w.start) <= a and z <= instant(w.end) for w in p.windows):
+        if not any(wa <= a and z <= wz for wa, wz in available):
             raise AssertionError('Outside availability')
+        if p.not_before and a < instant(p.not_before):
+            raise AssertionError('Elapsed time reused')
         if z > instant(tasks[b['task_id']].due):
             raise AssertionError('Hard deadline violated')
         if any(a < instant(v.end) and instant(v.start) < z for v in p.busy):
@@ -159,14 +182,14 @@ def validate_plan(plan: dict):
     if any(v > p.daily_cap_minutes for v in days.values()):
         raise AssertionError('Daily cap violated')
     for t in p.tasks:
-        required = t.effort_max if p.conservative and t.effort_max else t.minutes
+        required = required_minutes(t,p.conservative)
         if minutes[t.id] > required:
             raise AssertionError('Excess effort')
         for dep in t.dependencies:
             descendants = [instant(b['start']) for b in plan['blocks'] if b['task_id'] == t.id]
             prior = [instant(b['end']) for b in plan['blocks'] if b['task_id'] == dep]
             dep_task = tasks[dep]
-            dep_needed = dep_task.effort_max if p.conservative and dep_task.effort_max else dep_task.minutes
+            dep_needed = required_minutes(dep_task,p.conservative)
             if descendants and (minutes[dep] < dep_needed or max(prior) > min(descendants)):
                 raise AssertionError('Dependency order violated')
     for pin in p.pins:

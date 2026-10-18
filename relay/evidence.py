@@ -5,10 +5,11 @@ from datetime import datetime, date, time, timedelta
 from pathlib import PurePath
 from zoneinfo import ZoneInfo
 from .domain import RelayError, digest, now, instant
+from .identity import mapping, section_key
 
 MAX_BYTES = 10 * 1024 * 1024
 MAX_TEXT = 250_000
-ACADEMIC = re.compile(r'\b(assignment|syllabus|rubric|course|lab|report|project|deliverable|deadline)\b|задани|дедлайн|тапсырма|силлабус', re.I)
+ACADEMIC = re.compile(r'\b(assignment|syllabus|rubric|course|lab|report|project|deliverable|deadline)\b|Р·Р°РґР°РЅРё|РґРµРґР»Р°Р№РЅ|С‚Р°РїСЃС‹СЂРјР°|СЃРёР»Р»Р°Р±СѓСЃ', re.I)
 ISO = r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?(?:Z|[+-]\d{2}:\d{2})'
 
 
@@ -56,17 +57,23 @@ def extract_facts(source: dict):
         for section in sections:
             if not ACADEMIC.search(section):
                 continue
-            title_match = re.search(r'(?im)^(?:Assignment|Lab|Report|Project|Задание|Тапсырма)\s*:\s*(.+)$',section)
+            title_match = re.search(r'(?im)^(?:Assignment|Lab|Report|Project|Р—Р°РґР°РЅРёРµ|РўР°РїСЃС‹СЂРјР°)[ \t]*:[ \t]*(.+)$',section)
             title = title_match.group(1).strip() if title_match else section.split('\n')[0].strip()[:120]
             if not title or title.lower() in ('syllabus','course','rubric'):
                 continue
-            if not title_match and not re.search(r'\b(assignment|lab|report|project)\b|задани|тапсырма',title,re.I):
+            if not title_match and not re.search(r'\b(assignment|lab|report|project)\b|Р·Р°РґР°РЅРё|С‚Р°РїСЃС‹СЂРјР°',title,re.I):
                 continue # Academic overview/preamble is evidence, not an invented assignment.
-            task_id = digest(title.lower())[:16]
+            course_match = re.search(r'(?im)^Course[ \t]*:[ \t]*(.+)$',section)
+            term_match = re.search(r'(?im)^(?:Term|Semester)[ \t]*:[ \t]*(.+)$',section)
+            key_match = re.search(r'(?im)^Assignment ID[ \t]*:[ \t]*(.+)$',section)
+            identity = mapping(source, title, course_match[1].strip() if course_match else None,
+                               term_match[1].strip() if term_match else None,
+                               key_match[1].strip() if key_match else None)
+            task_id = identity['id']
             due = None
             evidence = []
             for line in section.splitlines():
-                if re.search(r'\b(due|deadline)\b|срок|дедлайн|мерзім',line,re.I):
+                if re.search(r'\b(due|deadline)\b|СЃСЂРѕРє|РґРµРґР»Р°Р№РЅ|РјРµСЂР·С–Рј',line,re.I):
                     match = re.search(ISO,line)
                     if match:
                         try:
@@ -77,7 +84,7 @@ def extract_facts(source: dict):
                             evidence.append(dict(field='due',value=None,quote=line.strip(),page=page['page'],status='invalid'))
                     else:
                         evidence.append(dict(field='due',value=None,quote=line.strip(),page=page['page'],status='ambiguous' if re.search(r'\d|Friday|Monday',line,re.I) else 'missing'))
-            effort = re.search(r'(?im)^(?:Effort|Estimate)\s*:\s*(\d+)(?:\s*-\s*(\d+))?\s*(minutes?|mins?|hours?|h)\b',section)
+            effort = re.search(r'(?im)^(?:Effort|Estimate)[ \t]*:[ \t]*(\d+)(?:\s*-\s*(\d+))?\s*(minutes?|mins?|hours?|h)\b',section)
             minutes = None
             effort_max = None
             if effort:
@@ -90,11 +97,13 @@ def extract_facts(source: dict):
             rubric = [m.group(1).strip() for m in re.finditer(r'(?m)^\s*-\s*\[\s*\]\s*(.+)$',section)]
             for quote in rubric:
                 evidence.append(dict(field='rubric',value=quote,quote=quote,page=page['page']))
-            course = re.search(r'(?im)^Course\s*:\s*(.+)$',section)
-            task = dict(id=task_id,title=title,course=course[1].strip() if course else 'Unassigned course',
+            for line in section.splitlines():
+                if re.match(r'(?i)^(Filename|Format|Sections|Words|Pages|Required files|Filename exception)[ \t]*:',line):
+                    evidence.append(dict(field='submission_requirement',value=line.strip(),quote=line.strip(),page=page['page']))
+            task = dict(id=task_id,title=title,course=identity['course'],identity=identity,section_key=section_key(title),
                         due=due,minutes=minutes,effort_max=effort_max,source_ids=[source['id']],rubric=rubric,
                         completion='planned',dependencies=[],priority=1)
-            drafts.append(dict(**task,gaps=[k for k in ('due','minutes') if task[k] is None]))
+            drafts.append(dict(**task,gaps=[k for k in ('due','minutes') if task[k] is None]+(['identity'] if identity['status']=='unresolved' else [])))
             for e in evidence:
                 facts.append(dict(id=digest([source['id'],source['version'],task_id,e])[:24],task_id=task_id,
                                   source_id=source['id'],source_version=source['version'],hash=source['content_hash'],

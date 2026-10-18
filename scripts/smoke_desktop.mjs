@@ -156,7 +156,7 @@ try {
 } finally {
   if (app) await app.close();
   await fs.writeFile(
-    "docs/evidence/desktop-smoke.json",
+    `docs/evidence/desktop-smoke${process.env.RELAY_EVIDENCE_SUFFIX||""}.json`,
     JSON.stringify(proof, null, 2),
   );
 }

@@ -1,0 +1,55 @@
+{
+  "version": "0.2.0",
+  "checked_at": "2026-10-18T22:35:27.520Z",
+  "executable": "D:\\projects\\CampusPulseRELAY\\installed\\CampusPulse RELAY\\CampusPulse RELAY.exe",
+  "profile": "D:\\projects\\CampusPulseRELAY\\.local\\desktop-contract\\0.2.0-mveely1s",
+  "checks": {
+    "secure_installed_package": true,
+    "task_packet_plan_scenario_rescue_approval_verify_undo": true,
+    "source_export_conversation_reset": true,
+    "preflight_json_contract": true,
+    "locale_and_workspace_persist_after_reopen": true
+  },
+  "packaged_files": [
+    {
+      "file": "desktop\\locales.cjs",
+      "sha256": "c34acd15ece60b55de1f0f61b7b4fa8abb7fc90884dbf5e7e0f9839a38e99f1f",
+      "matches_current_source": true
+    },
+    {
+      "file": "desktop\\main.cjs",
+      "sha256": "a92894d1546d66694577c48661b1a83109042dbf8f5b0380f4b3effaca57f999",
+      "matches_current_source": true
+    },
+    {
+      "file": "desktop\\preload.cjs",
+      "sha256": "4fca25d7fe6d70c80db78bb5c3a298b41c08037a8831037a952c0cde4e2132ab",
+      "matches_current_source": true
+    },
+    {
+      "file": "desktop\\request-policy.cjs",
+      "sha256": "b0027e438294c976ea821c37dc1ae6cf818cf64c43956e9477eaa29ac211bab1",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\assets\\index-BX6VNFBH.css",
+      "sha256": "25d63a52e6551d225eceea2d400e2e296d1c065182a0be8719f5312178f528d1",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\assets\\index-C-j1KeKm.js",
+      "sha256": "0c9ca430e4c49cb44669eca759f888c7d19c8b890e8ea4d5ada746aca75a3a70",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\index.html",
+      "sha256": "052655589ee3ebad47fa8a4f95288a28b8f02e915c2cf88e2aab07800fcf3973",
+      "matches_current_source": true
+    }
+  ],
+  "native_picker_substituted": false,
+  "native_visibility_checked": false,
+  "cloud_calls": 0,
+  "calendar": "illustrative",
+  "passed": true
+}

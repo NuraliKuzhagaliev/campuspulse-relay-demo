@@ -98,6 +98,7 @@ async function request(apiPath, method = "GET", body) {
   try {
     response = await session.defaultSession.fetch(gateway + apiPath, {
       method,
+      signal: AbortSignal.timeout(110000),
       credentials: "include",
       headers: {
         "Content-Type": "application/json",

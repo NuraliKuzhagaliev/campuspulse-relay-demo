@@ -20,7 +20,7 @@ async def main():
     url=os.environ['RELAY_MCP_URL']
     context=sign_context(tenant,url,os.environ['RELAY_CONTEXT_SECRET'])
     proof={'checked_at':now(),'transport':'Streamable HTTP','server':url,'calls':[],'cloud_agent':False}
-    output=Path('docs/evidence/mcp-smoke.json')
+    output=Path('docs/evidence/mcp-smoke'+os.getenv('RELAY_EVIDENCE_SUFFIX','')+'.json')
     historical=output.with_name('mcp-smoke-historical.json')
     if output.exists() and not historical.exists():
         historical.write_bytes(output.read_bytes())
@@ -44,7 +44,7 @@ async def main():
     proof['protocol_passed']=True
     proof['all_calls_passed']=not any(call['is_error'] for call in proof['calls'])
     Path('docs/evidence').mkdir(parents=True,exist_ok=True)
-    Path('docs/evidence/mcp-smoke.json').write_text(json.dumps(proof,indent=2,ensure_ascii=False),encoding='utf-8')
+    Path('docs/evidence/mcp-smoke'+os.getenv('RELAY_EVIDENCE_SUFFIX','')+'.json').write_text(json.dumps(proof,indent=2,ensure_ascii=False),encoding='utf-8')
     print(json.dumps({k:v for k,v in proof.items() if k!='calls'},indent=2))
     print('Actual tools/call results saved, including failures and provenance. This is local MCP proof, not cloud-agent proof.')
     if not proof['all_calls_passed']:

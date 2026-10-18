@@ -31,6 +31,9 @@ def test_public_workflow_is_scoped_and_simulated(demo):
     result=demo.post('/api/import',files={'file':('new-sample.md',raw)})
     assert result.status_code==200,result.text
     source=result.json()
+    draft=source['drafts'][0]
+    target=next(t for t in initial['tasks'] if t['title']=='Network Security lab')
+    assert demo.post('/api/sources/'+source['id']+'/mapping',json={'section_key':draft['section_key'],'target_id':target['id']}).status_code==200
     assert demo.get('/api/sources/'+source['id']).json()['pages'][0]['text']==raw.decode()
     with TestClient(gateway.app,base_url='https://demo.test') as other:
         visitor=other.get('/api/session').json()

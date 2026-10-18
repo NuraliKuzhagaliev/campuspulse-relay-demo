@@ -58,6 +58,7 @@ class Task(BaseModel):
     source_ids: list[str] = Field(default_factory=list)
     rubric: list[str] = Field(default_factory=list)
     completion: Literal['planned', 'worked_on', 'self_reported', 'externally_observed'] = 'planned'
+    remaining_minutes: int | None = Field(default=None, ge=0, le=10080, multiple_of=30)
 
     @field_validator('due')
     @classmethod
@@ -81,6 +82,14 @@ class PlanInput(BaseModel):
     timezone: str = 'Asia/Almaty'
     daily_cap_minutes: int = Field(default=240, ge=30, le=720, multiple_of=30)
     conservative: bool = False
+    not_before: str | None = None
+
+    @field_validator('not_before')
+    @classmethod
+    def cutoff_aware(cls, v):
+        if v is not None:
+            instant(v)
+        return v
 
 
 def overlaps(a, b):

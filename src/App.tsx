@@ -39,6 +39,7 @@ import {
 } from "lucide-react";
 import { api, setCsrf } from "./api";
 import { importSelectedSource } from "./imports";
+import { Workshop } from "./Workshop";
 import {
   useLocale,
   operational,
@@ -69,6 +70,7 @@ const langs = {
     recovery: "Recovery",
     activity: "Activity",
     connections: "Connections",
+    challenge: "Judge challenge",
     headline: "Your week.",
     balance: "Back in balance.",
     repair: "Repair my week",
@@ -89,6 +91,7 @@ const langs = {
     recovery: "Новый план",
     activity: "Действия",
     connections: "Подключения",
+    challenge: "Испытание для жюри",
     headline: "Ваша неделя.",
     balance: "Снова в балансе.",
     repair: "Перестроить неделю",
@@ -109,6 +112,7 @@ const langs = {
     recovery: "Жаңа жоспар",
     activity: "Әрекеттер",
     connections: "Қосылымдар",
+    challenge: "Қазылар сынағы",
     headline: "Сіздің аптаңыз.",
     balance: "Қайта теңгерімде.",
     repair: "Аптаны қайта жоспарлау",
@@ -124,14 +128,22 @@ const langs = {
     offline: "Сақталған жоспар — жаңа деректер мен сыртқы әрекеттер жоқ.",
   },
 };
-type View = "week" | "evidence" | "recovery" | "activity" | "connections";
+type View =
+  | "week"
+  | "evidence"
+  | "recovery"
+  | "activity"
+  | "connections"
+  | "challenge";
 type Lang = keyof typeof langs;
+const CONTACTING_AGENT = "Contacting remote agent";
 const icons = {
   week: CalendarDays,
   evidence: BookOpen,
   recovery: Zap,
   activity: Activity,
   connections: Link2,
+  challenge: ShieldCheck,
 };
 
 const shortHash = (s: string) => s.slice(0, 8);
@@ -618,12 +630,31 @@ export default function App() {
     [notice, setNotice] = useState("");
   const input = useRef<HTMLInputElement>(null);
   const ready = useRef(false);
+  const workLock = useRef(false);
+  const workGeneration = useRef(0);
+  const chatGeneration = useRef(0);
+  const conversationId = useRef<string | null>(null);
   const tenantRef = useRef<string | null>(
     localStorage.getItem("relay.lastTenant"),
   );
   const eventCursor = useRef(0);
   async function refresh() {
     const s = await api<Snapshot>("/state");
+    if (
+      s.workspace_id &&
+      tenantRef.current &&
+      s.workspace_id !== tenantRef.current
+    ) {
+      setSource(null);
+      setPacket(null);
+      setPreview(null);
+      setScenario(null);
+      setAnswer("");
+      setPrompt("");
+      setNotice("");
+      setCalendars([]);
+      conversationId.current = null;
+    }
     setData(s);
     eventCursor.current = s.events.at(-1)?.sequence || 0;
     setOffline(false);
@@ -649,6 +680,9 @@ export default function App() {
       setError(t.offline);
       return;
     }
+    if (workLock.current) return;
+    workLock.current = true;
+    const generation = ++workGeneration.current;
     setBusy(label);
     setError("");
     try {
@@ -656,7 +690,10 @@ export default function App() {
     } catch (e) {
       setError((e as Error).message);
     } finally {
-      setBusy("");
+      if (generation === workGeneration.current) {
+        workLock.current = false;
+        setBusy("");
+      }
     }
   }
   useEffect(() => {
@@ -700,38 +737,41 @@ export default function App() {
     };
   }, []);
   useEffect(() => {
-    const timer = setInterval(async () => {
-      if (!ready.current || document.hidden || offline) return;
-      try {
-        const events = await api<{ events: RunEvent[] }>(
-          "/events?after=" + eventCursor.current,
-        );
-        if (events.events.length) {
-          eventCursor.current = events.events.at(-1)!.sequence;
-          setData((d) =>
-            d
-              ? {
-                  ...d,
-                  events: Array.from(
-                    new Map(
-                      [...d.events, ...events.events].map((e) => [
-                        e.sequence,
-                        e,
-                      ]),
-                    ).values(),
-                  )
-                    .sort((a, b) => a.sequence - b.sequence)
-                    .slice(-500),
-                }
-              : d,
+    const timer = setInterval(
+      async () => {
+        if (!ready.current || document.hidden || offline) return;
+        try {
+          const events = await api<{ events: RunEvent[] }>(
+            "/events?after=" + eventCursor.current,
           );
+          if (events.events.length) {
+            eventCursor.current = events.events.at(-1)!.sequence;
+            setData((d) =>
+              d
+                ? {
+                    ...d,
+                    events: Array.from(
+                      new Map(
+                        [...d.events, ...events.events].map((e) => [
+                          e.sequence,
+                          e,
+                        ]),
+                      ).values(),
+                    )
+                      .sort((a, b) => a.sequence - b.sequence)
+                      .slice(-500),
+                  }
+                : d,
+            );
+          }
+        } catch {
+          setOffline(true);
         }
-      } catch {
-        setOffline(true);
-      }
-    }, 3000);
+      },
+      busy ? 1000 : 3000,
+    );
     return () => clearInterval(timer);
-  }, [offline]);
+  }, [offline, busy]);
   useEffect(() => {
     function key(e: KeyboardEvent) {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
@@ -809,12 +849,28 @@ export default function App() {
   }
   async function ask() {
     if (!prompt.trim()) return;
-    await work("Contacting remote agent", async () => {
-      const r = await api<{ text: string }>("/chat", "POST", {
-        message: prompt,
-        language: lang,
-      });
-      setAnswer(r.text);
+    const generation = ++chatGeneration.current;
+    await work(CONTACTING_AGENT, async () => {
+      if (!conversationId.current)
+        conversationId.current = (
+          await api<{ id: string }>("/conversation")
+        ).id;
+      const r = await api<{ text: string; status: string; reason?: string }>(
+        "/chat",
+        "POST",
+        {
+          message: prompt,
+          language: lang,
+          conversation_id: conversationId.current,
+          request_id: crypto.randomUUID().replaceAll("-", ""),
+        },
+      );
+      if (generation !== chatGeneration.current) return;
+      setAnswer(
+        r.text ||
+          tr("No usable final answer. Review the outcome before retrying."),
+      );
+      setNotice(tr("Agent outcome") + ": " + label(r.status, lang));
       setPrompt("");
       await refresh();
     });
@@ -951,7 +1007,7 @@ export default function App() {
           <span>⌘ / Ctrl K</span>
         </button>
         <div className="nav-foot">
-          RELAY<span>0.1</span>
+          RELAY<span>0.2</span>
         </div>
       </nav>
       <div className="workspace">
@@ -1061,6 +1117,10 @@ export default function App() {
                   setPreview(null);
                   setScenario(null);
                   setAnswer("");
+                  setPrompt("");
+                  setNotice("");
+                  setCalendars([]);
+                  conversationId.current = null;
                   await refresh();
                   setView("week");
                   setEntry(true);
@@ -2058,6 +2118,44 @@ export default function App() {
                 </div>
               </>
             ) : null}
+            {view === "challenge" ? (
+              <Workshop
+                key={data.workspace_id}
+                data={data}
+                refresh={refresh}
+                openSource={openSource}
+                onPlan={(p, proposed) => {
+                  setScenario(proposed ? p : null);
+                  setView("recovery");
+                }}
+                work={work}
+                busy={!!busy || offline}
+              />
+            ) : null}
+            {view === "evidence" &&
+            data.tasks.some((t) => t.identity?.status === "unresolved") ? (
+              <div className="offline-banner">
+                <span>
+                  {tr(
+                    "Course or term is unresolved. Confirm the assignment mapping before planning.",
+                  )}
+                </span>
+                <button
+                  className="secondary"
+                  onClick={() => setView("challenge")}
+                >
+                  {tr("Confirm assignment mapping")}
+                </button>
+              </div>
+            ) : null}
+            {view === "recovery" ? (
+              <button
+                className="secondary"
+                onClick={() => setView("challenge")}
+              >
+                {tr("Compare permitted remedies")}
+              </button>
+            ) : null}
             <p className="fine-print local-acceptance">
               {tr(
                 "Five enhancements locally implemented · real Calendar and Gemini acceptance pending.",
@@ -2073,6 +2171,26 @@ export default function App() {
                     : tr("Connect Agent Engine for live AI")}
                 </span>
               </div>
+              <button
+                className="text-button"
+                disabled={!!busy}
+                onClick={() =>
+                  void work("Starting a new conversation", async () => {
+                    conversationId.current = (
+                      await api<{ id: string }>("/conversation/new", "POST")
+                    ).id;
+                    setAnswer("");
+                    setPrompt("");
+                    setNotice(
+                      tr(
+                        "New conversation started. Previous context is not reused.",
+                      ),
+                    );
+                  })
+                }
+              >
+                {tr("New conversation")}
+              </button>
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -2112,7 +2230,10 @@ export default function App() {
                 {data.settings.mode === "illustrative"
                   ? tr("Illustrative course content · local Calendar adapter")
                   : ""}{" "}
-                · {new Date(data.last_sync).toLocaleTimeString(locale)}
+                · {tr("View generated")}{" "}
+                {new Date(
+                  data.snapshot_generated_at || data.last_sync || "",
+                ).toLocaleTimeString(locale)}
               </span>
             </footer>
             <input
@@ -2148,6 +2269,34 @@ export default function App() {
         <div className="working" role="status">
           <LoaderCircle size={16} className="spin" />
           {operational(busy, lang)}
+          {busy === CONTACTING_AGENT ? (
+            <button
+              onClick={() =>
+                void (async () => {
+                  chatGeneration.current++;
+                  workGeneration.current++;
+                  workLock.current = false;
+                  setBusy("");
+                  setNotice(
+                    tr(
+                      "Stopped waiting. Remote compute may continue; inspect events and receipts before retrying.",
+                    ),
+                  );
+                  try {
+                    const c = await api<{ active_run?: string }>(
+                      "/conversation",
+                    );
+                    if (c.active_run)
+                      await api("/runs/" + c.active_run + "/cancel", "POST");
+                  } catch (e) {
+                    setError((e as Error).message);
+                  }
+                })()
+              }
+            >
+              {tr("Stop waiting")}
+            </button>
+          ) : null}
         </div>
       ) : null}
       {source ? (

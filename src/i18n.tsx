@@ -104,6 +104,13 @@ export function translate(
 }
 const labelKeys: Record<string, string> = {
   illustrative: "Illustrative",
+  complete: "Complete",
+  cancelled: "Cancelled",
+  needs_review: "Needs review",
+  missing: "Missing",
+  run_partial: "Partial",
+  run_unknown: "Unknown",
+  run_cancelled: "Cancelled",
   selected_upload: "Selected upload",
   imported_snapshot: "Imported snapshot",
   implemented_local: "Locally implemented",

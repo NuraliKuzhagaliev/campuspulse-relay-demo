@@ -12,6 +12,7 @@ const environment={...process.env,RELAY_DESKTOP_DATA:path.join(root,".local/impo
 delete environment.ELECTRON_RUN_AS_NODE;
 const fixture=path.join(root,".local/native-verification/0.1.1-mvebaaui/native-picker-mvebaaui.md");
 const original=process.argv.includes("--expect-rejection");
+const suffix=process.env.RELAY_EVIDENCE_SUFFIX||"";
 const proof={checked_at:new Date().toISOString(),picker_substituted:true,requests:[],stages:[],packaged_files:[]};
 const packed=path.join(root,"installed/CampusPulse RELAY/resources/app.asar");
 for(const filename of asar.listPackage(packed).map(x=>x.slice(1)).filter(x=>/^(desktop\\(main|preload|request-policy)\.cjs|dist\\.*\.(js|html))$/.test(x))){
@@ -84,6 +85,6 @@ try {
     proof.conclusion="Both desktop selection paths import exact file contents and refresh/cache state. POST /api/import and unsupported methods/paths remain blocked. Real native interaction and OS notification visibility are separate checks.";
   }
   proof.passed=true;
-} finally {await app.close();await fs.writeFile(original?"docs/evidence/desktop-import-original.json":"docs/evidence/desktop-import-regression.json",JSON.stringify(proof,null,2));}
+} finally {await app.close();await fs.writeFile(original?"docs/evidence/desktop-import-original.json":`docs/evidence/desktop-import-regression${suffix}.json`,JSON.stringify(proof,null,2));}
 console.log(JSON.stringify(proof,null,2));
 

@@ -53,7 +53,7 @@ async def lifespan(app):
     task.cancel()
 
 
-app=FastAPI(title='CampusPulse RELAY',version='0.1.1',lifespan=lifespan,
+app=FastAPI(title='CampusPulse RELAY',version='0.2.0',lifespan=lifespan,
             docs_url=None if PUBLIC_DEMO else '/docs',redoc_url=None if PUBLIC_DEMO else '/redoc',
             openapi_url=None if PUBLIC_DEMO else '/openapi.json')
 expensive_requests=asyncio.Semaphore(2)
@@ -216,7 +216,9 @@ def google_auth(body:GoogleToken):
 
 @app.get('/api/health')
 def health():
-    return dict(ok=True,version='0.1.1',mode='public_demo' if PUBLIC_DEMO else 'cloud' if CLOUD else 'local',agent_configured=bool(os.getenv('RELAY_AGENT_RESOURCE')),agent_verified=False,time=now(),
+    from .conversations import availability
+    agent=availability(store,os.getenv('RELAY_AGENT_RESOURCE'))
+    return dict(ok=True,version='0.2.0',mode='public_demo' if PUBLIC_DEMO else 'cloud' if CLOUD else 'local',agent_configured=agent['configured'],agent_verified=agent['verified'],agent=agent,time=now(),
                 deployed_commit=os.getenv('RELAY_DEPLOYED_COMMIT') or os.getenv('RENDER_GIT_COMMIT'),
                 demo=public_demo.metadata() if PUBLIC_DEMO else None)
 
@@ -369,6 +371,7 @@ class TaskEdit(BaseModel):
     minutes:int|None=Field(default=None,ge=30,le=10080,multiple_of=30)
     due:str|None=None
     completion:str|None=Field(default=None,pattern='^(planned|worked_on|self_reported)$')
+    remaining_minutes:int|None=Field(default=None,ge=0,le=10080,multiple_of=30)
 
 
 @app.post('/api/tasks/{id}/settings')
@@ -416,6 +419,42 @@ def select_calendar(body:CalendarSelection,svc=Depends(service)):
 class Chat(BaseModel):
     message:str=Field(min_length=1,max_length=6000)
     language:str=Field(default='en',pattern='^(en|ru|kk)$')
+    conversation_id:str|None=Field(default=None,pattern='^[a-f0-9]{32}$')
+    request_id:str|None=Field(default=None,pattern='^[a-zA-Z0-9_-]{16,80}$')
+
+
+@app.get('/api/conversation')
+def get_conversation(svc=Depends(service)):
+    from .conversations import conversation
+    try:
+        id=store.get(svc.tenant,'meta','conversation')['id']
+        value=conversation(store,svc.tenant,id)
+        try:lease=store.get(svc.tenant,'conversation_leases',id)
+        except RelayError:lease={}
+        return dict(value,active_run=lease.get('owner') if lease.get('until',0)>time.time() else None)
+    except RelayError:
+        value=conversation(store,svc.tenant)
+        store.put(svc.tenant,'meta','conversation',{'id':value['id']})
+        return value
+
+
+@app.post('/api/conversation/new')
+def new_conversation(svc=Depends(service)):
+    from .conversations import conversation
+    try:
+        old=store.get(svc.tenant,'meta','conversation')['id']
+        store.claim(svc.tenant,'conversations',old,{'closed':False},{'closed':True})
+    except RelayError:pass
+    value=conversation(store,svc.tenant)
+    store.put(svc.tenant,'meta','conversation',{'id':value['id']})
+    return value
+
+
+@app.post('/api/runs/{id}/cancel')
+def cancel_run(id:str,svc=Depends(service)):
+    record=store.get(svc.tenant,'agent_runs',id)
+    store.claim(svc.tenant,'agent_runs',id,{'status':'running'},{'status':'cancel_requested'})
+    return dict(status='cancel_requested',remote_compute_stopped=False,message='Stopped waiting is not proof that remote compute stopped. Inspect events and receipts before retrying.')
 
 
 @app.post('/api/chat')
@@ -423,21 +462,128 @@ async def chat(body:Chat,svc=Depends(service)):
     resource=os.getenv('RELAY_AGENT_RESOURCE')
     if not resource:
         raise RelayError('AUTH_REQUIRED','The real Gemini Agent Engine is not connected. Local planning and evidence tools remain available.')
-    from .limits import model_request
-    model_request(store,svc.tenant,judge=svc.settings().get('mode')=='judge')
-    import vertexai
-    client=vertexai.Client(project=os.environ['GOOGLE_CLOUD_PROJECT'],location=os.environ['GOOGLE_CLOUD_LOCATION'])
-    remote=client.agent_engines.get(name=resource)
-    run=secrets.token_hex(16)
+    from .conversations import begin_run, finish_run, conversation, RUN_SECONDS
+    body.conversation_id=body.conversation_id or get_conversation(svc)['id']
+    body.request_id=body.request_id or secrets.token_hex(16)
+    record,created=begin_run(store,svc.tenant,body.conversation_id,body.request_id,body.message)
+    if not created:
+        return record.get('result',dict(status=record['status'],text='',run_id=record['id'],remote_compute_stopped=False))
+    run=record['id']
     store.event(svc.tenant,run,'run_started',summary='Sending your request to the managed Gemini agent.',resource=resource)
     token=sign_context(svc.tenant,os.environ['RELAY_MCP_URL'],os.environ['RELAY_CONTEXT_SECRET'])
     try:
-        result=await asyncio.to_thread(remote.query,user_id=svc.tenant,message=body.message,context_token=token,language=body.language,run_id=run)
+        from .limits import model_request
+        model_request(store,svc.tenant,judge=svc.settings().get('mode')=='judge')
+        result=await asyncio.wait_for(asyncio.to_thread(invoke_managed_query,resource,user_id=svc.tenant,message=body.message,context_token=token,language=body.language,run_id=run,
+            conversation_id=body.conversation_id,history=conversation(store,svc.tenant,body.conversation_id)['turns']),timeout=RUN_SECONDS)
+    except asyncio.TimeoutError:
+        result=dict(status='unknown',text='',reason='The gateway wait timed out. Remote compute may still be running. Review events and receipts before retrying.',remote_compute_stopped=False)
     except Exception as exc:
-        store.event(svc.tenant,run,'run_failed',summary='Remote agent request failed. No success is inferred.')
-        raise RelayError('UPSTREAM_UNAVAILABLE','The managed agent could not complete this request. Check deployment and consent.') from exc
-    store.event(svc.tenant,run,'run_completed',summary='Managed agent returned.',resource=resource)
+        result=dict(status='failed',text='',reason='The managed agent could not complete this request. Check deployment and consent.')
+    result=finish_run(store,svc.tenant,record,body.message,result)
+    kind={'complete':'run_completed','partial':'run_partial','failed':'run_failed','unknown':'run_unknown','cancelled':'run_cancelled'}.get(result['status'],'run_unknown')
+    store.event(svc.tenant,run,kind,summary='Managed agent outcome: '+result['status'],resource=resource)
+    if result['status']=='complete':
+        store.put('_server','agent_evidence',digest(resource),dict(resource=resource,run_id=run,revision=os.getenv('RELAY_AGENT_REVISION','unreported'),observed_at=now(),expires=time.time()+300))
     return result
+
+
+def invoke_managed_query(resource,**kwargs):
+    """Keep discovery/cold-start/network I/O outside ASGI and within the wait budget."""
+    import vertexai
+    client=vertexai.Client(project=os.environ['GOOGLE_CLOUD_PROJECT'],location=os.environ['GOOGLE_CLOUD_LOCATION'])
+    return client.agent_engines.get(name=resource).query(**kwargs)
+
+
+class AssignmentMapping(BaseModel):
+    section_key:str=Field(pattern='^[a-f0-9]{24}$')
+    course:str=Field(default='',max_length=180)
+    term:str=Field(default='',max_length=100)
+    assignment_key:str=Field(default='',max_length=180)
+    target_id:str|None=Field(default=None,pattern='^[a-f0-9]{24}$')
+
+
+@app.post('/api/sources/{id}/mapping')
+def assignment_mapping(id:str,body:AssignmentMapping,svc=Depends(service)):
+    return svc.map_assignment(id,body.section_key,body.course,body.term,body.assignment_key,body.target_id)
+
+
+class RescueBody(BaseModel):
+    scenario:Scenario|None=None
+    additions:list[dict]=Field(default_factory=list,max_length=5)
+
+
+@app.post('/api/rescue')
+def rescue(body:RescueBody,svc=Depends(service)):
+    from .rescue import minimal_rescue
+    baseline=svc.plan(body.scenario.model_dump(exclude_none=True)) if body.scenario else svc.plan()
+    result=minimal_rescue(baseline,body.additions)
+    id=secrets.token_hex(16)
+    value=dict(result,id=id,sources=svc.source_versions(),baseline_id=baseline['id'],created_at=now())
+    store.put(svc.tenant,'rescues',id,value)
+    return value
+
+
+class RescueChoice(BaseModel):
+    remedy_id:str=Field(pattern='^[a-f0-9]{24}$')
+
+
+@app.post('/api/rescues/{id}/choose')
+def choose_rescue(id:str,body:RescueChoice,svc=Depends(service)):
+    record=store.get(svc.tenant,'rescues',id)
+    if record['sources']!=svc.source_versions():
+        raise RelayError('STALE_PLAN','The comparison is outdated. Compare offered additions again.')
+    remedy=next((r for r in record['remedies'] if r['id']==body.remedy_id),None)
+    if not remedy:raise RelayError('ACCESS_DENIED','Choose a remedy from your own comparison.')
+    settings=svc.settings()
+    settings['windows']=remedy['plan']['input']['windows']
+    store.put(svc.tenant,'meta','settings',settings)
+    svc.invalidate_plans()
+    return svc.plan() # Reads current busy state again. Still no write without a fresh immutable preview.
+
+
+class SubmissionBody(NativeFile):
+    task_id:str=Field(pattern='^[a-f0-9]{24}$')
+    exceptions:dict[str,str]=Field(default_factory=dict,max_length=20)
+    present_files:list[str]=Field(default_factory=list,max_length=30)
+
+
+@app.post('/api/preflight')
+def submission_preflight(body:SubmissionBody,svc=Depends(service)):
+    import base64
+    from .preflight import check_submission
+    task=svc.packet(body.task_id)['task']
+    try:content=base64.b64decode(body.content,validate=True)
+    except Exception:raise RelayError('PARSE_FAILED','The selected draft could not be decoded.')
+    if PUBLIC_DEMO and len(content)>public_demo.MAX_UPLOAD_BYTES:
+        raise RelayError('UNSUPPORTED_INPUT','Public demo draft limit is 2 MiB.')
+    facts=[f for f in svc.current_facts() if f['task_id']==body.task_id]
+    result=check_submission(body.name,content,facts,body.exceptions,body.present_files)
+    result.update(task_id=body.task_id,source_versions=svc.source_versions())
+    store.put(svc.tenant,'preflights',result['id'],result)
+    return result
+
+
+class PreflightRecovery(BaseModel):
+    extra_minutes:int=Field(ge=30,le=600,multiple_of=30)
+
+
+@app.post('/api/preflights/{id}/recovery')
+def preflight_recovery(id:str,body:PreflightRecovery,svc=Depends(service)):
+    record=store.get(svc.tenant,'preflights',id)
+    if not record['missing_count']:raise RelayError('SOURCE_CONFLICT','No structurally missing requirement was observed.')
+    if record['source_versions']!=svc.source_versions():raise RelayError('STALE_PLAN','Requirements changed; check the draft again.')
+    return svc.plan(dict(task_id=record['task_id'],extra_minutes=body.extra_minutes))
+
+
+@app.get('/api/challenge')
+def challenge(svc=Depends(service)):
+    snapshot=svc.snapshot()
+    return dict(workspace_id=svc.tenant,mode=snapshot['settings']['mode'],calendar_mode=snapshot['calendar_mode'],
+        sources=[dict(id=s['id'],version=s['version'],fetched_at=s['fetched_at'],mode=s['mode']) for s in snapshot['sources']],
+        tasks=snapshot['tasks'],plan=snapshot['plan'],events=snapshot['events'],receipts=snapshot['receipts'],
+        preflights=store.list(svc.tenant,'preflights'),reset_scope='this visitor only',
+        live_acceptance='pending',agent=snapshot['agent'])
 
 
 @app.post('/internal/sync')

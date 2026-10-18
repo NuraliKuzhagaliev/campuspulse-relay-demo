@@ -2648,3 +2648,18 @@ code,
     gap: 12px;
   }
 }
+/* Evidence workshop keeps long translated labels and original quotes readable. */
+.workshop { display: grid; gap: 20px; min-width: 0; }
+.workshop p { line-height: 1.6; }
+.workshop-card,.mapping-panel { border: 1px solid var(--line,#deded8); border-radius: 16px; padding: 24px; background: var(--panel,#fff); min-width: 0; }
+.workshop label { display: grid; gap: 8px; margin: 12px 0; font-size: 13px; }
+.workshop label.check { display: flex; align-items: center; }
+.workshop input,.workshop select { padding: 10px; min-width: 0; width: 100%; border: 1px solid #aeb4ad; border-radius: 8px; background: white; color: #182c29; }
+.workshop input[type=checkbox] { width: auto; }
+.input-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,240px),1fr)); gap: 12px; }
+.challenge-steps { display: flex; flex-wrap: wrap; gap: 12px 32px; padding-left: 22px; color: #395b50; }
+.workshop pre,.workshop code { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 12px; }
+.remedy,.preflight-result { padding: 16px; border-left: 3px solid #69816b; margin: 16px 0; background: #f6f8f4; }
+.workshop button { white-space: normal; text-align: start; }
+.nav-item span { overflow-wrap: normal; word-break: normal; }
+@media(max-width:600px) { .workshop-card,.mapping-panel { padding: 16px; } }

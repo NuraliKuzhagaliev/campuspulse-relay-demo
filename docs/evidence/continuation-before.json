@@ -1,0 +1,20 @@
+{
+  "revision": "d12c27699332f1bb6f2e35e3ef27c379581192f7",
+  "bug_a": {
+    "task_ids": [
+      "593ae0e4f7dbd674",
+      "593ae0e4f7dbd674"
+    ],
+    "merged_task_count": 1,
+    "false_conflict_count": 1
+  },
+  "bug_b": {
+    "exception": "AssertionError",
+    "message": "Outside availability"
+  },
+  "conversation_source_review": {
+    "fresh_session_each_query": true,
+    "gateway_conversation_id": false,
+    "live_model_tested": false
+  }
+}
