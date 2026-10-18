@@ -24,6 +24,7 @@ def demo(tmp_path, monkeypatch):
 
 
 def test_public_workflow_is_scoped_and_simulated(demo):
+    assert demo.get('/api/session').json()['mode']=='public_demo'
     initial=demo.get('/api/state').json()
     assert initial['demo']['public'] and initial['demo']['session_seconds']==7200
     raw=b'Assignment: Network Security lab\nDue: 2026-10-21T18:00:00+05:00\nEffort: 240 minutes\n- [ ] New unseen rubric evidence'

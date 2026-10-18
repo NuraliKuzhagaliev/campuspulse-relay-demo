@@ -30,6 +30,7 @@ try{
   proof.checks.demo_entry=true;
   const cookie=(await context.cookies()).find(c=>c.name==="relay_session");
   assert(cookie?.secure&&cookie.httpOnly&&cookie.sameSite==="Strict");
+  assert.equal((await (await page.request.get("/api/session")).json()).mode,"public_demo");
   proof.checks.capability_cookie={secure:cookie.secure,httpOnly:cookie.httpOnly,sameSite:cookie.sameSite};
   let state=await (await page.request.get("/api/state")).json();
   const tenant=state.workspace_id;

@@ -156,7 +156,7 @@ def session(request:Request):
     if request.cookies.get('relay_session'):
         try:
             record=identity(request)
-            return dict(csrf=record['csrf'],tenant=record['tenant'],mode='cloud' if CLOUD else 'local',authenticated=CLOUD)
+            return dict(csrf=record['csrf'],tenant=record['tenant'],mode='public_demo' if PUBLIC_DEMO else 'cloud' if CLOUD else 'local',authenticated=CLOUD)
         except RelayError:
             pass
     if CLOUD:
