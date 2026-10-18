@@ -4,7 +4,7 @@ This dedicated repository contains demonstration material, not a real university
 
 ## Assignment: Network Security lab
 Course: Network Security
-Due: 2026-10-21T18:00:00+05:00
+Due: 2026-10-21T17:00:00+05:00
 Effort: 240 minutes
 Rubric:
 - [ ] Explain the threat model
