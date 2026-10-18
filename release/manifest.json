@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "product": "CampusPulse RELAY",
+  "version": "0.1.0",
+  "status": "local_release_candidate_cloud_pending",
+  "created_at": "2026-10-18T20:33:29.150338+00:00",
+  "project_root": "D:\\projects\\CampusPulseRELAY",
+  "source_commit": "738f802f4c0b99ae81051055c62d85333212d6ec",
+  "repository": {
+    "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo",
+    "branch": "main",
+    "source_commit": "738f802f4c0b99ae81051055c62d85333212d6ec",
+    "published": true
+  },
+  "urls": {
+    "local_web": "http://127.0.0.1:8000",
+    "local_mcp": "http://127.0.0.1:8001/mcp/",
+    "public_web": null,
+    "agent_api": null
+  },
+  "cloud": {
+    "status": "pending_organizer_credit_activation_and_verification",
+    "resource": null,
+    "revision": null,
+    "model_success_verified": false,
+    "paid_resources_provisioned": false,
+    "personal_spending_authorized_usd": 0,
+    "credits_confirmed": false,
+    "final_project_selected": false,
+    "credit_project_eligibility_confirmed": false
+  },
+  "dedicated_calendar": {
+    "name": "CampusPulse RELAY Demo",
+    "id": "44501b98c394287f85b47906c63f6d175019ff7e8a3c40679ac42c8dcd4f8aff@group.calendar.google.com",
+    "created_and_verified": true,
+    "runtime_authorized": false,
+    "note": "Connector/browser consent does not authorize the app's Calendar adapter. No primary-calendar changes."
+  },
+  "verification": {
+    "python": {
+      "tests": 56,
+      "failures": 0,
+      "errors": 0,
+      "seconds": 5.713
+    },
+    "browser": {
+      "startTime": "2026-10-18T20:26:43.552Z",
+      "duration": 9698.974,
+      "expected": 5,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "installed_windows_passed": true,
+    "windows_signature": "NotSigned",
+    "mcp_protocol": "2025-11-25",
+    "mcp_tools": 12,
+    "mcp_final_calls_passed": true,
+    "background_change_observed_seconds": 19.62,
+    "background_latency_observations": 1,
+    "background_is_cloud_hosted": false,
+    "real_calendar_write_readback": false,
+    "managed_agent_smoke": false,
+    "live_judge_session": false,
+    "presentation_slides": 8,
+    "presentation_native_editable": true,
+    "presentation_pdf": "rendered_slide_pages",
+    "recording_seconds": 125.48
+  },
+  "artifacts": [
+    {
+      "kind": "windows_installer",
+      "relative_path": "windows/CampusPulse-RELAY-0.1.0-x64-setup.exe",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.1.0-x64-setup.exe",
+      "bytes": 118725653,
+      "sha256": "964c37e932fd792f639288783188817f36a5b516ca0d1e95f4342280b9c7e945"
+    },
+    {
+      "kind": "windows_portable",
+      "relative_path": "windows/CampusPulse-RELAY-0.1.0-x64-portable.exe",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.1.0-x64-portable.exe",
+      "bytes": 118500446,
+      "sha256": "d10388e062f6c027716f23cb1440251a21cc50f90b4e24dc6012d94e2fab53f2"
+    },
+    {
+      "kind": "source_archive",
+      "relative_path": "source/CampusPulseRELAY-0.1.0-source.zip",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\source\\CampusPulseRELAY-0.1.0-source.zip",
+      "bytes": 1676817,
+      "sha256": "6debb6110b6cca1e97a952bd6df72fddc2d2b5ccf5e37c8d02e1f4c303222a80"
+    },
+    {
+      "kind": "web_frontend_build",
+      "relative_path": "web/CampusPulseRELAY-0.1.0-web-build.zip",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\web\\CampusPulseRELAY-0.1.0-web-build.zip",
+      "bytes": 1001249,
+      "sha256": "26be7bffcb340c1f8fcda2addc06d7879af5510080c84d6133a097035e1ab454"
+    },
+    {
+      "kind": "editable_presentation",
+      "relative_path": "presentation/CampusPulse-RELAY-final.pptx",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-final.pptx",
+      "bytes": 52437,
+      "sha256": "09c9a0291f0d083023df43b41bb6b2e7bfd777e88341fbd1d0bee81d4833cd98"
+    },
+    {
+      "kind": "presentation_pdf",
+      "relative_path": "presentation/CampusPulse-RELAY-final.pdf",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-final.pdf",
+      "bytes": 366168,
+      "sha256": "3dfe31808738a2f09206b694b7193f87e71042e4a4ad2dcea051e4904f15d1ff"
+    },
+    {
+      "kind": "recorded_local_demo",
+      "relative_path": "recordings/CampusPulse-RELAY-recorded-local-demo.webm",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\recordings\\CampusPulse-RELAY-recorded-local-demo.webm",
+      "bytes": 14949746,
+      "sha256": "108cc307afa000d55db16c13ba6ae11898c2118fcffd23f7eb3339db4d9aee32"
+    }
+  ],
+  "instructions": {
+    "run_gateway": "scripts/dev.ps1",
+    "bootstrap": "scripts/bootstrap.ps1",
+    "local_judge": "docs/judge_quickstart.md",
+    "install_uninstall": "release/README.md",
+    "after_credit_activation": "docs/cloud_setup.md",
+    "exclusive_judge_setup": "docs/judge_setup.md"
+  },
+  "blockers": [
+    "Organizer credits: activation, exact eligible project/billing account, balance and expiration are not confirmed. No personal spending authorized.",
+    "Real Vertex AI Agent Engine resource, Gemini request, public web and cloud-to-MCP boundary have not been deployed/verified.",
+    "Application Calendar OAuth/shared runtime access and actual approved write/read-back remain unverified.",
+    "Hosted exclusive judge access and consent/token renewal require actual credentials and testing."
+  ],
+  "limitations": [
+    "Conservative explicit academic text extraction; no scanned OCR or general natural-language date inference.",
+    "UI translation is partial; live EN/RU/KK model evaluation is pending.",
+    "Desktop picker is instrumented in automated smoke; actual selected-file IO is tested. OS toast visibility is not asserted.",
+    "Unsigned Windows app; local connected operations need a running gateway.",
+    "Guarded undo preserves edited events; deleted prior blocks require a fresh approval to restore.",
+    "GitHub public quota requires backoff or a dedicated repository-scoped read credential."
+  ]
+}
