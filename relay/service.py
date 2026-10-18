@@ -9,6 +9,7 @@ from .domain import RelayError, digest, now, instant, Task
 from .evidence import read_upload, extract_facts, conflicts
 from .scheduler import build_recovery_plan, compare_plan_scenarios
 from .connectors import GitHub, GoogleCalendar, LocalCalendar, busy_intervals
+from . import public_demo
 
 
 class RelayService:
@@ -56,6 +57,8 @@ class RelayService:
 
     def calendar(self):
         s=self.settings()
+        if public_demo.enabled() and s.get('calendar_live'):
+            raise RelayError('ACCESS_DENIED','Real Calendar operations are disabled in the public illustrative demo.')
         if s.get('calendar_live'):
             if s.get('mode')=='personal':
                 from .oauth import credentials
@@ -73,7 +76,11 @@ class RelayService:
         return versions
 
     def import_source(self,name,content,id=None,mode='selected_upload',title=None,remote=None):
+        if public_demo.enabled() and len(self.store.list(self.tenant,'sources'))>=public_demo.MAX_SOURCES:
+            raise RelayError('UNSUPPORTED_INPUT','This temporary demo reached its source limit. Start a fresh demo to import more.')
         parsed=read_upload(name,content)
+        if public_demo.enabled() and parsed['type']=='ics' and len(self.store.list(self.tenant,'calendar'))+len(parsed['events'])>100:
+            raise RelayError('UNSUPPORTED_INPUT','Use at most 100 calendar events in this temporary demo.')
         if parsed['type']=='ics':
             for event in parsed['events']:
                 self.store.put(self.tenant,'calendar','ics-'+digest(event)[:24],dict(id='ics-'+digest(event)[:24],summary=event['title'],start={'dateTime':event['start']},end={'dateTime':event['end']},etag=digest(event),origin='ics_import'))
@@ -223,7 +230,8 @@ class RelayService:
             return dict(changed=False,mode='coalesced_poll')
         repo=GitHub(s['github_repo'],s.get('github_ref','main'),os.getenv('RELAY_GITHUB_TOKEN'))
         try:
-            observation=repo.read(s.get('github_path','coursework.md'))
+            source_path=s.get('github_path','coursework.md')
+            observation=public_demo.read_public_source(s['github_repo'],s.get('github_ref','main'),source_path,lambda:repo.read(source_path)) if public_demo.enabled() else repo.read(source_path)
         except RelayError as exc:
             if exc.code=='UPSTREAM_RATE_LIMITED':
                 self.store.put(self.tenant,'watermarks','github-poll',{'next_check_epoch':(exc.details or {}).get('retry_at_epoch',clock.time()+interval)})

@@ -129,6 +129,13 @@ export type Snapshot = {
   receipts: Receipt[];
   last_sync: string;
   agent: { configured: boolean; resource: string | null; verified: boolean };
+  demo?: {
+    public: boolean;
+    storage: string;
+    session_seconds: number;
+    max_upload_mib: number;
+    max_sources: number;
+  };
 };
 export type Preview = {
   id: string;

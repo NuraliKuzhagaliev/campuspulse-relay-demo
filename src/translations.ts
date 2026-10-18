@@ -1,6 +1,56 @@
 export type Language = "en" | "ru" | "kk";
 // Operational UI only. Course titles, source quotations, original diagnostics and identifiers stay verbatim.
 export const translations = {
+  "Public illustrative demo": [
+    "Публичный учебный пример",
+    "Жалпыға ашық оқу үлгісі",
+  ],
+  "Enter public demo": [
+    "Открыть публичный демо-пример",
+    "Ашық демо үлгісін ашу",
+  ],
+  "Start a fresh demo": [
+    "Начать новый демо-пример",
+    "Жаңа демо үлгісін бастау",
+  ],
+  "Starting a fresh demo": [
+    "Открываем новый демо-пример",
+    "Жаңа демо үлгісі ашылуда",
+  ],
+  "Private browser workspace · expires after 2 hours. Hosting inactivity, restarts or redeploys can reset it sooner. Use sample documents.":
+    [
+      "Отдельное пространство этого браузера действует 2 часа. Простой хостинга, перезапуск или новое развёртывание могут сбросить его раньше. Используйте учебные документы.",
+      "Осы браузердің жеке кеңістігі 2 сағатқа жарамды. Хостинг бос тұрғанда, қайта іске қосылғанда немесе қайта орналастырылғанда ертерек тазалануы мүмкін. Үлгі құжаттарды пайдаланыңыз.",
+    ],
+  "Calendar actions are simulated. Gemini/Agent Engine and real Google Calendar remain pending.":
+    [
+      "Действия календаря имитируются. Подключение Gemini/Agent Engine и настоящего Google Календаря ещё ожидается.",
+      "Күнтізбе әрекеттері үлгі ретінде орындалады. Gemini/Agent Engine және нақты Google Күнтізбе қосылымдары күтілуде.",
+    ],
+  "Public demo imports: text PDF, Markdown, TXT or ICS up to 2 MiB. At most 12 sources including examples. Original quotations stay unchanged.":
+    [
+      "Публичный демо-пример: текстовые PDF, Markdown, TXT или ICS до 2 МиБ. До 12 источников, включая примеры. Исходные цитаты сохраняются.",
+      "Ашық демо: 2 МиБ-қа дейінгі мәтіндік PDF, Markdown, TXT немесе ICS. Үлгілермен бірге ең көбі 12 дереккөз. Бастапқы дәйексөздер өзгермейді.",
+    ],
+  "Public demo: refresh GitHub manually. Public source observations may be shared for 5 minutes; original fetch time and commit are retained. Durable radar awaits GCP.":
+    [
+      "В публичном демо обновляйте GitHub вручную. Полученные общедоступные данные могут использоваться повторно 5 минут; исходное время чтения и коммит сохраняются. Постоянный мониторинг ожидает GCP.",
+      "Ашық демода GitHub-ты қолмен жаңартыңыз. Жалпыға ашық деректер 5 минут ортақ пайдаланылуы мүмкін; бастапқы оқу уақыты мен коммит сақталады. Тұрақты бақылау GCP-ті күтуде.",
+    ],
+  "Real Google consent and Calendar writes are pending. Review and approve simulated actions in Recovery.":
+    [
+      "Настоящее согласие Google и запись в Календарь ещё не подключены. Проверяйте и одобряйте учебные действия в разделе «Новый план».",
+      "Нақты Google келісімі мен Күнтізбеге жазу әлі қосылмаған. Үлгі әрекеттерді «Жаңа жоспар» бөлімінде қарап, мақұлдаңыз.",
+    ],
+  "Public demo · mandatory GCP acceptance pending": [
+    "Публичный демо-пример · обязательная проверка GCP ожидается",
+    "Ашық демо · міндетті GCP қабылдау тексеруі күтілуде",
+  ],
+  "Illustrative course data. Calendar actions are simulated. GitHub reads are real. Gemini/Agent Engine and real Calendar acceptance remain pending.":
+    [
+      "Данные курсов учебные. Действия календаря имитируются. Чтение GitHub настоящее. Проверки Gemini/Agent Engine и настоящего Календаря ещё ожидаются.",
+      "Курс деректері үлгі ретінде берілген. Күнтізбе әрекеттері үлгіленеді. GitHub нақты оқылады. Gemini/Agent Engine және нақты Күнтізбе қабылдау тексерулері күтілуде.",
+    ],
   "Event titles are shown exactly as they will be written.": [
     "Названия событий показаны точно так, как они будут записаны.",
     "Оқиға атаулары дәл жазылатын күйінде көрсетілген.",

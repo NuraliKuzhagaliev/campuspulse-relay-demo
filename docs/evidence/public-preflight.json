@@ -1,0 +1,28 @@
+{
+  "checked_at": "2026-10-18T21:44:27.396435+00:00",
+  "python_tests": 61,
+  "python_failures": 0,
+  "public_http_security_tests": 5,
+  "existing_browser_scenarios": 8,
+  "public_local_browser_workflow_passed": true,
+  "public_local_browser_checks": [
+    "demo_entry",
+    "capability_cookie",
+    "new_upload_exact_evidence",
+    "conflict_resolved",
+    "plan_and_isolated_what_if",
+    "illustrative_approval_receipt_and_execution",
+    "hosted_github_read",
+    "translations_mobile_automated_aa_and_refresh",
+    "visitor_isolation_csrf_internal_and_unavailable_integrations",
+    "fresh_demo_reset"
+  ],
+  "minimal_runtime_without_gcp_gemini_verified": true,
+  "preserved_releases": [
+    "0.1.0",
+    "0.1.1"
+  ],
+  "cloud_model_calls": 0,
+  "real_calendar_writes": 0,
+  "mandatory_gcp_acceptance": "pending"
+}

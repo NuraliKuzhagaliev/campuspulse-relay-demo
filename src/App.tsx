@@ -629,10 +629,14 @@ export default function App() {
     setOffline(false);
     tenantRef.current = s.workspace_id || tenantRef.current;
     localStorage.setItem("relay.lastTenant", tenantRef.current || "");
-    localStorage.setItem(
-      "relay.snapshot.v1:" + tenantRef.current,
-      JSON.stringify(s),
-    );
+    if (s.demo?.public) {
+      localStorage.setItem("relay.publicDemo", "1");
+      localStorage.removeItem("relay.snapshot.v1:" + tenantRef.current);
+    } else
+      localStorage.setItem(
+        "relay.snapshot.v1:" + tenantRef.current,
+        JSON.stringify(s),
+      );
     if (window.relay) await window.relay.saveSnapshot(s);
     return s;
   }
@@ -674,15 +678,16 @@ export default function App() {
         const authFailed =
           (e as { status?: number }).status === 401 ||
           String(e).includes("AUTH_REQUIRED");
-        const cached = authFailed
-          ? null
-          : window.relay
-            ? await window.relay.loadSnapshot(tenantRef.current)
-            : JSON.parse(
-                localStorage.getItem(
-                  "relay.snapshot.v1:" + tenantRef.current,
-                ) || "null",
-              );
+        const cached =
+          authFailed || localStorage.getItem("relay.publicDemo") === "1"
+            ? null
+            : window.relay
+              ? await window.relay.loadSnapshot(tenantRef.current)
+              : JSON.parse(
+                  localStorage.getItem(
+                    "relay.snapshot.v1:" + tenantRef.current,
+                  ) || "null",
+                );
         if (cached) {
           setData(cached);
           setOffline(true);
@@ -1018,6 +1023,53 @@ export default function App() {
               {tr("Reconnect & revalidate")}
             </button>
           </div>
+        ) : null}
+        {data.demo?.public ? (
+          <aside
+            className="public-demo-banner"
+            aria-label={tr("Public illustrative demo")}
+          >
+            <div>
+              <strong>{tr("Public illustrative demo")}</strong>
+              <p>
+                {tr(
+                  "Private browser workspace · expires after 2 hours. Hosting inactivity, restarts or redeploys can reset it sooner. Use sample documents.",
+                )}
+              </p>
+              <small>
+                {tr(
+                  "Calendar actions are simulated. Gemini/Agent Engine and real Google Calendar remain pending.",
+                )}
+              </small>
+            </div>
+            <button
+              className="secondary"
+              disabled={!!busy}
+              onClick={() =>
+                void work("Starting a fresh demo", async () => {
+                  const old = tenantRef.current;
+                  const session = await api<{ csrf: string }>("/session");
+                  setCsrf(session.csrf);
+                  const next = await api<{ csrf: string }>(
+                    "/demo/reset",
+                    "POST",
+                  );
+                  setCsrf(next.csrf);
+                  localStorage.removeItem("relay.snapshot.v1:" + old);
+                  setSource(null);
+                  setPacket(null);
+                  setPreview(null);
+                  setScenario(null);
+                  setAnswer("");
+                  await refresh();
+                  setView("week");
+                  setEntry(true);
+                })
+              }
+            >
+              {tr("Start a fresh demo")}
+            </button>
+          </aside>
         ) : null}
         <div className="content-wrap">
           <main id="main" className="main-content">
@@ -1383,9 +1435,13 @@ export default function App() {
                   ))}
                 </div>
                 <p className="fine-print">
-                  {tr(
-                    "Text PDF, Markdown, TXT and normalized ICS · up to 10 MiB / 100 PDF pages. Scanned PDF OCR is not configured. Missing and ambiguous fields stay unknown.",
-                  )}
+                  {data.demo?.public
+                    ? tr(
+                        "Public demo imports: text PDF, Markdown, TXT or ICS up to 2 MiB. At most 12 sources including examples. Original quotations stay unchanged.",
+                      )
+                    : tr(
+                        "Text PDF, Markdown, TXT and normalized ICS · up to 10 MiB / 100 PDF pages. Scanned PDF OCR is not configured. Missing and ambiguous fields stay unknown.",
+                      )}
                 </p>
               </div>
             ) : null}
@@ -1778,6 +1834,7 @@ export default function App() {
                     <label className="toggle-row">
                       <input
                         type="checkbox"
+                        disabled={!!data.demo?.public}
                         checked={data.settings.watch_enabled}
                         onChange={(e) =>
                           void work("Updating radar", async () => {
@@ -1793,9 +1850,13 @@ export default function App() {
                       })}
                     </label>
                     <small>
-                      {tr(
-                        "Local server polling continues without a chat prompt. Hosted scheduled execution requires GCP deployment.",
-                      )}
+                      {data.demo?.public
+                        ? tr(
+                            "Public demo: refresh GitHub manually. Public source observations may be shared for 5 minutes; original fetch time and commit are retained. Durable radar awaits GCP.",
+                          )
+                        : tr(
+                            "Local server polling continues without a chat prompt. Hosted scheduled execution requires GCP deployment.",
+                          )}
                     </small>
                   </section>
                   <section className="panel connection-card">
@@ -1812,22 +1873,32 @@ export default function App() {
                     <h2>{tr("Study calendar")}</h2>
                     <button
                       className="text-button"
+                      disabled={!!data.demo?.public}
                       onClick={() => void connectGoogle()}
                     >
                       {tr("Connect Google in system browser")}
                       <ArrowUpRight size={14} />
                     </button>
-                    <p>
-                      {tr(
-                        "Writes are confined to a selected, authorized calendar. A service identity needs explicit sharing or consent.",
-                      )}
-                    </p>
+                    {data.demo?.public ? (
+                      <p>
+                        {tr(
+                          "Real Google consent and Calendar writes are pending. Review and approve simulated actions in Recovery.",
+                        )}
+                      </p>
+                    ) : (
+                      <p>
+                        {tr(
+                          "Writes are confined to a selected, authorized calendar. A service identity needs explicit sharing or consent.",
+                        )}
+                      </p>
+                    )}
                     <code>
                       {data.settings.calendar_id ||
                         tr("No authorized calendar selected")}
                     </code>
                     <button
                       className="text-button"
+                      disabled={!!data.demo?.public}
                       onClick={() =>
                         void work("Listing authorized calendars", async () =>
                           setCalendars(
@@ -2436,27 +2507,45 @@ export default function App() {
               sessionStorage.setItem("relay.entered", "1");
             }}
           >
-            {tr("Explore illustrative workspace")}
+            {data.demo?.public
+              ? tr("Enter public demo")
+              : tr("Explore illustrative workspace")}
             <ArrowRight size={18} />
           </button>
-          <button
-            className="secondary full"
-            onClick={() => {
-              setEntry(false);
-              setView("connections");
-              sessionStorage.setItem("relay.entered", "1");
-            }}
-          >
-            <Link2 size={17} />
-            {tr("Connect my workspace")}
-          </button>
+          {!data.demo?.public ? (
+            <button
+              className="secondary full"
+              onClick={() => {
+                setEntry(false);
+                setView("connections");
+                sessionStorage.setItem("relay.entered", "1");
+              }}
+            >
+              <Link2 size={17} />
+              {tr("Connect my workspace")}
+            </button>
+          ) : (
+            <p className="fine-print">
+              {tr(
+                "Private browser workspace · expires after 2 hours. Hosting inactivity, restarts or redeploys can reset it sooner. Use sample documents.",
+              )}
+            </p>
+          )}
           <div className="demo-disclosure">
             <Radio size={18} />
             <p>
-              <strong>{tr("Live demo: cloud setup required")}</strong>
-              {tr(
-                "Course examples are illustrative. The local Calendar is simulated. GitHub public reads are real. No Gemini success or cloud deployment is claimed.",
-              )}
+              <strong>
+                {data.demo?.public
+                  ? tr("Public demo · mandatory GCP acceptance pending")
+                  : tr("Live demo: cloud setup required")}
+              </strong>
+              {data.demo?.public
+                ? tr(
+                    "Illustrative course data. Calendar actions are simulated. GitHub reads are real. Gemini/Agent Engine and real Calendar acceptance remain pending.",
+                  )
+                : tr(
+                    "Course examples are illustrative. The local Calendar is simulated. GitHub public reads are real. No Gemini success or cloud deployment is claimed.",
+                  )}
             </p>
           </div>
         </Modal>

@@ -13,9 +13,13 @@ from .domain import RelayError, now, digest, Task
 from .store import make_store
 from .service import RelayService
 from .auth import sign_context
+from . import public_demo
 
 store=make_store()
 CLOUD=os.getenv('RELAY_MODE')=='cloud'
+PUBLIC_DEMO=public_demo.enabled()
+if PUBLIC_DEMO:
+    public_demo.configuration()
 if CLOUD:
     for key in ('GOOGLE_CLOUD_PROJECT','RELAY_AGENT_RESOURCE','RELAY_CONTEXT_SECRET','RELAY_AUTH_AUDIENCE','RELAY_MCP_URL'):
         if not os.getenv(key):
@@ -30,6 +34,9 @@ async def lifespan(app):
         # Local background polling is genuine server-side work, but not hosted autonomy proof.
         while True:
             await asyncio.sleep(max(30,int(os.getenv('RELAY_POLL_SECONDS','60'))))
+            if PUBLIC_DEMO:
+                await asyncio.to_thread(public_demo.cleanup,store)
+                continue
             if CLOUD:
                 continue # Authenticated Cloud Scheduler invokes /internal/sync for durable cloud execution.
             for workspace in store.list('_server','workspaces'):
@@ -46,7 +53,10 @@ async def lifespan(app):
     task.cancel()
 
 
-app=FastAPI(title='CampusPulse RELAY',version='0.1.0',lifespan=lifespan)
+app=FastAPI(title='CampusPulse RELAY',version='0.1.1',lifespan=lifespan,
+            docs_url=None if PUBLIC_DEMO else '/docs',redoc_url=None if PUBLIC_DEMO else '/redoc',
+            openapi_url=None if PUBLIC_DEMO else '/openapi.json')
+expensive_requests=asyncio.Semaphore(2)
 
 
 @app.exception_handler(RelayError)
@@ -62,16 +72,45 @@ async def validation_error(request,exc):
 
 @app.middleware('http')
 async def protect(request,call_next):
+    if PUBLIC_DEMO:
+        if not public_demo.route_allowed(request.url.path,request.method):
+            return JSONResponse({'error':{'code':'ACCESS_DENIED','message':'This public illustrative demo does not expose Google connections, managed AI, MCP, administrative or test operations. Mandatory GCP acceptance remains pending.'}},status_code=403)
+        try:
+            public_demo.limit('_global','requests',1200)
+        except RelayError as exc:
+            return JSONResponse({'error':exc.as_dict()},status_code=429)
+        if request.method=='POST' and request.url.path.startswith('/api/import'):
+            # Count streamed bytes as well as Content-Length: chunked bodies cannot bypass the limit.
+            total=0;chunks=[]
+            async for chunk in request.stream():
+                total+=len(chunk)
+                if total>3*1024*1024:
+                    return JSONResponse({'error':{'code':'UNSUPPORTED_INPUT','message':'Public demo upload limit is 2 MiB.'}},status_code=413)
+                chunks.append(chunk)
+            request._body=b''.join(chunks)
     if request.headers.get('content-length','0').isdigit() and int(request.headers.get('content-length','0'))>11*1024*1024:
         return JSONResponse({'error':{'code':'UNSUPPORTED_INPUT','message':'Upload limit is 10 MiB.'}},status_code=413)
     if request.method not in ('GET','HEAD','OPTIONS') and request.url.path.startswith('/api/'):
         origin=request.headers.get('origin')
-        allowed={str(request.base_url).rstrip('/'),os.getenv('RELAY_GATEWAY_URL',''),'http://127.0.0.1:5173','http://localhost:5173'}
+        allowed={str(request.base_url).rstrip('/'),os.getenv('RELAY_GATEWAY_URL','')}
+        if PUBLIC_DEMO and (os.getenv('RELAY_GATEWAY_URL') or os.getenv('RENDER_EXTERNAL_URL')):
+            allowed={os.getenv('RELAY_GATEWAY_URL') or os.getenv('RENDER_EXTERNAL_URL')}
+        if not PUBLIC_DEMO:
+            allowed.update({'http://127.0.0.1:5173','http://localhost:5173'})
         if origin and origin not in allowed:
             return JSONResponse({'error':{'code':'ACCESS_DENIED','message':'Request origin is not allowed.'}},status_code=403)
-    response=await call_next(request)
+    if PUBLIC_DEMO and request.method=='POST':
+        async with expensive_requests:
+            response=await call_next(request)
+    else:
+        response=await call_next(request)
     response.headers['X-Content-Type-Options']='nosniff'
     response.headers['Referrer-Policy']='no-referrer'
+    if PUBLIC_DEMO:
+        response.headers['X-Frame-Options']='DENY'
+        response.headers['X-Robots-Tag']='noindex, nofollow'
+        response.headers['Content-Security-Policy']="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'"
+        response.headers['Strict-Transport-Security']='max-age=31536000'
     if request.url.path.startswith('/api'):
         response.headers['Cache-Control']='no-store'
     return response
@@ -89,6 +128,11 @@ def identity(request:Request):
         raise RelayError('AUTH_REQUIRED','Session expired. Sign in again.')
     if request.method not in ('GET','HEAD') and request.headers.get('x-relay-csrf')!=record['csrf']:
         raise RelayError('ACCESS_DENIED','Missing workspace request protection.')
+    if PUBLIC_DEMO:
+        if not record['tenant'].startswith('demo-'):
+            raise RelayError('ACCESS_DENIED','This session is not a public demo workspace.')
+        if request.method not in ('GET','HEAD'):
+            public_demo.limit(record['tenant'],'writes',30)
     return record
 
 
@@ -98,11 +142,12 @@ def service(record=Depends(identity)):
 
 def new_session(tenant,expires=None):
     token,csrf=secrets.token_urlsafe(32),secrets.token_urlsafe(24)
-    lifetime=max(1,int(min(expires or time.time()+86400,time.time()+86400)-time.time()))
+    seconds=public_demo.SESSION_SECONDS if PUBLIC_DEMO else 86400
+    lifetime=max(1,int(min(expires or time.time()+seconds,time.time()+seconds)-time.time()))
     store.put('_server','sessions',digest(token),dict(tenant=tenant,csrf=csrf,expires=time.time()+lifetime))
     store.put('_server','workspaces',tenant,{'id':tenant},create=True)
-    response=JSONResponse(dict(csrf=csrf,tenant=tenant,mode='cloud' if CLOUD else 'local',authenticated=CLOUD))
-    response.set_cookie('relay_session',token,httponly=True,secure=CLOUD,samesite='strict',max_age=lifetime)
+    response=JSONResponse(dict(csrf=csrf,tenant=tenant,mode='public_demo' if PUBLIC_DEMO else 'cloud' if CLOUD else 'local',authenticated=CLOUD))
+    response.set_cookie('relay_session',token,httponly=True,secure=CLOUD or PUBLIC_DEMO,samesite='strict',max_age=lifetime)
     return response
 
 
@@ -116,7 +161,22 @@ def session(request:Request):
             pass
     if CLOUD:
         raise RelayError('AUTH_REQUIRED','Sign in through Google in the system browser, or use an owner-issued one-use judge invitation.')
+    if PUBLIC_DEMO:
+        public_demo.cleanup(store)
+        public_demo.limit('_global','new-sessions',60,3600)
+        if len(store.list('_server','workspaces'))>=100:
+            raise RelayError('UPSTREAM_RATE_LIMITED','Public demo capacity is full. Retry after temporary sessions expire.')
+        return new_session('demo-'+secrets.token_hex(16))
     return new_session('local-'+secrets.token_hex(16))
+
+
+@app.post('/api/demo/reset')
+def reset_demo(record=Depends(identity)):
+    if not PUBLIC_DEMO:
+        raise RelayError('ACCESS_DENIED','Public demo reset is unavailable in this mode.')
+    public_demo.limit('_global','new-sessions',60,3600)
+    public_demo.forget(store,record['tenant'])
+    return new_session('demo-'+secrets.token_hex(16))
 
 
 class JudgeInvitation(BaseModel):
@@ -156,12 +216,17 @@ def google_auth(body:GoogleToken):
 
 @app.get('/api/health')
 def health():
-    return dict(ok=True,mode='cloud' if CLOUD else 'local',agent_configured=bool(os.getenv('RELAY_AGENT_RESOURCE')),agent_verified=False,time=now())
+    return dict(ok=True,version='0.1.1',mode='public_demo' if PUBLIC_DEMO else 'cloud' if CLOUD else 'local',agent_configured=bool(os.getenv('RELAY_AGENT_RESOURCE')),agent_verified=False,time=now(),
+                deployed_commit=os.getenv('RELAY_DEPLOYED_COMMIT') or os.getenv('RENDER_GIT_COMMIT'),
+                demo=public_demo.metadata() if PUBLIC_DEMO else None)
 
 
 @app.get('/api/state')
 def state(svc=Depends(service)):
-    return svc.snapshot()
+    value=svc.snapshot()
+    if PUBLIC_DEMO:
+        value['demo']=public_demo.metadata()
+    return value
 
 
 @app.get('/api/events')
@@ -177,6 +242,8 @@ def source(source_id:str,svc=Depends(service)):
 @app.post('/api/import')
 async def import_file(file:UploadFile=File(...),svc=Depends(service)):
     content=await file.read(10*1024*1024+1)
+    if PUBLIC_DEMO and len(content)>public_demo.MAX_UPLOAD_BYTES:
+        raise RelayError('UNSUPPORTED_INPUT','Public demo imports must be at most 2 MiB.')
     return await asyncio.to_thread(svc.import_source,file.filename or 'upload.txt',content)
 
 
@@ -192,6 +259,8 @@ def import_native(body:NativeFile,svc=Depends(service)):
         content=base64.b64decode(body.content,validate=True)
     except Exception:
         raise RelayError('PARSE_FAILED','The selected file could not be decoded.')
+    if PUBLIC_DEMO and len(content)>public_demo.MAX_UPLOAD_BYTES:
+        raise RelayError('UNSUPPORTED_INPUT','Public demo imports must be at most 2 MiB.')
     return svc.import_source(body.name,content)
 
 
@@ -260,6 +329,8 @@ class Preferences(BaseModel):
 
 @app.post('/api/preferences')
 def preferences(body:Preferences,svc=Depends(service)):
+    if PUBLIC_DEMO and body.watch_enabled:
+        raise RelayError('ACCESS_DENIED','The public demo supports manual GitHub refresh. Durable background execution requires the pending GCP deployment.')
     s=svc.settings()
     if body.timezone:
         from zoneinfo import ZoneInfo
@@ -290,7 +361,7 @@ def export(svc=Depends(service)):
 
 @app.delete('/api/workspace')
 def delete_workspace(svc=Depends(service)):
-    store.delete_workspace(svc.tenant)
+    public_demo.forget(store,svc.tenant) if PUBLIC_DEMO else store.delete_workspace(svc.tenant)
     return {'deleted':True,'external_resources_deleted':False}
 
 
