@@ -148,6 +148,16 @@ def test_remaining_effort_is_explicit_not_assumed_from_completion():
     with pytest.raises(RelayError):build_recovery_plan(data)
 
 
+def test_extra_effort_scenario_shifts_range_and_preserves_baseline(tmp_path):
+    s=RelayService(Store(tmp_path/'db'),'a');base=golden(s)
+    task=base['input']['tasks'][0]
+    scenario=s.plan(dict(task_id=task['id'],extra_minutes=60))
+    changed=next(t for t in scenario['input']['tasks'] if t['id']==task['id'])
+    assert changed['minutes']==task['minutes']+60 and changed['effort_max']==task['effort_max']+60
+    assert scenario['required_minutes']==600 and scenario['unscheduled_minutes']==60
+    assert s.latest_plan()['id']==base['id'] and validate_plan(scenario)
+
+
 def test_context_renewal_never_outlives_original_authorization(monkeypatch):
     from relay import auth
     token=auth.sign_context('a','https://mcp.test/mcp','secret'*8,seconds=120)

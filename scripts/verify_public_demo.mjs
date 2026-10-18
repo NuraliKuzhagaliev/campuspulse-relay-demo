@@ -8,11 +8,11 @@ import AxeBuilder from "@axe-core/playwright";
 const url=process.argv[2];
 assert(url && (url.startsWith("https://") || url==="http://127.0.0.1:8010"));
 const local=url.startsWith("http://127.");
-const proof={checked_at:new Date().toISOString(),url,version:"0.2.0",fresh_browser_context:true,checks:{},limitations:["Illustrative Calendar adapter only. Gemini/Agent Engine, real Calendar and mandatory GCP acceptance remain pending.","Temporary storage: two-hour sessions, with earlier resets possible on inactivity/restarts/redeploys.","GitHub public observations may be reused for five minutes while retaining their original commit/fetch time."]};
+const proof={checked_at:new Date().toISOString(),url,version:"0.2.1",fresh_browser_context:true,checks:{},limitations:["Illustrative Calendar adapter only. Gemini/Agent Engine, real Calendar and mandatory GCP acceptance remain pending.","Temporary storage: two-hour sessions, with earlier resets possible on inactivity/restarts/redeploys.","GitHub public observations may be reused for five minutes while retaining their original commit/fetch time."]};
 const folder=path.join(process.cwd(),".local/public-verification",Date.now().toString(36));
 await fs.mkdir(folder,{recursive:true});
-const output=local?".local/logs/public-demo-browser-local.json":"docs/evidence/public-demo-browser-0.2.0.json";
-const screenshots=local?folder:"docs/screenshots/public-0.2.0";
+const output=local?".local/logs/public-demo-browser-local.json":"docs/evidence/public-demo-browser-0.2.1.json";
+const screenshots=local?folder:"docs/screenshots/public-0.2.1";
 await fs.mkdir(screenshots,{recursive:true});
 const browser=await chromium.launch({headless:true});
 try{

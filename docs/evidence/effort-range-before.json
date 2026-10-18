@@ -1,0 +1,5 @@
+{
+  "exception": "RelayError",
+  "message": "The effort range maximum is below the estimate.",
+  "baseline_required_minutes": 540
+}

@@ -49,13 +49,19 @@ try{
   const draft=await call('/preflight','POST',{name:'submission-check.md',content:Buffer.from('# Method\nTest method.\n# Results\nObserved facts.').toString('base64'),task_id:imported.drafts[0].id});
   assert.equal(draft.missing_count,0);assert(draft.results.some(r=>r.status==='needs_review'));
   proof.checks.preflight_json_contract=true;
+  const missing=await call('/preflight','POST',{name:'wrong.md',content:Buffer.from('# Method\n# Results\nObserved facts.').toString('base64'),task_id:imported.drafts[0].id});
+  assert(missing.missing_count>0);
+  const base2=await call('/plan','POST');
+  const extra=await call('/preflights/'+missing.id+'/recovery','POST',{extra_minutes:30});
+  assert.equal(extra.required_minutes,base2.required_minutes+30);assert.equal((await call('/state')).plan.id,base2.id);
+  proof.checks.preflight_missing_work_recovery_validated=true;
   await page.reload();await page.getByRole('button',{name:'Judge challenge',exact:true}).click();
   for(const [lang,title] of [['en','Judge challenge'],['ru','Испытание для жюри'],['kk','Қазылар сынағы']]){
     await page.getByTestId('language').selectOption(lang);await expect(page.getByRole('heading',{name:title,level:1})).toBeVisible();
     await app.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows()[0].setSize(1024,768));
     assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
   }
-  await page.screenshot({path:'docs/screenshots/desktop-0.2.0-1024.png'});
+  await page.screenshot({path:`docs/screenshots/desktop-${version}-1024.png`});
   await app.close();app=null;
   app=await electron.launch({executablePath:executable,cwd:root,env});page=await app.firstWindow();
   await expect(page.locator('html')).toHaveAttribute('lang','kk');

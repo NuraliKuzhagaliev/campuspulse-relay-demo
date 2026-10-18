@@ -55,3 +55,24 @@ def test_oauth_callback_cannot_switch_an_unbound_browser_session(client):
     r=client.get('/auth/callback',params={'code':'not-an-authorization-code','state':'attacker-state'})
     assert r.status_code==403
     assert 'browser' in r.json()['error']['message']
+
+
+def test_preflight_missing_work_recovery_and_point_reestimate(client):
+    state=client.get('/api/state').json()
+    for c in state['conflicts']:
+        client.post('/api/conflicts/'+c['id']+'/resolve',json={'fact_id':min(c['facts'],key=lambda f:f['value'])['id']})
+    base=client.post('/api/plan').json();task=base['input']['tasks'][0]
+    import base64
+    raw=f"Assignment: {task['title']}\nCourse: {task['course']}\nTerm: Illustrative 2026-10\nAssignment ID: {task['title']}\nDue: {task['due']}\nEffort: {task['minutes']} minutes\nFilename: report-*.md"
+    imported=client.post('/api/import',files={'file':('submission-rubric.md',raw.encode())})
+    assert imported.status_code==200
+    base=client.post('/api/plan').json()
+    p=client.post('/api/preflight',json=dict(task_id=task['id'],name='wrong.md',content=base64.b64encode(b'# Draft\nTest only').decode())).json()
+    assert p['missing_count']==1
+    response=client.post('/api/preflights/'+p['id']+'/recovery',json={'extra_minutes':60})
+    assert response.status_code==200,response.text
+    assert response.json()['required_minutes']==600 and not response.json()['feasible']
+    assert client.get('/api/state').json()['plan']['id']==base['id']
+    edited=client.post('/api/tasks/'+task['id']+'/settings',json={'minutes':task['minutes']+30})
+    assert edited.status_code==200 and edited.json()['task']['effort_max']==task['minutes']+30
+    assert client.post('/api/plan').json()['required_minutes']==570

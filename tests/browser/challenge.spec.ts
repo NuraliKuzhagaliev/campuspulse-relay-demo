@@ -113,6 +113,11 @@ test("unseen brief, explicit mapping, preflight, languages and responsive challe
     .getByRole("button", { name: "Confirm mapping", exact: true })
     .click();
   await expect(mapping).toHaveCount(0);
+  await page.getByRole('button',{name:'Evidence',exact:true}).click();
+  await page.locator('.fact-grid>div').filter({hasText:'2026-10-21'}).getByRole('button',{name:'Use this deadline'}).click();
+  await page.getByRole('button',{name:'Repair my week',exact:true}).click();
+  await expect(page.getByRole('status').filter({hasText:'60 minutes remain unscheduled'})).toBeVisible();
+  await page.getByRole('button',{name:'Judge challenge',exact:true}).click();
   const preflight = page.locator(".workshop-card").filter({
     has: page.getByRole("heading", { name: "Submission preflight" }),
   });
@@ -134,6 +139,12 @@ test("unseen brief, explicit mapping, preflight, languages and responsive challe
       .locator(".preflight-result")
       .filter({ hasText: "Justify the original reasoning" }),
   ).toContainText("Needs review");
+  const baseline=(await (await page.request.get('/api/state')).json()).plan.id;
+  await preflight.getByRole('button',{name:'Propose recovery for missing work'}).click();
+  await expect(page.getByText('What-if · baseline unchanged',{exact:true})).toBeVisible();
+  expect((await (await page.request.get('/api/state')).json()).plan.id).toBe(baseline);
+  await page.getByRole('button',{name:'Judge challenge',exact:true}).click();
+  await preflight.getByRole('combobox',{name:'Assignment',exact:true}).selectOption({label:'Ethics · Analysis draft'});
   await preflight.locator("input[type=file]").setInputFiles({
     name: "ethics-a.md",
     mimeType: "text/markdown",

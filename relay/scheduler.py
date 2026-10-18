@@ -212,4 +212,8 @@ def compare_plan_scenarios(baseline: dict, scenario: dict) -> dict:
         for t in data['tasks']:
             if t['id'] == scenario.get('task_id'):
                 t['minutes'] += scenario['extra_minutes']
+                if t.get('effort_max') is not None:
+                    t['effort_max'] += scenario['extra_minutes']
+                if t.get('remaining_minutes') is not None:
+                    t['remaining_minutes'] += scenario['extra_minutes']
     return build_recovery_plan(data)

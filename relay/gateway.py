@@ -53,7 +53,7 @@ async def lifespan(app):
     task.cancel()
 
 
-app=FastAPI(title='CampusPulse RELAY',version='0.2.0',lifespan=lifespan,
+app=FastAPI(title='CampusPulse RELAY',version='0.2.1',lifespan=lifespan,
             docs_url=None if PUBLIC_DEMO else '/docs',redoc_url=None if PUBLIC_DEMO else '/redoc',
             openapi_url=None if PUBLIC_DEMO else '/openapi.json')
 expensive_requests=asyncio.Semaphore(2)
@@ -218,7 +218,7 @@ def google_auth(body:GoogleToken):
 def health():
     from .conversations import availability
     agent=availability(store,os.getenv('RELAY_AGENT_RESOURCE'))
-    return dict(ok=True,version='0.2.0',mode='public_demo' if PUBLIC_DEMO else 'cloud' if CLOUD else 'local',agent_configured=agent['configured'],agent_verified=agent['verified'],agent=agent,time=now(),
+    return dict(ok=True,version='0.2.1',mode='public_demo' if PUBLIC_DEMO else 'cloud' if CLOUD else 'local',agent_configured=agent['configured'],agent_verified=agent['verified'],agent=agent,time=now(),
                 deployed_commit=os.getenv('RELAY_DEPLOYED_COMMIT') or os.getenv('RENDER_GIT_COMMIT'),
                 demo=public_demo.metadata() if PUBLIC_DEMO else None)
 
@@ -372,6 +372,7 @@ class TaskEdit(BaseModel):
     due:str|None=None
     completion:str|None=Field(default=None,pattern='^(planned|worked_on|self_reported)$')
     remaining_minutes:int|None=Field(default=None,ge=0,le=10080,multiple_of=30)
+    effort_max:int|None=Field(default=None,ge=30,le=10080,multiple_of=30)
 
 
 @app.post('/api/tasks/{id}/settings')
@@ -380,6 +381,12 @@ def edit_task(id:str,body:TaskEdit,svc=Depends(service)):
     if not task:
         raise RelayError('ACCESS_DENIED','Task unavailable.')
     values=body.model_dump(exclude_none=True)
+    if body.minutes is not None and body.effort_max is None:
+        values['effort_max']=body.minutes # Explicit point re-estimate; original source range remains in evidence.
+    maximum=values.get('effort_max',task.get('effort_max'))
+    point=values.get('minutes',task['minutes'])
+    if maximum is not None and point is not None and maximum<point:
+        raise RelayError('PARSE_FAILED','The effort maximum cannot be below the point estimate.')
     Task.model_validate(dict(task,**values))
     try:
         old=store.get(svc.tenant,'task_overrides',id)['values']

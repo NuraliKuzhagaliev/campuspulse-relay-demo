@@ -14,7 +14,7 @@ def sha(path):
 def git(*args):return subprocess.check_output(['git',*args],cwd=ROOT,text=True,encoding='utf-8').strip()
 
 version=read('package.json')['version']
-assert version=='0.2.0','Use an explicit release-specific recorder for later versions.'
+assert version=='0.2.1','Use an explicit release-specific recorder for later versions.'
 release=ROOT/'release'
 if (release/'versions'/version/'manifest.json').exists():
     old=read(f'release/versions/{version}/manifest.json')
@@ -32,13 +32,13 @@ assert deployment['verified'] and deployment['service_plan']=='free' and deploym
 assert browser['passed'] and browser['deployed_commit']==deployment['deployed_commit']
 assert desktop['passed'] and desktop['version']==version and all(f['matches_current_source'] for f in desktop['packaged_files'])
 assert imports['passed'] and all(f['matches_current_source'] for f in imports['packaged_files'])
-assert evaluation['python']['tests']=='76' and evaluation['python']['failures']=='0' and evaluation['python']['errors']=='0'
+assert evaluation['python']['tests']=='78' and evaluation['python']['failures']=='0' and evaluation['python']['errors']=='0'
 assert presentation['public_demo_verified'] and presentation['slides']==10
 runtime_paths=['relay','src','desktop','package.json','package-lock.json','infra','requirements.public.txt','requirements.public.lock.txt']
 assert not git('diff','--name-only',deployment['deployed_commit'],source_commit,'--',*runtime_paths),'Runtime changed after the verified deployed commit.'
 
 preserved=[]
-for old_version in ['0.1.0','0.1.1','0.1.1-public-demo']:
+for old_version in ['0.1.0','0.1.1','0.1.1-public-demo','0.2.0']:
     folder=release/'versions'/old_version;old=json.loads((folder/'manifest.json').read_text(encoding='utf-8-sig'))
     for artifact in old['artifacts']:assert sha(folder/artifact['relative_path'])==artifact['sha256']
     preserved.append(dict(version=old_version,directory=str(folder),artifacts_hash_verified=len(old['artifacts'])))
