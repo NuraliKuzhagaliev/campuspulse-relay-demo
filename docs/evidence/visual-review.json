@@ -1,0 +1,23 @@
+{
+  "checked_at": "2026-10-18T20:33:25.708409+00:00",
+  "presentation_slides_reviewed": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "presentation_findings": "Fixed legacy Windows character-encoding corruption; final slides have readable ASCII separators, no observed clipping/overlap. Native package/font/geometry validators passed.",
+  "screenshots_reviewed": [
+    "week-1440.png",
+    "week-1280.png",
+    "week-1024.png",
+    "week-390.png",
+    "desktop-installed.png",
+    "desktop-offline.png"
+  ],
+  "limits": "Visual review is not a complete accessibility certification; automated primary-state AA checks are separate."
+}

@@ -1,14 +1,14 @@
-# Requirement в†’ implementation в†’ evidence ledger
+# Requirement → implementation → evidence ledger
 
 Statuses distinguish local implementation from actual cloud/external acceptance. **The project is not yet a complete Topic 2 cloud submission.**
 
 | Gate | Code / UI entry | Meaningful verification | Live evidence / current status |
 |---|---|---|---|
-| R01 autonomous academic support | relay/service.py, agent.py; Week / Connections | deterministic source impact and planning tests | Real GitHub edit в†’ one server-side impact run, 19.62s observed; hosted Gemini autonomy BLOCKED |
+| R01 autonomous academic support | relay/service.py, agent.py; Week / Connections | deterministic source impact and planning tests | Real GitHub edit → one server-side impact run, 19.62s observed; hosted Gemini autonomy BLOCKED |
 | R02 Gemini core | relay/agent.py; assistant composer | pinned SDK imports, ADK/RunConfig/toolset signatures | No actual local/remote Gemini call: BLOCKED on GCP |
-| R03 custom function tools + MCP | scheduler.py, mcp_server.py; inspector | actual initialize/list/call; solver invariants | Genuine local MCP with 12 discovered tools; historical live GitHub status/source change proof; final live reads quota-limited; cloud-agent MCP calls BLOCKED |
+| R03 custom function tools + MCP | scheduler.py, mcp_server.py; inspector | actual initialize/list/call; solver invariants | Genuine local MCP with 12 discovered tools; final live GitHub status and immutable file calls pass after quota reset; source change proof retained; cloud-agent MCP calls BLOCKED |
 | R04 real reasoningEngine/API | scripts/deploy_reasoning_engine.py, deploy-cloud.ps1 | local SDK schema checks | No deployed resource/revision/API: BLOCKED |
-| R05 web в†’ remote agent visualization | gateway.py /api/chat, src/App.tsx | complete local browser workflow and disconnected-agent failure | Local UI works; public URL/remote path BLOCKED |
+| R05 web → remote agent visualization | gateway.py /api/chat, src/App.tsx | complete local browser workflow and disconnected-agent failure | Local UI works; public URL/remote path BLOCKED |
 | R06 source/reproducibility | full repo, locks, infra, scripts, README | builds, tests, local smoke | GitHub source publication tracked in release/manifest.json; cloud scripts unexecuted |
 | R07 presentation | scripts/build_presentation.mjs; release/presentation | eight-slide editable PPTX, package/font/geometry validation, slide renders/PDF | Local presentation artifact; cloud status disclosed |
 | R08 five evaluation criteria | this matrix, architecture, tool catalog, proof and test docs | no invented judging weights | Evidence indexed; cloud criterion remains unmet |

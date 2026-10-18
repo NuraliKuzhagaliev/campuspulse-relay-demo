@@ -70,7 +70,7 @@ function slide(title, kicker = "") {
   rect(s, 64, 664, 1152, 1, C.line);
   text(
     s,
-    `${String(deck.slides.items.length).padStart(2, "0")}  Р’В·  GDG ASTANA / TOPIC 2`,
+    `${String(deck.slides.items.length).padStart(2, "0")}  /   GDG ASTANA / TOPIC 2`,
     64,
     679,
     600,
@@ -120,7 +120,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
   text(s, "R/", 995, 177, 155, 150, 115, C.navy, true);
   text(
     s,
-    "Web + Windows Р’В· Evidence РІвЂ вЂ™ feasible plan РІвЂ вЂ™ approved action РІвЂ вЂ™ verification",
+    "Web + Windows /  Evidence -> feasible plan -> approved action -> verification",
     68,
     608,
     1120,
@@ -130,7 +130,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
   );
   text(
     s,
-    "Local release candidate Р’В· cloud acceptance gate remains blocked",
+    "Local release candidate /  cloud acceptance gate remains blocked",
     68,
     664,
     1120,
@@ -203,11 +203,11 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
     "FIVE CONNECTED ENHANCEMENTS",
   );
   const steps = [
-    ["01", "Evidence", "F1 Р’В· quote, page, ref, version"],
-    ["02", "Feasibility", "F2 Р’В· deterministic constraints"],
-    ["03", "Change radar", "F3 Р’В· real source polling"],
-    ["04", "Approved actions", "F4 Р’В· journal + read-back"],
-    ["05", "Next action", "F5 Р’В· rubric-linked packet"],
+    ["01", "Evidence", "F1 /  quote, page, ref, version"],
+    ["02", "Feasibility", "F2 /  deterministic constraints"],
+    ["03", "Change radar", "F3 /  real source polling"],
+    ["04", "Approved actions", "F4 /  journal + read-back"],
+    ["05", "Next action", "F5 /  rubric-linked packet"],
   ];
   steps.forEach(([n, title, caption], i) => {
     const x = 64 + i * 235;
@@ -215,7 +215,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
     text(s, n, x + 17, 270, 170, 37, 25, i === 3 ? C.mint : C.muted, true);
     text(s, title, x + 17, 323, 185, 60, 25, i === 3 ? "#FFFFFF" : C.ink, true);
     text(s, caption, x, 454, 215, 82, 19, C.muted);
-    if (i < 4) text(s, "РІвЂ вЂ™", x + 215, 319, 25, 36, 24, C.muted);
+    if (i < 4) text(s, "->", x + 215, 319, 25, 36, 24, C.muted);
   });
   text(
     s,
@@ -256,7 +256,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
       x: 785,
       w: 430,
       label: "Agent Engine + ADK / Gemini",
-      sub: "reasoningEngines resource Р’В· pending",
+      sub: "reasoningEngines resource /  pending",
       fill: "#DEE6FC",
     },
   ];
@@ -264,7 +264,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
     rect(s, b.x, 248, b.w, 113, b.fill, true);
     text(s, b.label, b.x + 18, 267, b.w - 36, 42, 24, C.ink, true);
     text(s, b.sub, b.x + 18, 316, b.w - 36, 30, 17, C.muted);
-    if (i < 2) text(s, "РІвЂ вЂ™", b.x + b.w + 18, 279, 40, 40, 30, C.muted);
+    if (i < 2) text(s, "->", b.x + b.w + 18, 279, 40, 40, 30, C.muted);
   });
   rect(s, 392, 416, 325, 126, C.navy, true);
   text(s, "Custom MCP service", 411, 437, 285, 37, 26, "#FFFFFF", true);
@@ -278,8 +278,8 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
     18,
     C.mint,
   );
-  text(s, "РІвЂ вЂњ", 978, 375, 40, 35, 29, C.muted);
-  text(s, "РІвЂ С’", 738, 455, 43, 35, 29, C.muted);
+  text(s, "v", 978, 375, 40, 35, 29, C.muted);
+  text(s, "<-", 738, 455, 43, 35, 29, C.muted);
   text(s, "Approved sources", 64, 435, 270, 34, 24, C.ink, true);
   text(
     s,
@@ -338,7 +338,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
     26,
     C.muted,
   );
-  text(s, "РІвЂ°Тђ120 min\nshortfall", 900, 472, 300, 120, 44, "#8B422C", true);
+  text(s, ">=120 min\nshortfall", 900, 472, 300, 120, 44, "#8B422C", true);
   note(
     s,
     "This is the fixed-clock golden test, not the current live repository revision. Windows total 600 minutes; Tuesday protected event removes 60. Tasks require 240 + 180 + 120 = 540. Removing Wednesday removes 120, leaving 420. At least 60 minutes of the lab shortage must be added before its Wednesday deadline; Friday-only extra time does not solve that constraint. CP-SAT and an independent interval validator enforce deadlines, no overlap, dependencies, pins and daily caps. Tests: tests/test_domain.py. OR-Tools: https://developers.google.com/optimization/cp/cp_solver .",
@@ -352,7 +352,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
   tag(s, "ACTUAL MCP TRANSPORT", 64, 235, 250);
   text(
     s,
-    "initialize РІвЂ вЂ™ tools/list РІвЂ вЂ™ tools/call",
+    "initialize -> tools/list -> tools/call",
     64,
     291,
     1140,
@@ -365,7 +365,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
   text(s, "Live GitHub", 64, 423, 450, 40, 31, C.ink, true);
   text(
     s,
-    "12 tools discovered; local source calls pass.\nFinal live recheck reached the API quota.",
+    "12 tools discovered; final calls pass.\nLive status + immutable repository file read.",
     64,
     479,
     525,
@@ -376,7 +376,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
   text(s, "Real change observed", 685, 423, 490, 40, 31, C.ink, true);
   text(
     s,
-    "19.62 seconds Р’В· one impact run\nDuplicate refresh: no second run.",
+    "19.62 seconds /  one impact run\nDuplicate refresh: no second run.",
     685,
     479,
     525,
@@ -526,7 +526,7 @@ const { finalizePresentation } = await import(
 const result = await finalizePresentation({
   workspaceDir: root,
   candidatePath: candidate,
-  finalPath: path.join(output, "CampusPulse-RELAY-0.1.0.pptx"),
+  finalPath: path.join(output, "CampusPulse-RELAY-final.pptx"),
   pythonExecutable: runtime + "/python/python.exe",
   integrityValidatorPath:
     skill + "/container_tools/inspect_presentation_package_integrity.py",
@@ -541,14 +541,14 @@ const result = await finalizePresentation({
   requiredNativeTableOwnerSlides: [],
   fontPolicy: { basis: "design", families: ["Arial"] },
   verifyArtifactToolImport: true,
-  receiptPath: path.join(build, "validation-delivery.json"),
+  receiptPath: path.join(build, "validation-final-delivered.json"),
 });
 console.log(
   JSON.stringify(
     {
       slides: 8,
-      pdf: path.join(output, "CampusPulse-RELAY-0.1.0.pdf"),
-      pptx: path.join(output, "CampusPulse-RELAY-0.1.0.pptx"),
+      pdf: path.join(output, "CampusPulse-RELAY-final.pdf"),
+      pptx: path.join(output, "CampusPulse-RELAY-final.pptx"),
       validation: result,
     },
     null,

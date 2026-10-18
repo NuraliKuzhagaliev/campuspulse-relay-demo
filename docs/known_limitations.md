@@ -13,4 +13,4 @@
 - The presentation PDF uses rendered slide pages because the bundled native PDF exporter lacks standard-font data. Its PPTX retains editable native text and shapes.
 - No interviews, grade/stress improvements, calibrated success probabilities, p95 from one observation, award guarantee or world-first claim is supported.
 
-- Unauthenticated GitHub API quota was reached during final verification. Typed rate-limit errors/backoff preserve prior observations. Public polling now defaults to 300 seconds; authenticated polling may use 60 seconds. The measured 19.62-second historical proof used a 60-second controlled test.
+- Unauthenticated GitHub API quota was reached during final verification; the final recheck passed after its reported reset. Typed rate-limit errors/backoff preserve prior observations. Public polling now defaults to 300 seconds; authenticated polling may use 60 seconds. The measured 19.62-second historical proof used a 60-second controlled test.

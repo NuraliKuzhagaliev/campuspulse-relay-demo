@@ -2,7 +2,7 @@ from pathlib import Path
 from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
 root=Path(__file__).resolve().parents[1]
-output=root/'release/presentation/CampusPulse-RELAY-0.1.0.pdf'
+output=root/'release/presentation/CampusPulse-RELAY-final.pdf'
 pdf=canvas.Canvas(str(output),pagesize=(960,540))
 pdf.setTitle('CampusPulse RELAY - release briefing')
 pdf.setAuthor('CampusPulse RELAY')

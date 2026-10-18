@@ -1,12 +1,12 @@
 {
-  "checked_at": "2026-10-18T20:17:00.318713+00:00",
+  "checked_at": "2026-10-18T20:28:42.958639+00:00",
   "transport": "Streamable HTTP",
   "server": "http://127.0.0.1:8001/mcp/",
   "calls": [
     {
       "tool": "list_course_sources",
       "is_error": false,
-      "elapsed_ms": 23,
+      "elapsed_ms": 10,
       "content": [
         {
           "type": "text",
@@ -18,12 +18,12 @@
     },
     {
       "tool": "get_assignment_repo_status",
-      "is_error": true,
-      "elapsed_ms": 752,
+      "is_error": false,
+      "elapsed_ms": 2186,
       "content": [
         {
           "type": "text",
-          "text": "{\n  \"error\": {\n    \"code\": \"UPSTREAM_RATE_LIMITED\",\n    \"message\": \"GitHub API quota reached. The last observation is retained; no fresh read is claimed.\",\n    \"details\": {\n      \"retry_at_epoch\": 1792355289.0\n    }\n  }\n}",
+          "text": "{\n  \"mode\": \"live\",\n  \"repository\": \"NuraliKuzhagaliev/campuspulse-relay-demo\",\n  \"url\": \"https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo\",\n  \"ref\": \"main\",\n  \"commit\": \"e490893feb21cd34bcca8aaedc16abdc818d94ac\",\n  \"updated_at\": \"2026-10-18T20:28:13Z\",\n  \"issues\": [],\n  \"fetched_at\": \"2026-10-18T20:28:45.404700+00:00\"\n}",
           "annotations": null,
           "meta": null
         }
@@ -31,12 +31,12 @@
     },
     {
       "tool": "read_assignment_repo_file",
-      "is_error": true,
-      "elapsed_ms": 7,
+      "is_error": false,
+      "elapsed_ms": 1695,
       "content": [
         {
           "type": "text",
-          "text": "{\n  \"error\": {\n    \"code\": \"UPSTREAM_RATE_LIMITED\",\n    \"message\": \"GitHub public API quota is exhausted. Wait for reset or configure the dedicated repository read credential.\",\n    \"details\": {\n      \"retry_at_epoch\": 1792355289.0\n    }\n  }\n}",
+          "text": "{\n  \"text\": \"# CampusPulse RELAY illustrative coursework\\n\\nThis dedicated repository contains demonstration material, not a real university course. Live GitHub API reads are real. Dates use Asia/Almaty (UTC+05:00).\\n\\n## Assignment: Network Security lab\\nCourse: Network Security\\nDue: 2026-10-21T16:30:00+05:00\\nEffort: 240 minutes\\nRubric:\\n- [ ] Explain the threat model\\n- [ ] Capture test evidence\\n- [ ] Document mitigations\\n\\n## Assignment: ML report\\nCourse: Machine Learning\\nDue: 2026-10-23T18:00:00+05:00\\nEffort: 180 minutes\\nRubric:\\n- [ ] State the experiment\\n- [ ] Compare baseline metrics\\n- [ ] Discuss limitations\\n\\n## Assignment: Web project\\nCourse: Web Engineering\\nDue: 2026-10-23T20:00:00+05:00\\nEffort: 120 minutes\\nRubric:\\n- [ ] Implement the interface\\n- [ ] Show responsive states\\n- [ ] Include setup instructions\\n\",\n  \"commit\": \"e490893feb21cd34bcca8aaedc16abdc818d94ac\",\n  \"committed_at\": \"2026-10-18T20:28:13Z\",\n  \"blob\": \"f08157273402f59aec8289366aef4b0d7623d66c\",\n  \"url\": \"https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/blob/e490893feb21cd34bcca8aaedc16abdc818d94ac/coursework.md\",\n  \"fetched_at\": \"2026-10-18T20:28:47.099743+00:00\",\n  \"mode\": \"live\",\n  \"truncated\": false\n}",
           "annotations": null,
           "meta": null
         }
@@ -45,7 +45,7 @@
     {
       "tool": "read_course_source",
       "is_error": false,
-      "elapsed_ms": 8,
+      "elapsed_ms": 9,
       "content": [
         {
           "type": "text",
@@ -73,5 +73,5 @@
     "save_validated_plan"
   ],
   "protocol_passed": true,
-  "all_calls_passed": false
+  "all_calls_passed": true
 }

@@ -1,4 +1,4 @@
-# CampusPulse RELAY РІР‚вЂќ local release candidate
+# CampusPulse RELAY - local release candidate
 
 All three attachments were read completely. Topic 2 is selected. The isolated project root is D:\projects\CampusPulseRELAY. Controlled environments, caches, downloads, temporary files, builds, installers, recordings and deliverables are on D:.
 
@@ -8,6 +8,6 @@ Latest full local results: 56 Python tests; five browser scenarios including pri
 
 Dedicated repo: https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo . Dedicated Calendar created; runtime authorization missing.
 
-Required cloud gate is BLOCKED. No successful Gemini call, actual Agent Engine resource/API, public web URL, real Calendar apply/read-back, cloud token renewal or isolated judge flow has been proved. Authentication/project/billing/budget/OAuth consent are human prerequisites. This is not a fully deployed hackathon submission.
+Required cloud gate is BLOCKED. No successful Gemini call, actual Agent Engine resource/API, public web URL, real Calendar apply/read-back, cloud token renewal or isolated judge flow has been proved. Organizer credit activation/eligibility, authentication and OAuth consent remain human prerequisites. Personal spending is not authorized. This is not a fully deployed hackathon submission.
 
 See REQUIREMENTS.md, BLOCKERS.md, docs/test_results.md and release/manifest.json. No organizer submission or unsolicited communication was performed.

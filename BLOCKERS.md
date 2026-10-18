@@ -8,4 +8,4 @@
 
 The dedicated GitHub repository was created and actual public reads/controlled edits verified. Local implementation, tests, MCP, desktop and presentation work continue independently. Actual outputs are in release/manifest.json and docs/evidence. No credentials belong in chat, Git, recordings or release bundles.
 
-GitHub public API quota was reached during final checks. Historical successful reads/change proof remain recorded; current calls must respect reset/backoff or use a repository-scoped read credential in RELAY_GITHUB_TOKEN.
+GitHub public API quota was reached during final checks. After its reported reset, the final MCP status and immutable file reads passed. The failed trace and historical change proof remain recorded; sustained polling must respect backoff or use a repository-scoped read credential in RELAY_GITHUB_TOKEN.
