@@ -438,7 +438,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
     "A product a judge can inspect.",
     "VERIFICATION, NOT A SUCCESS ANIMATION",
   );
-  text(s, "76", 64, 239, 330, 100, 84, C.blue, true);
+  text(s, "78", 64, 239, 330, 100, 84, C.blue, true);
   text(s, "Python tests passed", 69, 349, 400, 42, 28, C.ink, true);
   text(
     s,

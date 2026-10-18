@@ -1,0 +1,11 @@
+{
+  "version": "0.2.1",
+  "slides": 10,
+  "native_status": "passed_with_human_interaction",
+  "native_human_proof_release": "0.1.1",
+  "public_demo_verified": true,
+  "public_url": "https://campuspulse-relay-demo.onrender.com",
+  "pptx": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.2.1-quality-verified.pptx",
+  "pdf": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.2.1-quality-verified.pdf",
+  "validation": "D:\\projects\\CampusPulseRELAY\\.local\\presentation-build\\validation-CampusPulse-RELAY-0.2.1-quality-verified.json"
+}

@@ -21,3 +21,5 @@ The real unmodified native-picker recheck passed in the original verification pr
 
 
 0.2.0 continuation: 76/76 Python tests; 10/10 local browser scenarios; 3/3 narrow IPC tests; installed 0.2.0 package/ASAR parity and both instrumented import paths; genuine MCP 13-tool discovery and real reads; strict fresh HTTPS workflow and 3/3 hosted challenge/reset scenarios. Actual 429/backoff and two-tab failure-before/pass-after retained. See continuation-evaluation.json, hosted-challenge-0.2.0.json, public-demo-browser-0.2.0.json, desktop-contract-0.2.0.json and desktop-import-regression-0.2.0.json. Model/Calendar live acceptance remains blocked.
+
+Final0.2.1:78/78 Python,10 local browser passes/one public-only skip, installed0.2.1 imports/contracts including missing-work recovery, strict fresh HTTPS acceptance and3/3 hosted enhancement/reset scenarios. Versioned0.2.1 evidence supersedes the0.2.0 candidate.

@@ -1,0 +1,48 @@
+{
+  "checked_at": "2026-10-18T22:36:23.432Z",
+  "python": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "78",
+    "time": "6.275",
+    "timestamp": "2026-10-19T04:00:26.040143+05:00",
+    "hostname": "BlackWolf"
+  },
+  "full_browser_result": "10 passed, 1 public-only skipped (19.6s); .local/logs/browser-0.2.1.log",
+  "catalog_followup": ".local/logs/continuation-catalog-final.log",
+  "policy_tests": 3,
+  "latency": {
+    "checked_at": "2026-10-18T22:36:23.432Z",
+    "mode": "local_illustrative",
+    "observations": [
+      {
+        "route": "/api/plan",
+        "milliseconds": 38
+      },
+      {
+        "route": "/api/rescue",
+        "milliseconds": 50
+      }
+    ],
+    "model_calls": 0,
+    "p95_reported": false,
+    "n": 2,
+    "median_ms": 44.0,
+    "max_ms": 50
+  },
+  "paid_model_calls": 0,
+  "real_calendar_writes": 0,
+  "mandatory_live_gcp": "blocked_unconfirmed_credits",
+  "native_human_proof": "0.1.1 retained; 0.2.0 automation is separate",
+  "hosted_challenge_scenarios_passed": 3,
+  "public_two_tab_failure_before_pass_after": true,
+  "public_full_workflow_passed": true,
+  "deployed_commit": "83552161ec22c7cf44746433425d3b2b99e042c4",
+  "github_429_recovery_verified": true,
+  "version": "0.2.1",
+  "new_effort_range_regression_passed": true,
+  "hosted_0_2_1_acceptance_pending": false,
+  "missing_work_recovery_browser_and_ipc_passed": true
+}

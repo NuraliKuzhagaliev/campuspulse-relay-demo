@@ -1,0 +1,35 @@
+{
+  "version": "0.2.1",
+  "passed": true,
+  "browser_scenarios": 3,
+  "deployed_commit": "83552161ec22c7cf44746433425d3b2b99e042c4",
+  "checks": [
+    "deadline-specific minimal rescue and fresh choice",
+    "unseen brief and explicit mapping",
+    "submission structural preflight plus actual missing-work recovery action",
+    "baseline unchanged",
+    "EN/RU/Kazakh and responsive AA checks",
+    "focused second-tab reset and CSRF renewal"
+  ],
+  "metrics": {
+    "checked_at": "2026-10-18T23:05:20.767Z",
+    "mode": "hosted_illustrative",
+    "observations": [
+      {
+        "route": "/api/plan",
+        "milliseconds": 405
+      },
+      {
+        "route": "/api/rescue",
+        "milliseconds": 495
+      }
+    ],
+    "model_calls": 0,
+    "p95_reported": false,
+    "n": 2,
+    "median_ms": 450.0,
+    "max_ms": 495
+  },
+  "live_gemini_verified": false,
+  "real_calendar_verified": false
+}
