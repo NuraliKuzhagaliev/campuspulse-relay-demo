@@ -2562,3 +2562,16 @@ code,
 .study-block.applied .block-meta {
   color: #bde9d6;
 }
+
+/* Longer operational translations wrap without obscuring controls or evidence. */
+.side-nav .nav-item { overflow-wrap: anywhere; }
+.hero-actions { flex-shrink: 0; max-width: 46%; }
+.hero-actions .primary { white-space: normal; text-wrap: balance; }
+.toggle-row { align-items: start; }
+.toggle-row input { flex-shrink: 0; margin-top: 3px; }
+.diagnostic { font-size: 12px; max-width: 100%; overflow-wrap: anywhere; }
+.diagnostic code { display: block; white-space: pre-wrap; padding-top: 8px; }
+.boot form { display: grid; gap: 10px; max-width: 520px; }
+.boot input, .boot select, .entry select { padding: 10px; border: 1px solid #788276; border-radius: 6px; background: white; color: #10243a; }
+.local-acceptance { margin-top: 18px; }
+@media (max-width: 700px) { .hero-actions { max-width: 100%; } .connection-card .secondary, .row .secondary { white-space: normal; } }

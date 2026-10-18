@@ -1,8 +1,10 @@
 from pathlib import Path
+import os,json
 from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
 root=Path(__file__).resolve().parents[1]
-output=root/'release/presentation/CampusPulse-RELAY-final.pdf'
+stem=os.environ.get('RELAY_PRESENTATION_STEM','CampusPulse-RELAY-'+json.loads((root/'package.json').read_text(encoding='utf-8'))['version'])
+output=root/'release/presentation'/f'{stem}.pdf'
 pdf=canvas.Canvas(str(output),pagesize=(960,540))
 pdf.setTitle('CampusPulse RELAY - release briefing')
 pdf.setAuthor('CampusPulse RELAY')

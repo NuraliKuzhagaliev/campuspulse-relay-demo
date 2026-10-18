@@ -14,6 +14,13 @@ const fs = require("node:fs/promises");
 const { watch } = require("node:fs");
 const path = require("node:path");
 const crypto = require("node:crypto");
+const native = require("./locales.cjs");
+const requestPolicy = require("./request-policy.cjs");
+let language = "en";
+const words = () => native[language];
+const activeNotifications = new Map();
+if (process.platform === "win32")
+  app.setAppUserModelId("dev.campuspulse.relay");
 // Never default project data/caches to the system drive. Portable and installed builds use D:.
 const dataRoot =
   process.env.RELAY_DESKTOP_DATA ||
@@ -41,8 +48,27 @@ if (
   throw new Error(
     "Gateway must use HTTPS or the explicit local development endpoint.",
   );
-const allowed =
-  /^\/api\/(session|state|health|auth\/start|judge\/claim|connections\/calendar-list|connections\/calendar|tasks\/[a-f0-9]+\/settings|events(?:\?after=\d+)?|import-native|plan|scenario|chat|preferences|sync|export|sources\/[a-zA-Z0-9_-]+|conflicts\/[a-f0-9]+\/resolve|packets\/[a-f0-9]+|plans\/[a-f0-9]+\/preview|previews\/[a-f0-9]+\/approve|receipts\/[a-f0-9]+\/(verify|undo))$/;
+let pendingImportId = null;
+let refreshedImportId = null;
+let auditQueue = Promise.resolve();
+function audit(stage, fields = {}) {
+  // Callers pass only fixed stage names, random correlation IDs and sanitized
+  // route metadata. No document bytes, file paths, tokens or approval payloads.
+  auditQueue = auditQueue
+    .then(async () => {
+      await fs.mkdir(path.join(dataRoot, "logs"), { recursive: true });
+      await fs.appendFile(
+        path.join(dataRoot, "logs/desktop-trace.jsonl"),
+        JSON.stringify({
+          stage,
+          ...fields,
+          at: new Date().toISOString(),
+        }) + "\n",
+      );
+    })
+    .catch(() => undefined); // Diagnostics must never break local import.
+  return auditQueue;
+}
 function sender(event) {
   if (
     !window ||
@@ -52,25 +78,72 @@ function sender(event) {
     throw new Error("Untrusted native bridge caller.");
 }
 async function request(apiPath, method = "GET", body) {
-  if (!allowed.test(apiPath) || !["GET", "POST"].includes(method))
+  const route = requestPolicy.metadata(apiPath, method);
+  if (!requestPolicy.permits(apiPath, method)) {
+    await audit("request-rejected", route);
     throw new Error("Unsupported application request.");
-  const response = await session.defaultSession.fetch(gateway + apiPath, {
-    method,
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      ...(csrf ? { "X-Relay-CSRF": csrf } : {}),
-    },
-    body: body ? JSON.stringify(body) : undefined,
-    redirect: "error",
-  });
-  const value = await response.json();
-  if (!response.ok)
+  }
+  const isImport = apiPath === "/api/import-native" && method === "POST";
+  const isRefresh =
+    apiPath === "/api/state" && method === "GET" && pendingImportId;
+  const importId = isImport
+    ? pendingImportId || crypto.randomBytes(8).toString("hex")
+    : isRefresh || null;
+  if (importId)
+    await audit(isImport ? "import-request-started" : "state-refresh-started", {
+      id: importId,
+      ...route,
+    });
+  let response, value;
+  try {
+    response = await session.defaultSession.fetch(gateway + apiPath, {
+      method,
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        ...(csrf ? { "X-Relay-CSRF": csrf } : {}),
+      },
+      body: body ? JSON.stringify(body) : undefined,
+      redirect: "error",
+    });
+    value = await response.json();
+  } catch (error) {
+    if (importId)
+      await audit(isImport ? "import-request-failed" : "state-refresh-failed", {
+        id: importId,
+        ...route,
+      });
+    throw error;
+  }
+  if (!response.ok) {
+    if (importId)
+      await audit(isImport ? "import-request-failed" : "state-refresh-failed", {
+        id: importId,
+        ...route,
+        status: response.status,
+      });
     throw new Error(
       (value.error?.code || "REQUEST_FAILED") +
         ": " +
         (value.error?.message || "Gateway request failed."),
     );
+  }
+  if (isImport) {
+    pendingImportId = importId;
+    await audit("import-request-completed", {
+      id: importId,
+      ...route,
+      status: response.status,
+    });
+  } else if (isRefresh) {
+    refreshedImportId = importId;
+    pendingImportId = null;
+    await audit("state-refresh-completed", {
+      id: importId,
+      ...route,
+      status: response.status,
+    });
+  }
   if (apiPath === "/api/session") csrf = value.csrf;
   return value;
 }
@@ -79,14 +152,21 @@ function validFile(name, size) {
     /\.(pdf|md|txt|ics)$/i.test(name) && size > 0 && size <= 10 * 1024 * 1024
   );
 }
-async function selectedFile(file) {
-  const stat = await fs.stat(file);
-  if (!validFile(file, stat.size))
-    throw new Error("Choose PDF, Markdown, TXT or ICS up to 10 MiB.");
-  return {
-    name: path.basename(file),
-    content: (await fs.readFile(file)).toString("base64"),
-  };
+async function selectedFile(file, importId) {
+  if (importId) await audit("file-read-started", { id: importId });
+  try {
+    const stat = await fs.stat(file);
+    if (!validFile(file, stat.size)) throw new Error(words().chooseFile);
+    const value = {
+      name: path.basename(file),
+      content: (await fs.readFile(file)).toString("base64"),
+    };
+    if (importId) await audit("file-read-completed", { id: importId });
+    return value;
+  } catch (error) {
+    if (importId) await audit("file-read-failed", { id: importId });
+    throw error;
+  }
 }
 function installBridge() {
   ipcMain.handle("relay:request", async (e, p, m, b) => {
@@ -131,15 +211,49 @@ function installBridge() {
   });
   ipcMain.handle("relay:import", async (e) => {
     sender(e);
+    const pickerId = crypto.randomBytes(8).toString("hex");
+    pendingImportId = null;
+    const logPicker = async (event) => {
+      await fs.mkdir(path.join(dataRoot, "logs"), { recursive: true });
+      await fs.appendFile(
+        path.join(dataRoot, "logs/native-picker.jsonl"),
+        JSON.stringify({
+          id: pickerId,
+          event,
+          language,
+          at: new Date().toISOString(),
+        }) + "\n",
+      );
+    };
+    await logPicker("opened");
+    await audit("picker-opened", { id: pickerId });
     const result = await dialog.showOpenDialog(window, {
-      title: "Import selected academic source",
+      title: words().importTitle,
       properties: ["openFile"],
       filters: [
-        { name: "Academic sources", extensions: ["pdf", "md", "txt", "ics"] },
+        { name: words().filter, extensions: ["pdf", "md", "txt", "ics"] },
       ],
     });
+    await logPicker(result.canceled ? "canceled" : "selected");
+    await audit(result.canceled ? "picker-canceled" : "picker-selected", {
+      id: pickerId,
+    });
     if (result.canceled) return null;
-    return selectedFile(result.filePaths[0]);
+    const selected = await selectedFile(result.filePaths[0], pickerId);
+    pendingImportId = pickerId;
+    return selected;
+  });
+  ipcMain.handle("relay:locale", async (e, next) => {
+    sender(e);
+    if (!Object.hasOwn(native, next))
+      throw new Error("Unsupported UI language.");
+    language = next;
+    await fs.mkdir(dataRoot, { recursive: true });
+    await fs.writeFile(
+      path.join(dataRoot, "ui-language.json"),
+      JSON.stringify({ language }),
+    );
+    updateTrayMenu();
   });
   ipcMain.handle("relay:notify", async (e, title, body) => {
     sender(e);
@@ -150,8 +264,7 @@ function installBridge() {
       body.length > 500
     )
       throw new Error("Invalid notification.");
-    if (Notification.isSupported())
-      new Notification({ title, body, silent: true }).show();
+    return showNativeNotification(title, body, "ui-request");
   });
   ipcMain.handle("relay:external", async (e, url) => {
     sender(e);
@@ -189,8 +302,18 @@ function installBridge() {
       JSON.stringify({ tenant: data.workspace_id }),
     );
     const file = path.join(dataRoot, "snapshot-" + tag + ".json");
-    await fs.writeFile(file + ".tmp", json);
-    await fs.rename(file + ".tmp", file);
+    try {
+      await fs.writeFile(file + ".tmp", json);
+      await fs.rename(file + ".tmp", file);
+      if (refreshedImportId)
+        await audit("snapshot-save-completed", { id: refreshedImportId });
+    } catch (error) {
+      if (refreshedImportId)
+        await audit("snapshot-save-failed", { id: refreshedImportId });
+      throw error;
+    } finally {
+      refreshedImportId = null;
+    }
   });
   ipcMain.handle("relay:cache-load", async (e, tenant) => {
     sender(e);
@@ -223,7 +346,7 @@ function installBridge() {
       return { enabled: false };
     }
     const result = await dialog.showOpenDialog(window, {
-      title: "Watch a selected folder (changes require explicit import)",
+      title: words().watchTitle,
       properties: ["openDirectory"],
     });
     if (result.canceled) return { enabled: false };
@@ -251,18 +374,72 @@ function installBridge() {
             window?.webContents.send("relay:files", [
               { name: chosen.name, content: "" },
             ]);
-            if (Notification.isSupported())
-              new Notification({
-                title: "CampusPulse RELAY",
-                body: `${chosen.name} changed. Review and import it explicitly.`,
-                silent: true,
-              }).show();
+            showNativeNotification(
+              "CampusPulse RELAY",
+              words().changed(chosen.name),
+              "folder-change",
+            );
           } catch {}
         }, 500),
       );
     });
     return { enabled: true, path: selected };
   });
+}
+function updateTrayMenu() {
+  if (!tray) return;
+  tray.setContextMenu(
+    Menu.buildFromTemplate([
+      {
+        label: words().open,
+        click: () => (window ? window.show() : createWindow()),
+      },
+      { label: words().quit, click: () => app.quit() },
+    ]),
+  );
+}
+function showNativeNotification(title, body, kind) {
+  const id = crypto.randomBytes(8).toString("hex");
+  const record = (event) => {
+    void fs
+      .mkdir(path.join(dataRoot, "logs"), { recursive: true })
+      .then(() =>
+        fs.appendFile(
+          path.join(dataRoot, "logs/native-notifications.jsonl"),
+          JSON.stringify({
+            id,
+            event,
+            kind,
+            language,
+            at: new Date().toISOString(),
+          }) + "\n",
+        ),
+      )
+      .catch(() => undefined);
+  };
+  if (!Notification.isSupported()) {
+    record("unsupported");
+    return { id, supported: false, dispatched: false };
+  }
+  const notification = new Notification({ title, body, silent: true });
+  activeNotifications.set(id, notification);
+  notification.on("show", () => record("os-show-event"));
+  notification.on("failed", () => {
+    record("failed");
+    activeNotifications.delete(id);
+  });
+  notification.on("click", () => {
+    record("clicked");
+    window?.show();
+    window?.focus();
+  });
+  notification.on("close", () => {
+    record("closed");
+    activeNotifications.delete(id);
+  });
+  record("dispatch-requested");
+  notification.show();
+  return { id, supported: true, dispatched: true };
 }
 async function createWindow() {
   window = new BrowserWindow({
@@ -294,6 +471,12 @@ async function createWindow() {
 }
 app.whenReady().then(async () => {
   await fs.mkdir(dataRoot, { recursive: true });
+  try {
+    const saved = JSON.parse(
+      await fs.readFile(path.join(dataRoot, "ui-language.json"), "utf8"),
+    );
+    if (Object.hasOwn(native, saved.language)) language = saved.language;
+  } catch {}
   session.defaultSession.setPermissionRequestHandler(
     (_, permission, callback) => callback(permission === "notifications"),
   );
@@ -301,15 +484,7 @@ app.whenReady().then(async () => {
   await createWindow();
   tray = new Tray(path.join(__dirname, "icon.png"));
   tray.setToolTip("CampusPulse RELAY");
-  tray.setContextMenu(
-    Menu.buildFromTemplate([
-      {
-        label: "Open CampusPulse RELAY",
-        click: () => (window ? window.show() : createWindow()),
-      },
-      { label: "Quit", click: () => app.quit() },
-    ]),
-  );
+  updateTrayMenu();
   tray.on("double-click", () => (window ? window.show() : createWindow()));
 });
 app.on("window-all-closed", () => {

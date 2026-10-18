@@ -96,7 +96,7 @@ export type Receipt = {
     url?: string;
     verified_at?: string;
     etag?: string;
-    error?: { message: string };
+    error?: { message: string; code?: string };
   }[];
 };
 export type Snapshot = {
@@ -177,6 +177,7 @@ declare global {
       saveSnapshot: (data: unknown) => Promise<void>;
       loadSnapshot: (tenant?: string | null) => Promise<Snapshot | null>;
       version: () => Promise<string>;
+      setLanguage: (language: "en" | "ru" | "kk") => Promise<void>;
       watchFolder: () => Promise<{ enabled: boolean; path?: string }>;
       onFiles: (
         cb: (files: { name: string; content: string }[]) => void,

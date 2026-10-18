@@ -9,6 +9,7 @@ contextBridge.exposeInMainWorld("relay", {
   saveSnapshot: (data) => ipcRenderer.invoke("relay:cache-save", data),
   loadSnapshot: (tenant) => ipcRenderer.invoke("relay:cache-load", tenant),
   version: () => ipcRenderer.invoke("relay:version"),
+  setLanguage: (language) => ipcRenderer.invoke("relay:locale", language),
   watchFolder: () => ipcRenderer.invoke("relay:watch"),
   onFiles: (cb) => {
     const listener = (_, files) => cb(files);

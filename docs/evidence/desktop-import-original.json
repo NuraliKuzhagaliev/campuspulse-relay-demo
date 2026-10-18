@@ -1,0 +1,73 @@
+{
+  "checked_at": "2026-10-18T21:16:19.389Z",
+  "picker_substituted": true,
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/api/session",
+      "result": "succeeded"
+    },
+    {
+      "method": "GET",
+      "path": "/api/state",
+      "result": "succeeded"
+    },
+    {
+      "method": "POST",
+      "path": "/api/import-native",
+      "result": "succeeded"
+    },
+    {
+      "method": "GET",
+      "path": "/api/state",
+      "result": "succeeded"
+    },
+    {
+      "method": "POST",
+      "path": "/api/import",
+      "result": "allowlist-rejected"
+    }
+  ],
+  "stages": [
+    {
+      "path": "native-cancel",
+      "error": []
+    },
+    {
+      "path": "native-selected-file",
+      "source_visible": true,
+      "error": []
+    },
+    {
+      "path": "renderer-file-input",
+      "source_visible": false,
+      "error": [
+        "Error invoking remote method 'relay:request': Error: Unsupported application request."
+      ]
+    }
+  ],
+  "packaged_files": [
+    {
+      "file": "desktop\\main.cjs",
+      "sha256": "6040a1775b3cdf0ddc10d6a19cd8e248050d09dd3e1f400d04d87a6a8134de5d",
+      "matches_current_source": false
+    },
+    {
+      "file": "desktop\\preload.cjs",
+      "sha256": "4fca25d7fe6d70c80db78bb5c3a298b41c08037a8831037a952c0cde4e2132ab",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\assets\\index-B-Pt83Ul.js",
+      "sha256": "4305cba1df75651c00bdb6d07602ed4351101f2a7f7e60436b86efb6fcc0b775",
+      "matches_current_source": false
+    },
+    {
+      "file": "dist\\index.html",
+      "sha256": "304e5d83f135f207edcb50bb2f0fd2680116b178328a0edcf0c7162ef712f61c",
+      "matches_current_source": false
+    }
+  ],
+  "conclusion": "Renderer File input POST /api/import was rejected before upload. The native dialog import POST /api/import-native and following GET /api/state succeeded. The original human attempt lacked request tracing, so attribution of that incident remains unconfirmed.",
+  "passed": true
+}

@@ -5,6 +5,15 @@ import { pathToFileURL } from "node:url";
 import { spawnSync } from "node:child_process";
 const require = createRequire(import.meta.url);
 const root = process.cwd();
+const releaseVersion=JSON.parse(await fs.readFile(path.join(root,"package.json"),"utf8")).version;
+let nativeResult={};
+try {nativeResult=JSON.parse(await fs.readFile(path.join(root,"docs/evidence/desktop-native-result.json"),"utf8"));}catch{}
+const nativeVerified=nativeResult.status==="passed_with_human_interaction";
+const nativeImportVerified=nativeResult.picker?.exact_source_observed===true;
+const nativeSummary=nativeVerified?"Real picker import verified. User confirmed the bottom-right Windows banner.":nativeImportVerified?"Real picker import verified. OS notification visibility still pending.":"Picker appearance confirmed. Real import recheck and OS visibility pending.";
+const stem=`CampusPulse-RELAY-${releaseVersion}${nativeVerified?"-native-verified":nativeImportVerified?"-picker-verified":""}`;
+process.env.RELAY_PRESENTATION_STEM=stem;
+
 const runtime =
   "C:/Users/nural/.cache/codex-runtimes/codex-primary-runtime/dependencies";
 process.env.RUNTIME_NODE_MODULES = runtime + "/node/node_modules";
@@ -199,8 +208,8 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
 }
 {
   const s = slide(
-    "A complete change-to-action loop.",
-    "FIVE CONNECTED ENHANCEMENTS",
+    "Five enhancements, implemented locally.",
+    "FIVE LOCAL ENHANCEMENTS",
   );
   const steps = [
     ["01", "Evidence", "F1 /  quote, page, ref, version"],
@@ -416,11 +425,11 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
     24,
     C.muted,
   );
-  text(s, "5", 690, 239, 330, 100, 84, C.ink, true);
+  text(s, "8", 690, 239, 330, 100, 84, C.ink, true);
   text(s, "Browser scenarios passed", 695, 349, 480, 42, 28, C.ink, true);
   text(
     s,
-    "Full local workflow, unseen file, responsive\nlayouts, languages and automated AA rules.",
+    "EN / RU / Kazakh operational workflows,\noriginal quotes, errors and automated AA rules.",
     695,
     406,
     490,
@@ -430,7 +439,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
   );
   text(
     s,
-    "Windows: real installer and portable package. Installed smoke results are recorded separately.\nNative Google consent and live Calendar/Agent Engine acceptance still need account access.",
+    `Windows ${releaseVersion}: both import paths, refresh and cache pass regression.\n${nativeSummary}\nLive Google consent, Calendar and Agent Engine acceptance remain pending.`,
     64,
     563,
     1150,
@@ -440,7 +449,7 @@ function tag(s, value, x, y, w = 200, fill = C.mint) {
   );
   note(
     s,
-    "Counts come from the actual local suite and may be updated in docs/test_results.md. These results do not establish live Gemini success, a statistical reliability claim or zero future defects. Viewports: 1440x900, 1280x720, 1024x768, 390x844. Accessibility is an automated subset plus explicit keyboard/reduced-motion checks. Desktop picker stubbing and notification visibility limits are disclosed in docs/evidence/desktop-smoke.json.",
+    "Counts come from the actual local suite and may be updated in docs/test_results.md. Two additional native IPC policy/redaction tests passed. Installed original failure: renderer file input sent POST /api/import, rejected before upload. Both desktop paths now use /api/import-native. The original human incident lacked route tracing, so its attribution remains unconfirmed. The regression explicitly substitutes the native picker. The actual unmodified picker import and OS notification visibility are recorded separately in docs/evidence/desktop-native-result.json. No live Gemini, Calendar, statistical reliability or zero-defect claim follows from local tests. Accessibility covers an automated subset at 1440x900, 1280x720, 1024x768 and 390x844.",
   );
 }
 {
@@ -526,7 +535,7 @@ const { finalizePresentation } = await import(
 const result = await finalizePresentation({
   workspaceDir: root,
   candidatePath: candidate,
-  finalPath: path.join(output, "CampusPulse-RELAY-final.pptx"),
+  finalPath: path.join(output, stem+".pptx"),
   pythonExecutable: runtime + "/python/python.exe",
   integrityValidatorPath:
     skill + "/container_tools/inspect_presentation_package_integrity.py",
@@ -541,17 +550,19 @@ const result = await finalizePresentation({
   requiredNativeTableOwnerSlides: [],
   fontPolicy: { basis: "design", families: ["Arial"] },
   verifyArtifactToolImport: true,
-  receiptPath: path.join(build, "validation-final-delivered.json"),
+  receiptPath: path.join(build, `validation-${releaseVersion}-${nativeVerified?"verified":"pending"}.json`),
 });
 console.log(
   JSON.stringify(
     {
       slides: 8,
-      pdf: path.join(output, "CampusPulse-RELAY-final.pdf"),
-      pptx: path.join(output, "CampusPulse-RELAY-final.pptx"),
+      pdf: path.join(output, stem+".pdf"),
+      pptx: path.join(output, stem+".pptx"),
       validation: result,
     },
     null,
     2,
   ),
 );
+
+await fs.writeFile(path.join(root,"docs/evidence/presentation.json"), JSON.stringify({version:releaseVersion,slides:8,native_status:nativeResult.status||"pending",pptx:path.join(output,stem+".pptx"),pdf:path.join(output,stem+".pdf"),validation:path.join(build,`validation-${releaseVersion}-${nativeVerified?"verified":"pending"}.json`)},null,2));

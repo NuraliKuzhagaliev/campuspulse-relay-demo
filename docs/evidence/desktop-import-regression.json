@@ -1,0 +1,201 @@
+{
+  "checked_at": "2026-10-18T21:17:57.081Z",
+  "picker_substituted": true,
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/api/session",
+      "result": "succeeded"
+    },
+    {
+      "method": "GET",
+      "path": "/api/state",
+      "result": "succeeded"
+    },
+    {
+      "method": "POST",
+      "path": "/api/import-native",
+      "result": "succeeded"
+    },
+    {
+      "method": "GET",
+      "path": "/api/state",
+      "result": "succeeded"
+    },
+    {
+      "method": "POST",
+      "path": "/api/import-native",
+      "result": "succeeded"
+    },
+    {
+      "method": "GET",
+      "path": "/api/state",
+      "result": "succeeded"
+    }
+  ],
+  "stages": [
+    {
+      "path": "native-cancel",
+      "error": []
+    },
+    {
+      "path": "native-selected-file",
+      "source_visible": true,
+      "error": []
+    },
+    {
+      "path": "renderer-file-input",
+      "source_visible": true,
+      "error": []
+    }
+  ],
+  "packaged_files": [
+    {
+      "file": "desktop\\main.cjs",
+      "sha256": "ee8931376c8bd62d9aab2e2cf499e1174ac17200916810c80b790127b21de4d7",
+      "matches_current_source": true
+    },
+    {
+      "file": "desktop\\preload.cjs",
+      "sha256": "4fca25d7fe6d70c80db78bb5c3a298b41c08037a8831037a952c0cde4e2132ab",
+      "matches_current_source": true
+    },
+    {
+      "file": "desktop\\request-policy.cjs",
+      "sha256": "574617f64dd51441589735cc00cdf41dc8a83900251c924304b42142da3eca4f",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\assets\\index-C9oA55If.js",
+      "sha256": "85e7e3e1f125ea08551d0b6e955dd74941e7e7d8dcdd7be1790e77a40ed78d13",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\index.html",
+      "sha256": "4c89d68c7146690f6e95dc09e61d5b2acbcc404d207f5430a35f39b1bfac4bef",
+      "matches_current_source": true
+    }
+  ],
+  "trace": [
+    {
+      "stage": "picker-opened",
+      "id": "acf8ffa01f80f5d2",
+      "at": "2026-10-18T21:17:58.150Z"
+    },
+    {
+      "stage": "picker-canceled",
+      "id": "acf8ffa01f80f5d2",
+      "at": "2026-10-18T21:17:58.151Z"
+    },
+    {
+      "stage": "picker-opened",
+      "id": "41ffff45350fb9e1",
+      "at": "2026-10-18T21:17:58.402Z"
+    },
+    {
+      "stage": "picker-selected",
+      "id": "41ffff45350fb9e1",
+      "at": "2026-10-18T21:17:58.403Z"
+    },
+    {
+      "stage": "file-read-started",
+      "id": "41ffff45350fb9e1",
+      "at": "2026-10-18T21:17:58.404Z"
+    },
+    {
+      "stage": "file-read-completed",
+      "id": "41ffff45350fb9e1",
+      "at": "2026-10-18T21:17:58.405Z"
+    },
+    {
+      "stage": "import-request-started",
+      "id": "41ffff45350fb9e1",
+      "method": "POST",
+      "path": "/api/import-native",
+      "at": "2026-10-18T21:17:58.405Z"
+    },
+    {
+      "stage": "import-request-completed",
+      "id": "41ffff45350fb9e1",
+      "method": "POST",
+      "path": "/api/import-native",
+      "status": 200,
+      "at": "2026-10-18T21:17:58.417Z"
+    },
+    {
+      "stage": "state-refresh-started",
+      "id": "41ffff45350fb9e1",
+      "method": "GET",
+      "path": "/api/state",
+      "at": "2026-10-18T21:17:58.418Z"
+    },
+    {
+      "stage": "state-refresh-completed",
+      "id": "41ffff45350fb9e1",
+      "method": "GET",
+      "path": "/api/state",
+      "status": 200,
+      "at": "2026-10-18T21:17:58.428Z"
+    },
+    {
+      "stage": "snapshot-save-completed",
+      "id": "41ffff45350fb9e1",
+      "at": "2026-10-18T21:17:58.430Z"
+    },
+    {
+      "stage": "import-request-started",
+      "id": "5c66ecf138d21e00",
+      "method": "POST",
+      "path": "/api/import-native",
+      "at": "2026-10-18T21:17:58.475Z"
+    },
+    {
+      "stage": "import-request-completed",
+      "id": "5c66ecf138d21e00",
+      "method": "POST",
+      "path": "/api/import-native",
+      "status": 200,
+      "at": "2026-10-18T21:17:58.486Z"
+    },
+    {
+      "stage": "state-refresh-started",
+      "id": "5c66ecf138d21e00",
+      "method": "GET",
+      "path": "/api/state",
+      "at": "2026-10-18T21:17:58.487Z"
+    },
+    {
+      "stage": "state-refresh-completed",
+      "id": "5c66ecf138d21e00",
+      "method": "GET",
+      "path": "/api/state",
+      "status": 200,
+      "at": "2026-10-18T21:17:58.501Z"
+    },
+    {
+      "stage": "snapshot-save-completed",
+      "id": "5c66ecf138d21e00",
+      "at": "2026-10-18T21:17:58.504Z"
+    },
+    {
+      "stage": "request-rejected",
+      "method": "POST",
+      "path": "/api/import",
+      "at": "2026-10-18T21:17:59.035Z"
+    },
+    {
+      "stage": "request-rejected",
+      "method": "DELETE",
+      "path": "/api/state",
+      "at": "2026-10-18T21:17:59.039Z"
+    },
+    {
+      "stage": "request-rejected",
+      "method": "GET",
+      "path": "/api/:redacted?[redacted]",
+      "at": "2026-10-18T21:17:59.042Z"
+    }
+  ],
+  "conclusion": "Both desktop selection paths import exact file contents and refresh/cache state. POST /api/import and unsupported methods/paths remain blocked. Real native interaction and OS notification visibility are separate checks.",
+  "passed": true
+}

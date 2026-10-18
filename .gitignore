@@ -17,3 +17,4 @@ test-results/
 playwright-report/
 *.tsbuildinfo
 installed/
+docs/evidence/desktop-native-interactive.json

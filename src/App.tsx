@@ -38,6 +38,18 @@ import {
   Zap,
 } from "lucide-react";
 import { api, setCsrf } from "./api";
+import { importSelectedSource } from "./imports";
+import {
+  useLocale,
+  operational,
+  eventSummary,
+  weekdayText,
+  weekRange,
+  deadlineText,
+  label,
+  errorMessage,
+  formatDuration,
+} from "./i18n";
 import type {
   Snapshot,
   Fact,
@@ -121,8 +133,7 @@ const icons = {
   activity: Activity,
   connections: Link2,
 };
-const duration = (m: number) =>
-  `${Math.floor(m / 60)}h${m % 60 ? ` ${m % 60}m` : ""}`;
+
 const shortHash = (s: string) => s.slice(0, 8);
 function Modal({
   title,
@@ -135,6 +146,7 @@ function Modal({
   onClose: () => void;
   wide?: boolean;
 }) {
+  const { tr, lang, locale } = useLocale();
   const ref = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     const el = ref.current;
@@ -154,7 +166,7 @@ function Modal({
         </div>
         <button
           className="icon-button"
-          aria-label="Close dialog"
+          aria-label={tr("Close dialog")}
           onClick={onClose}
         >
           <X size={21} />
@@ -187,6 +199,7 @@ function SourceFact({
   source?: Source;
   onOpen: (id: string, page?: number) => void;
 }) {
+  const { tr, lang, locale } = useLocale();
   return (
     <div className="fact">
       <div className="between">
@@ -196,7 +209,7 @@ function SourceFact({
       <p className="fact-date">
         {fact.value
           ? String(fact.value).replace("T", " · ")
-          : "Unknown / needs clarification"}
+          : tr("Unknown / needs clarification")}
       </p>
       <blockquote>{fact.quote}</blockquote>
       <button
@@ -204,11 +217,11 @@ function SourceFact({
         onClick={() => onOpen(fact.source_id, fact.page)}
       >
         <FileText size={14} />
-        Page {fact.page}
+        {tr("Page")} {fact.page}
         <ArrowUpRight size={14} />
       </button>
       <small>
-        Original evidence · {fact.timezone} · {fact.kind}
+        {tr("Original evidence ·")} {fact.timezone} · {label(fact.kind, lang)}
       </small>
     </div>
   );
@@ -226,6 +239,7 @@ function Timeline({
   list: boolean;
   setList: (v: boolean) => void;
 }) {
+  const { tr, lang, locale } = useLocale();
   const timezone = data.settings.timezone;
   const days = Array.from({ length: 5 }, (_, i) => {
     const d = new Date(data.settings.anchor + "T12:00:00+05:00");
@@ -234,7 +248,7 @@ function Timeline({
   });
   const blocks = plan?.blocks || [];
   const hour = (value: string) => {
-    const p = new Intl.DateTimeFormat("en", {
+    const p = new Intl.DateTimeFormat(locale, {
       timeZone: timezone,
       hour: "numeric",
       minute: "numeric",
@@ -246,7 +260,7 @@ function Timeline({
     );
   };
   const weekday = (v: string) =>
-    new Intl.DateTimeFormat("en", {
+    new Intl.DateTimeFormat(locale, {
       timeZone: timezone,
       weekday: "short",
     }).format(new Date(v));
@@ -264,7 +278,7 @@ function Timeline({
     (_, i) => startHour + i,
   );
   const offset =
-    new Intl.DateTimeFormat("en", {
+    new Intl.DateTimeFormat(locale, {
       timeZone: timezone,
       timeZoneName: "shortOffset",
     })
@@ -279,21 +293,15 @@ function Timeline({
       <div className="calendar-toolbar">
         <div className="calendar-range">
           <CalendarDays size={18} />
-          <strong>
-            {days[0].toLocaleDateString("en", {
-              month: "long",
-              day: "numeric",
-            })}
-            –{days[4].getDate()}
-          </strong>
+          <strong>{weekRange(days[0], days[4], lang)}</strong>
           <span>{days[0].getFullYear()}</span>
         </div>
         <div className="segmented">
           <button aria-pressed={!list} onClick={() => setList(false)}>
-            Week
+            {tr("Week")}
           </button>
           <button aria-pressed={list} onClick={() => setList(true)}>
-            List
+            {tr("List")}
           </button>
         </div>
       </div>
@@ -314,10 +322,11 @@ function Timeline({
           ) : (
             <div className="empty">
               <CalendarDays />
-              <h3>Your study windows are ready.</h3>
+              <h3>{tr("Your study windows are ready.")}</h3>
               <p>
-                Resolve the evidence and repair your week to allocate study
-                blocks.
+                {tr(
+                  "Resolve the evidence and repair your week to allocate study blocks.",
+                )}
               </p>
             </div>
           )}
@@ -336,11 +345,7 @@ function Timeline({
                 key={i}
                 className={"day-header " + (i === 0 ? "active-day" : "")}
               >
-                <span>
-                  {day
-                    .toLocaleDateString("en", { weekday: "short" })
-                    .toUpperCase()}
-                </span>
+                <span>{weekdayText(day, lang).toUpperCase()}</span>
                 <strong>{day.getDate()}</strong>
               </div>
             ))}
@@ -352,7 +357,7 @@ function Timeline({
               ))}
             </div>
             {days.map((day, i) => {
-              const wd = day.toLocaleDateString("en", { weekday: "short" });
+              const wd = day.toLocaleDateString(locale, { weekday: "short" });
               return (
                 <div key={i} className="day-column">
                   {hours.map((_, h) => (
@@ -373,7 +378,7 @@ function Timeline({
                           height: (hour(w.end) - hour(w.start)) * 64,
                         }}
                       >
-                        <span>Available</span>
+                        <span>{tr("Available")}</span>
                       </div>
                     ))}
                   {(data.calendar_events || [])
@@ -396,12 +401,14 @@ function Timeline({
                       >
                         <LockKeyhole size={12} />
                         <span>
-                          {e.summary}
+                          {e.id === "protected-commitment"
+                            ? tr("Protected commitment")
+                            : e.summary}
                           <br />
                           <small>
                             {data.calendar_mode === "live"
-                              ? "Live calendar"
-                              : "Illustrative / imported snapshot"}
+                              ? tr("Live calendar")
+                              : tr("Illustrative / imported snapshot")}
                           </small>
                         </span>
                       </div>
@@ -451,7 +458,7 @@ function Timeline({
                                 new Date(b.start).getTime()) /
                                 60000,
                             )}
-                            m
+                            {tr("m")}
                           </span>
                           <strong>{task?.title}</strong>
                           <span className="block-meta">
@@ -462,11 +469,11 @@ function Timeline({
                             )}
                             {applied
                               ? data.calendar_mode === "live"
-                                ? "Verified in Calendar"
-                                : "Verified locally"
+                                ? tr("Verified in Calendar")
+                                : tr("Verified locally")
                               : b.pinned
-                                ? "Pinned"
-                                : "Source linked"}
+                                ? tr("Pinned")
+                                : tr("Source linked")}
                           </span>
                         </button>
                       );
@@ -480,22 +487,22 @@ function Timeline({
       <footer className="calendar-footer">
         <span>
           <i className="key blue" />
-          Suggested study
+          {tr("Suggested study")}
         </span>
         <span>
           <i className="key grey" />
-          Protected time
+          {tr("Protected time")}
         </span>
         <span>
           <i className="key outline" />
-          Available window
+          {tr("Available window")}
         </span>
         <small>
           {plan?.invalidated
-            ? "Outdated plan · repair required"
+            ? tr("Outdated plan · repair required")
             : plan
-              ? "Validated allocation"
-              : "No study blocks generated"}
+              ? tr("Validated allocation")
+              : tr("No study blocks generated")}
         </small>
       </footer>
     </section>
@@ -510,37 +517,38 @@ function RunRail({
   resource: string | null;
   close: () => void;
 }) {
+  const { tr, lang, locale } = useLocale();
   const recent = events.slice(-9).reverse();
   return (
     <aside className="run-rail">
       <div className="between">
         <span className="eyebrow light">
           <Radio size={14} />
-          EXECUTION
+          {tr("EXECUTION")}
         </span>
         <button
           className="icon-button light"
-          aria-label="Close inspector"
+          aria-label={tr("Close inspector")}
           onClick={close}
         >
           <PanelRightClose size={17} />
         </button>
       </div>
       <h2>
-        Clarity at
+        {tr("Clarity at")}
         <br />
-        every step.
+        {tr("every step.")}
       </h2>
       <p className="rail-intro">
-        Actual operations, observations
+        {tr("Actual operations, observations")}
         <br />
-        and outcomes from this workspace.
+        {tr("and outcomes from this workspace.")}
       </p>
       <div className="resource-state">
         <span className="status-dot" />
         {resource
-          ? "Managed resource configured"
-          : "Agent Engine not connected"}
+          ? tr("Managed resource configured")
+          : tr("Agent Engine not connected")}
       </div>
       <div className="run-events" aria-live="polite">
         {recent.map((e) => (
@@ -556,17 +564,17 @@ function RunRail({
                 <Check size={11} />
               )}
             </span>
-            <span className="event-type">
-              {e.tool || e.type.replaceAll("_", " ")}
-            </span>
-            <p>{e.summary}</p>
+            <span className="event-type">{label(e.tool || e.type, lang)}</span>
+            <p>{eventSummary(e, lang)}</p>
             <small>
-              {new Date(e.timestamp).toLocaleTimeString("en", {
+              {new Date(e.timestamp).toLocaleTimeString(locale, {
                 hour: "2-digit",
                 minute: "2-digit",
               })}
-              {e.duration_ms !== undefined ? ` · ${e.duration_ms}ms` : ""}
-              {e.mode ? ` · ${e.mode}` : ""}
+              {e.duration_ms !== undefined
+                ? ` · ${tr("{value} ms", { value: e.duration_ms })}`
+                : ""}
+              {e.mode ? ` · ${label(e.mode, lang)}` : ""}
             </small>
           </div>
         ))}
@@ -574,9 +582,9 @@ function RunRail({
       <div className="rail-foot">
         <ShieldCheck size={17} />
         <p>
-          Plans are proposals.
+          {tr("Plans are proposals.")}
           <br />
-          <strong>You approve every external write.</strong>
+          <strong>{tr("You approve every external write.")}</strong>
         </p>
       </div>
     </aside>
@@ -587,7 +595,8 @@ export default function App() {
   const [calendars, setCalendars] = useState<
     { id: string; name: string; role: string; primary: boolean }[]
   >([]);
-  const [lang, setLang] = useState<Lang>("en");
+  const { lang, setLang, tr, locale } = useLocale();
+  const duration = (minutes: number) => formatDuration(minutes, lang);
   const [judgeInvite, setJudgeInvite] = useState("");
   const t = langs[lang];
   const [data, setData] = useState<Snapshot | null>(null),
@@ -768,15 +777,7 @@ export default function App() {
   }
   async function importFile(file?: File) {
     await work("Importing selected file", async () => {
-      if (window.relay && !file) {
-        const chosen = await window.relay.importFile();
-        if (!chosen) return;
-        await api("/import-native", "POST", chosen);
-      } else if (file) {
-        const f = new FormData();
-        f.append("file", file);
-        await api("/import", "POST", f);
-      }
+      if (!(await importSelectedSource(file))) return;
       await refresh();
       setView("evidence");
       setNotice(
@@ -820,15 +821,29 @@ export default function App() {
           R<span>/</span>
         </div>
         <h1>CampusPulse RELAY</h1>
+        <select
+          data-testid="boot-language"
+          aria-label={tr("Language")}
+          value={lang}
+          onChange={(e) => setLang(e.target.value as Lang)}
+        >
+          <option value="en">English</option>
+          <option value="ru">Русский</option>
+          <option value="kk">Қазақша</option>
+        </select>
         {error ? (
           <>
-            <p role="alert">{error}</p>
+            <p role="alert">{errorMessage(error, lang)}</p>
+            <details className="diagnostic">
+              <summary>{tr("Original diagnostic")}</summary>
+              <code>{error}</code>
+            </details>
             <button className="primary" onClick={() => location.reload()}>
               <RefreshCw size={16} />
-              Retry connection
+              {tr("Retry connection")}
             </button>
             <button className="secondary" onClick={() => void connectGoogle()}>
-              Connect Google in system browser
+              {tr("Connect Google in system browser")}
               <ArrowUpRight size={16} />
             </button>
             <form
@@ -849,7 +864,7 @@ export default function App() {
               }}
             >
               <label htmlFor="judge-invite">
-                Owner-issued one-use judge invitation
+                {tr("Owner-issued one-use judge invitation")}
               </label>
               <input
                 id="judge-invite"
@@ -865,18 +880,19 @@ export default function App() {
                 disabled={!!busy || judgeInvite.trim().length < 40}
                 type="submit"
               >
-                Open isolated demo
+                {tr("Open isolated demo")}
               </button>
             </form>
             <p>
-              Start the local gateway with scripts/dev.ps1, or configure the
-              deployed gateway.
+              {tr(
+                "Start the local gateway with scripts/dev.ps1, or configure the deployed gateway.",
+              )}
             </p>
           </>
         ) : (
           <>
             <LoaderCircle className="spin" />
-            <p>Opening your workspace…</p>
+            <p>{tr("Opening your workspace…")}</p>
           </>
         )}
       </main>
@@ -892,9 +908,9 @@ export default function App() {
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main">
-        Skip to main content
+        {tr("Skip to main content")}
       </a>
-      <nav className="side-nav" aria-label="Main navigation">
+      <nav className="side-nav" aria-label={tr("Main navigation")}>
         <button
           className="brand-symbol"
           title="CampusPulse RELAY"
@@ -938,7 +954,7 @@ export default function App() {
           <div className="wordmark">
             CampusPulse <strong>RELAY</strong>
             <span className="top-divider" />
-            <span className="workspace-label">Academic workspace</span>
+            <span className="workspace-label">{tr("Academic workspace")}</span>
           </div>
           <div className="top-right">
             <StatusPill
@@ -951,15 +967,16 @@ export default function App() {
               }
             >
               {offline
-                ? "Offline snapshot"
+                ? tr("Offline snapshot")
                 : data.settings.mode === "illustrative"
-                  ? "Illustrative workspace"
+                  ? tr("Illustrative workspace")
                   : data.settings.mode === "judge"
-                    ? "Exclusive judge demo"
-                    : "Connected workspace"}
+                    ? tr("Exclusive judge demo")
+                    : tr("Connected workspace")}
             </StatusPill>
             <select
-              aria-label="Language"
+              aria-label={tr("Language")}
+              data-testid="language"
               value={lang}
               onChange={(e) => setLang(e.target.value as Lang)}
             >
@@ -970,7 +987,7 @@ export default function App() {
             <button
               className="avatar"
               onClick={() => setView("connections")}
-              aria-label="Workspace connections"
+              aria-label={tr("Workspace connections")}
             >
               CP
             </button>
@@ -998,7 +1015,7 @@ export default function App() {
                 );
               }}
             >
-              Reconnect & revalidate
+              {tr("Reconnect & revalidate")}
             </button>
           </div>
         ) : null}
@@ -1007,15 +1024,15 @@ export default function App() {
             {data.settings.mode === "judge" && (
               <div className="offline-banner">
                 <ShieldCheck size={18} />
-                Dedicated judge workspace. Upload permitted demo coursework.
-                Calendar changes are real, require approval, and stay in your
-                exclusive demo calendar.
+                {tr(
+                  "Dedicated judge workspace. Upload permitted demo coursework. Calendar changes are real, require approval, and stay in your exclusive demo calendar.",
+                )}
               </div>
             )}
             <section className="hero">
               <div>
                 <div className="eyebrow">
-                  <span className="pulse-dot" /> MONDAY START ·{" "}
+                  <span className="pulse-dot" /> {tr("MONDAY START ·")}{" "}
                   {data.settings.timezone}
                 </div>
                 <h1>
@@ -1033,12 +1050,20 @@ export default function App() {
                   {view === "week"
                     ? t.sub
                     : view === "evidence"
-                      ? "Every deadline deserves a source. Every conflict deserves a choice."
+                      ? tr(
+                          "Every deadline deserves a source. Every conflict deserves a choice.",
+                        )
                       : view === "recovery"
-                        ? "Make room for what matters, within the time you actually have."
+                        ? tr(
+                            "Make room for what matters, within the time you actually have.",
+                          )
                         : view === "activity"
-                          ? "An honest record of what was called, observed and applied."
-                          : "Choose exactly what RELAY can read and change."}
+                          ? tr(
+                              "An honest record of what was called, observed and applied.",
+                            )
+                          : tr(
+                              "Choose exactly what RELAY can read and change.",
+                            )}
                 </p>
               </div>
               <div className="hero-actions">
@@ -1057,7 +1082,7 @@ export default function App() {
                 </button>
                 <span className="hero-note">
                   <ShieldCheck size={13} />
-                  Nothing changes without your approval
+                  {tr("Nothing changes without your approval")}
                 </span>
               </div>
             </section>
@@ -1065,12 +1090,16 @@ export default function App() {
               <div className="error-banner" role="alert">
                 <TriangleAlert size={18} />
                 <div>
-                  <strong>We couldn’t complete that action.</strong>
-                  <p>{error}</p>
+                  <strong>{tr("We couldn’t complete that action.")}</strong>
+                  <p>{errorMessage(error, lang)}</p>
+                  <details className="diagnostic">
+                    <summary>{tr("Original diagnostic")}</summary>
+                    <code>{error}</code>
+                  </details>
                 </div>
                 <button
                   className="icon-button"
-                  aria-label="Dismiss error"
+                  aria-label={tr("Dismiss error")}
                   onClick={() => setError("")}
                 >
                   <X size={17} />
@@ -1080,9 +1109,9 @@ export default function App() {
             {notice ? (
               <div className="notice" role="status">
                 <Check size={16} />
-                {notice}
+                {operational(notice, lang)}
                 <button
-                  aria-label="Dismiss notification"
+                  aria-label={tr("Dismiss notification")}
                   onClick={() => setNotice("")}
                 >
                   <X size={14} />
@@ -1107,7 +1136,7 @@ export default function App() {
                             (task) => task.id === unresolved[0].task_id,
                           )?.title
                         }{" "}
-                        · two sources disagree · your choice is needed
+                        {tr("· two sources disagree · your choice is needed")}
                       </small>
                     </span>
                     <span className="review-link">
@@ -1118,18 +1147,18 @@ export default function App() {
                 ) : (
                   <div className="all-clear">
                     <ShieldCheck size={17} />
-                    Evidence checked.{" "}
+                    {tr("Evidence checked.")}{" "}
                     {data.conflicts.length
-                      ? "Your deadline choice is recorded."
-                      : "No deadline conflicts detected."}
+                      ? tr("Your deadline choice is recorded.")
+                      : tr("No deadline conflicts detected.")}
                     <button onClick={() => setView("evidence")}>
-                      View sources <ArrowUpRight size={14} />
+                      {tr("View sources")} <ArrowUpRight size={14} />
                     </button>
                   </div>
                 )}
                 <div className="section-heading">
                   <div>
-                    <span className="eyebrow">THE WEEK AHEAD</span>
+                    <span className="eyebrow">{tr("THE WEEK AHEAD")}</span>
                     <h2>{t.timeline}</h2>
                   </div>
                   <button
@@ -1144,7 +1173,7 @@ export default function App() {
                     }
                   >
                     <RefreshCw size={15} />
-                    Refresh
+                    {tr("Refresh")}
                   </button>
                 </div>
                 <Timeline
@@ -1161,24 +1190,44 @@ export default function App() {
                   <div>
                     <strong>
                       {data.plan
-                        ? `${duration(data.plan.required_minutes)} of work · ${duration(data.plan.capacity_minutes)} available`
+                        ? tr("{work} of work · {capacity} available", {
+                            work: duration(data.plan.required_minutes),
+                            capacity: duration(data.plan.capacity_minutes),
+                          })
                         : data.tasks.length
-                          ? `${duration(data.tasks.reduce((sum, t) => sum + (t.minutes || 0), 0))} known estimated work${data.tasks.some((t) => !t.minutes) ? " · some effort unknown" : ""}`
-                          : "Your week starts with a source."}
+                          ? tr("{work} known estimated work", {
+                              work: duration(
+                                data.tasks.reduce(
+                                  (sum, t) => sum + (t.minutes || 0),
+                                  0,
+                                ),
+                              ),
+                            }) +
+                            (data.tasks.some((t) => !t.minutes)
+                              ? tr(" · some effort unknown")
+                              : "")
+                          : tr("Your week starts with a source.")}
                     </strong>
                     <p>
                       {data.plan
                         ? data.plan.feasible
-                          ? "Every hard deadline checked. Effort remains an estimate."
-                          : `${data.plan.unscheduled_minutes} minutes don’t fit. Review explicit alternatives.`
-                        : "Resolve the conflicting deadline to calculate a feasible plan."}
+                          ? tr(
+                              "Every hard deadline checked. Effort remains an estimate.",
+                            )
+                          : tr(
+                              "{count} minutes don’t fit. Review explicit alternatives.",
+                              { count: data.plan.unscheduled_minutes },
+                            )
+                        : tr(
+                            "Resolve the conflicting deadline to calculate a feasible plan.",
+                          )}
                     </p>
                   </div>
                   <div className="capacity-value">
                     {data.plan
                       ? duration(Math.max(0, data.plan.slack_minutes))
                       : "—"}
-                    <span>capacity buffer</span>
+                    <span>{tr("capacity buffer")}</span>
                   </div>
                 </div>
                 <div className="section-heading next-heading">
@@ -1188,7 +1237,7 @@ export default function App() {
                     onClick={() => input.current?.click()}
                   >
                     <Plus size={16} />
-                    Import a source
+                    {tr("Import a source")}
                   </button>
                 </div>
                 <div className="task-grid">
@@ -1208,24 +1257,24 @@ export default function App() {
                           <Clock3 size={14} />
                           {task.minutes
                             ? duration(task.minutes)
-                            : "Effort unknown"}
+                            : tr("Effort unknown")}
                         </span>
                         <span className={!task.due ? "missing" : ""}>
                           {task.due
-                            ? new Intl.DateTimeFormat("en", {
-                                weekday: "short",
-                                hour: "numeric",
-                                minute: "2-digit",
-                                timeZone: data.settings.timezone,
-                              }).format(new Date(task.due))
-                            : "Deadline needs your choice"}
+                            ? deadlineText(
+                                task.due,
+                                lang,
+                                data.settings.timezone,
+                              )
+                            : tr("Deadline needs your choice")}
                         </span>
                       </div>
                       <footer>
                         <Link2 size={12} />
-                        {task.source_ids.length} evidence source
-                        {task.source_ids.length === 1 ? "" : "s"}
-                        <span>{task.completion.replaceAll("_", " ")}</span>
+                        {tr("{count} evidence sources", {
+                          count: task.source_ids.length,
+                        })}
+                        <span>{label(task.completion, lang)}</span>
                       </footer>
                     </button>
                   ))}
@@ -1247,13 +1296,14 @@ export default function App() {
                         tone={c.status === "resolved" ? "success" : "warning"}
                       >
                         {c.status === "resolved"
-                          ? "Choice recorded"
-                          : "Conflicting deadlines"}
+                          ? tr("Choice recorded")
+                          : tr("Conflicting deadlines")}
                       </StatusPill>
                     </div>
                     <p>
-                      Both passages are preserved. A newer fetch alone does not
-                      establish authority.
+                      {tr(
+                        "Both passages are preserved. A newer fetch alone does not establish authority.",
+                      )}
                     </p>
                     <div className="fact-grid">
                       {c.facts.map((f) => (
@@ -1291,8 +1341,8 @@ export default function App() {
                               <Check size={16} />
                             ) : null}
                             {c.resolution?.fact_id === f.id
-                              ? "Selected deadline"
-                              : "Use this deadline"}
+                              ? tr("Selected deadline")
+                              : tr("Use this deadline")}
                           </button>
                         </div>
                       ))}
@@ -1301,7 +1351,7 @@ export default function App() {
                 ))}
                 <div className="section-heading">
                   <h2>
-                    Source library{" "}
+                    {tr("Source library")}{" "}
                     <span className="count">{data.sources.length}</span>
                   </h2>
                   <button
@@ -1311,7 +1361,7 @@ export default function App() {
                     }
                   >
                     <Upload size={16} />
-                    Import selected file
+                    {tr("Import selected file")}
                   </button>
                 </div>
                 <div className="source-list">
@@ -1323,8 +1373,9 @@ export default function App() {
                       <span>
                         <strong>{s.title}</strong>
                         <small>
-                          {s.mode.replaceAll("_", " ")} · {s.facts.length}{" "}
-                          evidence facts · version {shortHash(s.version)}
+                          {label(s.mode, lang)} · {s.facts.length}{" "}
+                          {tr("evidence facts · version")}{" "}
+                          {shortHash(s.version)}
                         </small>
                       </span>
                       <ArrowUpRight size={18} />
@@ -1332,9 +1383,9 @@ export default function App() {
                   ))}
                 </div>
                 <p className="fine-print">
-                  Text PDF, Markdown, TXT and normalized ICS · up to 10 MiB /
-                  100 PDF pages. Scanned PDF OCR is not configured. Missing and
-                  ambiguous fields stay unknown.
+                  {tr(
+                    "Text PDF, Markdown, TXT and normalized ICS · up to 10 MiB / 100 PDF pages. Scanned PDF OCR is not configured. Missing and ambiguous fields stay unknown.",
+                  )}
                 </p>
               </div>
             ) : null}
@@ -1355,7 +1406,7 @@ export default function App() {
                     }
                   >
                     <ArrowDown size={16} />
-                    Lose Wednesday afternoon
+                    {tr("Lose Wednesday afternoon")}
                   </button>
                   <button
                     className="secondary"
@@ -1372,14 +1423,14 @@ export default function App() {
                     }
                   >
                     <Plus size={16} />
-                    One hour more effort
+                    {tr("One hour more effort")}
                   </button>
                   {scenario ? (
                     <button
                       className="text-button"
                       onClick={() => setScenario(null)}
                     >
-                      Return to baseline
+                      {tr("Return to baseline")}
                       <X size={15} />
                     </button>
                   ) : null}
@@ -1397,54 +1448,62 @@ export default function App() {
                         tone={activePlan.feasible ? "success" : "warning"}
                       >
                         {scenario
-                          ? "What-if · baseline unchanged"
+                          ? tr("What-if · baseline unchanged")
                           : activePlan.invalidated
-                            ? "Outdated plan"
+                            ? tr("Outdated plan")
                             : activePlan.feasible
-                              ? "Feasible allocation"
-                              : "More time is needed"}
+                              ? tr("Feasible allocation")
+                              : tr("More time is needed")}
                       </StatusPill>
                       <h2>
                         {activePlan.feasible
-                          ? "A week that fits."
-                          : "This week needs an explicit tradeoff."}
+                          ? tr("A week that fits.")
+                          : tr("This week needs an explicit tradeoff.")}
                       </h2>
                       <div className="plan-stats">
                         <p>
                           <strong>
                             {duration(activePlan.required_minutes)}
                           </strong>
-                          <span>estimated work</span>
+                          <span>{tr("estimated work")}</span>
                         </p>
                         <p>
                           <strong>
                             {duration(activePlan.capacity_minutes)}
                           </strong>
-                          <span>available capacity</span>
+                          <span>{tr("available capacity")}</span>
                         </p>
                         <p>
                           <strong>
                             {duration(activePlan.unscheduled_minutes)}
                           </strong>
-                          <span>unscheduled</span>
+                          <span>{tr("unscheduled")}</span>
                         </p>
                         <p>
-                          <strong>{activePlan.solver_status}</strong>
-                          <span>solver result</span>
+                          <strong>
+                            {label(activePlan.solver_status, lang)}
+                          </strong>
+                          <span>{tr("solver result")}</span>
                         </p>
                       </div>
                       {Object.entries(activePlan.unscheduled_by_task).map(
                         ([id, m]) => (
                           <p key={id}>
                             {data.tasks.find((t) => t.id === id)?.title}: {m}{" "}
-                            minutes remain unscheduled before its hard deadline.
+                            {tr(
+                              "minutes remain unscheduled before its hard deadline.",
+                            )}
                           </p>
                         ),
                       )}
                       <p>
                         {activePlan.feasible
-                          ? "Hard constraints validated. No calibrated probability or grade prediction is implied."
-                          : "Add availability before the affected deadline, revise the effort estimate explicitly, or request an instructor-approved extension. RELAY never changes the real deadline."}
+                          ? tr(
+                              "Hard constraints validated. No calibrated probability or grade prediction is implied.",
+                            )
+                          : tr(
+                              "Add availability before the affected deadline, revise the effort estimate explicitly, or request an instructor-approved extension. RELAY never changes the real deadline.",
+                            )}
                       </p>
                     </div>
                     <Timeline
@@ -1456,10 +1515,11 @@ export default function App() {
                     />
                     <div className="approval-cta">
                       <div>
-                        <h3>Ready to make space?</h3>
+                        <h3>{tr("Ready to make space?")}</h3>
                         <p>
-                          Review the exact events and destination before
-                          approving.
+                          {tr(
+                            "Review the exact events and destination before approving.",
+                          )}
                         </p>
                       </div>
                       <button
@@ -1483,16 +1543,16 @@ export default function App() {
                         }
                       >
                         <ShieldCheck size={17} />
-                        Review calendar actions
+                        {tr("Review calendar actions")}
                         <ArrowRight size={17} />
                       </button>
                     </div>
                     <div className="assumptions">
-                      <h3>Assumptions stay visible</h3>
+                      <h3>{tr("Assumptions stay visible")}</h3>
                       {activePlan.assumptions.map((a) => (
                         <p key={a}>
                           <Check size={14} />
-                          {a}
+                          {operational(a, lang)}
                         </p>
                       ))}
                     </div>
@@ -1500,16 +1560,17 @@ export default function App() {
                 ) : (
                   <div className="empty panel">
                     <Zap size={32} />
-                    <h2>Start with the evidence.</h2>
+                    <h2>{tr("Start with the evidence.")}</h2>
                     <p>
-                      Resolve the deadline conflict, then repair your week to
-                      compare scenarios.
+                      {tr(
+                        "Resolve the deadline conflict, then repair your week to compare scenarios.",
+                      )}
                     </p>
                     <button
                       className="secondary"
                       onClick={() => setView("evidence")}
                     >
-                      Review evidence
+                      {tr("Review evidence")}
                       <ArrowRight size={16} />
                     </button>
                   </div>
@@ -1519,8 +1580,10 @@ export default function App() {
             {view === "activity" ? (
               <>
                 <div className="section-heading">
-                  <h2>Verified receipts</h2>
-                  <StatusPill>{data.receipts.length} receipts</StatusPill>
+                  <h2>{tr("Verified receipts")}</h2>
+                  <StatusPill>
+                    {data.receipts.length} {tr("receipts")}
+                  </StatusPill>
                 </div>
                 {data.receipts.length ? (
                   data.receipts.map((r) => (
@@ -1529,32 +1592,39 @@ export default function App() {
                         <h3>
                           <CheckCheck size={20} />
                           {r.status === "verified"
-                            ? "Read-back completed"
-                            : "Partial apply — inspect outcomes"}
+                            ? tr("Read-back completed")
+                            : tr("Partial apply — inspect outcomes")}
                         </h3>
                         <StatusPill
                           tone={r.mode === "live" ? "success" : "warning"}
                         >
                           {r.mode === "live"
-                            ? "Live Calendar"
-                            : "Illustrative local calendar"}
+                            ? tr("Live Calendar")
+                            : tr("Illustrative local calendar")}
                         </StatusPill>
                       </div>
                       <p className="mono">{r.calendar_id}</p>
                       {r.outcomes.map((o) => (
                         <div className="receipt-line" key={o.event_id}>
-                          <span>{o.status}</span>
+                          <span>{label(o.status, lang)}</span>
                           <code>{o.event_id.slice(0, 16)}</code>
                           {o.url ? (
                             <button
                               className="text-button"
                               onClick={() => external(o.url!)}
                             >
-                              Open Calendar
+                              {tr("Open Calendar")}
                               <ArrowUpRight size={13} />
                             </button>
                           ) : null}
-                          {o.error ? <small>{o.error.message}</small> : null}
+                          {o.error ? (
+                            <small>
+                              {errorMessage(
+                                o.error.code + ": " + o.error.message,
+                                lang,
+                              )}
+                            </small>
+                          ) : null}
                         </div>
                       ))}
                       <div className="row">
@@ -1571,7 +1641,7 @@ export default function App() {
                           }
                         >
                           <RefreshCw size={15} />
-                          Verify again
+                          {tr("Verify again")}
                         </button>
                         <button
                           className="text-button"
@@ -1587,7 +1657,7 @@ export default function App() {
                           }
                         >
                           <Undo2 size={15} />
-                          Undo unchanged owned events
+                          {tr("Undo unchanged owned events")}
                         </button>
                       </div>
                     </section>
@@ -1595,17 +1665,20 @@ export default function App() {
                 ) : (
                   <div className="empty panel">
                     <ShieldCheck size={28} />
-                    <h3>No actions applied yet.</h3>
+                    <h3>{tr("No actions applied yet.")}</h3>
                     <p>
-                      A receipt appears after you review and approve concrete
-                      calendar events.
+                      {tr(
+                        "A receipt appears after you review and approve concrete calendar events.",
+                      )}
                     </p>
                   </div>
                 )}
                 <div className="section-heading">
-                  <h2>Execution journal</h2>
+                  <h2>{tr("Execution journal")}</h2>
                   <small>
-                    Durable, ordered events · reconnect uses sequence IDs
+                    {tr(
+                      "Durable, ordered events · reconnect uses sequence IDs",
+                    )}
                   </small>
                 </div>
                 <div className="journal">
@@ -1623,14 +1696,12 @@ export default function App() {
                           )}
                         </span>
                         <div>
-                          <strong>
-                            {e.tool || e.type.replaceAll("_", " ")}
-                          </strong>
-                          <p>{e.summary}</p>
+                          <strong>{label(e.tool || e.type, lang)}</strong>
+                          <p>{eventSummary(e, lang)}</p>
                         </div>
                         <small>
                           {e.duration_ms !== undefined
-                            ? `${e.duration_ms}ms`
+                            ? tr("{value} ms", { value: e.duration_ms })
                             : "—"}
                         </small>
                       </div>
@@ -1649,16 +1720,18 @@ export default function App() {
                       tone={data.agent.configured ? "neutral" : "warning"}
                     >
                       {data.agent.configured
-                        ? "Configured · unverified"
-                        : "Authentication required"}
+                        ? tr("Configured · unverified")
+                        : tr("Authentication required")}
                     </StatusPill>
-                    <h2>Gemini + Agent Engine</h2>
+                    <h2>{tr("Gemini + Agent Engine")}</h2>
                     <p>
-                      The managed reasoningEngine is the actual agent query
-                      path. Its live deployment is not verified yet.
+                      {tr(
+                        "The managed reasoningEngine is the actual agent query path. Its live deployment is not verified yet.",
+                      )}
                     </p>
                     <code>
-                      {data.agent.resource || "No managed resource connected"}
+                      {data.agent.resource ||
+                        tr("No managed resource connected")}
                     </code>
                     <button
                       className="secondary"
@@ -1668,7 +1741,7 @@ export default function App() {
                         )
                       }
                     >
-                      Open Google Cloud
+                      {tr("Open Google Cloud")}
                       <ArrowUpRight size={16} />
                     </button>
                   </section>
@@ -1676,8 +1749,10 @@ export default function App() {
                     <span className="connection-icon">
                       <GitBranch size={24} />
                     </span>
-                    <StatusPill tone="neutral">Public GitHub source</StatusPill>
-                    <h2>Course repository</h2>
+                    <StatusPill tone="neutral">
+                      {tr("Public GitHub source")}
+                    </StatusPill>
+                    <h2>{tr("Course repository")}</h2>
                     <p>{data.settings.github_repo}</p>
                     <button
                       className="secondary"
@@ -1698,7 +1773,7 @@ export default function App() {
                       }
                     >
                       <RefreshCw size={16} />
-                      Fetch live course source
+                      {tr("Fetch live course source")}
                     </button>
                     <label className="toggle-row">
                       <input
@@ -1713,12 +1788,14 @@ export default function App() {
                           })
                         }
                       />
-                      Enable server polling every{" "}
-                      {data.settings.poll_seconds || 300}s
+                      {tr("Poll every {count} seconds", {
+                        count: data.settings.poll_seconds || 300,
+                      })}
                     </label>
                     <small>
-                      Local server polling continues without a chat prompt.
-                      Hosted scheduled execution requires GCP deployment.
+                      {tr(
+                        "Local server polling continues without a chat prompt. Hosted scheduled execution requires GCP deployment.",
+                      )}
                     </small>
                   </section>
                   <section className="panel connection-card">
@@ -1729,24 +1806,25 @@ export default function App() {
                       tone={data.settings.calendar_live ? "success" : "warning"}
                     >
                       {data.settings.calendar_live
-                        ? "Live connection"
-                        : "Illustrative local adapter"}
+                        ? tr("Live connection")
+                        : tr("Illustrative local adapter")}
                     </StatusPill>
-                    <h2>Study calendar</h2>
+                    <h2>{tr("Study calendar")}</h2>
                     <button
                       className="text-button"
                       onClick={() => void connectGoogle()}
                     >
-                      Connect Google in system browser
+                      {tr("Connect Google in system browser")}
                       <ArrowUpRight size={14} />
                     </button>
                     <p>
-                      Writes are confined to a selected, authorized calendar. A
-                      service identity needs explicit sharing or consent.
+                      {tr(
+                        "Writes are confined to a selected, authorized calendar. A service identity needs explicit sharing or consent.",
+                      )}
                     </p>
                     <code>
                       {data.settings.calendar_id ||
-                        "No authorized calendar selected"}
+                        tr("No authorized calendar selected")}
                     </code>
                     <button
                       className="text-button"
@@ -1767,7 +1845,7 @@ export default function App() {
                         )
                       }
                     >
-                      Choose an authorized calendar
+                      {tr("Choose an authorized calendar")}
                       <ChevronRight size={14} />
                     </button>
                     {calendars.map((c) => (
@@ -1788,14 +1866,14 @@ export default function App() {
                         }
                       >
                         {c.name}
-                        {c.primary ? " · primary" : ""}
+                        {c.primary ? tr(" · primary") : ""}
                       </button>
                     ))}
                     <button
                       className="secondary"
                       onClick={() => external("https://calendar.google.com")}
                     >
-                      Open Google Calendar
+                      {tr("Open Google Calendar")}
                       <ArrowUpRight size={16} />
                     </button>
                   </section>
@@ -1804,12 +1882,13 @@ export default function App() {
                       <FolderOpen size={24} />
                     </span>
                     <StatusPill>
-                      {window.relay ? "Windows desktop" : "Web client"}
+                      {window.relay ? tr("Windows desktop") : tr("Web client")}
                     </StatusPill>
-                    <h2>Your files. Your choice.</h2>
+                    <h2>{tr("Your files. Your choice.")}</h2>
                     <p>
-                      Import only selected files. No arbitrary drive indexing.
-                      Offline snapshots never execute writes.
+                      {tr(
+                        "Import only selected files. No arbitrary drive indexing. Offline snapshots never execute writes.",
+                      )}
                     </p>
                     <button
                       className="secondary"
@@ -1818,7 +1897,7 @@ export default function App() {
                       }
                     >
                       <Upload size={16} />
-                      Import a file
+                      {tr("Import a file")}
                     </button>
                     {window.relay ? (
                       <button
@@ -1834,8 +1913,28 @@ export default function App() {
                           })
                         }
                       >
-                        Select a folder to watch
+                        {tr("Select a folder to watch")}
                         <FolderOpen size={15} />
+                      </button>
+                    ) : null}
+                    {window.relay ? (
+                      <button
+                        className="secondary"
+                        onClick={() =>
+                          void work("Send test notification", async () => {
+                            await window.relay?.notify(
+                              tr("RELAY notification check"),
+                              tr(
+                                "This is a local notification test. No cloud calls or calendar writes were made.",
+                              ),
+                            );
+                            setNotice(
+                              "Notification requested. Check the Windows banner or Notification Center; dispatch alone does not prove visibility.",
+                            );
+                          })
+                        }
+                      >
+                        {tr("Send test notification")}
                       </button>
                     ) : null}
                   </section>
@@ -1843,11 +1942,11 @@ export default function App() {
                 <div className="settings-row panel">
                   <Globe2 size={20} />
                   <div>
-                    <h3>Workspace timezone</h3>
-                    <p>Original evidence timestamps are preserved.</p>
+                    <h3>{tr("Workspace timezone")}</h3>
+                    <p>{tr("Original evidence timestamps are preserved.")}</p>
                   </div>
                   <input
-                    aria-label="Workspace timezone"
+                    aria-label={tr("Workspace timezone")}
                     defaultValue={data.settings.timezone}
                     onBlur={(e) => {
                       if (e.target.value !== data.settings.timezone)
@@ -1863,10 +1962,11 @@ export default function App() {
                 <div className="settings-row panel">
                   <Download size={20} />
                   <div>
-                    <h3>Export your workspace</h3>
+                    <h3>{tr("Export your workspace")}</h3>
                     <p>
-                      JSON snapshot with provenance, plans and receipts. No
-                      credentials.
+                      {tr(
+                        "JSON snapshot with provenance, plans and receipts. No credentials.",
+                      )}
                     </p>
                   </div>
                   <button
@@ -1882,19 +1982,24 @@ export default function App() {
                       URL.revokeObjectURL(a.href);
                     }}
                   >
-                    Export JSON
+                    {tr("Export JSON")}
                   </button>
                 </div>
               </>
             ) : null}
+            <p className="fine-print local-acceptance">
+              {tr(
+                "Five enhancements locally implemented · real Calendar and Gemini acceptance pending.",
+              )}
+            </p>
             <section className="assistant">
               <div className="assistant-label">
                 <Sparkles size={17} />
                 <strong>{t.assistant}</strong>
                 <span>
                   {data.agent.configured
-                    ? "Managed Gemini agent"
-                    : "Connect Agent Engine for live AI"}
+                    ? tr("Managed Gemini agent")
+                    : tr("Connect Agent Engine for live AI")}
                 </span>
               </div>
               <form
@@ -1904,14 +2009,14 @@ export default function App() {
                 }}
               >
                 <input
-                  aria-label="Message RELAY"
+                  aria-label={tr("Message RELAY")}
                   placeholder={t.placeholder}
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   maxLength={6000}
                 />
                 <button
-                  aria-label="Send to agent"
+                  aria-label={tr("Send to agent")}
                   disabled={!!busy || offline || !prompt.trim()}
                 >
                   <Send size={18} />
@@ -1920,7 +2025,7 @@ export default function App() {
               {answer ? (
                 <div className="answer">
                   <button
-                    aria-label="Dismiss agent response"
+                    aria-label={tr("Dismiss agent response")}
                     className="icon-button"
                     onClick={() => setAnswer("")}
                   >
@@ -1931,12 +2036,12 @@ export default function App() {
               ) : null}
             </section>
             <footer className="page-footer">
-              <span>See what changed. Know what to do next.</span>
+              <span>{tr("See what changed. Know what to do next.")}</span>
               <span>
                 {data.settings.mode === "illustrative"
-                  ? "Illustrative course content · local Calendar adapter"
+                  ? tr("Illustrative course content · local Calendar adapter")
                   : ""}{" "}
-                · {new Date(data.last_sync).toLocaleTimeString()}
+                · {new Date(data.last_sync).toLocaleTimeString(locale)}
               </span>
             </footer>
             <input
@@ -1960,7 +2065,7 @@ export default function App() {
           ) : (
             <button
               className="rail-open icon-button"
-              aria-label="Open inspector"
+              aria-label={tr("Open inspector")}
               onClick={() => setRail(true)}
             >
               <PanelRightOpen size={20} />
@@ -1971,7 +2076,7 @@ export default function App() {
       {busy ? (
         <div className="working" role="status">
           <LoaderCircle size={16} className="spin" />
-          {busy}
+          {operational(busy, lang)}
         </div>
       ) : null}
       {source ? (
@@ -1980,18 +2085,19 @@ export default function App() {
             <StatusPill
               tone={source.mode === "live_github" ? "success" : "warning"}
             >
-              {source.mode.replaceAll("_", " ")}
+              {label(source.mode, lang)}
             </StatusPill>
             <code>{source.content_hash}</code>
             <p>
-              Fetched {source.fetched_at} · version {source.version}
+              {tr("Fetched")} {source.fetched_at} {tr("· version")}{" "}
+              {source.version}
             </p>
             {source.remote?.url ? (
               <button
                 className="text-button"
                 onClick={() => external(source.remote!.url)}
               >
-                Open original commit
+                {tr("Open original commit")}
                 <ArrowUpRight size={14} />
               </button>
             ) : null}
@@ -2003,40 +2109,42 @@ export default function App() {
                 key={p.page}
                 onClick={() => setPage(p.page)}
               >
-                Page {p.page}
+                {tr("Page")} {p.page}
               </button>
             ))}
           </div>
           <pre className="source-text">
             {source.pages?.find((p) => p.page === page)?.text ||
-              "Page unavailable"}
+              tr("Page unavailable")}
           </pre>
           <p className="fine-print">
-            Source material is untrusted data. Its text cannot authorize
-            calendar writes or override application instructions.
+            {tr(
+              "Source material is untrusted data. Its text cannot authorize calendar writes or override application instructions.",
+            )}
           </p>
         </Modal>
       ) : null}
       {packet ? (
         <Modal title={packet.task.title} onClose={() => setPacket(null)} wide>
           <div className="packet-summary">
-            <StatusPill>
-              {packet.completion_origin.replaceAll("_", " ")}
-            </StatusPill>
-            <span>{packet.duration_assumption}</span>
+            <StatusPill>{label(packet.completion_origin, lang)}</StatusPill>
+            <span>{operational(packet.duration_assumption, lang)}</span>
           </div>
           <div className="next-action">
-            <span className="eyebrow">ONE SMALL NEXT ACTION</span>
-            <h3>{packet.next_action}</h3>
+            <span className="eyebrow">{tr("ONE SMALL NEXT ACTION")}</span>
+            <h3>{operational(packet.next_action, lang)}</h3>
           </div>
-          <h3>Deliverable checklist</h3>
+          <h3>{tr("Deliverable checklist")}</h3>
           {packet.task.user_overrides ? (
             <p className="fine-print">
-              Explicit inputs from you:{" "}
+              {tr("Explicit inputs from you:")}{" "}
               {Object.entries(packet.task.user_overrides)
-                .map(([key, value]) => `${key}: ${value}`)
+                .map(
+                  ([key, value]) =>
+                    `${label(key, lang)}: ${key === "completion" ? label(String(value), lang) : value}`,
+                )
                 .join(" · ")}
-              . Original source quotes are preserved below.
+              {tr(". Original source quotes are preserved below.")}
             </p>
           ) : null}
           {packet.checklist.length ? (
@@ -2050,8 +2158,9 @@ export default function App() {
             </ul>
           ) : (
             <p className="warning-text">
-              Rubric is missing. Define requirements before calling this
-              complete.
+              {tr(
+                "Rubric is missing. Define requirements before calling this complete.",
+              )}
             </p>
           )}
           <form
@@ -2079,7 +2188,7 @@ export default function App() {
             }}
           >
             <label>
-              Estimated effort (minutes)
+              {tr("Estimated effort (minutes)")}
               <input
                 name="minutes"
                 type="number"
@@ -2090,7 +2199,7 @@ export default function App() {
               />
             </label>
             <label>
-              Confirmed deadline (ISO with UTC offset)
+              {tr("Confirmed deadline (ISO with UTC offset)")}
               <input
                 name="due"
                 placeholder="2026-10-23T18:00:00+05:00"
@@ -2098,7 +2207,7 @@ export default function App() {
               />
             </label>
             <button className="secondary" type="submit">
-              Save explicit inputs
+              {tr("Save explicit inputs")}
             </button>
           </form>
           <div className="row">
@@ -2117,7 +2226,7 @@ export default function App() {
                 })
               }
             >
-              Mark worked on
+              {tr("Mark worked on")}
             </button>
             <button
               className="text-button"
@@ -2134,10 +2243,10 @@ export default function App() {
                 })
               }
             >
-              I completed this · self-report
+              {tr("I completed this · self-report")}
             </button>
           </div>
-          <h3>Follow the evidence</h3>
+          <h3>{tr("Follow the evidence")}</h3>
           <div className="evidence-chain">
             <button
               onClick={() => {
@@ -2145,7 +2254,7 @@ export default function App() {
                 void openSource(packet.task.source_ids[0]);
               }}
             >
-              Source
+              {tr("Source")}
             </button>
             <ArrowRight size={16} />
             <button
@@ -2153,7 +2262,7 @@ export default function App() {
                 document.getElementById("packet-checklist")?.focus()
               }
             >
-              Requirement
+              {tr("Requirement")}
             </button>
             <ArrowRight size={16} />
             <button
@@ -2163,7 +2272,7 @@ export default function App() {
                   ?.focus()
               }
             >
-              Task
+              {tr("Task")}
             </button>
             <ArrowRight size={16} />
             <button
@@ -2173,7 +2282,7 @@ export default function App() {
                 setList(true);
               }}
             >
-              Study block
+              {tr("Study block")}
             </button>
             <ArrowRight size={16} />
             <button
@@ -2182,7 +2291,7 @@ export default function App() {
                 setView("activity");
               }}
             >
-              Observation
+              {tr("Observation")}
             </button>
           </div>
           <div className="packet-facts">
@@ -2198,7 +2307,7 @@ export default function App() {
                 <span>
                   {f.quote}
                   <small>
-                    {sourceById(f.source_id)?.title} · page {f.page} ·{" "}
+                    {sourceById(f.source_id)?.title} {tr("· page")} {f.page} ·{" "}
                     {shortHash(f.source_version)}
                   </small>
                 </span>
@@ -2207,31 +2316,34 @@ export default function App() {
             ))}
           </div>
           <p className="fine-print">
-            Planned work and self-reported progress are distinct from externally
-            observed completion. Closing an issue does not prove full learning
-            or final submission.
+            {tr(
+              "Planned work and self-reported progress are distinct from externally observed completion. Closing an issue does not prove full learning or final submission.",
+            )}
           </p>
         </Modal>
       ) : null}
       {preview ? (
         <Modal
-          title="Review. Approve. Verify."
+          title={tr("Review. Approve. Verify.")}
           onClose={() => setPreview(null)}
           wide
         >
           <StatusPill tone={preview.mode === "live" ? "success" : "warning"}>
             {preview.mode === "live"
-              ? "Real Google Calendar"
-              : "Illustrative local calendar — no external writes"}
+              ? tr("Real Google Calendar")
+              : tr("Illustrative local calendar — no external writes")}
           </StatusPill>
           <div className="approval-target">
-            <small>EXACT DESTINATION</small>
+            <small>{tr("EXACT DESTINATION")}</small>
             <strong>{preview.calendar_id}</strong>
             <p>
-              Plan {preview.plan_id} · expires{" "}
-              {new Date(preview.expires_at).toLocaleTimeString()}
+              {tr("Plan")} {preview.plan_id} {tr("· expires")}{" "}
+              {new Date(preview.expires_at).toLocaleTimeString(locale)}
             </p>
           </div>
+          <p className="fine-print">
+            {tr("Event titles are shown exactly as they will be written.")}
+          </p>
           <div className="preview-list">
             {preview.actions.map((a) => (
               <div key={a.event.id}>
@@ -2239,22 +2351,24 @@ export default function App() {
                 <span>
                   <strong>{a.event.summary}</strong>
                   <small>
-                    {new Date(a.event.start.dateTime).toLocaleString()} →{" "}
-                    {new Date(a.event.end.dateTime).toLocaleTimeString()}
+                    {new Date(a.event.start.dateTime).toLocaleString(locale)} →{" "}
+                    {new Date(a.event.end.dateTime).toLocaleTimeString(locale)}
                   </small>
                 </span>
                 <code>
-                  {{ create: "Add", keep: "Keep", delete: "Remove" }[
-                    a.operation
-                  ] || a.operation}
+                  {{
+                    create: tr("Add"),
+                    keep: tr("Keep"),
+                    delete: tr("Remove"),
+                  }[a.operation] || a.operation}
                 </code>
               </div>
             ))}
           </div>
           <p className="fine-print">
-            No invitations or outgoing messages. The backend rechecks evidence
-            and Calendar freshness, applies this exact digest once, and reads
-            each event back.
+            {tr(
+              "No invitations or outgoing messages. The backend rechecks evidence and Calendar freshness, applies this exact digest once, and reads each event back.",
+            )}
           </p>
           <code className="digest">SHA256 {preview.digest}</code>
           <button
@@ -2280,21 +2394,33 @@ export default function App() {
           >
             <ShieldCheck size={18} />
             {preview.mode === "live"
-              ? "Approve exact Calendar actions"
-              : "Approve illustrative local actions"}
+              ? tr("Approve exact Calendar actions")
+              : tr("Approve illustrative local actions")}
           </button>
         </Modal>
       ) : null}
       {entry ? (
         <Modal
-          title="Every change has a way forward."
+          title={tr("Every change has a way forward.")}
           onClose={() => {
             setEntry(false);
             sessionStorage.setItem("relay.entered", "1");
           }}
         >
+          <select
+            data-testid="entry-language"
+            aria-label={tr("Language")}
+            value={lang}
+            onChange={(e) => setLang(e.target.value as Lang)}
+          >
+            <option value="en">English</option>
+            <option value="ru">Русский</option>
+            <option value="kk">Қазақша</option>
+          </select>
           <p className="entry-description">
-            An evidence-linked recovery plan for the week you actually have.
+            {tr(
+              "An evidence-linked recovery plan for the week you actually have.",
+            )}
           </p>
           <div className="entry-loop">
             <FileText />
@@ -2310,7 +2436,7 @@ export default function App() {
               sessionStorage.setItem("relay.entered", "1");
             }}
           >
-            Explore illustrative workspace
+            {tr("Explore illustrative workspace")}
             <ArrowRight size={18} />
           </button>
           <button
@@ -2322,21 +2448,22 @@ export default function App() {
             }}
           >
             <Link2 size={17} />
-            Connect my workspace
+            {tr("Connect my workspace")}
           </button>
           <div className="demo-disclosure">
             <Radio size={18} />
             <p>
-              <strong>Live demo: cloud setup required</strong>Course examples
-              are illustrative. The local Calendar is simulated. GitHub public
-              reads are real. No Gemini success or cloud deployment is claimed.
+              <strong>{tr("Live demo: cloud setup required")}</strong>
+              {tr(
+                "Course examples are illustrative. The local Calendar is simulated. GitHub public reads are real. No Gemini success or cloud deployment is claimed.",
+              )}
             </p>
           </div>
         </Modal>
       ) : null}
       {commands ? (
         <Modal
-          title="What would you like to do?"
+          title={tr("What would you like to do?")}
           onClose={() => setCommands(false)}
         >
           <div className="command-list">

@@ -1,0 +1,159 @@
+{
+  "version": "0.1.1",
+  "checked_at": "2026-10-18T21:18:19.776Z",
+  "status": "passed_with_human_interaction",
+  "executable": "D:\\projects\\CampusPulseRELAY\\installed\\CampusPulse RELAY\\CampusPulse RELAY.exe",
+  "profile": "D:\\projects\\CampusPulseRELAY\\.local\\native-verification\\0.1.1-mvebaaui\\profile",
+  "fixture": "D:\\projects\\CampusPulseRELAY\\.local\\native-verification\\0.1.1-mvebaaui\\native-picker-mvebaaui.md",
+  "picker": {
+    "unmodified": true,
+    "opened": true,
+    "appearance_confirmed_by_user": true,
+    "canceled": true,
+    "selected": true,
+    "exact_source_observed": true,
+    "source_id": "de648ca5bd89c8ebd63412da",
+    "import_confirmed_by_user": true
+  },
+  "import": {
+    "request_completed": true,
+    "state_refresh_completed": true,
+    "snapshot_saved": true
+  },
+  "notification": {
+    "dispatch_observed": true,
+    "os_show_event": true,
+    "actual_click_observed": false,
+    "visibility_verified": true,
+    "visibility_basis": "explicit_user_observation",
+    "location": "bottom-right Windows banner"
+  },
+  "automation_helper": {
+    "available": false,
+    "error": "failed to write kernel assets (os error 3), repeated after kernel reset"
+  },
+  "method": "Installed executable launched and observed read-only. Native picker input and notification click must be performed by the human; no API replacement or synthetic OS events.",
+  "no_cloud_calls": true,
+  "no_calendar_writes": true,
+  "rejected_requests": [],
+  "human_observation": {
+    "profile": "D:\\projects\\CampusPulseRELAY\\.local\\native-verification\\0.1.1-mvebaaui\\profile",
+    "recorded_at": "2026-10-18T21:23:37.738768+00:00",
+    "import_confirmed": true,
+    "notification_visible": true,
+    "notification_location": "bottom-right Windows banner",
+    "notification_click_confirmed": false,
+    "user_report": "Everything worked out; the notification appeared where it usually does by default—in the bottom-right corner."
+  },
+  "original_incident": {
+    "diagnostic": "Error invoking remote method 'relay:request': Error: Unsupported application request.",
+    "successful_import_confirmed": false,
+    "rejected_method_at_incident": null,
+    "rejected_path_at_incident": null,
+    "metadata_not_logged_in_original_build": true,
+    "reproduction": "docs/evidence/desktop-import-original.json"
+  },
+  "observed_through": "2026-10-18T21:23:36.920Z",
+  "import_trace": [
+    {
+      "stage": "picker-opened",
+      "id": "e1856b7257e36a09",
+      "at": "2026-10-18T21:19:21.387Z"
+    },
+    {
+      "stage": "picker-selected",
+      "id": "e1856b7257e36a09",
+      "at": "2026-10-18T21:21:11.437Z"
+    },
+    {
+      "stage": "file-read-started",
+      "id": "e1856b7257e36a09",
+      "at": "2026-10-18T21:21:11.437Z"
+    },
+    {
+      "stage": "file-read-completed",
+      "id": "e1856b7257e36a09",
+      "at": "2026-10-18T21:21:11.438Z"
+    },
+    {
+      "stage": "import-request-started",
+      "id": "e1856b7257e36a09",
+      "method": "POST",
+      "path": "/api/import-native",
+      "at": "2026-10-18T21:21:11.439Z"
+    },
+    {
+      "stage": "import-request-completed",
+      "id": "e1856b7257e36a09",
+      "method": "POST",
+      "path": "/api/import-native",
+      "status": 200,
+      "at": "2026-10-18T21:21:11.476Z"
+    },
+    {
+      "stage": "state-refresh-started",
+      "id": "e1856b7257e36a09",
+      "method": "GET",
+      "path": "/api/state",
+      "at": "2026-10-18T21:21:11.477Z"
+    },
+    {
+      "stage": "state-refresh-completed",
+      "id": "e1856b7257e36a09",
+      "method": "GET",
+      "path": "/api/state",
+      "status": 200,
+      "at": "2026-10-18T21:21:11.501Z"
+    },
+    {
+      "stage": "snapshot-save-completed",
+      "id": "e1856b7257e36a09",
+      "at": "2026-10-18T21:21:11.505Z"
+    }
+  ],
+  "notification_trace": [
+    {
+      "id": "8c6a2776c7f47834",
+      "event": "dispatch-requested",
+      "kind": "ui-request",
+      "language": "en",
+      "at": "2026-10-18T21:21:49.433Z"
+    },
+    {
+      "id": "8c6a2776c7f47834",
+      "event": "os-show-event",
+      "kind": "ui-request",
+      "language": "en",
+      "at": "2026-10-18T21:21:49.447Z"
+    },
+    {
+      "id": "8c6a2776c7f47834",
+      "event": "closed",
+      "kind": "ui-request",
+      "language": "en",
+      "at": "2026-10-18T21:21:56.296Z"
+    },
+    {
+      "id": "f93e6f10df30a47a",
+      "event": "dispatch-requested",
+      "kind": "ui-request",
+      "language": "en",
+      "at": "2026-10-18T21:22:03.374Z"
+    },
+    {
+      "id": "f93e6f10df30a47a",
+      "event": "os-show-event",
+      "kind": "ui-request",
+      "language": "en",
+      "at": "2026-10-18T21:22:03.374Z"
+    },
+    {
+      "id": "f93e6f10df30a47a",
+      "event": "closed",
+      "kind": "ui-request",
+      "language": "en",
+      "at": "2026-10-18T21:22:10.078Z"
+    }
+  ],
+  "recheck_required": []
+}

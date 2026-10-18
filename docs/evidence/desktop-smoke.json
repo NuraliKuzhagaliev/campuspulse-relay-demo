@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-18T20:27:03.998Z",
+  "checked_at": "2026-10-18T21:24:14.854Z",
   "executable": "D:\\projects\\CampusPulseRELAY\\installed\\CampusPulse RELAY\\CampusPulse RELAY.exe",
   "installed_build": true,
   "checks": {
@@ -24,6 +24,6 @@
     "The native file picker is deterministically stubbed in this automated smoke; actual file IO/import is exercised.",
     "Native notification dispatch is exercised; OS toast visibility is not asserted."
   ],
-  "version": "0.1.0",
+  "version": "0.1.1",
   "passed": true
 }

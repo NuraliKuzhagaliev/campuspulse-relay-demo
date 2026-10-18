@@ -61,4 +61,4 @@ Original supplied attachments are preserved locally under `inputs/`, excluded fr
 - `docs/`: evidence, security/architecture, judge instructions and actual results.
 - `release/`: installer, portable app, source archive, presentation, recording, hashes and manifest. Build output is excluded from source Git.
 
-The engineering limitations are deliberate and visible: conservative structured text extraction, no scanned OCR claim, partial language coverage, unsigned installer, and unverified cloud/personal-consent behavior. See [known limitations](docs/known_limitations.md).
+EN/RU/Kazakh operational UI is translated, including confirmations, errors, receipts, packets, calendar labels and native dialog/tray text. Source quotations, exact event titles and diagnostic data remain verbatim. Live multilingual Gemini acceptance is pending. The remaining limitations include conservative structured text extraction, no scanned OCR, unsigned Windows packages and unverified cloud/Calendar consent. See [known limitations](docs/known_limitations.md) and the [real native Windows check](docs/native_windows_check.md).

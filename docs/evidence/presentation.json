@@ -1,0 +1,8 @@
+{
+  "version": "0.1.1",
+  "slides": 8,
+  "native_status": "passed_with_human_interaction",
+  "pptx": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.1.1-native-verified.pptx",
+  "pdf": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.1.1-native-verified.pdf",
+  "validation": "D:\\projects\\CampusPulseRELAY\\.local\\presentation-build\\validation-0.1.1-verified.json"
+}
