@@ -38,4 +38,5 @@ def invoke(**args):
     except Exception as exc:raise RelayError('UPSTREAM_UNAVAILABLE','Managed query outcome is unknown. It was not replayed on an unpaid provider.') from exc
     if response.status_code!=200:raise RelayError(result.get('error',{}).get('code','UPSTREAM_UNAVAILABLE'),'The managed query bridge rejected or could not complete this request.')
     if result.get('provider')!='vertex' or result.get('deployment_mode')!='managed_gcp':raise RelayError('UPSTREAM_UNAVAILABLE','Managed response provenance does not match the selected route.')
+    if result.get('managed_resource')!=config['resource'] or result.get('runtime_revision')!=config['revision']:raise RelayError('UPSTREAM_UNAVAILABLE','Managed resource or runtime revision differs from the exact selected deployment. No automatic retry was made.')
     return result

@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-19T17:46:45.972Z",
+  "checked_at": "2026-10-19T18:31:13.474Z",
   "version": "0.5.0",
   "model_calls": 0,
   "real_calendar_writes": 0,
@@ -39,8 +39,8 @@
       "matches_current_source": true
     },
     {
-      "file": "dist\\assets\\index-BDqhXpPO.js",
-      "sha256": "c18177377545a45a944ee0e9f0b693f2da4630c65cd3d8588c37e5186c454a9c",
+      "file": "dist\\assets\\index-BtA3JmI6.js",
+      "sha256": "e4dfb4723f79e9ac5dd0ea37fb985539707de6a9817e045cbe460f4fd80ec52a",
       "matches_current_source": true
     },
     {
@@ -50,7 +50,7 @@
     },
     {
       "file": "dist\\index.html",
-      "sha256": "7ba0e83e47abcd99d634f94254bbd59430fc8d01fcfb0cb64d2f453ba955ffec",
+      "sha256": "5f1d2aeb70178bdbe9e4c399b63d5b4df9a7aac920c91d3d16107c1377584216",
       "matches_current_source": true
     },
     {
@@ -64,6 +64,6 @@
       "matches_current_source": true
     }
   ],
-  "deployed_commit": "3797e12209230c5692bb8a214d26242ca60e9638",
+  "deployed_commit": "73a71dcab2918bb0197a08345784d197bcabcdac",
   "passed": true
 }

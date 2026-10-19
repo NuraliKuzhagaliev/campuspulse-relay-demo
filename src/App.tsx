@@ -952,7 +952,7 @@ export default function App() {
                     {tr(kind === "own" ? "Use my own data" : "Open example")}
                   </button>
                 ))}
-                <a href="/samples/" target="_blank" rel="noreferrer">
+                <a href={window.relay ? "https://campuspulse-relay-demo.onrender.com/samples/" : "/samples/"} target="_blank" rel="noreferrer" onClick={window.relay ? (e)=>{e.preventDefault();void external("https://campuspulse-relay-demo.onrender.com/samples/");} : undefined}>
                   {tr("Sample documents and instructions")}
                 </a>
               </section>

@@ -1,0 +1,14 @@
+{
+  "checked_at": "2026-10-19T18:33:59.223Z",
+  "version": "0.5.0",
+  "profile": "D:\\projects\\CampusPulseRELAY\\.local\\native-verification\\0.3.0-passport\\profile",
+  "workspace_id": "local-0688d3fe954432fdcddf722f2eace92c",
+  "logged_minutes": 45,
+  "reported_remaining_minutes": 95,
+  "source": "Original preserved native profile/datastore; corrected installed main/preload IPC read only",
+  "native_dialog_opened": false,
+  "native_dialog_substituted": false,
+  "notification_visibility_observed": false,
+  "model_calls": 0,
+  "passed": true
+}

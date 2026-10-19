@@ -99,7 +99,14 @@ def current_proposals(svc):
         if versions.get(proposal['source_id'])!=proposal['source_version']:continue
         records.append(proposal)
         for entity in proposal['entities']:latest[(proposal['source_id'],entity['id'])]=proposal['id']
-    return [dict(p,entities=[e for e in p['entities'] if latest[(p['source_id'],e['id'])]==p['id']]) for p in records if any(latest[(p['source_id'],e['id'])]==p['id'] for e in p['entities'])]
+    visible=[]
+    for proposal in records:
+        entities=[e for e in proposal['entities'] if latest[(proposal['source_id'],e['id'])]==proposal['id']]
+        if not entities:continue
+        labels={e['entity_id'] for e in entities}
+        issues=[i for i in proposal.get('validation_issues',[]) if i['entity_id'] in labels]
+        visible.append(dict(proposal,entities=entities,validation_issues=issues,status='partial' if issues else 'requires_explicit_confirmation'))
+    return visible
 
 def confirm(svc,proposal_id,entity_id,body):
     if body.get('confirmed') is not True:raise RelayError('APPROVAL_REQUIRED','Review and explicitly confirm this one assignment.')

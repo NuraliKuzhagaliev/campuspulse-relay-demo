@@ -5,6 +5,7 @@ receives the existing context secret encrypted to an ephemeral X25519 recipient;
 only DPAPI ciphertext is saved. Activate requires an actual fresh funding record.
 """
 import argparse,base64,json,os,secrets,sys,time
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
@@ -24,7 +25,15 @@ def main():
         public=base64.b64encode(key.public_key().public_bytes(serialization.Encoding.Raw,serialization.PublicFormat.Raw)).decode()
         (private/'managed-owner-public.json').write_text(json.dumps({'public_key':public,'purpose':'managed_route_only'}),encoding='utf-8')
         print(json.dumps({'public_key':public,'private_key_encrypted_on_D':True,'cloud_calls':0}));return
-    key=Ed25519PrivateKey.from_private_bytes(base64.b64decode(unprotect(keyfile)));body=dict(op=args.operation,timestamp=int(time.time()),nonce=secrets.token_hex(16));ephemeral=None
+    import httpx
+    # Use this HTTPS server's clock, retaining its narrow freshness check. The
+    # local Windows clock can differ; never weaken the server signature policy.
+    clock_response=httpx.get(args.url.rstrip('/')+'/api/health',timeout=30,follow_redirects=False)
+    if clock_response.status_code!=200:parser.error('Could not verify the exact HTTPS server clock.')
+    try:server_time=int(parsedate_to_datetime(clock_response.headers['date']).timestamp())
+    except (KeyError,ValueError,TypeError):parser.error('The HTTPS response has no valid Date header.')
+    if abs(server_time-time.time())>300:parser.error('Server/client clock difference exceeds five minutes; stop and inspect time before signing.')
+    key=Ed25519PrivateKey.from_private_bytes(base64.b64decode(unprotect(keyfile)));body=dict(op=args.operation,timestamp=server_time,nonce=secrets.token_hex(16));ephemeral=None
     if args.operation=='bootstrap':
         from cryptography.hazmat.primitives.asymmetric.x25519 import X25519PrivateKey
         ephemeral=X25519PrivateKey.generate();body['recipient_key']=base64.b64encode(ephemeral.public_key().public_bytes(serialization.Encoding.Raw,serialization.PublicFormat.Raw)).decode()

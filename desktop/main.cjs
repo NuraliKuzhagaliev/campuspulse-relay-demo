@@ -342,12 +342,12 @@ function installBridge() {
     }
     if (
       u.protocol !== "https:" ||
-      ![
+      !([
         "github.com",
         "calendar.google.com",
         "console.cloud.google.com",
         "accounts.google.com",
-      ].includes(u.hostname)
+      ].includes(u.hostname) || (u.origin === "https://campuspulse-relay-demo.onrender.com" && u.pathname.startsWith("/samples/") && !u.search && !u.hash && !u.username && !u.password))
     )
       throw new Error("Only approved service HTTPS links can open externally.");
     await shell.openExternal(u.href);

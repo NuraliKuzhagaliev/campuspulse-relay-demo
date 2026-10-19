@@ -56,13 +56,24 @@ async function documentCase(c,index){
   const answer=index===0&&resumed?resumed.runs[0]:await run(v,()=>v.page.getByRole('button',{name:'Propose with Gemini',exact:true}).click());
   if(index===0&&resumed){proof.runs.push(answer);await save();}item.actual_answer_status=answer.status;
   assert(answer.tool_observations?.some(t=>t.tool==='read_course_source'&&t.status==='observed'));
-  assert(answer.tool_observations?.some(t=>t.tool==='propose_academic_extraction'&&t.status==='observed'));
   await v.page.getByRole('button',{name:'Refresh proposals',exact:true}).click();
-  const proposals=(await (await v.page.request.get('/api/extraction-proposals')).json()).proposals.filter(p=>p.source_id===source.id);item.proposals=proposals;
+  let proposals=(await (await v.page.request.get('/api/extraction-proposals')).json()).proposals.filter(p=>p.source_id===source.id);item.proposals=proposals;
+  // A genuinely partial batch retains good fields and is conservatively marked
+  // failed by the execution inspector. Do not confuse that with no saved data.
+  // Permit exactly one ordinary UI follow-up, without feeding expected answers.
+  if(proposals.some(p=>p.validation_issues?.length)){
+   item.initial_validation_issues=proposals.flatMap(p=>p.validation_issues||[]);
+   const repair=await ask(v,`The saved proposal for source ${source.id} lists rejected fields under validation_issues. Re-read the exact original source pages and quote_lines, then use propose_academic_extraction to correct those rejected fields for their existing entity_id. Shared document course/term context may be cited using its exact original quote. Preserve other valid fields; do not invent missing information or confirm facts. Report anything still unresolved.`);
+   item.repair_run_id=repair.run_id;await v.page.getByRole('button',{name:'Refresh proposals',exact:true}).click();
+   proposals=(await (await v.page.request.get('/api/extraction-proposals')).json()).proposals.filter(p=>p.source_id===source.id);item.proposals=proposals;
+  }
+  assert(proposals.length,'No actual saved extraction proposal');
+  assert(proposals.every(p=>!p.validation_issues?.length),'Cited fields still have unresolved rejection diagnostics');
   const entities=proposals.flatMap(p=>p.entities);assert.equal(entities.length,c.expected.length);
   for(const expected of c.expected){
    const entity=entities.find(e=>e.fields.some(f=>f.field==='assignment_key'&&String(f.value).toLowerCase()===expected.key.toLowerCase()));assert(entity,'Missing entity '+expected.key);
    assert.equal(entity.fields.find(f=>f.field==='minutes')?.value,expected.minutes);
+   assert(['title','course','term','assignment_key'].every(key=>entity.fields.some(f=>f.field===key&&f.value&&f.validation_status==='needs_confirmation')),'Missing cited assignment identity');
    const due=entity.fields.find(f=>f.field==='due');assert(due?.value&&Date.parse(due.value)===Date.parse(expected.due),'Incorrect cited due for '+expected.key);
    assert.equal(due.validation_status,'needs_confirmation');
    if(entity.applied)continue;

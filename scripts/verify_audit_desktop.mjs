@@ -21,6 +21,7 @@ try{
  app=await electron.launch({executablePath:executable,cwd:root,env,timeout:45000});let page=await app.firstWindow();
  await expect(page.locator('.live-access input[type=checkbox]')).toBeVisible({timeout:45000});
  await expect(page.getByText('Use a private AI invitation',{exact:true})).toHaveCount(0);
+ await expect(page.getByRole('link',{name:'Sample documents and instructions',exact:true})).toHaveAttribute('href','https://campuspulse-relay-demo.onrender.com/samples/');
  const security=await app.evaluate(({app,BrowserWindow})=>({version:app.getVersion(),profile:app.getPath('userData'),prefs:BrowserWindow.getAllWindows()[0].webContents.getLastWebPreferences()}));
  assert.equal(security.version,'0.5.0');assert.equal(security.profile,profile);assert(security.prefs.sandbox&&security.prefs.contextIsolation&&!security.prefs.nodeIntegration);
  proof.checks.package_matches_source_and_sandboxed_D_profile=true;

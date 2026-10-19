@@ -56,3 +56,24 @@ def test_bridge_accepts_only_fixed_resource_fresh_owner_signature(monkeypatch):
     assert validate(body,headers)['user_id']=='demo-a'
     with pytest.raises(RelayError):validate(body,headers)
     with pytest.raises(RelayError):validate(body|{'resource':resource+'other'},headers|{'x-relay-nonce':'e'*32})
+
+@pytest.mark.parametrize('change',[{}, {'managed_resource':'projects/foreign/locations/us-central1/reasoningEngines/other'}, {'runtime_revision':'different-build'}])
+def test_gateway_verifies_exact_managed_response_resource_revision(monkeypatch,change):
+    from relay import managed_bridge
+    secret='c'*64;url='https://public.test/_relay/mcp/'
+    config=dict(mcp_url='https://public.test/managed/mcp/',url='https://bridge.test',resource='projects/123/locations/us-central1/reasoningEngines/456',revision='actual-build',secret='b'*64)
+    monkeypatch.setenv('RELAY_MCP_URL',url);monkeypatch.setenv('RELAY_CONTEXT_SECRET',secret)
+    monkeypatch.setattr(managed_bridge,'configuration',lambda:config)
+    payload=dict(provider='vertex',deployment_mode='managed_gcp',managed_resource=config['resource'],runtime_revision=config['revision'])|change
+    calls=[]
+    class Response:
+        status_code=200
+        def json(self):return payload
+    def post(*args,**kw):calls.append(args[0]);return Response()
+    monkeypatch.setattr('httpx.post',post)
+    args=dict(user_id='demo-a',context_token=sign_context('demo-a',url,secret),message='Synthetic query',run_id='a'*32,conversation_id='b'*32)
+    if change:
+        with pytest.raises(RelayError) as error:managed_bridge.invoke(**args)
+        assert error.value.code=='UPSTREAM_UNAVAILABLE'
+    else:assert managed_bridge.invoke(**args)==payload
+    assert calls==['https://bridge.test/query']

@@ -212,3 +212,14 @@ def test_rejected_semantic_batch_does_not_apply_or_cross_entities(tmp_path):
     with pytest.raises(RelayError) as error:validated_batch(s,[a|{'quote':'Invented quote'}])
     assert error.value.code=='SOURCE_CONFLICT' and error.value.details['rejected_fields'][0]['reason']=='field_or_exact_page_quote_invalid'
     assert not svc.sources()[0].get('confirmed_extractions')
+
+def test_repaired_neighbor_diagnostics_disappear_from_visible_proposals(tmp_path):
+    svc=service(tmp_path);s=svc.import_source('shared.txt',b'Course: Research Methods\nTerm: Autumn 2026\nMeasurement log\nNoise comparison memo')
+    def f(entity,name,value,quote):return dict(entity_id=entity,field=name,value=value,page=1,quote=quote)
+    original=record_proposal(svc,validated_batch(s,[f('M26','title','Measurement log','Measurement log'),f('N13','title','Noise comparison memo','Noise comparison memo'),f('N13','course','Research Methods','Invented heading')]))
+    assert original['status']=='partial'
+    corrected=record_proposal(svc,validated_batch(s,[f('N13','course','Research Methods','Course: Research Methods')]))
+    visible=current_proposals(svc)
+    assert len(visible)==2 and sum(len(p['entities']) for p in visible)==2
+    assert all(not p['validation_issues'] and p['status']=='requires_explicit_confirmation' for p in visible)
+    assert next(p for p in visible if p['id']==corrected['id'])['entities'][0]['fields'][0]['value']=='Noise comparison memo'
