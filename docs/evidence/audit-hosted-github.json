@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-19T19:44:34.866Z",
+  "deployed_commit": "1718ff340bdb2b40c5d3e796907000bd6720b80f",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "upstream": "actual GitHub REST from hosted backend",
+  "initial_commit": "1718ff340bdb2b40c5d3e796907000bd6720b80f",
+  "original_source_fetched_at": "2026-10-19T19:44:06.008038+00:00",
+  "initial_freshness": {
+    "last_successful_sync": null,
+    "last_failed_attempt": null,
+    "source_fetched_at": "2026-10-19T19:44:06.008038+00:00",
+    "last_observation_at": "2026-10-19T19:45:55.279056+00:00",
+    "cached": true,
+    "commit": "1718ff340bdb2b40c5d3e796907000bd6720b80f"
+  },
+  "manual_ui_read": true,
+  "watch_enabled": true,
+  "provider_calls": 0,
+  "google_writes": 0,
+  "background_pending": false,
+  "limitations": "Free hosting polls only while awake. Cached observations preserve original fetch time; a poll is not claimed a fresh download.",
+  "browser_closed_at": "2026-10-19T19:44:34.908Z",
+  "after_browser_closed_observation": "2026-10-19T19:51:19.063217+00:00",
+  "after_browser_closed_check_at": "2026-10-19T19:50:18.366Z",
+  "latest_freshness": {
+    "last_successful_sync": "2026-10-19T19:44:06.008038+00:00",
+    "last_failed_attempt": null,
+    "source_fetched_at": "2026-10-19T19:44:06.008038+00:00",
+    "last_observation_at": "2026-10-19T19:52:19.095162+00:00",
+    "cached": true,
+    "commit": "1718ff340bdb2b40c5d3e796907000bd6720b80f"
+  },
+  "server_observation_without_browser": true,
+  "clock_independent_server_timestamp_comparison": true,
+  "immutable_source_time_preserved": true,
+  "passed": true,
+  "checked_at": "2026-10-19T19:51:41.916Z"
+}

@@ -12,7 +12,7 @@ Topic2 GDG Astana CampusPulse AI. **NON_GCP_READY=false**; per-check status is n
 | Limits and protection |2MiBraw/3MiBtransport, bounded PDF subprocess, typed errors, CSRF/tenant checks, narrow IPC and protected internal/admin/MCP operations |
 | GitHub change radar | Cache/singleflight/conditional304/backoff tests passed. Real read and browser-independent observation have separately dated evidence; shared upstream429 retained |
 | Samples |13synthetic files, trilingual guide/context/expected results and ZIP. Public hashes and current runtime recorded separately |
-| Calendar | Technical client/API/Production setup done; real consent/target/write/read-back/retry/undo/revocation and independent user acceptance pending |
+| Calendar | Technical client/API/Production setup done; real owner connection and selected-target live status confirmed; exact target ID/event write/read-back/retry/undo/revocation and independent user acceptance pending |
 | Windows | Installed0.5contracts/source match and original45/95 passed. Actual Open/Cancel/import+refresh passed; Save/reimport/banner/click and real Gemini pending |
 | Managed GCP | Guarded SDK/package/bridge/shared-state/owner-routing preparation only. Actual organizer activation/project/coverage/resources/query still pending |
 | After-window fallback | Existing public state remains authoritative. Actual managed-off/expiry complete-product acceptance pending real window |

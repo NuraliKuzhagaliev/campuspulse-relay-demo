@@ -1,6 +1,7 @@
 {
-  "at": "2026-10-19T17:44:44.700Z",
+  "at": "2026-10-19T19:44:29.388Z",
   "base": "https://campuspulse-relay-demo.onrender.com",
+  "deployed_commit": "1718ff340bdb2b40c5d3e796907000bd6720b80f",
   "provider_calls": 0,
   "checks": {
     "clean_own_workspace": true,
@@ -77,5 +78,6 @@
       }
     ],
     "visitor_isolation": true
-  }
+  },
+  "passed": true
 }

@@ -1,0 +1,105 @@
+{
+  "checked_at": "2026-10-19T19:42:41.156424+00:00",
+  "url": "https://campuspulse-relay-demo.onrender.com/samples/",
+  "provider_calls": 0,
+  "google_writes": 0,
+  "files": [
+    {
+      "file": "01-original.md",
+      "bytes": 298,
+      "sha256": "9c78fc8c97a40017cba7403435dbeed9e1ed0a26d765e6b1140814ba5dde9da8",
+      "content_type": "text/markdown; charset=utf-8",
+      "zip_hash_matches": true
+    },
+    {
+      "file": "02-revision.md",
+      "bytes": 216,
+      "sha256": "b100ce1150798012af92274c94d9cae6bc1a9a2cf7e3c7c6fd513067785c2ef1",
+      "content_type": "text/markdown; charset=utf-8",
+      "zip_hash_matches": true
+    },
+    {
+      "file": "03-prose-en.txt",
+      "bytes": 410,
+      "sha256": "c001facb3d55b347c825200a281a9564229231e63f326fac90f1bfdd48c2f329",
+      "content_type": "text/plain; charset=utf-8",
+      "zip_hash_matches": true
+    },
+    {
+      "file": "04-prose-ru.txt",
+      "bytes": 534,
+      "sha256": "2c81865ab91d7bfc54636f12c85d17cc47cd0c3470957b28482f8cce67dc2556",
+      "content_type": "text/plain; charset=utf-8",
+      "zip_hash_matches": true
+    },
+    {
+      "file": "05-prose-kk.txt",
+      "bytes": 586,
+      "sha256": "1be7f50be6a9fc469a5583cdcade25aa84fa2009ed67f665a1a888de3db777b8",
+      "content_type": "text/plain; charset=utf-8",
+      "zip_hash_matches": true
+    },
+    {
+      "file": "06-missing-and-ambiguous.md",
+      "bytes": 267,
+      "sha256": "9a60c4b8c41e0e70d4209b9454257eb6c811388a2aceeefd15d960c82c1a83f8",
+      "content_type": "text/markdown; charset=utf-8",
+      "zip_hash_matches": true
+    },
+    {
+      "file": "07-same-title.md",
+      "bytes": 320,
+      "sha256": "d484c1bb4e9b602769258bbf4630a15d2e22bbf34591a841cd6e112cab57a7af",
+      "content_type": "text/markdown; charset=utf-8",
+      "zip_hash_matches": true
+    },
+    {
+      "file": "08-busy.ics",
+      "bytes": 255,
+      "sha256": "a3e8fb5662d93550a78fdc629240fcf6884f76dcf3b632dbe4902408fff2bdbd",
+      "content_type": "application/octet-stream",
+      "zip_hash_matches": true
+    },
+    {
+      "file": "09-workspace.relay.json",
+      "bytes": 14532,
+      "sha256": "972eb4172574e32ffd4f8b014ab0158be909cab4f1521dbc5b11a229802e7af0",
+      "content_type": "application/json",
+      "zip_hash_matches": true
+    },
+    {
+      "file": "10-prism-draft.md",
+      "bytes": 370,
+      "sha256": "fe8eb0512952d1f6f09558955999d554e9438fb0ff83f8166c05ddb2fc75728f",
+      "content_type": "text/markdown; charset=utf-8",
+      "zip_hash_matches": true
+    },
+    {
+      "file": "11-continued-brief.pdf",
+      "bytes": 2212,
+      "sha256": "dbfbef67958436e01bbd7ec21cf591ca7c58593938adb32a644298095e0572c4",
+      "content_type": "application/pdf",
+      "zip_hash_matches": true
+    },
+    {
+      "file": "12-table-brief.pdf",
+      "bytes": 2197,
+      "sha256": "7e4acb08b756e29152efac0b6204b26cc8e54fecb75dff59d73ff427e920dfce",
+      "content_type": "application/pdf",
+      "zip_hash_matches": true
+    },
+    {
+      "file": "13-original-brief.pdf",
+      "bytes": 2045,
+      "sha256": "11a2d57b1ddf16764e8cf24d99d1f37ee2320d2f06d7667f31ef1deb89beeba5",
+      "content_type": "application/pdf",
+      "zip_hash_matches": true
+    }
+  ],
+  "deployed_commit": "1718ff340bdb2b40c5d3e796907000bd6720b80f",
+  "sample_zip_sha256": "015b41274953e709f6d29fe4ce4cd5648823659168857570c4c6e21dd2a9905b",
+  "sample_zip_bytes": 21018,
+  "trilingual_guide": true,
+  "privacy_page": true,
+  "passed": true
+}

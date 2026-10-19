@@ -15,6 +15,9 @@ def main():
     assert live['passed'] and len(live['cases'])==5 and len(live['runs'])==6
     github=read('docs/evidence/audit-hosted-github.json') if (ROOT/'docs/evidence/audit-hosted-github.json').exists() else {}
     samples=read('docs/evidence/audit-public-samples.json') if (ROOT/'docs/evidence/audit-public-samples.json').exists() else {}
+    oauth=read('docs/evidence/audit-hosted-oauth-boundary.json') if (ROOT/'docs/evidence/audit-hosted-oauth-boundary.json').exists() else {}
+    current=read('docs/evidence/audit-live-mvfnvite.json') if (ROOT/'docs/evidence/audit-live-mvfnvite.json').exists() else {}
+    owner_calendar=read('docs/evidence/audit-calendar-owner-connected.json') if (ROOT/'docs/evidence/audit-calendar-owner-connected.json').exists() else {}
     proof=dict(checked_at=datetime.now(timezone.utc).isoformat(),version='0.5.0',public_url='https://campuspulse-relay-demo.onrender.com/',
         deployed_commit=health['deployed_commit'],NON_GCP_READY=False,
         tests=dict(python_passed=209,subtests_passed=3,ipc_passed=7,
@@ -43,6 +46,14 @@ def main():
             'Google Calendar protocol fault simulations and illustrative receipts are not actual Google writes.',
             'Five-document batch is evidence, not a statistical reliability or latency guarantee. Earlier failed/partial attempts remain recorded.',
             'Native observations belong to their recorded build; final installed contracts do not prove a Save dialog or notification was visible.'])
+    proof['calendar']['server_configuration_boundary_verified']=bool(oauth.get('passed') and oauth.get('deployed_commit')==health['deployed_commit'])
+    proof['calendar']['boundary_evidence']='docs/evidence/audit-hosted-oauth-boundary.json' if oauth else None
+    if owner_calendar.get('connected'):
+        proof['calendar'].update(owner_observed_connected=True,real_consent_completed_owner_observation=True,owner_connection_evidence='docs/evidence/audit-calendar-owner-connected.json',
+            consent_token_exchange_verified='Owner screenshot confirms actual connected status after the verified OAuth flow; no independent event/API operation acceptance.',
+            owner_reported_target_selected=True,actual_target_id_verified=False,owner_action='Record selected target ID and live status, then exact real preview/approval/read-back. Do not reconnect or switch workspaces.')
+    if current.get('passed') and current.get('deployed_commit')==health['deployed_commit']:
+        proof['documents']['current_two_clean_visitors']=dict(evidence='docs/evidence/audit-live-mvfnvite.json',deployed_commit=current['deployed_commit'],cases=len(current['cases']),real_turns=len(current['runs']),complete_turns=sum(r['status']=='complete' for r in current['runs']),partial_turns=sum(r['status']=='partial' for r in current['runs']),all_complete=all(r['status']=='complete' for r in current['runs']))
     write('docs/evidence/non-gcp-0.5.0.json',proof)
     summary=f'''# CampusPulse RELAY · 0.5.0 audit candidate
 
@@ -132,6 +143,28 @@ Public HTTPS https://campuspulse-relay-demo.onrender.com/ · Render Free `srv-db
 
 Latest complete local suite209tests+3subtests;7IPC checks. Logs remain private on D:; non-gcp-0.5.0.json records the full-run log hash. F1–F5 remain locally implemented with real Calendar/full enhancement-level Gemini acceptance pending. Public current availability, alternative Gemini, managed historical acceptance and after-window readiness are separate statuses. No personal payment, card, trial, paid upgrade or contest submission.
 ''')
+    if proof['calendar']['server_configuration_boundary_verified']:
+        p=ROOT/'docs/calendar_acceptance_0_5.md'
+        p.write_text(p.read_text(encoding='utf-8').replace('A later GitHub-token field mix-up must be repaired before deployment, with the protected original Fernet key restored.','The owner restored the protected original Fernet key and saved the dedicated GitHub token separately. Actual deployed OAuth configuration, PKCE,15-minute private cookie and copied-URL rejection passed; no real Google consent or event call was made by that boundary check.'),encoding='utf-8')
+    if proof['github']['background_verified']:
+        for name in ['BLOCKERS.md','docs/audit_U1_U16.md','docs/remaining_actions_0.5.0.md']:
+            p=ROOT/name;s=p.read_text(encoding='utf-8')
+            if name=='BLOCKERS.md':s='\n'.join(line for line in s.splitlines() if not line.startswith('- Hosted GitHub earlier'))+'\n\nGitHub gate passed: actual hosted read and a later server observation after closing the test browser; original immutable fetch time retained. Free hosting sleep/restart limits remain.\n'
+            s=s.replace('actual hosted recovery/background proof pending','actual hosted read and later browser-independent observation passed; audit-hosted-github.json')
+            if name.endswith('remaining_actions_0.5.0.md'):s+='\nGitHub update: both fields were corrected and the deployed live read/background observation passed. Credential setup above is historical recovery guidance, not a remaining gate. See docs/evidence/audit-hosted-github.json.\n'
+            p.write_text(s,encoding='utf-8')
+    if current.get('passed'):
+        for name in ['README.md','STATUS.md','docs/final_integration_ledger.md']:
+            p=ROOT/name;p.write_text(p.read_text(encoding='utf-8')+f'\nCurrent-runtime follow-up: two new clean visitors, prose/table full UI passed; real Gemini/MCP turns:2complete and1partial (a failed tool call followed by a saved valid proposal inside that turn) on `{current["deployed_commit"]}`; `docs/evidence/audit-live-mvfnvite.json`. This is separate from the preceding five-document/six-turn batch and the simulated100-session load test.\n',encoding='utf-8')
+    if owner_calendar.get('connected'):
+        for name in ['README.md','STATUS.md','BLOCKERS.md','docs/calendar_acceptance_0_5.md','docs/final_integration_ledger.md']:
+            p=ROOT/name;s=p.read_text(encoding='utf-8')
+            s=s.replace('actual Google Calendar operations and the remaining physical Windows checks','actual Google Calendar event operations and the remaining physical Windows checks')
+            s=s.replace('real Calendar consent/target/write/read-back/retry/undo/revocation','real Calendar target/write/read-back/retry/undo/revocation')
+            s=s.replace('Real consent has not completed.','Real consent now completed: the owner provided a screenshot of actual configured=true, connected=true. No event operation is implied.')
+            s=s.replace('real consent and operations NOT verified.','real connection observed by owner; event operations NOT verified.')
+            s+='\nOwner connection update: actual status screenshot confirms configured=true, connected=true, calendar_live=false at that observation. The owner subsequently reports selecting the created calendar; exact returned target/live status and actual event operations remain to verify. No additional browser transfer/reconnect is needed. Evidence: audit-calendar-owner-connected.json (image hash only, no credentials).\n'
+            p.write_text(s,encoding='utf-8')
     print(json.dumps({'deployed_commit':health['deployed_commit'],'NON_GCP_READY':False,'github_background':proof['github']['background_verified'],'samples_public':proof['samples']['public_downloads_verified']}))
 
 if __name__=='__main__':main()

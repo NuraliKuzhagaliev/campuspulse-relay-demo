@@ -2,7 +2,7 @@
 
 Public app: **https://campuspulse-relay-demo.onrender.com/** · [Source](https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo) · [13-file sample pack and EN/RU/Kazakh instructions](https://campuspulse-relay-demo.onrender.com/samples/).
 
-**NON_GCP_READY = false.** Real multilingual document/Gemini workflows are verified. Actual Google Calendar operations and the remaining physical Windows checks still block complete acceptance. Current runtime: `2f74bdacf4bab56b96dbd2b3350d388634d95142`. See `docs/evidence/non-gcp-0.5.0.json` for separate evidence revisions and unresolved gates.
+**NON_GCP_READY = false.** Real multilingual document/Gemini workflows are verified. Actual Google Calendar operations and the remaining physical Windows checks still block complete acceptance. Current runtime: `1718ff340bdb2b40c5d3e796907000bd6720b80f`. See `docs/evidence/non-gcp-0.5.0.json` for separate evidence revisions and unresolved gates.
 
 Open the ordinary HTTPS link: an isolated visitor workspace is created automatically, without invitations, registration, Google sign-in or visitor API keys. Choose **Use my own data**, upload permitted non-sensitive PDF/MD/TXT/ICS, review exact page citations and confirm each assignment separately. Choose your period/timezone/availability, resolve conflicts, plan, compare what-if, inspect next actions/Preflight, record progress and export a Passport. The example workspace and local-adapter Calendar previews/receipts are explicitly illustrative. Real Calendar is a separate voluntary consent and exact-action approval flow.
 
@@ -25,3 +25,7 @@ Supplied notice: tutorial20October2026at10:00;12hours from **actual activation**
 Everything project-controlled stays under `D:/projects/CampusPulseRELAY`: dependencies, caches, temp, profiles, downloads, builds and deliverables. Start with `scripts/env.ps1`. Local illustrative development: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File "D:/projects/CampusPulseRELAY/scripts/dev.ps1"`. Real server-only Gemini uses `scripts/run-alternative.ps1`. Never put keys in the renderer or desktop build.
 
 Prior sealed releases and original data remain preserved. New0.5.0 packages are a separately versioned audit candidate; read the manifest for exact source/runtime commits and checksums. Windows binaries are unsigned. A complete local illustrative React+Python ZIP is distinct from the configured real public Gemini service. Full user answers, private screenshots, credentials and cookies stay outside Git on D:.
+
+Current-runtime follow-up: two new clean visitors, prose/table full UI passed; real Gemini/MCP turns:2complete and1partial (a failed tool call followed by a saved valid proposal inside that turn) on `1718ff340bdb2b40c5d3e796907000bd6720b80f`; `docs/evidence/audit-live-mvfnvite.json`. This is separate from the preceding five-document/six-turn batch and the simulated100-session load test.
+
+Owner connection update: actual status screenshot confirms configured=true, connected=true, calendar_live=false at that observation. The owner subsequently reports selecting the created calendar; exact returned target/live status and actual event operations remain to verify. No additional browser transfer/reconnect is needed. Evidence: audit-calendar-owner-connected.json (image hash only, no credentials).

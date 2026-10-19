@@ -1,0 +1,22 @@
+{
+  "recorded_at": "2026-10-19T19:50:18.471376+00:00",
+  "deployed_commit": "1718ff340bdb2b40c5d3e796907000bd6720b80f",
+  "owner_screenshot_sha256": "71af134058b8d4f4757c99ce209aa08fe9bd293faea73aabd8ec5bb2171d0405",
+  "observation": "Owner screenshot of real /api/connections/status in consenting Chrome browser",
+  "configured": true,
+  "connected": true,
+  "calendar_live": false,
+  "real_google_consent_and_encrypted_connection_observed": true,
+  "selected_target": false,
+  "real_write_readback_retry_undo_revocation_verified": false,
+  "independent_second_user_verified": false,
+  "credentials_in_evidence": false,
+  "subsequent_owner_report": {
+    "configured": true,
+    "connected": true,
+    "calendar_live": true,
+    "target_selected": true,
+    "target_id_pending": true,
+    "method": "Owner pasted actual /api/connections/status JSON after selecting the created calendar; no credentials."
+  }
+}

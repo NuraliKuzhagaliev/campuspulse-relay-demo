@@ -1,6 +1,6 @@
 # Requirement and evidence ledger · 0.5.0
 
-Public HTTPS https://campuspulse-relay-demo.onrender.com/ · Render Free `srv-dbajs73bc2fs73bm9mfg` · current runtime `2f74bdacf4bab56b96dbd2b3350d388634d95142`. **NON_GCP_READY=false**. Prior release/history evidence is retained.
+Public HTTPS https://campuspulse-relay-demo.onrender.com/ · Render Free `srv-dbajs73bc2fs73bm9mfg` · current runtime `1718ff340bdb2b40c5d3e796907000bd6720b80f`. **NON_GCP_READY=false**. Prior release/history evidence is retained.
 
 | Check | Actual evidence | Limit / remaining gate |
 |---|---|---|
@@ -17,3 +17,7 @@ Public HTTPS https://campuspulse-relay-demo.onrender.com/ · Render Free `srv-db
 | Managed GCP | managed-preparation-0.5.0.json and organizer_window_runbook.md | Offline preparation only, no deployed resource; T0/coverage unknown |
 
 Latest complete local suite209tests+3subtests;7IPC checks. Logs remain private on D:; non-gcp-0.5.0.json records the full-run log hash. F1–F5 remain locally implemented with real Calendar/full enhancement-level Gemini acceptance pending. Public current availability, alternative Gemini, managed historical acceptance and after-window readiness are separate statuses. No personal payment, card, trial, paid upgrade or contest submission.
+
+Current-runtime follow-up: two new clean visitors, prose/table full UI passed; real Gemini/MCP turns:2complete and1partial (a failed tool call followed by a saved valid proposal inside that turn) on `1718ff340bdb2b40c5d3e796907000bd6720b80f`; `docs/evidence/audit-live-mvfnvite.json`. This is separate from the preceding five-document/six-turn batch and the simulated100-session load test.
+
+Owner connection update: actual status screenshot confirms configured=true, connected=true, calendar_live=false at that observation. The owner subsequently reports selecting the created calendar; exact returned target/live status and actual event operations remain to verify. No additional browser transfer/reconnect is needed. Evidence: audit-calendar-owner-connected.json (image hash only, no credentials).

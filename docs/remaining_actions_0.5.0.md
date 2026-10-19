@@ -44,3 +44,7 @@ Remaining observations: Passport preview → Download → actual native Save dia
 ## Organizer T0
 
 Read `docs/organizer_window_runbook.md`. Supply the actual activation instructions, assigned principal/project, expiry and coverage. Inspect billing/credit fields where visible and retain unknown/hidden fields honestly. Do not activate a personal trial, attach personal billing or pay. Only then create the minimal owned covered resources, deploy/discover the exact Agent Engine, activate the authenticated shared-state bridge, run actual remote multi-turn/isolation/Windows acceptance, and retire only owned ledger resources before expiry. An offline SDK package or alternative Gemini answer does not satisfy the managed requirement.
+
+GitHub update: both fields were corrected and the deployed live read/background observation passed. Credential setup above is historical recovery guidance, not a remaining gate. See docs/evidence/audit-hosted-github.json.
+
+GitHub update: both fields were corrected and the deployed live read/background observation passed. Credential setup above is historical recovery guidance, not a remaining gate. See docs/evidence/audit-hosted-github.json.

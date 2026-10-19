@@ -75,5 +75,20 @@
     "reason": "Four short pending-gate lines remain readable in the existing bold source layout, with no clipping or overlap; preserved the established design."
   },
   "native_powerpoint_opened": false,
-  "all_12_slides_verified": true
+  "all_12_slides_verified": true,
+  "final_revision": "audit-r3",
+  "unchanged_slides_pixel_identical_to_individually_reviewed_r1": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "final_slide_12_individually_reviewed": true
 }

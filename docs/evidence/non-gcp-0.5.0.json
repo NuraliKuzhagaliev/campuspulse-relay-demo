@@ -1,8 +1,8 @@
 {
-  "checked_at": "2026-10-19T19:38:54.278704+00:00",
+  "checked_at": "2026-10-19T19:51:42.660713+00:00",
   "version": "0.5.0",
   "public_url": "https://campuspulse-relay-demo.onrender.com/",
-  "deployed_commit": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
+  "deployed_commit": "1718ff340bdb2b40c5d3e796907000bd6720b80f",
   "NON_GCP_READY": false,
   "tests": {
     "python_passed": 209,
@@ -45,7 +45,16 @@
         "passed": true
       }
     ],
-    "statistical_reliability_claimed": false
+    "statistical_reliability_claimed": false,
+    "current_two_clean_visitors": {
+      "evidence": "docs/evidence/audit-live-mvfnvite.json",
+      "deployed_commit": "1718ff340bdb2b40c5d3e796907000bd6720b80f",
+      "cases": 2,
+      "real_turns": 3,
+      "complete_turns": 2,
+      "partial_turns": 1,
+      "all_complete": false
+    }
   },
   "calendar": {
     "operations_verified": false,
@@ -54,9 +63,19 @@
     "audience_production_owner_confirmed": true,
     "callback_attempt_rejected": true,
     "owner_report": "Authorization link copied into another browser/window; source session cookie does not transfer with URL.",
-    "consent_token_exchange_verified": false,
+    "consent_token_exchange_verified": true,
     "real_write_readback_retry_undo_revocation_verified": false,
-    "owner_action": "Start from ordinary RELAY homepage in the working browser, then connect and finish there without transferring authorization/callback URLs."
+    "owner_action": "Record selected target ID and live status, then exact real preview/approval/read-back. Do not reconnect or switch workspaces.",
+    "server_configuration_boundary_verified": true,
+    "boundary_evidence": "docs/evidence/audit-hosted-oauth-boundary.json",
+    "owner_observed_connected": true,
+    "real_consent_completed_owner_observation": true,
+    "owner_connection_evidence": "docs/evidence/audit-calendar-owner-connected.json",
+    "owner_reported_target_selected": true,
+    "actual_target_id_verified": false,
+    "owner_reported_calendar_live": true,
+    "target_id_pending": true,
+    "connection_verification_method": "Actual status screenshot and subsequent owner-provided JSON; actual Google event operations still unverified."
   },
   "native": {
     "full_visibility_verified": false,
@@ -72,17 +91,17 @@
     "windows_control_stopped_by_owner_escape": true
   },
   "github": {
-    "background_verified": false,
-    "evidence": null,
+    "background_verified": true,
+    "evidence": "docs/evidence/audit-hosted-github.json",
     "dedicated_credential_locally_read_validated": true,
-    "server_configuration_verified": false,
+    "server_configuration_verified": true,
     "prior_upstream_error": "UPSTREAM_RATE_LIMITED",
-    "deployment_guard": "Do not deploy until owner restores RELAY_TOKEN_ENCRYPTION_KEY and stores GitHub token separately in RELAY_GITHUB_TOKEN."
+    "deployment_guard": null
   },
   "samples": {
     "files": 13,
-    "public_downloads_verified": false,
-    "evidence": null,
+    "public_downloads_verified": true,
+    "evidence": "docs/evidence/audit-public-samples.json",
     "url": "https://campuspulse-relay-demo.onrender.com/samples/"
   },
   "managed": {

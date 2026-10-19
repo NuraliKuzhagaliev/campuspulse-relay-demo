@@ -1,0 +1,16 @@
+{
+  "checked_at": "2026-10-19T19:42:53.040306+00:00",
+  "deployed_commit": "1718ff340bdb2b40c5d3e796907000bd6720b80f",
+  "passed": true,
+  "configuration_including_encryption_key_valid": true,
+  "exact_https_callback": true,
+  "minimum_scopes": true,
+  "pkce_s256": true,
+  "private_browser_binding_independent_from_url_state": true,
+  "copied_url_cannot_reconstruct_cookie": true,
+  "web_cookie_ttl_seconds": 900,
+  "google_api_calls": 0,
+  "real_consent": false,
+  "real_calendar_writes": 0,
+  "limitation": "Hosted boundary only. Actual owner consent/token exchange and event acceptance remain pending."
+}

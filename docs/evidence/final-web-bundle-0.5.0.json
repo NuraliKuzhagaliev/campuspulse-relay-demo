@@ -1,8 +1,8 @@
 {
-  "checked_at": "2026-10-19T19:38:33.785965+00:00",
+  "checked_at": "2026-10-19T19:53:24.831434+00:00",
   "version": "0.5.0",
   "environment": "D:\\projects\\CampusPulseRELAY\\.local\\public-venv\\Scripts\\python.exe",
-  "extracted_root": "D:\\projects\\CampusPulseRELAY\\.local\\final-integration\\web-bundle-audit-0.5.0-r2",
+  "extracted_root": "D:\\projects\\CampusPulseRELAY\\.local\\final-integration\\web-bundle-audit-0.5.0-r3",
   "checks": {
     "plan_whatif_illustrative_approval_readback": true,
     "new_file_exact_readback_no_google": true,
@@ -96,7 +96,7 @@
     "dist/samples/judge_sample_pack.zip": "015b41274953e709f6d29fe4ce4cd5648823659168857570c4c6e21dd2a9905b",
     "dist/samples/privacy.html": "adc7f70004ff6751b2fbcd0baf224dfdf528691c0f664411a7be4e89ceabbd5d",
     "dist/samples/README.md": "660569b97c8d7155c0f8e7a336ec2ad025208276a8d8b04a93f4a5a246873fe9",
-    "docs/final_judge_guide.md": "57d5bd75fc1666124715a1b30937374a1c3f236b515d21771726dba01e3f1457",
+    "docs/final_judge_guide.md": "6a62c9a48cd576170f4bd0a064ecf6a8f6dce11a78f2c97bdc749f9099737d02",
     "docs/workspace_passport.md": "ca193f4f84d5fb06422aa0ee2502dbf174d0f8ae6f49ee23d24bf863fd1f593d",
     "fixtures/network-security-original.pdf": "11a2d57b1ddf16764e8cf24d99d1f37ee2320d2f06d7667f31ef1deb89beeba5",
     "fixtures/workspace-passport-example.relay.json": "972eb4172574e32ffd4f8b014ab0158be909cab4f1521dbc5b11a229802e7af0",
