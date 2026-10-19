@@ -1,0 +1,17 @@
+{
+  "recorded_at": "2026-10-19T19:59:20.391039+00:00",
+  "deployed_commit": "1718ff340bdb2b40c5d3e796907000bd6720b80f",
+  "owner_actual_status": {
+    "configured": true,
+    "connected": true,
+    "calendar_live": true
+  },
+  "owner_selected_target_screenshot_sha256": "124c74cc6eb128ecc05cb5fabe51d82c0e82d13490e64e975cf45f29646f2ca5",
+  "selected_calendar_id_sha256": "070b322ffc3742b422e1b4fdda14fad9a2ba81734dd9c64463f9405b431eea9c",
+  "target_id_source": "Exact target visible in owner screenshot; full identifier retained privately on D:.",
+  "real_event_write_readback_verified": false,
+  "real_retry_undo_revocation_verified": false,
+  "independent_user_verified": false,
+  "native_pairing_verified": false,
+  "next_step": "One synthetic30minute event preview, then separate explicit owner approval. No event was approved by this verification."
+}
