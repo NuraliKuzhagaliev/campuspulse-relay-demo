@@ -110,7 +110,12 @@ try{
    assert.equal(ca.turns.length,1);assert.equal(cb.turns.length,1);
    assert(!JSON.stringify(ca).includes(markerB));assert(!JSON.stringify(cb).includes(markerA));
    const session=await (await a.page.request.get('/api/session')).json();
-   const plan=await (await a.page.request.post('/api/plan',{headers:{'X-Relay-CSRF':session.csrf},data:{}})).json();
+   for(const conflict of (await state(a)).conflicts){
+     const resolved=await a.page.request.post('/api/conflicts/'+conflict.id+'/resolve',{headers:{'X-Relay-CSRF':session.csrf},data:{fact_id:conflict.facts[0].id}});
+     assert.equal(resolved.status(),200);
+   }
+   const response=await a.page.request.post('/api/plan',{headers:{'X-Relay-CSRF':session.csrf},data:{}});assert.equal(response.status(),200);
+   const plan=await response.json();
    assert(plan.id);const bs=await (await b.page.request.get('/api/session')).json();
    assert.equal((await b.page.request.post('/api/plans/'+plan.id+'/preview',{headers:{'X-Relay-CSRF':bs.csrf},data:{}})).status(),403);
  });

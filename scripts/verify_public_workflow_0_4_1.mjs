@@ -12,7 +12,7 @@ const proof={checked_at:new Date().toISOString(),url,version:"0.4.1",fresh_brows
 const folder=path.join(process.cwd(),".local/public-verification",Date.now().toString(36));
 await fs.mkdir(folder,{recursive:true});
 const output=local?".local/logs/public-demo-browser-local.json":"docs/evidence/public-demo-browser-0.4.1.json";
-const screenshots=local?folder:"docs/screenshots/public-0.4.1";
+const screenshots=path.join(folder,"screenshots");
 await fs.mkdir(screenshots,{recursive:true});
 const browser=await chromium.launch({headless:true});
 try{

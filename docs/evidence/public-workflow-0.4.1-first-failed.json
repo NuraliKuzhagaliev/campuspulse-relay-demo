@@ -1,0 +1,37 @@
+{
+  "checked_at": "2026-10-19T15:01:38.067Z",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "version": "0.4.1",
+  "fresh_browser_context": true,
+  "checks": {
+    "demo_entry": true,
+    "capability_cookie": {
+      "secure": true,
+      "httpOnly": true,
+      "sameSite": "Strict"
+    },
+    "new_upload_exact_evidence": true,
+    "explicit_assignment_mapping": true,
+    "conflict_resolved": true,
+    "plan_and_isolated_what_if": true,
+    "illustrative_approval_receipt_and_execution": true,
+    "hosted_github_read": {
+      "repository": "NuraliKuzhagaliev/campuspulse-relay-demo",
+      "commit": "6f776dac78b1b9d3592a4334ffe41b3e761c7795",
+      "blob": "f08157273402f59aec8289366aef4b0d7623d66c",
+      "fetched_at": "2026-10-19T15:03:11.953809+00:00",
+      "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/blob/6f776dac78b1b9d3592a4334ffe41b3e761c7795/coursework.md",
+      "cache_age_seconds": null
+    },
+    "translations_mobile_automated_aa_and_refresh": true,
+    "visitor_isolation_csrf_internal_and_unavailable_integrations": true
+  },
+  "limitations": [
+    "Illustrative Calendar adapter only. Public queued Gemini is tested separately; real Calendar and mandatory GCP acceptance remain pending.",
+    "Temporary storage: two-hour sessions, with earlier resets possible on inactivity/restarts/redeploys.",
+    "GitHub public observations may be reused for five minutes while retaining their original commit/fetch time."
+  ],
+  "deployed_commit": "6f776dac78b1b9d3592a4334ffe41b3e761c7795",
+  "passed": false,
+  "error": "AssertionError [ERR_ASSERTION]: Expected \"actual\" to be strictly unequal to:\n\n'demo-b52f5a4ec6e755ac39b2e3908f6940df'"
+}

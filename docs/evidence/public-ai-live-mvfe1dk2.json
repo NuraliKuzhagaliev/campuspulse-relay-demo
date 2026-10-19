@@ -1,0 +1,165 @@
+{
+  "checked_at": "2026-10-19T15:07:14.020Z",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "version": "0.4.1",
+  "fresh_browser_sessions": 2,
+  "personal_invitations": 0,
+  "user_logins": 0,
+  "user_api_keys": 0,
+  "provider_substitution": false,
+  "mandatory_agent_engine": false,
+  "real_calendar_writes": 0,
+  "checks": {
+    "two_clean_automatic_isolated_workspaces": {
+      "secure_http_only_strict_cookies": true,
+      "no_registration_or_codes": true
+    },
+    "two_unseen_document_uploads_and_foreign_denial": true,
+    "consent_and_csrf_checked_before_inference": true,
+    "refresh_resumes_same_run": true,
+    "two_real_gemini_signed_mcp_answers": {
+      "independent_conversations": true,
+      "actual_model_turns": 2,
+      "actual_mcp_read_observed": true
+    },
+    "history_run_and_plan_isolation": {
+      "failed": true,
+      "reason": "Acceptance assertion failed; complete diagnostics retained privately on D:."
+    }
+  },
+  "runs": [
+    {
+      "status": "complete",
+      "required_tool_failed": false,
+      "tool_observations": [
+        {
+          "tool": "list_course_sources",
+          "status": "observed",
+          "response_sha256": "afce976c0f59b89fa78f0fb48830fa3c965e8d0aecfb7e0904e947d29afc9148",
+          "provenance": [
+            {
+              "version": "ed54a6a612afa690b67b1bf5",
+              "fetched_at": "2026-10-19T15:08:45.910728+00:00",
+              "mode": "selected_upload"
+            },
+            {
+              "version": "2f1365369bcaca0fc2410e36",
+              "fetched_at": "2026-10-19T15:08:44.060500+00:00",
+              "mode": "illustrative"
+            },
+            {
+              "version": "f533bc53b7a3908263273afb",
+              "fetched_at": "2026-10-19T15:08:44.044641+00:00",
+              "mode": "illustrative"
+            },
+            {
+              "version": "3d59531452b6fcba20721a8d",
+              "fetched_at": "2026-10-19T15:08:44.052655+00:00",
+              "mode": "illustrative"
+            },
+            {
+              "version": "74cb3670dd78e6fa05f7d1eb",
+              "fetched_at": "2026-10-19T15:08:44.067465+00:00",
+              "mode": "illustrative"
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "be27f933221dcfb7dc0a07d69d69e4b41529f194ea87e76982979513f7dd89e7",
+          "provenance": [
+            {
+              "source_id": "384ecc629374abd5625abdc0",
+              "page": 1,
+              "version": "ed54a6a612afa690b67b1bf5",
+              "fetched_at": "2026-10-19T15:08:45.910728+00:00",
+              "mode": "selected_upload"
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "0e976974c653fabb7ff0e9af2dd6a3a1",
+      "conversation_id": "c2790da05db7fb99a3a9b362f9d88829",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "d7cef3d008f831a35a3b3b4e46d880e0477bf0e6",
+      "duration_ms": 18790,
+      "gateway_revision": "d7cef3d008f831a35a3b3b4e46d880e0477bf0e6",
+      "answer_sha256": "9fe55c33429be0225d40fb7175d593f736596cceec8b484920868c06d51cccc7",
+      "answer_characters": 637
+    },
+    {
+      "status": "complete",
+      "required_tool_failed": false,
+      "tool_observations": [
+        {
+          "tool": "list_course_sources",
+          "status": "observed",
+          "response_sha256": "3de5115131bca0509b5b6ed3196157d4e0ecdfc16b71798a6514fd6a4ef45ddf",
+          "provenance": [
+            {
+              "version": "8e1f0bed06e910a9d80ee649",
+              "fetched_at": "2026-10-19T15:08:45.253467+00:00",
+              "mode": "selected_upload"
+            },
+            {
+              "version": "2f1365369bcaca0fc2410e36",
+              "fetched_at": "2026-10-19T15:08:41.558275+00:00",
+              "mode": "illustrative"
+            },
+            {
+              "version": "f533bc53b7a3908263273afb",
+              "fetched_at": "2026-10-19T15:08:41.457204+00:00",
+              "mode": "illustrative"
+            },
+            {
+              "version": "3d59531452b6fcba20721a8d",
+              "fetched_at": "2026-10-19T15:08:41.552189+00:00",
+              "mode": "illustrative"
+            },
+            {
+              "version": "74cb3670dd78e6fa05f7d1eb",
+              "fetched_at": "2026-10-19T15:08:41.565609+00:00",
+              "mode": "illustrative"
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "7c5d8caba4a9aee312940477d4c1d0d0a472ac436309e1c68e5d1d774f304f48",
+          "provenance": [
+            {
+              "source_id": "d649afb40188116e5ccf50db",
+              "page": 1,
+              "version": "8e1f0bed06e910a9d80ee649",
+              "fetched_at": "2026-10-19T15:08:45.253467+00:00",
+              "mode": "selected_upload"
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "de84f21e3e7fbfcb33ec9ef3e14c3097",
+      "conversation_id": "91e74e14cc1ff101e43051c937d999b8",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "d7cef3d008f831a35a3b3b4e46d880e0477bf0e6",
+      "duration_ms": 20937,
+      "gateway_revision": "d7cef3d008f831a35a3b3b4e46d880e0477bf0e6",
+      "answer_sha256": "ca41171bf5a371eee904bb1d47c5e3f057b8b782df7ab3c0bc3946a25d18cd68",
+      "answer_characters": 345
+    }
+  ],
+  "deployed_commit": "d7cef3d008f831a35a3b3b4e46d880e0477bf0e6",
+  "passed": false,
+  "error": "Acceptance assertion failed; complete diagnostics retained privately on D:."
+}

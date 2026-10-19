@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-19T15:03:39.783229+00:00",
+  "checked_at": "2026-10-19T15:11:10.026975+00:00",
   "sessions": 100,
   "provider": "simulated_test_only",
   "actual_gemini_calls": 0,
@@ -9,6 +9,8 @@
     "foreign_source_denied_100": true,
     "foreign_run_denied_100": true,
     "history_isolation_100": true,
+    "plan_isolation_100": true,
+    "plans_seeded_as_isolation_fixtures_not_solver_acceptance": true,
     "one_outstanding_per_workspace": true,
     "bounded_worker_pool": 2,
     "at_least_98_queued_at_barrier": true,

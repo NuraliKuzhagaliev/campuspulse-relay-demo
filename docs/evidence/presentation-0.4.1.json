@@ -1,0 +1,12 @@
+{
+  "version": "0.4.1",
+  "slides": 12,
+  "pptx": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.4.1-public-ai-r1.pptx",
+  "pdf": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.4.1-public-ai-r1-verified.pdf",
+  "renders": "D:\\projects\\CampusPulseRELAY\\.local\\presentation-final\\public-ai-r1",
+  "editable": true,
+  "source_reference": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.4.0-hosted-r1.pptx",
+  "public_gemini_verified": true,
+  "validation": "D:\\projects\\CampusPulseRELAY\\.local\\presentation-final\\public-ai-r1\\validation.json",
+  "native_powerpoint_opened": false
+}

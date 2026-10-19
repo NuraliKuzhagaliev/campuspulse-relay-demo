@@ -1,0 +1,12 @@
+{
+  "provider": "Google Gemini Developer API",
+  "exception": "google.genai.errors.ServerError",
+  "upstream_status": 504,
+  "provider_status": "DEADLINE_EXCEEDED",
+  "observed_log_time": "2026-10-19T15:02:47.002099493Z",
+  "first_batch_complete_turns": 1,
+  "first_batch_failed_turns": 1,
+  "no_hidden_retry": true,
+  "raw_provider_logs_published": false,
+  "documents_and_answers_published": false
+}

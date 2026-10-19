@@ -1,32 +1,21 @@
-> Executed on2026-10-19: existing-service0.4 cutover verified. See `evidence/public-deployment-0.4.0.json`. The following is the retained reviewable plan; its key-save/verification steps have been completed. Original managed GCP and real Calendar remain pending.
+# Completed public AI cutover · 0.4.1
 
-# Reviewable existing-service cutover
+Public HTTPS **https://campuspulse-relay-demo.onrender.com** runs **0.4.1**, existing Render **Free** service `srv-dbajs73bc2fs73bm9mfg`, deploy `dep-dbb348mi0phs73bb6u50`, runtime commit `d7cef3d008f831a35a3b3b4e46d880e0477bf0e6`. No new infrastructure, paid upgrade, billing activation or personal payment was used.
 
-No new Render infrastructure is authorized or needed. Use the already authorized workspace `tea-d3pt0sbipnbc73a5v810`, existing service `srv-dbajs73bc2fs73bm9mfg`, Free Docker Frankfurt, one instance, auto-deploy **off**. Preserve the previous live deployment `dep-dbal14m1egvs73b4fp8g`, source `83552161ec22c7cf44746433425d3b2b99e042c4`, Dockerfile `infra/Dockerfile.public`, branch `main` as the rollback reference. Prior local and sealed release archives are unchanged.
+Branch `local/final-integration-0.4.0` and public `main` retain fast-forward history. Auto-deploy remains off. Existing `infra/Dockerfile.alternative`, one Free instance and server-only key are preserved. Public flag/quota values were merged without retrieving or logging the secret. The first deployment ran6f776da; the final runtime is `d7cef3d008f831a35a3b3b4e46d880e0477bf0e6`. No new hosting resource or paid setting.
 
-Prepared source branch: `local/final-integration-0.4.0`. Before triggering, record its exact clean pushed commit. Target Dockerfile: `infra/Dockerfile.alternative`, context repository root, health path `/api/health`. The image builds the frontend and actual Python ADK/MCP backend. It does not point the hosted frontend at localhost. Internal loopback MCP is inside that same container and is not a client URL.
+Two originally clean automatic anonymous workspaces uploaded separate unseen synthetic documents and each completed a real Gemini/ADK/signed-MCP answer. No invitation, registration, Google login or visitor API key was used. Refresh resumed the same run. A later non-model test stage initially attempted planning before resolving the fixture conflict; its precondition was corrected and the remaining checks passed in the same two owned workspaces with zero additional model calls. This reuse is recorded explicitly, not counted as another pair of fresh visitors.
 
-The owner must put the eligible free-tier Gemini key in the **existing service's private environment** as `RELAY_GEMINI_API_KEY`, then choose **Save only**. The exact empty row was prepared in the authenticated Render Dashboard. Do not copy a key into chat, a tool output, frontend source, screenshot or invitation. Keep current live deployment until the key is saved and all local reviewable checks/artifacts are ready.
+Actual first batch: one complete answer and one Google `504 DEADLINE_EXCEEDED`; that failure remains recorded. The next pair completed both questions. No hidden model retry, paid fallback, statistical success rate or latency guarantee is claimed. Published evidence contains metadata/hashes only; full answers, document citations, cookies and content screenshots remain in ignored private D: folders.
 
-Merge these non-secret variables without replacing other secrets:
+Separately, 100 real HTTP capability sessions/uploads/queue/history paths ran with the provider simulated: unique workspaces, foreign source/run/history/plan authorization, one outstanding turn per workspace, two workers, FIFO/fair quota tickets and 15-RPM rolling accounting passed. Plan objects in this load test are explicitly seeded isolation fixtures, not 100 solver or real-model acceptances. Zero actual Gemini calls. Final local suite:132 Python tests and3 subtests passed;6 IPC policy tests; queue refresh/cancel/reset and localized quota UI regressions passed.
 
-```text
-RELAY_MODE=alternative_live
-RELAY_INFERENCE_PROVIDER=gemini_developer
-RELAY_DEPLOYMENT_MODE=alternative_hosted
-GOOGLE_GENAI_USE_VERTEXAI=false
-RELAY_GEMINI_DEVELOPER_MODEL=gemini-3.5-flash-lite
-RELAY_GEMINI_FREE_ONLY=true
-RELAY_GITHUB_REPO=NuraliKuzhagaliev/campuspulse-relay-demo
-RELAY_GATE_REPOS=pallets/flask
-RELAY_JUDGE_ENABLED=true
-RELAY_AI_ADMIN_PUBLIC_KEY=UPbLEObv9w0mCyy+3hNR5q68vLx6vqqeSc3LrnuF3w8=
-RELAY_MODEL_CALLS_PER_MINUTE=13
-RELAY_MODEL_TOKENS_PER_MINUTE=240000
-```
+The full hosted illustrative workflow passed: import, original evidence, explicit assignment mapping/conflict resolution, validated plan, what-if, illustrative approval/read-back receipt, execution events, real backend GitHub read, EN/RU/Kazakh, mobile, refresh and reset/isolation. Nine additional language/width states and automated AA checks passed in the real-AI workspaces. Installed0.4.1 main/preload/policy/renderer match source; anonymous public import/read-back/refresh, polling route authorization, reopen and CSRF reset passed with zero model calls. The original native profile still reads45 logged/95 explicitly remaining.
 
-`RENDER_EXTERNAL_URL`, commit and port are supplied by Render. The entrypoint generates distinct ephemeral internal context/service keys, binds `0.0.0.0:$PORT`, and starts one worker. Do not set Google Vertex flags, a managed resource ID, real Calendar permission, a local development certificate or a paid tier.
+New source-only documentation/test/evidence commits after the runtime commit may be archived in the release. The packager checks the deployed frontend/backend/runtime files are identical to archived source. No implicit deployment of documentation-only metadata is claimed.
 
-After deployment, verify actual deployID/commit, valid public TLS, health/version, no frontend localhost dependency, fresh anonymous and private sessions, two documents/isolation, actual Gemini/MCP/GitHub query, languages/mobile, illustrative plan/receipt and installed Windows HTTPS query. Record provider/model/runtime/gateway revision and sample latency. Leave0.4 marked pending until these actually pass. A successful Docker build or model metadata request alone is insufficient.
+Original managed GCP Agent Engine criterion remains **UNMET / GCP_EXCEPTION_PENDING**. The existing trial is closed, prepayment is required, no usable credits were established, and D: CLI/ADC authentication is absent. Alternative Gemini hosting does not satisfy a deployed `projects/.../reasoningEngines/...` requirement. Organizer credits will not arrive; no personal spending or paid billing attachment is authorized.
 
-If deployment fails or exceeds included free capacity, preserve evidence and restore the previous settings/deployment without a paid upgrade. No automatic deletion, unrelated resource cleanup or calendar clearing is authorized. Cloud Free Trial remains separately blocked by prepayment and the original managed criterion remains UNMET/EXCEPTION_PENDING.
+Real Calendar remains separate and optional. The dedicated secondary target exists (`docs/connections.json`), but app OAuth client/runtime consent and real write/read-back are not accepted. Public Gemini grants no Calendar authority and does not receive private event data or Calendar mutation tools. External writes require separate user consent, exact target, fresh immutable preview and authenticated UI approval. Current public Calendar receipts are explicitly illustrative.
+
+New0.4.1 unmodified native Open/Cancel/Save visibility, real import through that picker, notification banner and click/focus remain human observations. Automated import/API/policy contracts and historical0.1.1 picker/banner plus0.3 human45/95 restart evidence are separate. Current installed original-profile45/95 read-back is verified, not a new human picker claim.

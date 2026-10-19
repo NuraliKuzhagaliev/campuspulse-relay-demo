@@ -187,12 +187,15 @@ async def test_100_http_sessions_simulated_provider_only(tmp_path,monkeypatch):
                 client=httpx.AsyncClient(transport=transport,base_url='https://testserver')
                 clients.append(client);session=(await client.get('/api/session')).json()
                 state=(await client.get('/api/state')).json();marker=f'isolated-marker-{n:03}-{secrets.token_hex(3)}'
+                plan_id=secrets.token_hex(12)
                 headers={'X-Relay-CSRF':session['csrf']}
                 import base64
                 source=(await client.post('/api/import-native',headers=headers,json=dict(name=f'visitor-{n}.md',content=base64.b64encode(marker.encode()).decode()))).json()
+                gateway.store.put(state['workspace_id'],'plans',plan_id,dict(id=plan_id,input={'tasks':[]},marker=marker,purpose='isolation_fixture_not_solver_acceptance'))
+                gateway.store.put(state['workspace_id'],'meta','latest_plan',{'id':plan_id})
                 response=await client.post('/api/chat',headers=headers,json=dict(message='Read my private document',language='en',adult_confirmed=True,permitted_processing=True,processing_region='supported_non_eea',request_id=secrets.token_hex(16)))
                 assert response.status_code==202,response.text
-                records.append(dict(tenant=state['workspace_id'],source=source['id'],run=response.json()['run_id'],marker=marker,headers=headers))
+                records.append(dict(tenant=state['workspace_id'],source=source['id'],run=response.json()['run_id'],marker=marker,plan=plan_id,headers=headers))
             assert len({r['tenant'] for r in records})==100
             jobs=gateway.store.list('_server','public_ai_jobs');assert len(jobs)==100
             assert len([j for j in jobs if j['status']=='running'])<=2
@@ -211,6 +214,8 @@ async def test_100_http_sessions_simulated_provider_only(tmp_path,monkeypatch):
                 peer=records[(n+1)%100]
                 assert (await client.get('/api/sources/'+peer['source'])).status_code==403
                 assert (await client.get('/api/runs/'+peer['run'])).status_code==403
+                assert (await client.get('/api/state')).json()['plan']['id']==record['plan']
+                assert (await client.post('/api/plans/'+peer['plan']+'/preview',headers=record['headers'],json={})).status_code==403
                 history=(await client.get('/api/conversation')).json();assert len(history['turns'])==1
                 assert history['turns'][0]['assistant']==result['text']
             times=sorted(c['reserved_at'] for c in calls)
@@ -218,7 +223,7 @@ async def test_100_http_sessions_simulated_provider_only(tmp_path,monkeypatch):
             assert len({c['tenant'] for c in calls})==100
             evidence=dict(checked_at=datetime.now(timezone.utc).isoformat(),sessions=100,provider='simulated_test_only',actual_gemini_calls=0,
                 actual_http_session_upload_queue_history_paths=True,checks=dict(unique_workspaces=True,foreign_source_denied_100=True,foreign_run_denied_100=True,
-                history_isolation_100=True,one_outstanding_per_workspace=True,bounded_worker_pool=2,at_least_98_queued_at_barrier=True,served_all_100=True,
+                history_isolation_100=True,plan_isolation_100=True,plans_seeded_as_isolation_fixtures_not_solver_acceptance=True,one_outstanding_per_workspace=True,bounded_worker_pool=2,at_least_98_queued_at_barrier=True,served_all_100=True,
                 rolling_rpm_limit_15_respected=True,no_real_calendar_writes=True),passed=True)
             Path('docs/evidence/public-ai-100-simulated.json').write_text(json.dumps(evidence,indent=2))
     finally:
