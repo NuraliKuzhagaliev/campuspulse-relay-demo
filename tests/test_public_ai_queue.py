@@ -226,7 +226,7 @@ async def test_100_http_sessions_simulated_provider_only(tmp_path,monkeypatch):
                 actual_http_session_upload_queue_history_paths=True,checks=dict(unique_workspaces=True,foreign_source_denied_100=True,foreign_run_denied_100=True,
                 history_isolation_100=True,plan_isolation_100=True,plans_seeded_as_isolation_fixtures_not_solver_acceptance=True,one_outstanding_per_workspace=True,bounded_worker_pool=2,at_least_98_queued_at_barrier=True,served_all_100=True,
                 rolling_rpm_limit_15_respected=True,no_real_calendar_writes=True),passed=True)
-            Path('docs/evidence/public-ai-100-simulated.json').write_text(json.dumps(evidence,indent=2))
+            Path('docs/evidence/audit-100-simulated.json').write_text(json.dumps(evidence,indent=2))
     finally:
         ready.set()
         for client in clients:await client.aclose()

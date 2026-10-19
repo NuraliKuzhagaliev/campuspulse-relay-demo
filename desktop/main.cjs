@@ -155,7 +155,7 @@ async function request(apiPath, method = "GET", body) {
 }
 function validFile(name, size) {
   return (
-    /\.(pdf|md|txt|ics)$/i.test(name) && size > 0 && size <= 10 * 1024 * 1024
+    /\.(pdf|md|txt|ics)$/i.test(name) && size > 0 && size <= 2 * 1024 * 1024
   );
 }
 async function selectedFile(file, importId, kind) {

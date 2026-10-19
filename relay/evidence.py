@@ -7,31 +7,38 @@ from zoneinfo import ZoneInfo
 from .domain import RelayError, digest, now, instant
 from .identity import mapping, section_key
 
-MAX_BYTES = 10 * 1024 * 1024
+MAX_BYTES = 2 * 1024 * 1024
 MAX_TEXT = 250_000
-ACADEMIC = re.compile(r'\b(assignment|syllabus|rubric|course|lab|report|project|deliverable|deadline)\b|Р·Р°РґР°РЅРё|РґРµРґР»Р°Р№РЅ|С‚Р°РїСЃС‹СЂРјР°|СЃРёР»Р»Р°Р±СѓСЃ', re.I)
+ACADEMIC = re.compile(r'\b(assignment|syllabus|rubric|course|lab|report|project|deliverable|deadline)\b|задани|дедлайн|тапсырма|силлабус|отч[её]т|жоба|есеп|курс|лаборатор', re.I)
 ISO = r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?(?:Z|[+-]\d{2}:\d{2})'
+
+import threading
+_pdf_slot=threading.Semaphore(1)
+
+def bounded_pdf(content):
+    import subprocess, sys, json, os
+    with _pdf_slot:
+        try:
+            result=subprocess.run([sys.executable,'-m','relay.pdf_worker'],input=content,stdout=subprocess.PIPE,
+                                  stderr=subprocess.DEVNULL,timeout=8,creationflags=0x08000000 if os.name=='nt' else 0)
+            value=json.loads(result.stdout) if result.returncode==0 else {}
+        except (subprocess.TimeoutExpired,ValueError):value={}
+    if not value.get('pages'):
+        reason=value.get('error','parse_or_resource_limit')
+        raise RelayError('UNSUPPORTED_INPUT','PDF import stopped: '+reason+'. Use an unlocked text PDF within the page/text/resource limits; scanned PDF OCR is unavailable.')
+    return value['pages']
 
 
 def read_upload(name: str, content: bytes, timezone='Asia/Almaty', horizon=None):
     if not content or len(content) > MAX_BYTES:
-        raise RelayError('UNSUPPORTED_INPUT', 'Choose a non-empty file up to 10 MiB.')
+        raise RelayError('UNSUPPORTED_INPUT', 'Choose a non-empty PDF, Markdown, TXT or ICS file up to 2 MiB.')
     if '/' in name or '\\' in name or '\x00' in name or name.startswith('.'):
         raise RelayError('ACCESS_DENIED', 'Only a filename is accepted; paths are not allowed.')
     ext = PurePath(name).suffix.lower()
     pages = []
     try:
         if ext == '.pdf':
-            from pypdf import PdfReader
-            doc = PdfReader(io.BytesIO(content))
-            if doc.is_encrypted:
-                raise RelayError('UNSUPPORTED_INPUT', 'Unlock the encrypted PDF before import.')
-            if len(doc.pages)>100:
-                raise RelayError('UNSUPPORTED_INPUT', 'Import at most 100 pages at a time.')
-            for i, page in enumerate(doc.pages):
-                pages.append(dict(page=i+1, text=page.extract_text() or ''))
-            if not any(p['text'].strip() for p in pages):
-                raise RelayError('UNSUPPORTED_INPUT', 'This PDF has no extractable text. Scanned PDF OCR is not configured.')
+            pages = bounded_pdf(content)
         elif ext in ('.md','.txt'):
             pages = [dict(page=1, text=content.decode('utf-8-sig'))]
         elif ext == '.ics':
@@ -44,72 +51,12 @@ def read_upload(name: str, content: bytes, timezone='Asia/Almaty', horizon=None)
         raise RelayError('PARSE_FAILED', 'The file could not be read. Check encoding or export a fresh copy.') from exc
     if sum(len(p['text']) for p in pages)>MAX_TEXT:
         raise RelayError('UNSUPPORTED_INPUT','Extracted text exceeds 250,000 characters; split the document.')
+    if not any(p['text'].strip() for p in pages):
+        raise RelayError('EMPTY_CONTENT','The file has no readable text. Export a non-empty text document.')
     return dict(pages=pages, content_hash=digest(content.hex()), type=ext[1:], fetched_at=now())
 
 
-def extract_facts(source: dict):
-    facts, drafts = [], []
-    for page in source['pages']:
-        text = page['text']
-        if not ACADEMIC.search(text):
-            continue
-        sections = re.split(r'(?m)^#{1,3}\s+', text)
-        for section in sections:
-            if not ACADEMIC.search(section):
-                continue
-            title_match = re.search(r'(?im)^(?:Assignment|Lab|Report|Project|Р—Р°РґР°РЅРёРµ|РўР°РїСЃС‹СЂРјР°)[ \t]*:[ \t]*(.+)$',section)
-            title = title_match.group(1).strip() if title_match else section.split('\n')[0].strip()[:120]
-            if not title or title.lower() in ('syllabus','course','rubric'):
-                continue
-            if not title_match and not re.search(r'\b(assignment|lab|report|project)\b|Р·Р°РґР°РЅРё|С‚Р°РїСЃС‹СЂРјР°',title,re.I):
-                continue # Academic overview/preamble is evidence, not an invented assignment.
-            course_match = re.search(r'(?im)^Course[ \t]*:[ \t]*(.+)$',section)
-            term_match = re.search(r'(?im)^(?:Term|Semester)[ \t]*:[ \t]*(.+)$',section)
-            key_match = re.search(r'(?im)^Assignment ID[ \t]*:[ \t]*(.+)$',section)
-            identity = mapping(source, title, course_match[1].strip() if course_match else None,
-                               term_match[1].strip() if term_match else None,
-                               key_match[1].strip() if key_match else None)
-            task_id = identity['id']
-            due = None
-            evidence = []
-            for line in section.splitlines():
-                if re.search(r'\b(due|deadline)\b|СЃСЂРѕРє|РґРµРґР»Р°Р№РЅ|РјРµСЂР·С–Рј',line,re.I):
-                    match = re.search(ISO,line)
-                    if match:
-                        try:
-                            instant(match.group())
-                            due = match.group()
-                            evidence.append(dict(field='due',value=due,quote=line.strip(),page=page['page']))
-                        except RelayError:
-                            evidence.append(dict(field='due',value=None,quote=line.strip(),page=page['page'],status='invalid'))
-                    else:
-                        evidence.append(dict(field='due',value=None,quote=line.strip(),page=page['page'],status='ambiguous' if re.search(r'\d|Friday|Monday',line,re.I) else 'missing'))
-            effort = re.search(r'(?im)^(?:Effort|Estimate)[ \t]*:[ \t]*(\d+)(?:\s*-\s*(\d+))?\s*(minutes?|mins?|hours?|h)\b',section)
-            minutes = None
-            effort_max = None
-            if effort:
-                multiplier = 60 if effort[3].startswith('h') else 1
-                minutes = int(effort[1])*multiplier
-                effort_max = int(effort[2])*multiplier if effort[2] else minutes
-                if minutes < 30 or minutes % 30 or effort_max % 30 or effort_max < minutes:
-                    minutes = effort_max = None
-                evidence.append(dict(field='minutes',value=minutes,quote=effort.group(),page=page['page'],kind='explicit_estimate'))
-            rubric = [m.group(1).strip() for m in re.finditer(r'(?m)^\s*-\s*\[\s*\]\s*(.+)$',section)]
-            for quote in rubric:
-                evidence.append(dict(field='rubric',value=quote,quote=quote,page=page['page']))
-            for line in section.splitlines():
-                if re.match(r'(?i)^(Filename|Format|Sections|Words|Pages|Required files|Filename exception)[ \t]*:',line):
-                    evidence.append(dict(field='submission_requirement',value=line.strip(),quote=line.strip(),page=page['page']))
-            task = dict(id=task_id,title=title,course=identity['course'],identity=identity,section_key=section_key(title),
-                        due=due,minutes=minutes,effort_max=effort_max,source_ids=[source['id']],rubric=rubric,
-                        completion='planned',dependencies=[],priority=1)
-            drafts.append(dict(**task,gaps=[k for k in ('due','minutes') if task[k] is None]+(['identity'] if identity['status']=='unresolved' else [])))
-            for e in evidence:
-                facts.append(dict(id=digest([source['id'],source['version'],task_id,e])[:24],task_id=task_id,
-                                  source_id=source['id'],source_version=source['version'],hash=source['content_hash'],
-                                  fetched_at=source['fetched_at'],timezone=source.get('timezone','Asia/Almaty'),
-                                  status=e.get('status','explicit'),kind=e.get('kind','explicit'),**{k:v for k,v in e.items() if k not in ('status','kind')}))
-    return facts,drafts
+from .academic import extract_facts
 
 
 def conflicts(facts):

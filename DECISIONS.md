@@ -1,3 +1,13 @@
+# Current audit decisions ·19October2026
+
+- The final audit prompt supersedes prior funding notices: actual organizer access is expected tomorrow for12hours after activation. No personal trial/payment/billing upgrade. Actual project/window/coverage and mandatory managed deployment remain pending.
+-0.5keeps anonymous public Gemini/MCP access and isolated own/example workspaces. Grouped cited proposals require per-entity explicit atomic review; exact source effort is distinct from rounded solver allocation and reported remaining work.
+- Public state remains authoritative outside the temporary lab. A narrow checkpoint/quota RPC, signed machine/workspace boundary and optional organizer query bridge avoid an unfinished data-store fork. Owner routing activation/retirement is signed with a separate DPAPI key and does not reset visitor state. All real GCP evidence is still pending.
+- Calendar connection is voluntary per visitor but a required product feature. Default app-created-calendar scopes are separate from optional existing-calendar consent. Consent never approves study writes; desktop credentials are not granted before explicit pairing approval. Real Google acceptance and publishing eligibility are pending.
+- Previous decisions below retain historical context only where not superseded. Sealed releases and original45/95 are preserved; new outputs remain on D:.
+
+## Historical decisions
+
 # Decisions
 
 - Final phase2026-10-19 supersedes organizer-only funding waits. Preferred managed route requires an actual verified non-billable Free Trial; current account requires prepayment and cannot be used under the zero-personal-spend policy. Select the explicit Gemini Developer free-tier alternative, preserving the managed criterion as unresolved. No automatic provider fallback or paid upgrade.

@@ -7,6 +7,7 @@ import os
 import re
 import threading
 import time
+import copy
 from collections import OrderedDict
 from .domain import RelayError
 
@@ -25,7 +26,7 @@ MAX_SOURCES = 12
 _lock = threading.Lock()
 _cache_lock = threading.Lock()
 _buckets = OrderedDict()
-_public_cache = {}
+_public_cache = OrderedDict()
 
 
 def limit(scope, operation, count, seconds=60):
@@ -47,7 +48,10 @@ POST = re.compile(r'^/api/(import|import-native|tasks/[a-f0-9]+/progress|work-se
 
 
 def route_allowed(path, method):
-    if path == '/' or path.startswith('/assets/') or path == '/robots.txt':
+    if method=='GET' and path=='/api/extraction-proposals':return True
+    if method=='POST' and re.fullmatch(r'/api/sources/[A-Za-z0-9_-]+/review',path):return True
+    if method=='POST' and (path in ('/api/workspace/switch','/api/planning-context') or re.fullmatch(r'/api/extraction-proposals/[a-f0-9]{24}/[a-f0-9]{24}/confirm',path)):return True
+    if path == '/' or path.startswith('/assets/') or path.startswith('/samples/') or path == '/robots.txt':
         return method in ('GET', 'HEAD')
     if method == 'GET':
         return bool(GET.fullmatch(path))
@@ -112,8 +116,8 @@ def read_public_source(repo, ref, path, loader):
     with _cache_lock:
         cached = _public_cache.get(key)
         if cached and time.time() - cached[0] < 300:
-            return dict(cached[1], cache_age_seconds=round(time.time() - cached[0], 2))
+            return dict(copy.deepcopy(cached[1]), cache_age_seconds=round(time.time() - cached[0], 2))
         value = loader()
-        _public_cache.clear()
+        while len(_public_cache)>=64:_public_cache.popitem(last=False)
         _public_cache[key] = (time.time(), value)
-        return dict(value, cache_age_seconds=0)
+        return dict(copy.deepcopy(value), cache_age_seconds=0)

@@ -11,7 +11,7 @@ def enabled():
 def configuration():
     from .providers import selected
     value = selected()
-    if not value['configured']:
+    if not value['configured'] or not os.getenv('RELAY_GEMINI_API_KEY') or os.getenv('RELAY_GEMINI_FREE_ONLY')!='true':
         raise RuntimeError('Alternative live startup requires an owner-authorized free-tier key. No paid fallback is permitted.')
     for key in ('RELAY_CONTEXT_SECRET', 'RELAY_MCP_SERVICE_SECRET'):
         if len(os.getenv(key, '')) < 32:
@@ -26,6 +26,11 @@ def configuration():
 
 
 def route_allowed(path, method):
+    if path=='/internal/managed-route':return method=='POST'
+    if path=='/internal/runtime-state':return method=='POST'
+    if path.rstrip('/')=='/managed/mcp':return method in ('POST','GET','DELETE')
+    if method=='GET' and path in ('/api/auth/start','/connect','/auth/callback','/api/connections/calendar-list','/api/connections/status'):return True
+    if method=='POST' and path in ('/api/auth/poll','/api/auth/pair/approve','/api/connections/calendar','/api/connections/calendar/create','/api/connections/disconnect'):return True
     from .public_ai import enabled as public_access
     if public_access() and path in ('/internal/ai-invitations','/api/judge/claim'):
         return False

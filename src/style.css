@@ -2706,3 +2706,23 @@ code,
   cursor: pointer;
   font-weight: 600;
 }
+/* Document review keeps long untrusted quotations inside the content column. */
+.review-fields { display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin:18px 0; }
+.review-fields label {display:flex;flex-direction:column;gap:8px;}
+.review-fields input,.review-fields textarea {width:100%;min-width:0;min-height:44px;padding:11px 12px;border:1px solid #bac7cb;border-radius:9px;background:#fff;color:#23343e;font:inherit;}
+.review-fields textarea {min-height:96px;resize:vertical;}
+.study-block.compact {padding:3px 7px;gap:0;justify-content:center;}
+.study-block.compact .block-time,.study-block.compact .block-meta {display:none;}
+.study-block.compact strong {overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.review-source,.workspace-choice {display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin:12px 0;padding:18px;}
+.workspace-choice p {flex-basis:100%;margin:0;}
+.review-entity {padding:24px;margin:18px 0;}
+.review-quote {overflow-wrap:anywhere;border-top:1px solid #dce3e7;padding:12px;}
+.review-consent {display:flex;gap:10px;margin:18px 0;align-items:center;}
+.planning-context {padding:20px;margin-bottom:20px;}
+.planning-context summary {cursor:pointer;font-weight:700;}
+.planning-context fieldset {display:flex;flex-wrap:wrap;gap:16px;border:1px solid #cbd6df;border-radius:12px;padding:15px;}
+.planning-context fieldset label {display:flex;align-items:center;gap:6px;}
+.scope-notice {padding:16px;background:#f3f7f7;border-radius:12px;}
+.seven-day-grid {min-width:1000px;}
+.zoned-hour small {position:absolute;top:1px;left:3px;font-size:10px;color:#4b6075;background:#fff9;z-index:1;pointer-events:none;}

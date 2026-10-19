@@ -17,7 +17,8 @@ from cryptography.fernet import Fernet
 from .domain import RelayError,digest
 
 router=APIRouter()
-SCOPES=['openid','https://www.googleapis.com/auth/userinfo.email','https://www.googleapis.com/auth/userinfo.profile','https://www.googleapis.com/auth/calendar.events','https://www.googleapis.com/auth/calendar.calendarlist.readonly']
+SCOPES=['openid','https://www.googleapis.com/auth/userinfo.email','https://www.googleapis.com/auth/calendar.app.created']
+EXISTING_SCOPES=['openid','https://www.googleapis.com/auth/userinfo.email','https://www.googleapis.com/auth/calendar.events','https://www.googleapis.com/auth/calendar.calendarlist.readonly']
 
 
 def configuration():
@@ -30,9 +31,16 @@ def configuration():
 def credentials(store,tenant):
     from google.oauth2.credentials import Credentials
     try:
-        value=store.get(tenant,'private_connections','google')['ciphertext']
+        record=store.get(tenant,'private_connections','google')
+        value=record['ciphertext']
         plaintext=Fernet(os.environ['RELAY_TOKEN_ENCRYPTION_KEY'].encode()).decrypt(value.encode())
-        return Credentials.from_authorized_user_info(json.loads(plaintext))
+        value=Credentials.from_authorized_user_info(json.loads(plaintext))
+        if value.expired and value.refresh_token:
+            from google.auth.transport.requests import Request
+            value.refresh(Request())
+            ciphertext=Fernet(os.environ['RELAY_TOKEN_ENCRYPTION_KEY'].encode()).encrypt(value.to_json().encode()).decode()
+            store.put(tenant,'private_connections','google',dict(record,ciphertext=ciphertext,type='google_oauth'))
+        return value
     except Exception as exc:
         raise RelayError('AUTH_REQUIRED','Connect Google in your browser to authorize this workspace Calendar.') from exc
 
@@ -40,7 +48,16 @@ def credentials(store,tenant):
 def calendar_list(store,tenant):
     from google.auth.transport.requests import AuthorizedSession
     from .connectors import upstream_error
-    session=AuthorizedSession(credentials(store,tenant))
+    creds=credentials(store,tenant)
+    session=AuthorizedSession(creds)
+    if 'https://www.googleapis.com/auth/calendar.events' not in (creds.scopes or []):
+        connection=store.get(tenant,'private_connections','google')
+        target=connection.get('app_calendar')
+        if not target:return []
+        response=session.get('https://www.googleapis.com/calendar/v3/calendars/'+__import__('urllib.parse',fromlist=['quote']).quote(target['id'],safe=''),timeout=20)
+        if response.status_code!=200:raise upstream_error(response.status_code)
+        actual=response.json()
+        return [dict(id=actual['id'],name=actual.get('summary','CampusPulse RELAY'),role='owner',primary=False,timezone=actual.get('timeZone'))]
     response=session.get('https://www.googleapis.com/calendar/v3/users/me/calendarList',params={'maxResults':250},timeout=20)
     if response.status_code!=200:
         raise upstream_error(response.status_code)
@@ -49,19 +66,20 @@ def calendar_list(store,tenant):
 
 def install(store,new_session,identity):
     @router.get('/api/auth/start')
-    def start(desktop:bool=False):
+    def start(request:Request,desktop:bool=False,existing:bool=False):
+        owner=identity(request)
         configuration()
         gateway=os.environ['RELAY_GATEWAY_URL']
         if not gateway.startswith('https://'):
             raise RelayError('AUTH_REQUIRED','Hosted OAuth requires the configured HTTPS gateway.')
         if not desktop:
-            return {'url':gateway+'/connect'}
+            return {'url':gateway+('/connect?existing=true' if existing else '/connect')}
         pairing_id,secret=secrets.token_urlsafe(24),secrets.token_urlsafe(32)
-        store.put('_server','pairings',pairing_id,{'id':pairing_id,'secret_hash':digest(secret),'expires':time.time()+300,'status':'pending'})
-        return {'url':gateway+'/connect?pair='+pairing_id,'pairing_id':pairing_id,'secret':secret}
+        store.put('_server','pairings',pairing_id,{'id':pairing_id,'secret_hash':digest(secret),'expires':time.time()+300,'status':'pending','workspace':owner['tenant']})
+        return {'url':gateway+'/connect?pair='+pairing_id+('&existing=true' if existing else ''),'pairing_id':pairing_id,'secret':secret}
 
     @router.get('/connect')
-    def connect(pair:str|None=None):
+    def connect(request:Request,pair:str|None=None,existing:bool=False):
         from google_auth_oauthlib.flow import Flow
         config=configuration()
         state=secrets.token_urlsafe(32)
@@ -70,8 +88,11 @@ def install(store,new_session,identity):
             pairing=store.get('_server','pairings',pair)
             if pairing['expires']<time.time() or pairing['status']!='pending':
                 raise RelayError('AUTH_REQUIRED','Desktop pairing expired. Start again in the app.')
-        store.put('_server','oauth_states',digest(state),{'expires':time.time()+300,'verifier':verifier,'pair':pair,'status':'pending'})
-        flow=Flow.from_client_config(config,scopes=SCOPES,state=state,code_verifier=verifier)
+            tenant=pairing['workspace']
+        else:tenant=identity(request)['tenant']
+        scopes=EXISTING_SCOPES if existing else SCOPES
+        store.put('_server','oauth_states',digest(state),{'expires':time.time()+300,'verifier':verifier,'pair':pair,'status':'pending','workspace':tenant,'scopes':scopes})
+        flow=Flow.from_client_config(config,scopes=scopes,state=state,code_verifier=verifier)
         flow.redirect_uri=os.environ['RELAY_GATEWAY_URL']+'/auth/callback'
         url,_=flow.authorization_url(access_type='offline',include_granted_scopes='true',prompt='consent')
         response=RedirectResponse(url)
@@ -90,7 +111,7 @@ def install(store,new_session,identity):
         from google_auth_oauthlib.flow import Flow
         from google.oauth2 import id_token
         from google.auth.transport.requests import Request as GoogleRequest
-        flow=Flow.from_client_config(configuration(),scopes=SCOPES,state=state,code_verifier=record['verifier'])
+        flow=Flow.from_client_config(configuration(),scopes=record['scopes'],state=state,code_verifier=record['verifier'])
         flow.redirect_uri=os.environ['RELAY_GATEWAY_URL']+'/auth/callback'
         try:
             flow.fetch_token(code=code)
@@ -99,20 +120,41 @@ def install(store,new_session,identity):
                 raise ValueError()
         except Exception as exc:
             raise RelayError('AUTH_REQUIRED','Google authorization could not be verified. Review consent settings.') from exc
-        tenant=hashlib.sha256(info['sub'].encode()).hexdigest()
+        tenant=record['workspace']
+        store.get('_server','workspaces',tenant)
         cipher=Fernet(os.environ['RELAY_TOKEN_ENCRYPTION_KEY'].encode()).encrypt(flow.credentials.to_json().encode()).decode()
-        store.put(tenant,'private_connections','google',{'ciphertext':cipher,'type':'google_oauth'})
+        try:old=store.get(tenant,'private_connections','google')
+        except RelayError:old={}
+        same=old.get('identity_hash')==digest(info['sub'])
+        connection={'ciphertext':cipher,'type':'google_oauth','identity_hash':digest(info['sub']),**({'app_calendar':old['app_calendar']} if same and old.get('app_calendar') else {})}
+        if same and old.get('create_status')=='pending':connection['create_status']='pending'
+        if record.get('pair'):
+            # Do not grant credentials to the requesting desktop before the
+            # consenting browser explicitly approves that pairing.
+            from . import public_demo
+            tenant=('demo-' if public_demo.temporary_enabled() else 'local-')+secrets.token_hex(16)
+            from .service import RelayService
+            RelayService(store,tenant).create_empty()
+            store.claim('_server','pairings',record['pair'],{'status':'pending'},{'pending_tenant':tenant})
+        store.put(tenant,'private_connections','google',connection)
         try:
             store.get(tenant,'meta','settings')
         except RelayError:
             zone=ZoneInfo('Asia/Almaty');today=datetime.now(zone).date();monday=today+timedelta(days=(7-today.weekday())%7)
             windows=[{'start':datetime.combine(monday+timedelta(days=i),day_time(18),zone).isoformat(),'end':datetime.combine(monday+timedelta(days=i),day_time(20),zone).isoformat()} for i in range(5)]
             store.put(tenant,'meta','settings',dict(mode='personal',timezone='Asia/Almaty',anchor=monday.isoformat(),windows=windows,daily_cap_minutes=240,calendar_id=None,calendar_live=False,github_repo=os.getenv('RELAY_GITHUB_REPO','NuraliKuzhagaliev/campuspulse-relay-demo'),github_ref='main',github_path='coursework.md',watch_enabled=False,availability_assumption='Default draft windows: weekdays 18:00-20:00. Confirm before planning.'))
-        response=new_session(tenant)
+        response=new_session(tenant,expires=time.time()+300) if record.get('pair') else new_session(tenant)
+        # Consent never silently selects a target or preserves an old write
+        # authorization across scope/account changes.
+        settings=store.get(tenant,'meta','settings');settings.update(calendar_live=False,calendar_connection=None,calendar_id='local-illustrative-calendar')
+        store.put(tenant,'meta','settings',settings)
+        from .service import RelayService
+        RelayService(store,tenant).invalidate_plans()
         if record.get('pair'):
             csrf=json.loads(response.body)['csrf'];pair=record['pair']
             # A deliberate second click binds this browser identity to the requesting desktop.
-            html='<!doctype html><html lang="en"><meta name="viewport" content="width=device-width"><title>Connect CampusPulse RELAY desktop</title><body style="font:18px Arial;padding:64px;background:#f5f4ef;color:#14243a"><h1>Connect this Windows desktop?</h1><p>You signed in with Google. Only approve if you just requested this connection in CampusPulse RELAY.</p><button id="approve" style="padding:16px;background:#2b59f0;color:white;border:0;border-radius:8px">Connect this desktop</button><p id="result"></p><script>document.getElementById("approve").onclick=async()=>{const r=await fetch("/api/auth/pair/approve",{method:"POST",headers:{"Content-Type":"application/json","X-Relay-CSRF":'+json.dumps(csrf)+'},body:JSON.stringify({pairing_id:'+json.dumps(pair)+'})});document.getElementById("result").textContent=r.ok?"Connected. Return to CampusPulse RELAY.":"Could not connect. Restart pairing in the app.";};</script></body></html>'
+            from html import escape
+            html='<!doctype html><html lang="en"><meta name="viewport" content="width=device-width"><title>Connect CampusPulse RELAY desktop</title><body style="font:18px Arial;padding:40px;max-width:800px;background:#f5f4ef;color:#14243a"><h1>Connect this Windows desktop?<br>Подключить это приложение?<br>Осы қолданбаны қосу керек пе?</h1><p>Approve only if you just requested this connection in RELAY. Consent alone has not connected the desktop.</p><p>Подтвердите, только если вы только что запросили подключение в RELAY. Само согласие Google ещё не подключает приложение.</p><p>RELAY ішінде осы қосылымды жаңа ғана сұраған болсаңыз ғана растаңыз. Google келісімі қолданбаны әлі қоспайды.</p><button id="approve" data-pair="'+escape(pair,quote=True)+'" data-csrf="'+escape(csrf,quote=True)+'" style="padding:16px;background:#2b59f0;color:white;border:0;border-radius:8px">Connect / Подключить / Қосу</button><p id="result" role="status"></p><script src="/assets/relay-pair.js" defer></script></body></html>'
             result=HTMLResponse(html)
         else:
             result=RedirectResponse('/',status_code=303)
@@ -128,9 +170,22 @@ def install(store,new_session,identity):
     def approve_pair(body:PairApproval,request:Request):
         user=identity(request)
         pairing=store.get('_server','pairings',body.pairing_id)
-        if pairing['expires']<time.time() or not store.claim('_server','pairings',body.pairing_id,{'status':'pending'},{'status':'approved','tenant':user['tenant']}):
+        if pairing['expires']<time.time() or pairing.get('pending_tenant')!=user['tenant']:
+            raise RelayError('ACCESS_DENIED','Only the consenting browser can approve this exact desktop pairing.')
+        connection=store.get(user['tenant'],'private_connections','google');target=pairing['workspace']
+        from .service import RelayService
+        RelayService(store,target).settings()
+        def commit(tx):
+            p=tx.get('pairings',body.pairing_id);workspace=tx.get('workspaces',target)
+            if not workspace or workspace.get('expires',time.time()+1)<=time.time() or p['status']!='pending' or p['expires']<time.time():raise RelayError('AUTH_REQUIRED','Pairing or destination expired.')
+            destination=tx.workspace(target);destination.put('private_connections','google',connection)
+            settings=destination.get('meta','settings');settings.update(calendar_live=False,calendar_connection=None,calendar_id='local-illustrative-calendar');destination.put('meta','settings',settings);destination.advance()
+            tx.workspace(user['tenant']).delete('private_connections','google')
+            tx.put('pairings',body.pairing_id,dict(p,status='approved',tenant=target))
+        store.atomic('_server',commit)
+        if store.get('_server','pairings',body.pairing_id)['status']!='approved':
             raise RelayError('AUTH_REQUIRED','Pairing expired or already consumed.')
-        return {'approved':True}
+        return new_session(target)
 
     class PairPoll(BaseModel):
         pairing_id:str

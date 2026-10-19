@@ -1,0 +1,9 @@
+FROM python:3.13-slim
+WORKDIR /app
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PORT=8080 RELAY_DATA_DIR=/tmp/relay-bridge TMPDIR=/tmp
+COPY requirements.cloud.txt ./
+RUN pip install --no-cache-dir -r requirements.cloud.txt
+COPY relay ./relay
+RUN useradd -m -u 10001 relay
+USER relay
+CMD ["sh", "-c", "exec python -m uvicorn relay.bridge_server:app --host 0.0.0.0 --port ${PORT} --no-access-log"]

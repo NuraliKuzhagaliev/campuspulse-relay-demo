@@ -8,18 +8,18 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 
 def main():
     parser=argparse.ArgumentParser()
-    parser.add_argument('--approved-budget-usd',type=float,required=True)
-    parser.add_argument('--pilot-hours',type=int,default=24)
+    parser.add_argument('--approved-budget-usd',type=float,default=0)
+    parser.add_argument('--pilot-hours',type=int,default=10)
     args=parser.parse_args()
-    if args.approved_budget_usd<=0:
-        parser.error('A positive user-approved spending limit is required. This flag is a record, not a cloud-enforced spend cap.')
+    if args.approved_budget_usd<0:
+        parser.error('Only an actual organizer credit envelope is permitted. No personal spending is authorized.')
     from relay.funding import validate_funding
     from relay.domain import RelayError
     try:
         record=json.loads(Path('.local/funding-verification.json').read_text(encoding='utf-8-sig'))
         validate_funding(record,os.getenv('GOOGLE_CLOUD_PROJECT'),args.approved_budget_usd,args.pilot_hours)
     except (OSError,ValueError,RelayError):
-        parser.error('An actual fresh eligible non-billable trial record is required. Organizer credits are not expected and personal spending is prohibited.')
+        parser.error('An actual activated organizer project/window/coverage record is required. Personal trials and spending are prohibited.')
     for name in ['GOOGLE_CLOUD_PROJECT','GOOGLE_CLOUD_LOCATION','GEMINI_MODEL','RELAY_STAGING_BUCKET','RELAY_MCP_URL','RELAY_CONTEXT_SECRET','RELAY_RUNTIME_SERVICE_ACCOUNT']:
         if not os.getenv(name):
             parser.error(f'Missing {name}')
@@ -34,7 +34,7 @@ def main():
         'staging_bucket':os.environ['RELAY_STAGING_BUCKET'],
         'service_account':os.environ['RELAY_RUNTIME_SERVICE_ACCOUNT'],
         'env_vars':{key:os.environ[key] for key in ['GOOGLE_CLOUD_PROJECT','GOOGLE_CLOUD_LOCATION','GEMINI_MODEL','RELAY_MCP_URL']}|{'RELAY_MODE':'cloud','RELAY_CONTEXT_SECRET':vertexai.types.SecretRef(secret='relay-context',version='latest')},
-        'min_instances':0,'max_instances':2,
+        'min_instances':0,'max_instances':1,
     })
     from relay.domain import now
     proof={'name':remote.api_resource.name,'deployed_at':now(),'approved_budget_usd':args.approved_budget_usd,'remote_query_verified':False}

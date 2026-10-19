@@ -1,36 +1,22 @@
-# Requirement and evidence ledger · 0.4.1
+# Requirements and acceptance · 0.5.0 audit candidate
 
-Public HTTPS **https://campuspulse-relay-demo.onrender.com** runs **0.4.1**, existing Render **Free** service `srv-dbajs73bc2fs73bm9mfg`, deploy `dep-dbb3d649v7es73ai35ag`, runtime commit `cf04a29bf6fb2bbbcddc8e259094b8ddebed2d64`. No new infrastructure, paid upgrade, billing activation or personal payment was used.
+Topic2 GDG Astana CampusPulse AI. **NON_GCP_READY pending** until current hosted own-document/Gemini/sample/Windows/Calendar gates are actually accepted. No source module or old test total substitutes for acceptance.
 
-| Requirement | Actual result | Evidence / remaining gate |
-|---|---|---|
-| Public real Gemini/MCP | Two clean automatic anonymous sessions, independent unseen uploads and actual source-grounded answers. No codes, registration, Google login or visitor keys | public-ai-acceptance-0.4.1.json; actual alternative Gemini, not managed GCP |
-| Isolation / authorization | Own documents, conversations, runs and plans; foreign access denied; internal/admin/test/invitation routes protected | Two actual workspaces plus100 simulated-provider HTTP workspaces |
-| Shared fair queue | One outstanding turn per workspace, FIFO,2 workers, fair tickets per model call, observed quota ceilings, Pacific daily reset, provider backoff | test_public_ai_queue.py; zero actual Gemini in100-session load |
-| Supported web operations | Import/evidence/conflict, plan/what-if, illustrative approved receipts, events. GitHub previously read live; current429 is reported honestly | public-demo-browser-0.4.1.json and r1 read evidence |
-| EN/RU/Kazakh and mobile | Operational translations,9 extra language-width states, refresh, automated AA | Actual hosted browser evidence; no manual universal accessibility guarantee |
-| Windows0.4.1 | Installed main/preload/policy/renderer match source; HTTPS anonymous import/read-back/refresh, poll authorization, reopen/reset/CSRF | public-ai-desktop-0.4.1.json;0 model calls; original45/95 remains |
-| F1–F5 | **Locally implemented** | Real Calendar and full enhancement-level Gemini acceptance pending |
-| Four additions / D1–D3 | Preserved Progress, Clarify, Handoff, Passport, Minimal Rescue, Preflight and independent challenge | Current132 Python suite plus historical detailed feature/live evidence |
-| Original managed GCP | **UNMET / GCP_EXCEPTION_PENDING** | Trial closed/prepayment/no usable credits; no personal spend. No actual managed resource or managed cloud-to-MCP acceptance |
-| Real Calendar | Dedicated secondary target exists; optional app/runtime consent and actual writes/read-back pending | docs/connections.json; illustrative receipts are not Google writes |
-| Native interactions | Package/API contracts passed; original45/95 read-back passed | Actual new Open/Save/cancel/import/banner/click observations require the owner |
-| Source / presentation / history | Public source, versioned manifest/archive and editable12-slide deck/PDF | Manifest records exact archived and deployed commits separately; prior releases hash-preserved |
+| Requirement | Current result |
+|---|---|
+| Own academic documents EN/RU/Kazakh | Unicode/structured/prose drafts, grouped cited semantic proposals and explicit atomic review implemented; new local deterministic/UI checks passed; current hosted real-provider batch pending |
+| Evidence/conflicts and identity | Cross-page exact quotes, stable source-local sections and explicit canonical keys; original decisions/history retained; no title-only fuzzy joining |
+| Plan/what-if/packets/Preflight/progress/Passport | Full local own-PDF UI sequence passed, including75source→90allocation,45logged/95remaining and fresh-copy restore; empty/unassessed rubric stays unassessed |
+| F1–F5 enhancements | Locally implemented; real Calendar and full enhancement-level Gemini acceptance pending; no relabeling of illustrative receipts as Google writes |
+| Public independent AI | No invites/registration/Google login/visitor keys; previous0.4.1real acceptance retained;0.5source must pass fresh deployed UI checks |
+| Isolation and fair quotas | Tenant/capability/CSRF/one-outstanding-job/FIFO/quota/backoff preserved; audit100provider-simulated HTTP sessions use zero Gemini calls; actual traffic capacity is bounded and not guaranteed |
+| File boundary |2MiBraw file,3MiBtransport,100PDFpages/250ktext, disposable bounded PDF worker; near/at/over and expansion checks recorded separately |
+| GitHub change radar | Shared singleflight/conditional/immutable cache and awake-server polling implemented; current hosted live recovery/no-browser polling evidence pending |
+| Samples |13synthetic cases plus trilingual guide, expected context and ZIP. Local download/unzip/hash and PDF visual checks passed; current public download/use pending |
+| Real Calendar | Optional per visitor, required product integration. Narrow app-created-calendar consent, encrypted credentials, separate target/preview/approval and recovery boundaries implemented; actual app client/publishing eligibility/consent/write/read-back/native pairing pending |
+| Windows | Original45/95 and sealed packages preserved. New0.5installer/portable/installed/native physical acceptance still to complete |
+| Managed GCP | Pending actual organizer T0/project/coverage/model/quotas/IAM/resource/query.12hours after activation; personal payment/trial/billing upgrades prohibited. Offline SDK/shared-state/owner-routing contracts tested, not deployed |
+| After-window fallback | Prepared no-restart owner-signed route switch and automatic cutoff, existing backend remains authoritative. Actual GCP-off/expiry full-product acceptance pending real window |
+| Presentation/package | Prior0.4.1PDF/PPTX/packages unchanged; new audited0.5versioned package to be sealed from actual results |
 
-Two clean automatic anonymous workspaces uploaded separate unseen synthetic documents and each completed a real Gemini/ADK/signed-MCP answer on the current deployment. No invitation, registration, Google login or visitor API key was used. Refresh resumed the same run. The full current acceptance includes planning after explicit conflict resolution. Earlier non-model validation had attempted planning before resolving a fixture conflict; its original protocol and explicitly reused-session follow-up remain preserved in the r1 history.
-
-Actual first batch: one complete answer and one Google `504 DEADLINE_EXCEEDED`; that failure remains recorded. The latest clean pair completed both questions. No hidden model retry, paid fallback, statistical success rate or latency guarantee is claimed. Published evidence contains metadata/hashes only; full answers, document citations, cookies and content screenshots remain in ignored private D: folders.
-
-Separately, 100 real HTTP capability sessions/uploads/queue/history paths ran with the provider simulated: unique workspaces, foreign source/run/history/plan authorization, one outstanding turn per workspace, two workers, FIFO/fair quota tickets and 15-RPM rolling accounting passed. Plan objects in this load test are explicitly seeded isolation fixtures, not 100 solver or real-model acceptances. Zero actual Gemini calls. Final local suite:132 Python tests and3 subtests passed;6 IPC policy tests; queue refresh/cancel/reset and localized quota UI regressions passed.
-
-The full hosted illustrative workflow passed: import, original evidence, explicit assignment mapping/conflict resolution, validated plan, what-if, illustrative approval/read-back receipt, execution events, EN/RU/Kazakh, mobile, refresh and reset/isolation. Nine additional language/width states and automated AA checks passed in the real-AI workspaces. Six targeted browser regressions include the three queue-event summaries previously missing RU/Kazakh translations. Installed0.4.1 main/preload/policy/renderer match source; anonymous public import/read-back/refresh, polling route authorization, reopen and CSRF reset passed with zero model calls. An initial r2 test queried the retired cookie during reset; waiting for rotation before checking passed. Import itself had already passed. The original native profile still reads45 logged/95 explicitly remaining.
-
-Current GitHub read returned429 UPSTREAM_RATE_LIMITED from the shared anonymous upstream quota. The UI displays a useful error and no fresh read is claimed. The previous actually successful hosted GitHub read/commit/fetch time is preserved in docs/history/0.4.1-public-ai-r1-evidence/public-demo-browser-0.4.1.json. Respect provider backoff; no paid upgrade or copied broad account token was used.
-
-- `docs/evidence/public-ai-acceptance-0.4.1.json`: combined real public acceptance, with original clean-session evidence and explicit zero-model follow-up.
-- The clean-session evidence named by the combined acceptance: two actual complete current Gemini/MCP outcomes and response hashes. The earlier `public-ai-live-mvfe1dk2.json` retains the r1 outcomes and later harness precondition failure.
-- `docs/evidence/public-ai-first-provider-failure.json`: actual first Google504, retained separately.
-- `docs/evidence/public-ai-100-simulated.json`:100-session simulated-provider queue/isolation.
-- `docs/evidence/public-demo-browser-0.4.1.json`: hosted operational workflow and actual GitHub commit/read.
-- `docs/evidence/public-ai-desktop-0.4.1.json`, `preserved-native-0.4.1.json`: actual installed source/IPC/session checks and original45/95.
-- `docs/public_ai_access.md`: queue, security, processing conditions and limitations.
+See docs/audit_U1_U16.md for per-defect evidence. Current public storage is temporary and may reset on Free host restart/redeploy; no durable/always-on/SLA claim. Public and managed/historical/current-availability statuses remain separate.

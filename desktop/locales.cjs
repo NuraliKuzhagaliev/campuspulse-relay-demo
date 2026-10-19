@@ -7,7 +7,7 @@ const native = {
     choosePassport: "Choose a .relay.json file up to 2 MiB.",
     importTitle: "Import selected academic source",
     filter: "Academic sources",
-    chooseFile: "Choose PDF, Markdown, TXT or ICS up to 10 MiB.",
+    chooseFile: "Choose PDF, Markdown, TXT or ICS up to 2 MiB.",
     watchTitle: "Select folder for opt-in, non-recursive source watching",
     chooseFolder: "Choose an existing folder on D:.",
     changed: (name) => `${name} changed. Review and import it explicitly.`,
@@ -22,7 +22,7 @@ const native = {
     choosePassport: "Выберите файл .relay.json до 2 МиБ.",
     importTitle: "Импорт выбранного учебного источника",
     filter: "Учебные источники",
-    chooseFile: "Выберите PDF, Markdown, TXT или ICS до 10 МиБ.",
+    chooseFile: "Выберите PDF, Markdown, TXT или ICS до 2 МиБ.",
     watchTitle: "Выберите папку для явного наблюдения без вложенных папок",
     chooseFolder: "Выберите существующую папку на D:.",
     changed: (name) =>
@@ -38,7 +38,7 @@ const native = {
     choosePassport: "2 МиБ-қа дейінгі .relay.json файлын таңдаңыз.",
     importTitle: "Таңдалған оқу дереккөзін импорттау",
     filter: "Оқу дереккөздері",
-    chooseFile: "10 МиБ-қа дейінгі PDF, Markdown, TXT немесе ICS таңдаңыз.",
+    chooseFile: "2 МиБ-қа дейінгі PDF, Markdown, TXT немесе ICS таңдаңыз.",
     watchTitle: "Ішкі қалталарсыз ерікті бақылау үшін қалтаны таңдаңыз",
     chooseFolder: "D: дискісіндегі бар қалтаны таңдаңыз.",
     changed: (name) =>

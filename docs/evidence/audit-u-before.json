@@ -1,0 +1,43 @@
+{
+  "at": "2026-10-19T16:09:37.080032+00:00",
+  "network_calls": 0,
+  "baseline_commit": "12a9eb04b89721108d4b67ce5df0be2f767e0b0e",
+  "cases": {
+    "ru": {
+      "draft_count": 0,
+      "effort": null,
+      "fact_count": 0
+    },
+    "kk": {
+      "draft_count": 0,
+      "effort": null,
+      "fact_count": 0
+    },
+    "indented": {
+      "draft_count": 1,
+      "effort": null,
+      "fact_count": 1
+    },
+    "45_minutes": {
+      "draft_count": 1,
+      "effort": null,
+      "fact_count": 2
+    },
+    "continued_page": {
+      "due": null,
+      "minutes": null
+    },
+    "due_None": {
+      "result": "AttributeError"
+    },
+    "due_42": {
+      "result": "AttributeError"
+    },
+    "due_False": {
+      "result": "AttributeError"
+    },
+    "whitespace": {
+      "result": "accepted"
+    }
+  }
+}

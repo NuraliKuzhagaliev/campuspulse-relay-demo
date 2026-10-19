@@ -44,7 +44,6 @@ async def lifespan(app):
             await asyncio.sleep(max(30,int(os.getenv('RELAY_POLL_SECONDS','60'))))
             if TEMPORARY_WEB:
                 await asyncio.to_thread(public_demo.cleanup,store)
-                continue
             if CLOUD:
                 continue # Authenticated Cloud Scheduler invokes /internal/sync for durable cloud execution.
             for workspace in store.list('_server','workspaces'):
@@ -74,7 +73,7 @@ async def lifespan(app):
             await asyncio.gather(*workers,return_exceptions=True)
 
 
-app=FastAPI(title='CampusPulse RELAY',version='0.4.1',lifespan=lifespan,
+app=FastAPI(title='CampusPulse RELAY',version='0.5.0',lifespan=lifespan,
             docs_url=None if TEMPORARY_WEB else '/docs',redoc_url=None if TEMPORARY_WEB else '/redoc',
             openapi_url=None if TEMPORARY_WEB else '/openapi.json')
 expensive_requests=asyncio.Semaphore(2)
@@ -101,7 +100,7 @@ async def protect(request,call_next):
             public_demo.limit('_global','requests',1200)
         except RelayError as exc:
             return JSONResponse({'error':exc.as_dict()},status_code=429)
-        if request.method=='POST' and (request.url.path.startswith('/api/import') or request.url.path.startswith('/api/passport/')):
+        if request.method=='POST':
             # Count streamed bytes as well as Content-Length: chunked bodies cannot bypass the limit.
             total=0;chunks=[]
             async for chunk in request.stream():
@@ -110,8 +109,8 @@ async def protect(request,call_next):
                     return JSONResponse({'error':{'code':'UNSUPPORTED_INPUT','message':'Public demo upload limit is 2 MiB.'}},status_code=413)
                 chunks.append(chunk)
             request._body=b''.join(chunks)
-    if request.headers.get('content-length','0').isdigit() and int(request.headers.get('content-length','0'))>11*1024*1024:
-        return JSONResponse({'error':{'code':'UNSUPPORTED_INPUT','message':'Upload limit is 10 MiB.'}},status_code=413)
+    if request.headers.get('content-length','0').isdigit() and int(request.headers.get('content-length','0'))>3*1024*1024:
+        return JSONResponse({'error':{'code':'UNSUPPORTED_INPUT','message':'Request body limit is 3 MiB; selected files must be at most 2 MiB.'}},status_code=413)
     if request.method not in ('GET','HEAD','OPTIONS') and request.url.path.startswith('/api/'):
         origin=request.headers.get('origin')
         allowed={str(request.base_url).rstrip('/'),os.getenv('RELAY_GATEWAY_URL','')}
@@ -165,6 +164,14 @@ def service(record=Depends(identity)):
 def new_session(tenant,expires=None):
     token,csrf=secrets.token_urlsafe(32),secrets.token_urlsafe(24)
     seconds=public_demo.SESSION_SECONDS if TEMPORARY_WEB else 86400
+    if TEMPORARY_WEB:
+        store.put('_server','workspaces',tenant,{'id':tenant,'expires':time.time()+seconds},create=True)
+        workspace=store.get('_server','workspaces',tenant)
+        if 'expires' not in workspace:
+            store.claim('_server','workspaces',tenant,{'expires':None},{'expires':time.time()+seconds})
+            workspace=store.get('_server','workspaces',tenant)
+        expires=min(expires or time.time()+seconds,workspace.get('expires',time.time()+seconds))
+        if expires<=time.time():raise RelayError('AUTH_REQUIRED','This temporary workspace expired. Start a fresh workspace.')
     lifetime=max(1,int(min(expires or time.time()+seconds,time.time()+seconds)-time.time()))
     store.put('_server','sessions',digest(token),dict(tenant=tenant,csrf=csrf,expires=time.time()+lifetime))
     store.put('_server','workspaces',tenant,{'id':tenant},create=True)
@@ -200,6 +207,75 @@ def reset_demo(record=Depends(identity)):
     if public_ai_enabled():PublicQueue(store).cancel_tenant(record['tenant'])
     public_demo.forget(store,record['tenant'])
     return new_session('demo-'+secrets.token_hex(16))
+
+
+class WorkspaceChoice(BaseModel):
+    kind:__import__('typing').Literal['own','example']
+
+@app.post('/api/workspace/switch')
+def switch_workspace(body:WorkspaceChoice,record=Depends(identity)):
+    if not TEMPORARY_WEB:raise RelayError('ACCESS_DENIED','Workspace switching is available in temporary public sessions.')
+    tenant=record['tenant']
+    try:pair=store.get('_server','workspace_pairs',tenant)
+    except RelayError:
+        current='example' if RelayService(store,tenant).settings().get('mode')=='illustrative' else 'own'
+        pair={current:tenant}
+    target=pair.get(body.kind)
+    if target:
+        # An expired/deleted pair is not silently resurrected.
+        try:store.get('_server','workspaces',target)
+        except RelayError:target=None
+    if not target:
+        target='demo-'+secrets.token_hex(16);store.put('_server','workspaces',target,{'id':target},create=True)
+        svc=RelayService(store,target)
+        svc.seed() if body.kind=='example' else svc.create_empty()
+        pair[body.kind]=target
+    for member in pair.values():store.put('_server','workspace_pairs',member,pair)
+    return new_session(target)
+
+
+@app.get('/api/extraction-proposals')
+def extraction_proposals(svc=Depends(service)):
+    from .extraction import current_proposals
+    return dict(proposals=current_proposals(svc))
+
+@app.post('/api/sources/{source_id}/review')
+def prepare_source_review(source_id:str,svc=Depends(service)):
+    from .extraction import extraction_proposal,ALLOWED,record_proposal
+    source=store.get(svc.tenant,'sources',source_id);candidates=[]
+    for draft in source.get('drafts',[]):
+        for fact in source.get('facts',[]):
+            if fact['task_id']==draft['id'] and fact['field'] in ALLOWED:
+                candidates.append(dict(field=fact['field'],value=fact['value'],page=fact['page'],quote=fact['quote'],entity_id=draft['section_key'],
+                    timezone=source['timezone'],year_explicit=fact['field']=='due' and bool(fact['value'])))
+    if not candidates:raise RelayError('SOURCE_CONFLICT','No structured assignment fields detected. Ask Gemini to propose cited assignments from this document, then review them here.')
+    proposal=extraction_proposal(source,candidates);proposal['origin']='deterministic_review'
+    proposal['id']=digest([proposal['id'],'explicit_review',secrets.token_hex(12)])[:24]
+    for entity in proposal['entities']:
+        draft=next(d for d in source['drafts'] if d['section_key']==entity['entity_id'])
+        entity['defaults']=dict(title=draft['title'] if draft.get('extraction_origin')!='prose_needs_review' else '',
+            course=draft['identity']['course'] if draft['identity']['course']!='Unassigned course' else '',term=draft['identity'].get('term'),assignment_key=draft['identity'].get('assignment_key'),
+            due=draft.get('due'),minutes=draft.get('minutes'),rubric=draft.get('rubric',[]))
+    return record_proposal(svc,proposal)
+
+class ExtractionReview(BaseModel):
+    source_version:str=Field(max_length=64)
+    confirmed:bool=False
+    values:dict
+    due_local:str|None=Field(default=None,max_length=32)
+
+@app.post('/api/extraction-proposals/{proposal_id}/{entity_id}/confirm')
+def confirm_extraction(proposal_id:str,entity_id:str,body:ExtractionReview,svc=Depends(service)):
+    from .extraction import confirm
+    if body.due_local:
+        from .planning_context import local_timestamp
+        body.values['due']=local_timestamp(body.due_local,svc.settings()['timezone'])
+    return confirm(svc,proposal_id,entity_id,body.model_dump())
+
+@app.post('/api/planning-context')
+def planning_context(body:dict,svc=Depends(service)):
+    from .planning_context import update
+    return update(svc,body)
 
 
 class JudgeInvitation(BaseModel):
@@ -242,7 +318,7 @@ def health():
     agent=current_availability(store)
     return dict(ok=True,version=app.version,mode='alternative_live' if ALTERNATIVE else 'public_demo' if PUBLIC_DEMO else 'cloud' if CLOUD else 'local',agent_configured=agent['configured'],agent_verified=agent['verified'],agent=agent,time=now(),
                 deployed_commit=os.getenv('RELAY_DEPLOYED_COMMIT') or os.getenv('RENDER_GIT_COMMIT'),
-                demo=dict(public_demo.metadata(),gemini='public_queued' if public_ai_enabled() else 'private_invitation_required',mandatory_gcp='exception_pending') if ALTERNATIVE else public_demo.metadata() if PUBLIC_DEMO else None)
+                demo=dict(public_demo.metadata(),gemini='public_queued' if public_ai_enabled() else 'private_invitation_required',mandatory_gcp='pending_organizer_activation') if ALTERNATIVE else public_demo.metadata() if PUBLIC_DEMO else None)
 
 
 @app.get('/api/state')
@@ -265,7 +341,7 @@ def source(source_id:str,svc=Depends(service)):
 
 @app.post('/api/import')
 async def import_file(file:UploadFile=File(...),svc=Depends(service)):
-    content=await file.read(10*1024*1024+1)
+    content=await file.read(public_demo.MAX_UPLOAD_BYTES+1)
     if TEMPORARY_WEB and len(content)>public_demo.MAX_UPLOAD_BYTES:
         raise RelayError('UNSUPPORTED_INPUT','Public demo imports must be at most 2 MiB.')
     return await asyncio.to_thread(svc.import_source,file.filename or 'upload.txt',content)
@@ -273,7 +349,7 @@ async def import_file(file:UploadFile=File(...),svc=Depends(service)):
 
 class NativeFile(BaseModel):
     name:str=Field(max_length=200)
-    content:str=Field(max_length=14*1024*1024)
+    content:str=Field(max_length=3*1024*1024)
 
 
 @app.post('/api/import-native')
@@ -353,8 +429,6 @@ class Preferences(BaseModel):
 
 @app.post('/api/preferences')
 def preferences(body:Preferences,svc=Depends(service)):
-    if TEMPORARY_WEB and body.watch_enabled:
-        raise RelayError('ACCESS_DENIED','The public demo supports manual GitHub refresh. Durable background execution requires the pending GCP deployment.')
     s=svc.settings()
     if body.timezone:
         from zoneinfo import ZoneInfo
@@ -623,6 +697,52 @@ def list_calendars(svc=Depends(service)):
     from .oauth import calendar_list
     return {'calendars':calendar_list(store,svc.tenant)}
 
+@app.get('/api/connections/status')
+def connection_status(svc=Depends(service)):
+    configured=all(os.getenv(k) for k in ('RELAY_OAUTH_CLIENT_ID','RELAY_OAUTH_CLIENT_SECRET','RELAY_TOKEN_ENCRYPTION_KEY','RELAY_GATEWAY_URL'))
+    connected=bool(store.list(svc.tenant,'private_connections'))
+    return dict(configured=bool(configured),connected=connected,calendar_live=svc.settings().get('calendar_live',False),
+                acceptance='pending_live_consent_and_read_back',existing_events_delete_on_disconnect=False)
+
+@app.post('/api/connections/calendar/create')
+def create_app_calendar(svc=Depends(service)):
+    from .oauth import credentials
+    from google.auth.transport.requests import AuthorizedSession
+    connection=store.get(svc.tenant,'private_connections','google')
+    if connection.get('app_calendar'):return dict(calendar=connection['app_calendar'],duplicate=True)
+    if not store.claim(svc.tenant,'private_connections','google',{'create_status':None},{'create_status':'pending'}):
+        raise RelayError('UNKNOWN_EXTERNAL_RESULT','A previous Calendar creation needs reconciliation; it will not be repeated automatically.')
+    credential=credentials(store,svc.tenant)
+    try:
+        result=AuthorizedSession(credential).post('https://www.googleapis.com/calendar/v3/calendars',json=dict(summary='CampusPulse RELAY Study',timeZone=svc.settings()['timezone']),timeout=20)
+        if result.status_code not in (200,201):
+            from .connectors import upstream_error
+            raise upstream_error(result.status_code)
+        actual=result.json();calendar=dict(id=actual['id'],name=actual.get('summary'),timezone=actual.get('timeZone'),primary=False,role='owner')
+        # Retain freshly refreshed credentials and bind only the returned target.
+        connection=store.get(svc.tenant,'private_connections','google');connection.update(app_calendar=calendar,create_status='complete')
+        store.put(svc.tenant,'private_connections','google',connection)
+        return dict(calendar=calendar,duplicate=False)
+    except RelayError:raise
+    except Exception as exc:raise RelayError('UNKNOWN_EXTERNAL_RESULT','Calendar creation outcome is unknown. Check Google Calendar before any new creation; automatic retry is blocked.') from exc
+
+@app.post('/api/connections/disconnect')
+def disconnect_calendar(svc=Depends(service)):
+    revoked=False
+    try:
+        from .oauth import credentials
+        credential=credentials(store,svc.tenant)
+        import httpx
+        response=httpx.post('https://oauth2.googleapis.com/revoke',data={'token':credential.refresh_token or credential.token},timeout=15)
+        revoked=response.status_code==200
+    except Exception:pass
+    def forget(tx):
+        tx.delete('private_connections','google')
+        settings=tx.get('meta','settings');settings.update(calendar_live=False,calendar_connection=None,calendar_id='local-illustrative-calendar')
+        tx.put('meta','settings',settings);tx.advance()
+    store.atomic(svc.tenant,forget)
+    return dict(disconnected=True,google_revocation_confirmed=revoked,existing_events_deleted=False)
+
 
 class CalendarSelection(BaseModel):
     calendar_id:str
@@ -637,7 +757,7 @@ def select_calendar(body:CalendarSelection,svc=Depends(service)):
     chosen=next((c for c in calendars if c['id']==body.calendar_id),None)
     if not chosen or chosen.get('primary') or chosen.get('id')=='primary':
         raise RelayError('ACCESS_DENIED','Choose a calendar verified for your Google identity.')
-    settings=svc.settings();settings.update(calendar_id=chosen['id'],calendar_live=True,mode='personal')
+    settings=svc.settings();settings.update(calendar_id=chosen['id'],calendar_live=True,calendar_connection='google_oauth')
     store.put(svc.tenant,'meta','settings',settings)
     return {'calendar':chosen}
 
@@ -699,7 +819,7 @@ async def chat(body:Chat,svc=Depends(service)):
     resource=config['resource']
     if not config['configured']:
         raise RelayError('AUTH_REQUIRED','The real Gemini Agent Engine is not connected. Local planning and evidence tools remain available.')
-    if config['provider']=='gemini_developer':
+    if ALTERNATIVE or config['provider']=='gemini_developer':
         alternative_live.authorize_query(svc.settings(),body.adult_confirmed,body.permitted_processing,body.processing_region)
     if public_ai_enabled():
         body.conversation_id=body.conversation_id or get_conversation(svc)['id']
@@ -757,6 +877,9 @@ def invoke_managed_query(resource,**kwargs):
 
 
 def invoke_alternative_query(resource,**kwargs):
+    if selected()['provider']=='vertex':
+        from .managed_bridge import invoke
+        return invoke(**kwargs)
     from .agent import RelayRuntime
     return RelayRuntime().query(**kwargs)
 
@@ -881,6 +1004,15 @@ from .oauth import install as install_oauth
 app.include_router(install_oauth(store,new_session,identity))
 
 if ALTERNATIVE:
+    @app.post('/internal/managed-route')
+    def managed_route(body:dict,request:Request):
+        from .managed_operator import operate
+        return operate(store,body,request.headers.get('x-relay-owner-signature',''))
+    @app.post('/internal/runtime-state')
+    def managed_state(body:dict,request:Request):
+        from .managed_state import authenticate,dispatch
+        tenant=authenticate(request.headers)
+        return dict(result=dispatch(store,tenant,body))
     class AIInvitationBatch(StrictBody):
         count:int=Field(ge=1,le=8)
         hours:int=Field(ge=1,le=12)
@@ -894,9 +1026,11 @@ if ALTERNATIVE:
 
     from .mcp_server import app as internal_mcp_app
     app.mount('/_relay',internal_mcp_app)
+    app.mount('/managed',internal_mcp_app)
 
 dist=Path(__file__).parent.parent/'dist'
 if dist.exists():
+    if (dist/'samples').exists():app.mount('/samples',StaticFiles(directory=dist/'samples',html=True),name='samples')
     app.mount('/assets',StaticFiles(directory=dist/'assets'),name='assets')
     @app.get('/')
     def index():

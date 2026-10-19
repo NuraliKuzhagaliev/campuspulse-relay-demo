@@ -1,0 +1,81 @@
+{
+  "at": "2026-10-19T17:31:21.107Z",
+  "base": "http://127.0.0.1:8028",
+  "provider_calls": 0,
+  "checks": {
+    "clean_own_workspace": true,
+    "sample_download_and_index": true,
+    "multipage_import": true,
+    "explicit_review_persisted": true,
+    "example_separate": true,
+    "switch_preserves_own": true,
+    "planning_through_ui": true,
+    "whatif_and_illustrative_receipt": true,
+    "preflight_own_draft": true,
+    "progress_and_explicit_remaining": true,
+    "passport_download_restore_reopen": true,
+    "languages_and_responsive_aa": [
+      {
+        "language": "en",
+        "width": 390,
+        "aa_violations": 0
+      },
+      {
+        "language": "en",
+        "width": 768,
+        "aa_violations": 0
+      },
+      {
+        "language": "en",
+        "width": 1280,
+        "aa_violations": 0
+      },
+      {
+        "language": "en",
+        "width": 1440,
+        "aa_violations": 0
+      },
+      {
+        "language": "ru",
+        "width": 390,
+        "aa_violations": 0
+      },
+      {
+        "language": "ru",
+        "width": 768,
+        "aa_violations": 0
+      },
+      {
+        "language": "ru",
+        "width": 1280,
+        "aa_violations": 0
+      },
+      {
+        "language": "ru",
+        "width": 1440,
+        "aa_violations": 0
+      },
+      {
+        "language": "kk",
+        "width": 390,
+        "aa_violations": 0
+      },
+      {
+        "language": "kk",
+        "width": 768,
+        "aa_violations": 0
+      },
+      {
+        "language": "kk",
+        "width": 1280,
+        "aa_violations": 0
+      },
+      {
+        "language": "kk",
+        "width": 1440,
+        "aa_violations": 0
+      }
+    ],
+    "visitor_isolation": true
+  }
+}

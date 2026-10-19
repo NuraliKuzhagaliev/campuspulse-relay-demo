@@ -16,19 +16,21 @@ def clean_provider(monkeypatch):
         monkeypatch.delenv(name,raising=False)
 
 
-def test_funding_requires_exact_fresh_nonbillable_trial():
+def test_funding_requires_exact_fresh_organizer_coverage():
     at=datetime.now(timezone.utc)
-    r=dict(source='gcp-free-trial',project_id='owned',billing_account='billingAccounts/test',
-           account_type_human_confirmed='free_trial',eligibility_human_confirmed=True,
+    r=dict(source='organizer-credits',project_id='owned',billing_account='billingAccounts/test',
+           account_type_human_confirmed='organizer_credit_project',eligibility_human_confirmed=True,
            covered_services_human_confirmed=True,no_personal_spending=True,billing_open_api_verified=True,
-           credit_balance_api_verified=False,checked_at_utc=at.isoformat(),expires_at_utc=(at+timedelta(days=3)).isoformat(),
+           credit_balance_api_verified=False,checked_at_utc=at.isoformat(),expires_at_utc=(at+timedelta(hours=12)).isoformat(),
+           activated_at_utc=at.isoformat(),organizer_project_ownership_verified=True,eligible_project_verified=True,service_coverage_verified=True,
+           no_personal_billing_attached=True,activation_verified=True,organizer_terms_verified=True,instruction_reference='simulated organizer record',billing_visibility='verified_organizer_account',
            balance_usd_human_confirmed=30,reserve_usd=10)
-    assert validate_funding(r,'owned',15,24,'billingAccounts/test',at)['personal_spending_authorized_usd']==0
-    for change in [dict(source='organizer-credits'),dict(account_type_human_confirmed='paid'),
+    assert validate_funding(r,'owned',15,10,'billingAccounts/test',at)['personal_spending_authorized_usd']==0
+    for change in [dict(source='gcp-free-trial'),dict(account_type_human_confirmed='paid'),
                    dict(project_id='other'),dict(credit_balance_api_verified=True),dict(billing_open_api_verified=False),
                    dict(balance_usd_human_confirmed=20),dict(reserve_usd=0),dict(expires_at_utc=at.isoformat()),
                    dict(checked_at_utc=(at-timedelta(days=2)).isoformat())]:
-        with pytest.raises(RelayError):validate_funding(r|change,'owned',15,24,'billingAccounts/test',at)
+        with pytest.raises(RelayError):validate_funding(r|change,'owned',15,10,'billingAccounts/test',at)
 
 
 def test_provider_combinations_and_no_secret_in_metadata(clean_provider,monkeypatch):

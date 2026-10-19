@@ -16,7 +16,8 @@ def check_submission(name, content, facts, exceptions=None, present_files=None):
     results=[]
     for fact in facts:
         if fact['field'] not in ('submission_requirement','rubric'):continue
-        quote=fact['quote'];key,sep,value=quote.partition(':');value=value.strip();key=key.casefold()
+        quote=fact['quote'];normalized=fact.get('value') if fact['field']=='submission_requirement' and isinstance(fact.get('value'),str) else quote
+        key,sep,value=normalized.partition(':');value=value.strip();key=key.casefold()
         status='needs_review';observed=dict(location='draft text',note='Semantic correctness requires human review.')
         if fact['field']=='submission_requirement':
             status='unknown'
@@ -54,4 +55,6 @@ def check_submission(name, content, facts, exceptions=None, present_files=None):
     return dict(id=digest([name,parsed['content_hash'],[f['id'] for f in facts],exceptions])[:24],checked_at=now(),
                 draft=dict(filename=name,hash=parsed['content_hash'],format=parsed['type'],words=words,pages=len(parsed['pages']) if parsed['type']=='pdf' else None),
                 results=results,missing_count=sum(r['status']=='missing' for r in results),
+                assessment_status='not_assessed' if not results else 'issues_found' if any(r['status']=='missing' for r in results) else 'human_review_required',
+                requirement_count=len(results),unassessed_count=sum(r['status'] in ('unknown','needs_review') for r in results),
                 structural_only=True,grade_predicted=False,external_submission=False)

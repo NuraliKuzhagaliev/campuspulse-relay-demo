@@ -14,6 +14,7 @@ export type Fact = {
   kind: string;
 };
 export type Source = {
+  import_notice?:string;
   id: string;
   title: string;
   filename: string;
@@ -55,6 +56,7 @@ export type Block = {
   pinned: boolean;
 };
 export type Plan = {
+  scope?:{included:string[],excluded:{id:string,title:string,gaps:string[]}[],complete:boolean};
   id: string;
   blocks: Block[];
   feasible: boolean;
@@ -110,6 +112,7 @@ export type Receipt = {
   }[];
 };
 export type Snapshot = {
+  calendar_error?:{code:string,message:string}|null;
   workspace_fingerprint?: string;
   additions_revision?: number;
   workspace_id?: string;

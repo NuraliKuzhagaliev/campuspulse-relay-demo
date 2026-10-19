@@ -1,5 +1,6 @@
-param([ValidateRange(1024,65535)][int]$Port=8016,[string]$GatewayOrigin='https://localhost:8017')
+param([ValidateRange(1024,65535)][int]$Port=8016,[string]$GatewayOrigin='https://localhost:8017',[string]$DataDirectory)
 . "$PSScriptRoot/gemini-env.ps1"
+. "$PSScriptRoot/calendar-env.ps1"
 Set-Location $RelayRoot
 if (!$env:RELAY_GEMINI_API_KEY -or $env:RELAY_GEMINI_FREE_ONLY -ne 'true') { throw 'Run configure-gemini-free.ps1 with an eligible free-tier key first. No paid fallback is enabled.' }
 $env:RELAY_MODE='alternative_live'
@@ -10,7 +11,8 @@ $env:RELAY_MCP_URL="http://127.0.0.1:$Port/_relay/mcp/"
 $RelayTransportPath=Join-Path $RelayLocal 'private/mcp-service-secret'
 if (!(Test-Path $RelayTransportPath)) { .\.venv\Scripts\python.exe -c "import secrets,pathlib;pathlib.Path('.local/private/mcp-service-secret').write_text(secrets.token_hex(32))" }
 $env:RELAY_MCP_SERVICE_SECRET=Get-Content -LiteralPath $RelayTransportPath -Raw
-$env:RELAY_DATA_DIR=Join-Path $RelayLocal 'final-integration/alternative-data'
+$env:RELAY_DATA_DIR=if($DataDirectory){[IO.Path]::GetFullPath($DataDirectory)}else{Join-Path $RelayLocal 'final-integration/alternative-data'}
+if ($env:RELAY_DATA_DIR -notmatch '^[dD]:[\\/]') { throw 'Alternative workspace data must stay on D:.' }
 $env:RELAY_GITHUB_REPO='NuraliKuzhagaliev/campuspulse-relay-demo'
 $env:RELAY_GATE_REPOS='pallets/flask'
 $env:RELAY_GATEWAY_URL=$GatewayOrigin

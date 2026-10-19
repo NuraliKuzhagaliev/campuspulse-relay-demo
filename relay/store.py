@@ -82,7 +82,18 @@ class FirestoreStore:
         self.client = firestore.Client(project=os.environ['GOOGLE_CLOUD_PROJECT'], database=os.getenv('RELAY_FIRESTORE_DATABASE','(default)'))
 
     def atomic(self, tenant, fn):
-        raise RelayError('FEATURE_PENDING', 'Portable/progress transactions require the verified local SQLite store; Firestore acceptance is pending.')
+        from google.cloud import firestore
+        @firestore.transactional
+        def operation(transaction):
+            changes={}
+            result=fn(FirestoreWorkspaceTransaction(self,transaction,tenant,changes))
+            # Firestore requires all reads before writes. Domain callbacks see a
+            # read-your-writes buffer; nothing is sent until the callback succeeds.
+            for (scope,kind,id),value in changes.items():
+                ref=self.collection(scope,kind).document(id)
+                transaction.delete(ref) if value is None else transaction.set(ref,{'value':value})
+            return result
+        return operation(self.client.transaction())
 
     def collection(self, tenant, kind):
         if '/' in tenant or '/' in kind:
@@ -150,6 +161,9 @@ class WorkspaceTransaction:
     def __init__(self, db, tenant):
         self.db, self.tenant = db, tenant
 
+    def workspace(self,tenant):
+        return WorkspaceTransaction(self.db,tenant)
+
     def get(self, kind, id, default=None):
         row = self.db.execute('SELECT data FROM records WHERE tenant=? AND kind=? AND id=?', (self.tenant, kind, id)).fetchone()
         return json.loads(row[0]) if row else default
@@ -174,3 +188,34 @@ class WorkspaceTransaction:
                 self.put('plan_history', plan['id'], plan)
                 self.put('plans', plan['id'], dict(plan, invalidated=True))
         return revision
+
+
+class FirestoreWorkspaceTransaction(WorkspaceTransaction):
+    def __init__(self,store,transaction,tenant,changes):
+        self.store,self.transaction,self.tenant,self.changes=store,transaction,tenant,changes
+
+    def workspace(self,tenant):
+        return FirestoreWorkspaceTransaction(self.store,self.transaction,tenant,self.changes)
+
+    def get(self,kind,id,default=None):
+        import copy
+        key=(self.tenant,kind,id)
+        if key in self.changes:return copy.deepcopy(self.changes[key]) if self.changes[key] is not None else default
+        snap=self.store.collection(self.tenant,kind).document(id).get(transaction=self.transaction)
+        return snap.to_dict()['value'] if snap.exists else default
+
+    def list(self,kind):
+        import copy
+        values={d.id:d.to_dict()['value'] for d in self.store.collection(self.tenant,kind).stream(transaction=self.transaction)}
+        for (tenant,k,id),value in self.changes.items():
+            if tenant==self.tenant and k==kind:
+                if value is None:values.pop(id,None)
+                else:values[id]=value
+        return [copy.deepcopy(values[id]) for id in sorted(values)]
+
+    def put(self,kind,id,data):
+        import copy
+        self.changes[(self.tenant,kind,id)]=copy.deepcopy(data)
+
+    def delete(self,kind,id):
+        self.changes[(self.tenant,kind,id)]=None

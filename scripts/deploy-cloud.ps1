@@ -1,11 +1,11 @@
 param(
-    [Parameter(Mandatory=$true)][decimal]$ApprovedBudgetUsd,
+    [decimal]$ApprovedBudgetUsd=0,
     [Parameter(Mandatory=$true)][switch]$AcknowledgeBillableResources,
-    [ValidateRange(1,72)][int]$PilotHours=72
+    [ValidateRange(1,12)][int]$PilotHours=10
 )
 . "$PSScriptRoot/env.ps1"
 Set-Location $RelayRoot
-if (!$AcknowledgeBillableResources -or $ApprovedBudgetUsd -le 0) { throw 'A specific human-approved budget is required. This is not a cloud-enforced dollar cap.' }
+if (!$AcknowledgeBillableResources -or $ApprovedBudgetUsd -lt 0) { throw 'Actual organizer coverage is required; this credit envelope never authorizes personal spending or creates a hard dollar cap.' }
 foreach ($key in @('GOOGLE_CLOUD_PROJECT','GOOGLE_CLOUD_LOCATION','RELAY_AUTH_AUDIENCE','RELAY_OAUTH_CLIENT_ID','RELAY_OAUTH_CLIENT_SECRET','RELAY_TOKEN_ENCRYPTION_KEY','RELAY_CONTEXT_SECRET','RELAY_GITHUB_REPO')) {
     if (![Environment]::GetEnvironmentVariable($key)) { throw "Missing $key. Review docs/cloud_setup.md." }
 }
@@ -13,7 +13,7 @@ $RelayGcloud = Join-Path $RelayLocal 'tools/google-cloud-sdk/bin/gcloud.cmd'
 $RelayProject = $env:GOOGLE_CLOUD_PROJECT
 $RelayRegion = $env:GOOGLE_CLOUD_LOCATION
 $RelayFundingPath=Join-Path $RelayLocal 'funding-verification.json'
-if (!(Test-Path $RelayFundingPath)) { throw 'An actual eligible non-billable GCP Free Trial record is required. See record-funding.ps1. Organizer credits are not expected; no payment or billing change is authorized.' }
+if (!(Test-Path $RelayFundingPath)) { throw 'Actual activated organizer funding is required. Read docs/organizer_window_runbook.md. Personal trials, payments and billing changes are prohibited.' }
 $RelayFunding=Get-Content -LiteralPath $RelayFundingPath -Raw | ConvertFrom-Json
 & '.venv/Scripts/python.exe' scripts/check-funding.py --record $RelayFundingPath --project $RelayProject --budget $ApprovedBudgetUsd --hours $PilotHours
 if ($LASTEXITCODE) { throw 'Verified funding does not cover this exact authorized credit-usage envelope. No resource was provisioned.' }

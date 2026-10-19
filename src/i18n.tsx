@@ -275,7 +275,10 @@ const errorKeys: Record<string, string> = {
   AUTH_REQUIRED:
     "Sign in or reconnect the required service, then retry. Cloud acceptance remains pending.",
   ACCESS_DENIED:
-    "This action is unavailable in this workspace. Check the invitation, selected resource and access.",
+    "This action is unavailable in this workspace. Check the selected resource and access.",
+  EMPTY_CONTENT:"The selected document has no readable content. Export a non-empty text document and retry.",
+  AMBIGUOUS_TIME:"This local time is ambiguous or invalid. Choose an unambiguous time in the workspace timezone.",
+  AVAILABILITY_REQUIRED:"Add study availability in Planning context before generating a plan.",
   UPSTREAM_RATE_LIMITED:
     "The service request allowance is exhausted. Wait for its reset before retrying.",
   UPSTREAM_UNAVAILABLE:

@@ -23,10 +23,15 @@ def selected():
     model = os.getenv('RELAY_GEMINI_DEVELOPER_MODEL', 'gemini-3.5-flash-lite') if developer else os.getenv('GEMINI_MODEL', '')
     resource = 'gemini-developer:' + model if developer else os.getenv('RELAY_AGENT_RESOURCE')
     configured = bool(os.getenv('RELAY_GEMINI_API_KEY') and os.getenv('RELAY_GEMINI_FREE_ONLY') == 'true') if developer else bool(resource)
-    return dict(provider=provider, deployment_mode=deployment, model=model, resource=resource,
+    result=dict(provider=provider, deployment_mode=deployment, model=model, resource=resource,
                 configured=configured, managed_agent_engine=deployment == 'managed_gcp',
                 mode='live_gemini_alternative' if developer else 'live_agent_engine',
                 revision=os.getenv('RELAY_AGENT_REVISION') if not developer else (os.getenv('RELAY_BUILD_REVISION') or os.getenv('RELAY_DEPLOYED_COMMIT') or os.getenv('RENDER_GIT_COMMIT')))
+    if mode=='alternative_live':
+        from .managed_bridge import configuration
+        managed=configuration()
+        if managed:result.update(provider='vertex',deployment_mode='managed_gcp',model=managed['model'],resource=managed['resource'],configured=True,managed_agent_engine=True,mode='live_agent_engine',revision=managed['revision'],expires_at=managed['expiry'],authoritative_state='existing_public_backend')
+    return result
 
 
 def current_availability(store):
@@ -35,6 +40,8 @@ def current_availability(store):
     result = availability(store, config['resource'] if config['configured'] else None)
     result.update({k: config[k] for k in ('provider', 'deployment_mode', 'model', 'managed_agent_engine', 'mode')})
     result['configured'] = config['configured']
+    for key in ('expires_at','authoritative_state'):
+        if key in config:result[key]=config[key]
     from .public_ai import enabled as public_access
     result['public_access'] = public_access()
     if config.get('revision') and result.get('evidence', {}).get('revision') != config['revision']:

@@ -59,6 +59,7 @@ class Assignment(Strict):
 
 
 class PassportPayload(Strict):
+    reviewed_assignments:list[dict]=Field(default_factory=list,max_length=50)
     sources:list[PortableSource]=Field(min_length=1,max_length=12)
     assignments:list[Assignment]=Field(max_length=50)
     citations:list[dict]=Field(max_length=1000)
@@ -88,6 +89,7 @@ def export(svc, source_ids=None):
         if set(source_ids)-{s['id'] for s in sources}:raise RelayError('ACCESS_DENIED','Select sources in your current workspace.')
         sources=[s for s in sources if s['id'] in source_ids]
     ids={s['id'] for s in sources}
+    if not sources:raise RelayError('SOURCE_CONFLICT','Import and review at least one source before exporting a Workspace Passport.')
     tasks=[t for t in svc.tasks() if any(s in ids for s in t['source_ids'])]
     if any(t['identity']['status']!='confirmed' for t in tasks):raise RelayError('SOURCE_CONFLICT','Confirm course, term and assignment identity before portable export.')
     assignments=[dict(id=t['id'],course=t['identity']['course'],term=t['identity']['term'],key=t['identity']['assignment_key'],
@@ -111,7 +113,8 @@ def export(svc, source_ids=None):
     payload=dict(sources=[dict(id=s['id'],title=s['title'],filename=s['filename'],version=s['version'],historical_content_hash=s['content_hash'],
                     historical_hash_algorithm=s.get('content_hash_algorithm','sha256(canonical_json(content.hex()))'),fetched_at=s['fetched_at'],pages=s['pages']) for s in sources],
                  assignments=assignments,citations=citations,overrides=overrides,progress=progress,logs=logs,decisions=decisions,clarifications=clarifications,gates=gates,
-                 preferences=selected(config,'timezone windows daily_cap_minutes'))
+                 preferences=selected(config,'timezone windows daily_cap_minutes'),
+                 reviewed_assignments=[dict(task_id=t['id'],**selected(t,'title due minutes effort_max rubric')) for t in tasks if t.get('extraction_origin')=='confirmed_semantic_proposal'])
     envelope=dict(format='campuspulse-relay-workspace',version=1,exported_at=now(),payload=payload,sha256=checksum(payload))
     # Export uses the same strict validator as import, so an invalid partial selection
     # never silently drops a dependency or an evidence reference.
@@ -139,7 +142,7 @@ def validate(value):
     if 'format' not in value and 'sources' in value:
         raise RelayError('LEGACY_SNAPSHOT_MISSING_EXTRACTS','Legacy snapshots contain settings, task summaries and receipts, but omit source pages. Re-import original documents; this file cannot restore cited coursework. Your workspace is unchanged.')
     if value.get('version')!=1 or value.get('format')!='campuspulse-relay-workspace':raise RelayError('PASSPORT_VERSION','Unsupported portable workspace format/version; supported migration starts at version 1.')
-    try: envelope=Envelope.model_validate(value).model_dump()
+    try: envelope=Envelope.model_validate(value).model_dump(exclude_unset=True)
     except ValidationError as exc:raise RelayError('PASSPORT_INVALID','Portable workspace fields or item limits are invalid.') from exc
     walk(envelope['payload'])
     if checksum(envelope['payload'])!=envelope['sha256']:raise RelayError('PASSPORT_CHECKSUM','Portable checksum does not match. This is an integrity check, never proof of authenticity.')
@@ -153,6 +156,10 @@ def validate(value):
     for task in tasks.values():
         if task['id']!=assignment_id(task['course'],task['term'],task['key']):raise RelayError('PASSPORT_REFERENCES','Course/term/assignment identity does not match its portable key.')
         if set(task['source_ids'])-sources.keys() or set(task['sections'])!=set(task['source_ids']) or any(not re.fullmatch(r'[a-f0-9]{24}',v) for v in task['sections'].values()):raise RelayError('PASSPORT_REFERENCES','Assignment source/section references are invalid.')
+    for reviewed in p.get('reviewed_assignments',[]):
+        if not isinstance(reviewed,dict) or set(reviewed)!={'task_id','title','due','minutes','effort_max','rubric'} or reviewed['task_id'] not in tasks:raise RelayError('PASSPORT_REFERENCES','Invalid reviewed assignment reference.')
+        Task.model_validate(dict(id=reviewed['task_id'],**{k:v for k,v in reviewed.items() if k!='task_id'}))
+        if not isinstance(reviewed['rubric'],list) or len(reviewed['rubric'])>50 or any(not isinstance(v,str) or len(v)>4000 for v in reviewed['rubric']):raise RelayError('PASSPORT_INVALID','Invalid reviewed rubric.')
     citations={}
     for fact in p['citations']:
         if set(fact)!={'id','task_id','source_id','source_version','field','value','quote','page'} or fact['task_id'] not in tasks or fact['source_id'] not in sources:raise RelayError('PASSPORT_REFERENCES','Invalid portable citation references.')
@@ -243,9 +250,25 @@ def commit(svc, stage_id):
                     timezone=p['preferences']['timezone'],remote=None,original_file_verified=False,archived=True,
                     historical_original=dict(content_hash=old['historical_content_hash'],algorithm=old['historical_hash_algorithm'],version=old['version'],claim='unverified_historical_hash'))
         source['facts'],source['drafts']=extract_facts(source)
+        reviewed_ids=set()
+        for reviewed in p.get('reviewed_assignments',[]):
+            assignment=next(t for t in p['assignments'] if t['id']==reviewed['task_id'])
+            if old['id'] not in assignment['source_ids']:continue
+            tid=assignment['id'];reviewed_ids.add(tid)
+            identity=dict(id=tid,course=assignment['course'],term=assignment['term'],assignment_key=assignment['key'],status='confirmed',origin='untrusted_portable_reviewed_claim')
+            source['drafts']=[d for d in source['drafts'] if d['id']!=tid and d.get('extraction_origin')!='prose_needs_review']
+            source['drafts'].append(dict(id=tid,**{k:v for k,v in reviewed.items() if k!='task_id'},identity=identity,course=assignment['course'],section_key=assignment['sections'][old['id']],source_ids=[sid],
+                gaps=[k for k in ('due','minutes') if reviewed[k] is None],completion='planned',dependencies=[],priority=1,extraction_origin='confirmed_semantic_proposal'))
+            source.setdefault('confirmed_extractions',[]).append(dict(task=copy.deepcopy(source['drafts'][-1]),proposal_id='archived_portable_claim',entity_id=assignment['sections'][old['id']]))
+            source['facts']=[f for f in source['facts'] if f['task_id']!=tid]
         for old_fact in p['citations']:
             if old_fact['source_id']!=old['id']:continue
             new=next((f for f in source['facts'] if all(f[k]==old_fact[k] for k in ('task_id','field','value','quote','page'))),None)
+            if not new and old_fact['task_id'] in reviewed_ids:
+                # Integrity was checked above; these are explicitly untrusted
+                # archived interpretations, never newly observed source facts.
+                new=dict(old_fact,id=digest([sid,old_fact])[:24],source_id=sid,source_version=source['version'],hash=source['content_hash'],fetched_at=source['fetched_at'],timezone=source['timezone'],status='archived_student_claim')
+                source['facts'].append(new)
             if not new:raise RelayError('PASSPORT_REFERENCES','Included facts cannot be reproduced from the included extract. Re-import the original document.')
             fact_map[old_fact['id']]=new['id']
         for fact in source['facts']:fact.update(kind='archived_extract_claim',original_verified=False)
@@ -254,9 +277,8 @@ def commit(svc, stage_id):
         current=tx.get('passport_stages',stage_id)
         if current['status']=='committed':return current['result']
         check_revision(tx,staged['expected_revision'])
-        from .store import WorkspaceTransaction
-        target=WorkspaceTransaction(tx.db,destination)
-        settings=dict(p['preferences'],mode='illustrative',anchor=min((w['start'][:10] for w in p['preferences']['windows']),default=now()[:10]),
+        target=tx.workspace(destination)
+        settings=dict(p['preferences'],mode='own_documents',workspace_kind='own',anchor=min((w['start'][:10] for w in p['preferences']['windows']),default=now()[:10]),
                       calendar_id='local-illustrative-calendar',calendar_live=False,watch_enabled=False,github_repo=svc.settings()['github_repo'],github_ref='main',github_path='coursework.md',
                       portable_origin='untrusted_manual_copy',restored_at=now(),external_revalidation_required=True)
         target.put('meta','settings',settings)
@@ -291,7 +313,7 @@ def commit(svc, stage_id):
         target.put('passport_copies',stage_id,result)
         tx.put('passport_stages',stage_id,dict(current,status='committed',result=result))
         # Scope registration is committed in the same database transaction.
-        server=WorkspaceTransaction(tx.db,'_server')
+        server=tx.workspace('_server')
         server.put('workspaces',destination,dict(id=destination,origin='authenticated_manual_restore',created_at=now()))
         return result
     return svc.store.atomic(svc.tenant,switch)

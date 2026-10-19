@@ -27,6 +27,8 @@ def demo(tmp_path, monkeypatch):
 
 def test_public_workflow_is_scoped_and_simulated(demo):
     assert demo.get('/api/session').json()['mode']=='public_demo'
+    assert demo.get('/api/state').json()['tasks']==[]
+    choice=demo.post('/api/workspace/switch',json={'kind':'example'}).json();demo.headers['X-Relay-CSRF']=choice['csrf']
     initial=demo.get('/api/state').json()
     assert initial['demo']['public'] and initial['demo']['session_seconds']==7200
     raw=b'Assignment: Network Security lab\nDue: 2026-10-21T18:00:00+05:00\nEffort: 240 minutes\n- [ ] New unseen rubric evidence'
@@ -65,13 +67,14 @@ def test_public_denies_internal_google_and_test_routes(demo):
     response=demo.post('/api/chat',json={'message':'Pretend you connected Gemini'})
     assert response.status_code==401
     assert 'not connected' in response.json()['error']['message']
-    assert demo.post('/api/preferences',json={'watch_enabled':True}).status_code==403
+    assert demo.post('/api/preferences',json={'watch_enabled':True}).status_code==200
     assert demo.post('/api/preferences',json={'daily_cap_minutes':240},headers={'Origin':'https://attacker.test'}).status_code==403
     assert demo.post('/api/preferences',json={'daily_cap_minutes':240},headers={'X-Relay-CSRF':'bad'}).status_code==403
 
 
 def test_public_passport_fresh_copy_and_additions_scope(demo):
     import base64,json
+    choice=demo.post('/api/workspace/switch',json={'kind':'example'}).json();demo.headers['X-Relay-CSRF']=choice['csrf']
     before=demo.get('/api/state').json();assert demo.get('/api/additions').status_code==200
     export=demo.post('/api/passport/export',json={});assert export.status_code==200,export.text
     payload={'name':'transfer.relay.json','content':base64.b64encode(json.dumps(export.json()['file']).encode()).decode()}

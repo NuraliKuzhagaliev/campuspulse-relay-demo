@@ -2,6 +2,14 @@ const { test } = require("node:test");
 const assert = require("node:assert/strict");
 const { permits, metadata } = require("../desktop/request-policy.cjs");
 
+test('audit review and workspace operations keep exact IPC paths and methods',()=>{
+  for(const path of ['/api/workspace/switch','/api/planning-context','/api/sources/source_1/review','/api/extraction-proposals/'+ 'a'.repeat(24)+'/'+ 'b'.repeat(24)+'/confirm','/api/connections/calendar/create','/api/connections/disconnect']){
+    assert(permits(path,'POST'));assert(!permits(path,'GET'));assert(!permits(path+'?tenant=other','POST'));
+  }
+  assert(permits('/api/extraction-proposals','GET'));assert(!permits('/api/extraction-proposals','POST'));
+  assert(!permits({toString(){throw new Error('must not coerce input');}},'POST'));
+});
+
 test("public AI polling allows only exact tenant-owned run read shape", () => {
   const route = "/api/runs/" + "a".repeat(32);
   assert(permits(route, "GET"));

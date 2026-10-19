@@ -42,6 +42,8 @@ import { api, setCsrf } from "./api";
 import { importSelectedSource } from "./imports";
 import { Workshop } from "./Workshop";
 import { Continuity } from "./Continuity";
+import { DocumentReview, PlanningContext } from "./DocumentReview";
+import { Timeline } from "./Timeline";
 import { version as releaseVersion } from "../package.json";
 import {
   useLocale,
@@ -252,288 +254,6 @@ function SourceFact({
     </div>
   );
 }
-function Timeline({
-  data,
-  plan,
-  onBlock,
-  list,
-  setList,
-}: {
-  data: Snapshot;
-  plan: Plan | null;
-  onBlock: (t: string) => void;
-  list: boolean;
-  setList: (v: boolean) => void;
-}) {
-  const { tr, lang, locale } = useLocale();
-  const timezone = data.settings.timezone;
-  const days = Array.from({ length: 5 }, (_, i) => {
-    const d = new Date(data.settings.anchor + "T12:00:00+05:00");
-    d.setUTCDate(d.getUTCDate() + i);
-    return d;
-  });
-  const blocks = plan?.blocks || [];
-  const hour = (value: string) => {
-    const p = new Intl.DateTimeFormat(locale, {
-      timeZone: timezone,
-      hour: "numeric",
-      minute: "numeric",
-      hourCycle: "h23",
-    }).formatToParts(new Date(value));
-    return (
-      Number(p.find((x) => x.type === "hour")?.value) +
-      Number(p.find((x) => x.type === "minute")?.value) / 60
-    );
-  };
-  const weekday = (v: string) =>
-    new Intl.DateTimeFormat(locale, {
-      timeZone: timezone,
-      weekday: "short",
-    }).format(new Date(v));
-  const startHour = Math.max(
-    0,
-    Math.floor(Math.min(...data.settings.windows.map((w) => hour(w.start)))) -
-      1,
-  );
-  const endHour = Math.min(
-    24,
-    Math.ceil(Math.max(...data.settings.windows.map((w) => hour(w.end)))) + 1,
-  );
-  const hours = Array.from(
-    { length: Math.max(1, endHour - startHour) },
-    (_, i) => startHour + i,
-  );
-  const offset =
-    new Intl.DateTimeFormat(locale, {
-      timeZone: timezone,
-      timeZoneName: "shortOffset",
-    })
-      .formatToParts(new Date(data.settings.anchor + "T12:00:00Z"))
-      .find((p) => p.type === "timeZoneName")?.value || timezone;
-  const colors = (taskId: string) =>
-    ["blue", "mint", "peach"][
-      data.tasks.findIndex((t) => t.id === taskId) % 3
-    ] || "blue";
-  return (
-    <section className="timeline-card">
-      <div className="calendar-toolbar">
-        <div className="calendar-range">
-          <CalendarDays size={18} />
-          <strong>{weekRange(days[0], days[4], lang)}</strong>
-          <span>{days[0].getFullYear()}</span>
-        </div>
-        <div className="segmented">
-          <button aria-pressed={!list} onClick={() => setList(false)}>
-            {tr("Week")}
-          </button>
-          <button aria-pressed={list} onClick={() => setList(true)}>
-            {tr("List")}
-          </button>
-        </div>
-      </div>
-      {list ? (
-        <div className="schedule-list">
-          {blocks.length ? (
-            blocks.map((b, i) => (
-              <button key={i} onClick={() => onBlock(b.task_id)}>
-                <span>
-                  {weekday(b.start)} · {hour(b.start)}–{hour(b.end)}
-                </span>
-                <strong>
-                  {data.tasks.find((t) => t.id === b.task_id)?.title}
-                </strong>
-                <ArrowUpRight size={16} />
-              </button>
-            ))
-          ) : (
-            <div className="empty">
-              <CalendarDays />
-              <h3>{tr("Your study windows are ready.")}</h3>
-              <p>
-                {tr(
-                  "Resolve the evidence and repair your week to allocate study blocks.",
-                )}
-              </p>
-            </div>
-          )}
-        </div>
-      ) : (
-        <div className="calendar-scroll">
-          <div
-            className="calendar-grid"
-            style={{ gridTemplateRows: `72px ${hours.length * 64 + 1}px` }}
-          >
-            <div className="time-header">
-              <small>{offset}</small>
-            </div>
-            {days.map((day, i) => (
-              <div
-                key={i}
-                className={"day-header " + (i === 0 ? "active-day" : "")}
-              >
-                <span>{weekdayText(day, lang).toUpperCase()}</span>
-                <strong>{day.getDate()}</strong>
-              </div>
-            ))}
-            <div className="time-labels">
-              {hours.map((h) => (
-                <span key={h} style={{ top: (h - startHour) * 64 - 6 }}>
-                  {String(h).padStart(2, "0")}:00
-                </span>
-              ))}
-            </div>
-            {days.map((day, i) => {
-              const wd = day.toLocaleDateString(locale, { weekday: "short" });
-              return (
-                <div key={i} className="day-column">
-                  {hours.map((_, h) => (
-                    <div
-                      className="hour-line"
-                      style={{ top: h * 64 }}
-                      key={h}
-                    />
-                  ))}
-                  {data.settings.windows
-                    .filter((w) => weekday(w.start) === wd)
-                    .map((w, j) => (
-                      <div
-                        className="availability"
-                        key={j}
-                        style={{
-                          top: (hour(w.start) - startHour) * 64,
-                          height: (hour(w.end) - hour(w.start)) * 64,
-                        }}
-                      >
-                        <span>{tr("Available")}</span>
-                      </div>
-                    ))}
-                  {(data.calendar_events || [])
-                    .filter(
-                      (e) =>
-                        e.start.dateTime && weekday(e.start.dateTime) === wd,
-                    )
-                    .map((e) => (
-                      <div
-                        key={e.id}
-                        className="commitment"
-                        style={{
-                          top: (hour(e.start.dateTime!) - startHour) * 64,
-                          height: Math.max(
-                            32,
-                            (hour(e.end.dateTime!) - hour(e.start.dateTime!)) *
-                              64,
-                          ),
-                        }}
-                      >
-                        <LockKeyhole size={12} />
-                        <span>
-                          {e.id === "protected-commitment"
-                            ? tr("Protected commitment")
-                            : e.summary}
-                          <br />
-                          <small>
-                            {data.calendar_mode === "live"
-                              ? tr("Live calendar")
-                              : tr("Illustrative / imported snapshot")}
-                          </small>
-                        </span>
-                      </div>
-                    ))}
-                  {blocks
-                    .filter((b) => weekday(b.start) === wd)
-                    .map((b, j) => {
-                      const task = data.tasks.find((t) => t.id === b.task_id);
-                      const applied = (data.calendar_events || []).some(
-                        (event) =>
-                          event.extendedProperties?.private?.relay_task ===
-                            b.task_id &&
-                          event.start.dateTime &&
-                          event.end.dateTime &&
-                          new Date(event.start.dateTime).getTime() ===
-                            new Date(b.start).getTime() &&
-                          new Date(event.end.dateTime).getTime() ===
-                            new Date(b.end).getTime() &&
-                          data.receipts.some((receipt) =>
-                            receipt.outcomes.some(
-                              (outcome) =>
-                                outcome.event_id === event.id &&
-                                outcome.status === "verified" &&
-                                outcome.etag === event.etag,
-                            ),
-                          ),
-                      );
-                      return (
-                        <button
-                          key={j}
-                          className={`study-block ${colors(b.task_id)} ${applied ? "applied" : ""}`}
-                          style={{
-                            top: (hour(b.start) - startHour) * 64,
-                            height: Math.max(
-                              31,
-                              (hour(b.end) - hour(b.start)) * 64 - 4,
-                            ),
-                          }}
-                          onClick={() => onBlock(b.task_id)}
-                          title={task?.title}
-                        >
-                          <span className="block-time">
-                            {String(Math.floor(hour(b.start))).padStart(2, "0")}
-                            :{hour(b.start) % 1 ? "30" : "00"} ·{" "}
-                            {Math.round(
-                              (new Date(b.end).getTime() -
-                                new Date(b.start).getTime()) /
-                                60000,
-                            )}
-                            {tr("m")}
-                          </span>
-                          <strong>{task?.title}</strong>
-                          <span className="block-meta">
-                            {applied ? (
-                              <CheckCheck size={11} />
-                            ) : (
-                              <Link2 size={11} />
-                            )}
-                            {applied
-                              ? data.calendar_mode === "live"
-                                ? tr("Verified in Calendar")
-                                : tr("Verified locally")
-                              : b.pinned
-                                ? tr("Pinned")
-                                : tr("Source linked")}
-                          </span>
-                        </button>
-                      );
-                    })}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-      <footer className="calendar-footer">
-        <span>
-          <i className="key blue" />
-          {tr("Suggested study")}
-        </span>
-        <span>
-          <i className="key grey" />
-          {tr("Protected time")}
-        </span>
-        <span>
-          <i className="key outline" />
-          {tr("Available window")}
-        </span>
-        <small>
-          {plan?.invalidated
-            ? tr("Outdated plan · repair required")
-            : plan
-              ? tr("Validated allocation")
-              : tr("No study blocks generated")}
-        </small>
-      </footer>
-    </section>
-  );
-}
 function RunRail({
   events,
   resource,
@@ -631,7 +351,6 @@ export default function App() {
   >([]);
   const { lang, setLang, tr, locale } = useLocale();
   const duration = (minutes: number) => formatDuration(minutes, lang);
-  const [judgeInvite, setJudgeInvite] = useState("");
   const t = langs[lang];
   const [data, setData] = useState<Snapshot | null>(null),
     [view, setView] = useState<View>("week"),
@@ -945,8 +664,8 @@ export default function App() {
       setBusy("");
     }
   }
-  async function ask() {
-    if (!prompt.trim()) return;
+  async function ask(message = prompt) {
+    if (!message.trim()) return;
     const generation = ++chatGeneration.current;
     await work(CONTACTING_AGENT, async () => {
       if (!conversationId.current)
@@ -954,7 +673,7 @@ export default function App() {
           await api<{ id: string }>("/conversation")
         ).id;
       const r = await api<ChatReply>("/chat", "POST", {
-        message: prompt,
+        message,
         language: lang,
         conversation_id: conversationId.current,
         request_id: crypto.randomUUID().replaceAll("-", ""),
@@ -999,47 +718,7 @@ export default function App() {
               <RefreshCw size={16} />
               {tr("Retry connection")}
             </button>
-            <button className="secondary" onClick={() => void connectGoogle()}>
-              {tr("Connect Google in system browser")}
-              <ArrowUpRight size={16} />
-            </button>
-            <form
-              onSubmit={async (e) => {
-                e.preventDefault();
-                setBusy("Opening your exclusive judge workspace");
-                setError("");
-                try {
-                  await api("/judge/claim", "POST", {
-                    invitation: judgeInvite.trim(),
-                  });
-                  setJudgeInvite("");
-                  location.reload();
-                } catch (failure) {
-                  setError((failure as Error).message);
-                  setBusy("");
-                }
-              }}
-            >
-              <label htmlFor="judge-invite">
-                {tr("Owner-issued one-use judge invitation")}
-              </label>
-              <input
-                id="judge-invite"
-                type="password"
-                autoComplete="off"
-                spellCheck={false}
-                value={judgeInvite}
-                onChange={(e) => setJudgeInvite(e.target.value)}
-                maxLength={100}
-              />
-              <button
-                className="secondary"
-                disabled={!!busy || judgeInvite.trim().length < 40}
-                type="submit"
-              >
-                {tr("Open isolated demo")}
-              </button>
-            </form>
+            <p>{tr('Public AI access needs no sign-in or invitation. Retry the connection; Calendar consent is a separate optional action in Connections.')}</p>
             <p>
               {tr(
                 "Start the local gateway with scripts/dev.ps1, or configure the deployed gateway.",
@@ -1184,7 +863,7 @@ export default function App() {
             aria-label={tr("Public illustrative demo")}
           >
             <div>
-              <strong>{tr("Public illustrative demo")}</strong>
+              <strong>{tr("Public temporary workspace")}</strong>
               <p>
                 {tr(
                   "Private browser workspace · expires after 2 hours. Hosting inactivity, restarts or redeploys can reset it sooner. Use sample documents.",
@@ -1235,6 +914,81 @@ export default function App() {
         ) : null}
         <div className="content-wrap">
           <main id="main" className="main-content">
+            {data.calendar_error&&<div className="offline-banner" role="status"><p>{tr('Calendar needs reconnection. Your documents and progress remain available; no fresh Calendar availability is assumed.')}</p><button className="secondary" onClick={()=>setView('connections')}>{tr('Connections')}</button></div>}
+            <p className="fine-print">{tr('Selected files: PDF, MD, TXT, ICS · up to 2 MiB; text PDFs only.')}</p>
+            {data.demo?.public && (
+              <section
+                className="panel workspace-choice"
+                aria-label={tr("Choose your workspace")}
+              >
+                <strong>
+                  {data.settings.mode === "illustrative"
+                    ? tr("Example workspace")
+                    : tr("Your own documents")}
+                </strong>
+                <p>
+                  {tr(
+                    "The example and your own documents use separate workspaces. Switching preserves both until their temporary sessions expire.",
+                  )}
+                </p>
+                {(["own", "example"] as const).map((kind) => (
+                  <button
+                    key={kind}
+                    className="secondary"
+                    disabled={!!busy}
+                    onClick={() =>
+                      void work(tr("Switch workspace"), async () => {
+                        const next = await api<{ csrf: string }>(
+                          "/workspace/switch",
+                          "POST",
+                          { kind },
+                        );
+                        setCsrf(next.csrf);
+                        sessionStorage.setItem("relay.entered", "1");
+                        location.reload();
+                      })
+                    }
+                  >
+                    {tr(kind === "own" ? "Use my own data" : "Open example")}
+                  </button>
+                ))}
+                <a href="/samples/" target="_blank" rel="noreferrer">
+                  {tr("Sample documents and instructions")}
+                </a>
+              </section>
+            )}
+            {(view === "week" || view === "recovery") && (
+              <PlanningContext
+                key={"context:" + data.workspace_id}
+                data={data}
+                work={work}
+                refresh={refresh}
+              />
+            )}
+            {data.plan?.scope && (
+              <p className="scope-notice" role="status">
+                {tr("Plan scope")}: {data.plan.scope.included.length}{" "}
+                {tr("confirmed assignments")}; {data.plan.scope.excluded.length}{" "}
+                {tr("drafts excluded")}.{" "}
+                {!data.plan.scope.complete &&
+                  tr(
+                    "This is a partial plan. Review the excluded drafts before treating the whole workload as planned.",
+                  )}
+              </p>
+            )}
+            {view === "evidence" && (
+              <DocumentReview
+                key={"review:" + data.workspace_id}
+                data={data}
+                refresh={refresh}
+                work={work}
+                onExtract={(id) =>
+                  void ask(
+                    `Read source ${id} completely, including continuation chunks/pages. Extract its academic assignments using propose_academic_extraction. Group each assignment under a distinct entity_id (use existing section_key if it matches). Cite exact page quotes for title, course, term, assignment_key, due, minutes, rubric and normalized submission_requirement where present. Keep missing or ambiguous fields unknown. Do not save a plan or apply facts. Tell me which fields need clarification; I will review each proposal in Document review.`,
+                  )
+                }
+              />
+            )}
             {data.settings.mode === "judge" && (
               <div className="offline-banner">
                 <ShieldCheck size={18} />
@@ -1433,7 +1187,11 @@ export default function App() {
                               { count: data.plan.unscheduled_minutes },
                             )
                         : tr(
-                            "Resolve the conflicting deadline to calculate a feasible plan.",
+                            data.conflicts.some(
+                              (c) => c.status === "unresolved",
+                            )
+                              ? "Resolve the conflicting deadline to calculate a feasible plan."
+                              : "Review assignments and availability, then generate a plan. Unknown information stays unknown.",
                           )}
                     </p>
                   </div>
@@ -1602,7 +1360,7 @@ export default function App() {
                         "Public demo imports: text PDF, Markdown, TXT or ICS up to 2 MiB. At most 12 sources including examples. Original quotations stay unchanged.",
                       )
                     : tr(
-                        "Text PDF, Markdown, TXT and normalized ICS · up to 10 MiB / 100 PDF pages. Scanned PDF OCR is not configured. Missing and ambiguous fields stay unknown.",
+                        "PDF, Markdown, TXT and ICS · maximum 2 MiB. Text PDFs only, at most 100 pages and 250,000 extracted characters. No OCR.",
                       )}
                 </p>
               </div>
@@ -2004,7 +1762,6 @@ export default function App() {
                     <label className="toggle-row">
                       <input
                         type="checkbox"
-                        disabled={!!data.demo?.public}
                         checked={data.settings.watch_enabled}
                         onChange={(e) =>
                           void work("Updating radar", async () => {
@@ -2022,7 +1779,7 @@ export default function App() {
                     <small>
                       {data.demo?.public
                         ? tr(
-                            "Public demo: refresh GitHub manually. Public source observations may be shared for 5 minutes; original fetch time and commit are retained. Durable radar awaits GCP.",
+                            "Server polling works while the free service is awake. Shared public observations keep their original fetch time. Sleeping or restarting hosting stops polling; no always-on guarantee.",
                           )
                         : tr(
                             "Local server polling continues without a chat prompt. Hosted scheduled execution requires GCP deployment.",
@@ -2034,22 +1791,25 @@ export default function App() {
                       <CalendarDays size={24} />
                     </span>
                     <StatusPill
-                      tone={data.settings.calendar_live ? "success" : "warning"}
+                      tone={data.settings.calendar_live&&data.calendar_mode!=='unavailable' ? "success" : "warning"}
                     >
-                      {data.settings.calendar_live
+                      {data.calendar_mode==='unavailable'?tr('Calendar needs reconnection'):data.settings.calendar_live
                         ? tr("Live connection")
                         : tr("Illustrative local adapter")}
                     </StatusPill>
                     <h2>{tr("Study calendar")}</h2>
                     <button
                       className="text-button"
-                      disabled={!!data.demo?.public}
+                      disabled={
+                        !!data.demo?.public &&
+                        !data.agent.configured
+                      }
                       onClick={() => void connectGoogle()}
                     >
                       {tr("Connect Google in system browser")}
                       <ArrowUpRight size={14} />
                     </button>
-                    {data.demo?.public ? (
+                    {data.settings.calendar_live?<p>{tr('Connected to your selected Calendar. Approved actions affect real events; review the exact preview first.')}</p>:data.demo?.public ? (
                       <p>
                         {tr(
                           "Real Google consent and Calendar writes are pending. Review and approve simulated actions in Recovery.",
@@ -2068,7 +1828,10 @@ export default function App() {
                     </code>
                     <button
                       className="text-button"
-                      disabled={!!data.demo?.public}
+                      disabled={
+                        !!data.demo?.public &&
+                        !data.agent.configured
+                      }
                       onClick={() =>
                         void work("Listing authorized calendars", async () =>
                           setCalendars(
@@ -2112,6 +1875,53 @@ export default function App() {
                     ))}
                     <button
                       className="secondary"
+                      disabled={
+                        !!data.demo?.public &&
+                        !data.agent.configured
+                      }
+                      onClick={() =>
+                        void work(
+                          tr("Create a separate study calendar"),
+                          async () => {
+                            await api("/connections/calendar/create", "POST");
+                            setCalendars(
+                              (
+                                await api<{
+                                  calendars: {
+                                    id: string;
+                                    name: string;
+                                    role: string;
+                                    primary: boolean;
+                                  }[];
+                                }>("/connections/calendar-list")
+                              ).calendars,
+                            );
+                          },
+                        )
+                      }
+                    >
+                      {tr("Create a separate study calendar")}
+                    </button>
+                    <button
+                      className="text-button"
+                      disabled={!data.settings.calendar_live}
+                      onClick={() =>
+                        void work(tr("Disconnect Calendar"), async () => {
+                          await api("/connections/disconnect", "POST");
+                          setCalendars([]);
+                          await refresh();
+                        })
+                      }
+                    >
+                      {tr("Disconnect Calendar")}
+                    </button>
+                    <p>
+                      {tr(
+                        "Calendar connection is optional. Consent does not authorize study writes. Create or choose a separate calendar, then review and approve exact actions. Disconnect preserves existing events.",
+                      )}
+                    </p>
+                    <button
+                      className="secondary"
                       onClick={() => external("https://calendar.google.com")}
                     >
                       {tr("Open Google Calendar")}
@@ -2129,6 +1939,11 @@ export default function App() {
                     <p>
                       {tr(
                         "Import only selected files. No arbitrary drive indexing. Offline snapshots never execute writes.",
+                      )}
+                    </p>
+                    <p>
+                      {tr(
+                        "PDF, Markdown, TXT and ICS · maximum 2 MiB. Text PDFs only, at most 100 pages and 250,000 extracted characters. No OCR.",
                       )}
                     </p>
                     <button

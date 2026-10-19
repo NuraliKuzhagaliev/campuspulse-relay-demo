@@ -26,18 +26,26 @@ class RelayService:
                 raise RelayError('AUTH_REQUIRED','Create or connect an isolated workspace first.')
             from .public_ai import enabled as public_access
             if public_access():self.store.get('_server','workspaces',self.tenant)
-            self.seed()
+            if public_demo.temporary_enabled():self.create_empty()
+            else:self.seed()
             return self.store.get(self.tenant,'meta','settings')
         if value.get('mode') in ('judge','judge_ai') and value.get('judge_expires',0)<clock.time():
             raise RelayError('AUTH_REQUIRED','This judge workspace has expired. Its calendar is retired and is never reassigned to another visitor.')
         return value
+
+    def create_empty(self):
+        today=datetime.now(ZoneInfo('Asia/Almaty')).date()
+        self.store.put(self.tenant,'meta','settings',dict(mode='own_documents',workspace_kind='own',timezone='Asia/Almaty',anchor=(today-timedelta(days=today.weekday())).isoformat(),windows=[],daily_cap_minutes=240,
+            calendar_id='local-illustrative-calendar',github_repo=os.getenv('RELAY_GITHUB_REPO','NuraliKuzhagaliev/campuspulse-relay-demo'),github_ref='main',github_path='coursework.md',watch_enabled=False,calendar_live=False))
 
     def seed(self,anchor=None):
         if os.getenv('RELAY_MODE')=='cloud':
             raise RelayError('ACCESS_DENIED','Local fixtures are disabled in cloud mode.')
         zone=ZoneInfo('Asia/Almaty')
         today=datetime.now(zone).date()
-        monday=datetime.fromisoformat(anchor).date() if anchor else today+timedelta(days=(7-today.weekday())%7)
+        monday=datetime.fromisoformat(anchor).date() if anchor else today-timedelta(days=today.weekday())
+        # Establish context before importing; import never invents a workspace timezone.
+        self.create_empty()
         def at(day,hour):
             return datetime.combine(monday+timedelta(days=day),time(hour),zone).isoformat()
         sources=[('security-pdf','Network Security · original brief','Network Security lab',at(3,18),240,['Explain the threat model','Capture test evidence','Document mitigations']),
@@ -53,7 +61,7 @@ class RelayService:
             else:
                 self.import_source(name+'.md',text.encode(),id=id,mode='illustrative',title=name)
         windows=[dict(start=at(d,a),end=at(d,b)) for d,a,b in [(0,18,20),(1,18,20),(2,16,18),(3,16,19),(4,16,17)]]
-        settings=dict(mode='illustrative',timezone='Asia/Almaty',anchor=monday.isoformat(),windows=windows,daily_cap_minutes=240,
+        settings=dict(mode='illustrative',workspace_kind='example',timezone='Asia/Almaty',anchor=monday.isoformat(),windows=windows,daily_cap_minutes=240,
                       calendar_id='local-illustrative-calendar',github_repo=os.getenv('RELAY_GITHUB_REPO','NuraliKuzhagaliev/campuspulse-relay-demo'),github_ref='main',github_path='coursework.md',watch_enabled=False,calendar_live=False)
         self.store.put(self.tenant,'meta','settings',settings)
         self.store.put(self.tenant,'calendar','protected-commitment',dict(id='protected-commitment',summary='Protected commitment',start={'dateTime':at(1,18)},end={'dateTime':at(1,19)},etag='fixture-1',pinned=True))
@@ -64,7 +72,7 @@ class RelayService:
         if public_demo.enabled() and s.get('calendar_live'):
             raise RelayError('ACCESS_DENIED','Real Calendar operations are disabled in the public illustrative demo.')
         if s.get('calendar_live'):
-            if s.get('mode')=='personal':
+            if s.get('mode')=='personal' or s.get('calendar_connection')=='google_oauth':
                 from .oauth import credentials
                 return GoogleCalendar(s['calendar_id'],credentials(self.store,self.tenant))
             return GoogleCalendar(s['calendar_id'])
@@ -85,7 +93,12 @@ class RelayService:
         return versions
 
     def import_source(self,name,content,id=None,mode='selected_upload',title=None,remote=None):
-        parsed=read_upload(name,content)
+        try:self.store.get(self.tenant,'meta','settings')
+        except RelayError:self.create_empty()
+        settings=self.settings()
+        windows=settings.get('windows',[])
+        horizon=dict(start=min(w['start'] for w in windows),end=max(w['end'] for w in windows)) if windows else None
+        parsed=read_upload(name,content,timezone=settings['timezone'],horizon=horizon)
         if public_demo.temporary_enabled() and parsed['type']=='ics' and len(self.store.list(self.tenant,'calendar'))+len(parsed['events'])>100:
             raise RelayError('UNSUPPORTED_INPUT','Use at most 100 calendar events in this temporary demo.')
         if parsed['type']=='ics':
@@ -98,13 +111,14 @@ class RelayService:
         id=id or digest([name,parsed['content_hash']])[:24]
         if public_demo.temporary_enabled() and id not in {s['id'] for s in self.sources()} and len(self.sources())>=public_demo.MAX_SOURCES:
             raise RelayError('UNSUPPORTED_INPUT','This temporary demo reached its source limit. Start a fresh demo to import more.')
-        source=dict(**parsed,id=id,title=title or name,filename=name,version=parsed['content_hash'][:24],mode=mode,timezone='Asia/Almaty',remote=remote,observed_monotonic_ns=clock.monotonic_ns())
+        source=dict(**parsed,id=id,title=title or name,filename=name,version=parsed['content_hash'][:24],mode=mode,timezone=settings['timezone'],timezone_origin='workspace_context',remote=remote,observed_monotonic_ns=clock.monotonic_ns())
         if remote and remote.get('fetched_at'):
             source['fetched_at']=remote['fetched_at']
         source['identity_schema']=2
         source['assignment_mappings']=self.source_mappings(source)
         facts,drafts=extract_facts(source)
         source['facts'],source['drafts']=facts,drafts
+        source['import_notice']='academic_evidence_review_required' if drafts else 'no_academic_assignments_detected_document_available_for_discussion'
         self.store.put(self.tenant,'source_versions',id+'-'+source['version'],source,create=True)
         self.store.put(self.tenant,'sources',id,source)
         impacted={t['id'] for t in drafts}
@@ -181,7 +195,7 @@ class RelayService:
 
     def map_assignment(self, source_id, key, course, term, assignment_key, target_id=None):
         source=next((s for s in self.sources() if s['id']==source_id),None)
-        if not source or not any(t['section_key']==key for t in source['drafts']):
+        if not source or sum(t['section_key']==key for t in source['drafts'])!=1:
             raise RelayError('ACCESS_DENIED','Choose an assignment section in your own current source.')
         if target_id:
             task=next((t for t in self.tasks() if t['id']==target_id and t['identity']['status']=='confirmed'),None)
@@ -192,6 +206,8 @@ class RelayService:
                 raise RelayError('SOURCE_CONFLICT','Confirm course, academic term and assignment key; missing context is not guessed.')
             identity=dict(id=assignment_id(course,term,assignment_key),course=course.strip(),term=term.strip(),assignment_key=assignment_key.strip(),status='confirmed')
         previous=next(t for t in source['drafts'] if t['section_key']==key)
+        if previous.get('extraction_origin')=='confirmed_semantic_proposal':
+            raise RelayError('SOURCE_CONFLICT','Use Document review to change a confirmed interpretation; existing progress cannot be silently rebound.')
         record=dict(identity,origin='explicit_user_mapping',source_id=source_id,source_version=source['version'],section_key=key,confirmed_at=now())
         self.store.put(self.tenant,'assignment_mappings',source_id+'-'+key,record)
         source['assignment_mappings']=self.source_mappings(source)
@@ -251,15 +267,26 @@ class RelayService:
 
     def plan(self,scenario=None,proposal=False):
         s=self.settings()
-        tasks=self.tasks()
-        if any(t.get('identity',{}).get('status')=='unresolved' for t in tasks):
-            raise RelayError('SOURCE_CONFLICT','Confirm unresolved course/term/assignment mappings before planning.')
+        all_tasks=self.tasks()
+        if any(c['status']=='unresolved' for c in self.current_conflicts()):
+            raise RelayError('SOURCE_CONFLICT','Resolve the deadline conflict before repairing this week.')
+        tasks=[t for t in all_tasks if t.get('identity',{}).get('status')=='confirmed' and t.get('extraction_origin')!='prose_needs_review']
+        excluded=[dict(id=t['id'],title=t['title'],gaps=t.get('gaps',[])) for t in all_tasks if t not in tasks]
+        from .extraction import current_proposals
+        for extraction_review in current_proposals(self):
+            if extraction_review.get('origin')=='deterministic_review':continue
+            for entity in extraction_review['entities']:
+                if not entity.get('applied'):
+                    title=next((f['value'] for f in entity['fields'] if f['field']=='title' and isinstance(f['value'],str)),'Unconfirmed assignment')
+                    excluded.append(dict(id=entity['id'],title=title,gaps=['semantic_review']))
+        if not tasks:raise RelayError('SOURCE_CONFLICT','Review and confirm at least one assignment with deadline and effort before planning.',{'excluded':excluded})
+        if not s['windows']:raise RelayError('AVAILABILITY_REQUIRED','Add study availability in Planning context before generating a plan.')
         start=min((w['start'] for w in s['windows']),default=now())
         end=max((w['end'] for w in s['windows']),default=now())
         initial_versions=self.source_versions()
         run=uuid.uuid4().hex
         self.store.event(self.tenant,run,'run_started',summary='Checking evidence and actual configured availability.',mode=s['mode'])
-        if any(c['status']=='unresolved' for c in self.current_conflicts()):
+        if any(c['status']=='unresolved' and c['task_id'] in {t['id'] for t in tasks} for c in self.current_conflicts()):
             self.store.event(self.tenant,run,'source_conflict',summary='Two source deadlines disagree. A choice is required.')
             raise RelayError('SOURCE_CONFLICT','Resolve the deadline conflict before repairing this week.')
         began=clock.perf_counter()
@@ -295,7 +322,7 @@ class RelayService:
             self.store.event(self.tenant,run,'tool_finished',tool='build_recovery_plan',duration_ms=round((clock.perf_counter()-began)*1000),summary=result['solver_status'])
         if initial_versions!=self.source_versions():
             raise RelayError('STALE_PLAN','Workspace changed during planning. No proposal was accepted; refresh and retry.')
-        result.update(sources=initial_versions,created_at=now(),run_id=run,mode=s['mode'],gate_notes=gate_notes)
+        result.update(sources=initial_versions,created_at=now(),run_id=run,mode=s['mode'],gate_notes=gate_notes,scope=dict(included=[t['id'] for t in tasks],excluded=excluded,complete=not excluded))
         result['historical_blocks']=(prior or {}).get('historical_blocks',[])+[b for b in (prior or {}).get('blocks',[]) if payload.get('not_before') and instant(b['start'])<instant(payload['not_before'])]
         result['change_reason']='Explicit remaining work, current gate observations and eligible future availability.'
         before={(b['task_id'],b['start'],b['end']) for b in (prior or {}).get('blocks',[])}
@@ -330,16 +357,22 @@ class RelayService:
 
     def snapshot(self):
         s=self.settings()
+        calendar_error=None
         if os.getenv('RELAY_MODE')=='cloud' and not s.get('calendar_live'):
             events=[];calendar_mode='disconnected'
         else:
-            calendar=self.calendar()
-            events=calendar.list(min((w['start'] for w in s['windows']),default=now()),max((w['end'] for w in s['windows']),default=now()))
-            calendar_mode=calendar.mode
+            try:
+                calendar=self.calendar()
+                events=calendar.list(min((w['start'] for w in s['windows']),default=now()),max((w['end'] for w in s['windows']),default=now()))
+                calendar_mode=calendar.mode
+            except RelayError as exc:
+                events=[];calendar_mode='unavailable';calendar_error=dict(code=exc.code,message=exc.message)
+        plan=self.latest_plan()
+        if calendar_error and plan:plan=dict(plan,invalidated=True)
         display_settings=dict(s,poll_seconds=max(30,int(os.getenv('RELAY_POLL_SECONDS','60' if os.getenv('RELAY_GITHUB_TOKEN') else '300'))))
         return dict(workspace_id=self.tenant,workspace_fingerprint=digest(self.source_versions()),settings=display_settings,tasks=self.tasks(),sources=[{k:v for k,v in source.items() if k!='pages'} for source in self.sources()],
-                    conflicts=self.current_conflicts(),plan=self.latest_plan(),events=self.store.events(self.tenant),
-                    calendar_events=events,calendar_mode=calendar_mode,
+                    conflicts=self.current_conflicts(),plan=plan,events=self.store.events(self.tenant),
+                    calendar_events=events,calendar_mode=calendar_mode,calendar_error=calendar_error,
                     receipts=self.store.list(self.tenant,'receipts'),snapshot_generated_at=now(),
                     last_sync=self.freshness().get('last_successful_sync'),freshness=self.freshness(),
                     identity_migrations=self.store.list(self.tenant,'identity_migrations'),
@@ -363,7 +396,7 @@ class RelayService:
         repo=GitHub(s['github_repo'],s.get('github_ref','main'),os.getenv('RELAY_GITHUB_TOKEN'))
         try:
             source_path=s.get('github_path','coursework.md')
-            observation=public_demo.read_public_source(s['github_repo'],s.get('github_ref','main'),source_path,lambda:repo.read(source_path)) if public_demo.enabled() else repo.read(source_path)
+            observation=repo.read(source_path)
         except RelayError as exc:
             self.store.put(self.tenant,'meta','freshness',dict(self.freshness(),last_failed_attempt=dict(at=now(),code=exc.code)))
             if exc.code=='UPSTREAM_RATE_LIMITED':

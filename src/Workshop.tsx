@@ -22,6 +22,7 @@ type Rescue = {
   remedies: Remedy[];
 };
 type Preflight = {
+  assessment_status?:string;
   id: string;
   task_id: string;
   missing_count: number;
@@ -73,7 +74,7 @@ export function Workshop({
     await work("Checking selected draft", async () => {
       let selected;
       if (file) {
-        if (file.size > (data.demo?.public ? 2 : 10) * 1024 * 1024)
+        if (file.size > 2 * 1024 * 1024)
           throw new Error("UNSUPPORTED_INPUT: Draft exceeds the upload limit.");
         const bytes = new Uint8Array(await file.arrayBuffer());
         let binary = "";
@@ -397,6 +398,7 @@ export function Workshop({
         />
         {preflight && (
           <div>
+            <p role="status">{tr(preflight.assessment_status==='not_assessed'?'No requirements assessed. Add and review cited rubric requirements before judging readiness.':'Structural checks only. Semantic correctness still requires review.')}</p>
             <p>
               <strong>{preflight.draft.filename}</strong> ·{" "}
               {preflight.draft.words} {tr("extracted words")}

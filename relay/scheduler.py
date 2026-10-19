@@ -10,7 +10,8 @@ UNIT = timedelta(minutes=30)
 
 
 def required_minutes(task, conservative=False):
-    return task.remaining_minutes if task.remaining_minutes is not None else (task.effort_max if conservative and task.effort_max else task.minutes)
+    value=task.remaining_minutes if task.remaining_minutes is not None else (task.effort_max if conservative and task.effort_max else task.minutes)
+    return ((value+29)//30)*30 if value is not None else None
 
 
 def interval_union(windows):

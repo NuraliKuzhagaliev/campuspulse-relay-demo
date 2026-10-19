@@ -1,0 +1,51 @@
+# CampusPulse RELAY · 0.4.1
+
+Public HTTPS **https://campuspulse-relay-demo.onrender.com** runs **0.4.1**, existing Render **Free** service `srv-dbajs73bc2fs73bm9mfg`, deploy `dep-dbb3d649v7es73ai35ag`, runtime commit `cf04a29bf6fb2bbbcddc8e259094b8ddebed2d64`. No new infrastructure, paid upgrade, billing activation or personal payment was used.
+
+Open the link: an isolated workspace is created automatically. Upload a permitted document, confirm free-service processing conditions, then ask RELAY. There is **no access code, registration, Google login or visitor API key**. The owner key remains on the server. Public AI access is independent of optional personal Calendar consent.
+
+The free-service confirmation is for adult professional/hackathon evaluation in an eligible region outside EEA/UK/Switzerland, using permitted non-sensitive material. It is self-attestation, not registration or independent age/location verification. Unpaid inputs may be used for improvement and human review. [Gemini terms](https://ai.google.dev/gemini-api/terms).
+
+RELAY retains source/page/version quotations and disagreements, validates CP-SAT plans, compares what-if/Minimal Rescue changes, previews illustrative Calendar effects and records read-back receipts. Progress & Remaining Work, Clarify First, Handoff Radar, Workspace Passport and EN/RU/Kazakh remain supported. **F1–F5 stay labeled locally implemented; real Calendar and full enhancement-level Gemini acceptance remain pending.** Actual source-grounded public Gemini acceptance is reported separately.
+
+## Verified results
+
+Two clean automatic anonymous workspaces uploaded separate unseen synthetic documents and each completed a real Gemini/ADK/signed-MCP answer on the current deployment. No invitation, registration, Google login or visitor API key was used. Refresh resumed the same run. The full current acceptance includes planning after explicit conflict resolution. Earlier non-model validation had attempted planning before resolving a fixture conflict; its original protocol and explicitly reused-session follow-up remain preserved in the r1 history.
+
+Actual first batch: one complete answer and one Google `504 DEADLINE_EXCEEDED`; that failure remains recorded. The latest clean pair completed both questions. No hidden model retry, paid fallback, statistical success rate or latency guarantee is claimed. Published evidence contains metadata/hashes only; full answers, document citations, cookies and content screenshots remain in ignored private D: folders.
+
+Separately, 100 real HTTP capability sessions/uploads/queue/history paths ran with the provider simulated: unique workspaces, foreign source/run/history/plan authorization, one outstanding turn per workspace, two workers, FIFO/fair quota tickets and 15-RPM rolling accounting passed. Plan objects in this load test are explicitly seeded isolation fixtures, not 100 solver or real-model acceptances. Zero actual Gemini calls. Final local suite:132 Python tests and3 subtests passed;6 IPC policy tests; queue refresh/cancel/reset and localized quota UI regressions passed.
+
+The full hosted illustrative workflow passed: import, original evidence, explicit assignment mapping/conflict resolution, validated plan, what-if, illustrative approval/read-back receipt, execution events, EN/RU/Kazakh, mobile, refresh and reset/isolation. Nine additional language/width states and automated AA checks passed in the real-AI workspaces. Six targeted browser regressions include the three queue-event summaries previously missing RU/Kazakh translations. Installed0.4.1 main/preload/policy/renderer match source; anonymous public import/read-back/refresh, polling route authorization, reopen and CSRF reset passed with zero model calls. An initial r2 test queried the retired cookie during reset; waiting for rotation before checking passed. Import itself had already passed. The original native profile still reads45 logged/95 explicitly remaining.
+
+Current GitHub read returned429 UPSTREAM_RATE_LIMITED from the shared anonymous upstream quota. The UI displays a useful error and no fresh read is claimed. The previous actually successful hosted GitHub read/commit/fetch time is preserved in docs/history/0.4.1-public-ai-r1-evidence/public-demo-browser-0.4.1.json. Respect provider backoff; no paid upgrade or copied broad account token was used.
+
+## Shared free capacity
+
+One outstanding question per workspace; FIFO queue with two workers and fair tickets before each actual model call. The account's observed limits are15RPM/250,000TPM/500RPD, not a remaining balance. Conservative context reservations, Pacific-midnight daily reset and authoritative provider429/backoff protect shared free capacity. No judge-specific reserve, number of codes or visit schedule. Normal anti-abuse and bounded queue/session capacity still apply. Anonymous cookie creation cannot independently identify people or defeat every distributed attacker.
+
+Automatic sessions last up to two hours; Render Free can sleep and lose temporary SQLite/uploads/history/queue earlier on restart/redeploy. No durability or always-on Scheduler guarantee. Export a Workspace Passport for portable non-secret data. Reset/expiry removes documents, history and globally queued text/results; late results cannot recreate a deleted workspace. Active remote work is not claimed stopped merely because the browser stops waiting.
+
+## Run and release on D:
+
+All controlled local dependencies, caches, profiles, temp and outputs stay under `D:\projects\CampusPulseRELAY`. Read/use `scripts/env.ps1`. Illustrative local development: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File D:\projects\CampusPulseRELAY\scripts\dev.ps1`. No Google account is required. Server-only alternative Gemini: `scripts/run-alternative.ps1`, private DPAPI key configuration and HTTPS staging; never put keys in the frontend or desktop app. No permanent execution-policy or trust-root change is required.
+
+Versioned installer/portable, full local frontend+Python illustrative bundle, exact source archive, editable presentation/PDF and checksums are indexed in `release/manifest.json` and `submission/0.4.1-public-ai-r2`. The manifest distinguishes archived source from the deployed runtime commit. Earlier sealed releases and installed0.4.0 backup remain unchanged. Binaries are unsigned. Read `release/README.md`.
+
+## Remaining gates
+
+Original managed GCP Agent Engine criterion remains **UNMET / GCP_EXCEPTION_PENDING**. The existing trial is closed, prepayment is required, no usable credits were established, and D: CLI/ADC authentication is absent. Alternative Gemini hosting does not satisfy a deployed `projects/.../reasoningEngines/...` requirement. Organizer credits will not arrive; no personal spending or paid billing attachment is authorized.
+
+Real Calendar remains separate and optional. The dedicated secondary target exists (`docs/connections.json`), but app OAuth client/runtime consent and real write/read-back are not accepted. Public Gemini grants no Calendar authority and does not receive private event data or Calendar mutation tools. External writes require separate user consent, exact target, fresh immutable preview and authenticated UI approval. Current public Calendar receipts are explicitly illustrative.
+
+New0.4.1 unmodified native Open/Cancel/Save visibility, real import through that picker, notification banner and click/focus remain human observations. Automated import/API/policy contracts and historical0.1.1 picker/banner plus0.3 human45/95 restart evidence are separate. Current installed original-profile45/95 read-back is verified, not a new human picker claim.
+
+- `docs/evidence/public-ai-acceptance-0.4.1.json`: combined real public acceptance, with original clean-session evidence and explicit zero-model follow-up.
+- The clean-session evidence named by the combined acceptance: two actual complete current Gemini/MCP outcomes and response hashes. The earlier `public-ai-live-mvfe1dk2.json` retains the r1 outcomes and later harness precondition failure.
+- `docs/evidence/public-ai-first-provider-failure.json`: actual first Google504, retained separately.
+- `docs/evidence/public-ai-100-simulated.json`:100-session simulated-provider queue/isolation.
+- `docs/evidence/public-demo-browser-0.4.1.json`: hosted operational workflow and actual GitHub commit/read.
+- `docs/evidence/public-ai-desktop-0.4.1.json`, `preserved-native-0.4.1.json`: actual installed source/IPC/session checks and original45/95.
+- `docs/public_ai_access.md`: queue, security, processing conditions and limitations.
+
+Deadline supplied by owner:20October2026,23:59; organizer timezone remains unconfirmed. Planning assumes UTC+5. No entry, organizer message or judge invitation was sent. Historical private-access documentation is preserved under `docs/history/0.4.0-before-public-ai` and does not describe current public access.

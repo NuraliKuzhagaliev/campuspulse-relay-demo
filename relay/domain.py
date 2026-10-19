@@ -26,6 +26,8 @@ def digest(value) -> str:
 
 def instant(value: str) -> datetime:
     try:
+        if not isinstance(value, str) or len(value)>100:
+            raise TypeError('A bounded timestamp string is required')
         parsed = datetime.fromisoformat(value.replace('Z', '+00:00'))
         if parsed.tzinfo is None or parsed.utcoffset() is None:
             raise ValueError('An explicit UTC offset is required')
@@ -50,8 +52,8 @@ class Task(BaseModel):
     id: str = Field(pattern=r'^[a-zA-Z0-9_-]{1,80}$')
     title: str = Field(min_length=1, max_length=180)
     course: str = 'Unassigned course'
-    minutes: int | None = Field(default=None, ge=30, le=10080, multiple_of=30)
-    effort_max: int | None = Field(default=None, ge=30, le=10080, multiple_of=30)
+    minutes: int | None = Field(default=None, ge=1, le=10080)
+    effort_max: int | None = Field(default=None, ge=1, le=10080)
     due: str | None = None
     priority: int = Field(default=1, ge=1, le=10)
     dependencies: list[str] = Field(default_factory=list, max_length=50)

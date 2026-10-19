@@ -1,3 +1,13 @@
+# Current0.5MCP additions
+
+Actual alternative-host MCP is protected loopback `/_relay/mcp/`, reached by server-owned transport bearer + signed workspace context. Anonymous visitors cannot call it directly. `read_course_source(source_id,page,offset,limit,search)` exposes bounded continuation/next_offset/page_count and literal search, preserving original offsets/quotes. `propose_academic_extraction` accepts distinct entity_id labels and cited title/course/term/key/due/minutes/rubric/normalized requirement fields; it records proposals only. Per-entity confirmation is a separate capability/CSRF-protected UI operation, never a model tool. Real loopback protocol evidence: docs/evidence/audit-mcp.json; no model/cloud calls in that smoke.
+
+Prepared managed path `/managed/mcp/` additionally verifies actual Google machine principal/audience and organizer window. The narrow `/internal/runtime-state` cannot read private connections or write approvals; it is bound to the existing active public run/conversation. `/internal/managed-route` requires the independent owner's fresh signature and is not a model tool or invitation issuer. These endpoints are disabled by missing actual organizer configuration and do not imply managed acceptance.
+
+The existing public safe tool catalog is reused under both public inference modes. Older catalog notes below are historical; private mutation tools still require pre-existing authenticated UI authorizations and are excluded from public model discovery.
+
+## Earlier tool catalog
+
 # Custom MCP catalog
 
 Server: `relay/mcp_server.py`; local endpoint `http://127.0.0.1:8001/mcp/`. Transport: genuine MCP Streamable HTTP via the official Python SDK. Actual initialize/discovery/call evidence is in `docs/evidence/mcp-smoke.json`. Cloud-agent discovery remains unverified.

@@ -4,6 +4,26 @@ const read =
 const write =
   /^\/api\/(demo\/reset|judge\/claim|connections\/calendar|tasks\/[a-f0-9]+\/settings|import-native|tasks\/[a-f0-9]+\/progress|work-sessions\/[a-f0-9]+\/heartbeat|progress\/preview|progress\/[a-f0-9]+\/adopt|clarify|clarify\/[a-f0-9]+\/(cancel|answer)|gates|gates\/notifications\/[a-f0-9]+\/claim|gates\/conditional-preview|gates\/[a-f0-9]+\/(observe|remove)|passport\/(export|preview)|passport\/[a-f0-9]+\/restore|plan|scenario|chat|conversation\/new|runs\/[a-f0-9]+\/cancel|rescue|rescues\/[a-f0-9]+\/choose|preflight|preflights\/[a-f0-9]+\/recovery|sources\/[a-zA-Z0-9_-]+\/mapping|preferences|sync|conflicts\/[a-f0-9]+\/resolve|plans\/[a-f0-9]+\/preview|previews\/[a-f0-9]+\/approve|receipts\/[a-f0-9]+\/(verify|undo))$/;
 function permits(apiPath, method) {
+  if (typeof apiPath !== "string" || apiPath.length > 2000) return false;
+  if (method === "GET" && apiPath === "/api/extraction-proposals") return true;
+  if (method === "GET" && apiPath === "/api/connections/status") return true;
+  if (method === "POST" && apiPath === "/api/connections/disconnect")
+    return true;
+  if (method === "POST" && apiPath === "/api/connections/calendar/create")
+    return true;
+  if (
+    method === "POST" &&
+    /^\/api\/sources\/[A-Za-z0-9_-]+\/review$/.test(apiPath)
+  )
+    return true;
+  if (
+    method === "POST" &&
+    (["/api/workspace/switch", "/api/planning-context"].includes(apiPath) ||
+      /^\/api\/extraction-proposals\/[a-f0-9]{24}\/[a-f0-9]{24}\/confirm$/.test(
+        apiPath,
+      ))
+  )
+    return true;
   return (
     typeof apiPath === "string" &&
     ((method === "GET" && read.test(apiPath)) ||

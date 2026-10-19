@@ -18,7 +18,7 @@ provider_clock=time.time
 
 
 def enabled():
-    return os.getenv('RELAY_MODE')=='alternative_live' and os.getenv('RELAY_PUBLIC_AI_ENABLED')=='true'
+    return os.getenv('RELAY_MODE') in ('alternative_live','cloud') and os.getenv('RELAY_PUBLIC_AI_ENABLED')=='true'
 
 
 def day_window(at):
@@ -243,6 +243,11 @@ class PublicQueue:
 
 
 async def reserve_public_call(store,tenant,run_id,request_bytes):
+    if hasattr(store,'reserve'):
+        while True:
+            info=await asyncio.to_thread(store.reserve,request_bytes)
+            if info['reserved']:return
+            await asyncio.sleep(min(2,max(.05,info['wait_seconds'])))
     queue=PublicQueue(store);key=queue.key(tenant,run_id);gate=QuotaGate(store)
     while True:
         job=store.get('_server','public_ai_jobs',key)

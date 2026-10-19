@@ -1,0 +1,11 @@
+{
+  "checked_at": "2026-10-19T17:19:24.738502+00:00",
+  "transport": "actual MCP Streamable HTTP",
+  "model_calls": 0,
+  "cloud_calls": 0,
+  "checks": {
+    "bounded_continuation_search_tail": true,
+    "null_due_grouped_unapplied": true
+  },
+  "passed": true
+}

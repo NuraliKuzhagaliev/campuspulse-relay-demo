@@ -109,11 +109,16 @@ class RelayRuntime:
             value={'X-Relay-Context':authorization.context()}
             if os.getenv('RELAY_MODE')=='cloud':
                 value['Authorization']='Bearer '+fetch_id_token(Request(),origin)
+                if os.getenv('RELAY_STATE_URL'):value['X-Relay-Managed']='1'
             elif config['provider']=='gemini_developer':
                 value['Authorization']='Bearer '+os.environ['RELAY_MCP_SERVICE_SECRET']
             return value
         from .store import make_store
-        store=make_store()
+        if os.getenv('RELAY_STATE_URL'):
+            from .managed_state import RemoteStore
+            store=RemoteStore(tenant,run_id,authorization)
+            store.begin()
+        else:store=make_store()
         from .service import RelayService
         settings=RelayService(store,tenant).settings()
         async def before_model(callback_context,llm_request):
@@ -128,7 +133,7 @@ class RelayRuntime:
             from .model_usage import record_usage
             record_usage(store,tenant,run_id,getattr(llm_response,'usage_metadata',None))
         toolset=McpToolset(connection_params=StreamableHTTPConnectionParams(url=url,timeout=20,sse_read_timeout=90),header_provider=headers,
-                          tool_filter=SAFE_DEVELOPER_TOOLS if config['provider']=='gemini_developer' else None)
+                          tool_filter=SAFE_DEVELOPER_TOOLS if config['provider']=='gemini_developer' or public_access() else None)
         agent=Agent(name='campuspulse_relay',model=model_instance(config),instruction=INSTRUCTION+f'\nRequested language: {language}.\nDeployment mode: {config["deployment_mode"]}. Never describe alternative hosting as Agent Engine.',
                     tools=[build_recovery_plan,compare_plan_scenarios,toolset],before_model_callback=before_model,after_model_callback=after_model,
                     generate_content_config=types.GenerateContentConfig(temperature=0.2,max_output_tokens=3000))

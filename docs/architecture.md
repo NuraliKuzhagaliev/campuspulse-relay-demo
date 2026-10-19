@@ -1,3 +1,15 @@
+# Current0.5architecture and trust boundaries
+
+The public React/Electron app uses capability-cookie/CSRF workspace authorization. Own documents and examples have distinct server-generated workspaces; the owner key never enters clients. Source imports have one2MiBcontract, bounded PDF subprocesses and exact page/version quotations. Semantic MCP proposals are untrusted interpretations until one-entity atomic UI review. Progress, source effort and solver allocation remain separate. Passport copies archived untrusted claims, never connection or approval authority.
+
+Anonymous AI jobs share the existing bounded fair quota-aware queue. MCP requires machine transport identity plus a short-lived audience-bound workspace context; tool schemas do not carry tenant authority. Public model tools exclude private Calendar payloads and mutations. Calendar OAuth is voluntary, same-workspace state/PKCE, minimum created-calendar scope by default, encrypted refresh and a separate exact preview/approval/read-back journal. A revoked Calendar leaves files/progress accessible and cannot silently make an empty busy calendar look fresh.
+
+Prepared organizer route (disabled until actual activation): Render remains authoritative for documents/history/progress/plans/ADK checkpoints. An owner-signed no-restart configuration selects one organizer-covered Cloud Run query bridge→actual Agent Engine. The runtime uses its Google service ID token plus bounded workspace context to the existing protected MCP and narrow run-scoped checkpoint/quota RPC. No broad database proxy, approval writer, permanent SA key or copied owner access token. Public safe tool filtering also applies in the managed route. Initial invocation has a durable run claim; unknown outcomes are not replayed automatically on free Gemini. At the actual retirement cutoff the existing free route resumes with the same state; real expiry/cutover acceptance is pending.
+
+Firestore transaction buffering/cross-workspace copy is separately prepared/tested with a fake adapter and is not required for this state-preserving route. Actual Google IAM/resource/session behavior must be verified tomorrow. Older descriptions below are historical and do not imply the new route is deployed.
+
+## Earlier architecture
+
 # Architecture and data flow
 
 0.3.0 adds focused domain services `progress.py`, `clarify.py`, `handoff.py` and `passport.py`, used by the same FastAPI/web/Electron boundaries. The PR observation service is also the genuine authenticated MCP tool implementation. `Continuity.tsx` contains focused feature panels rather than expanding the main week's intertwined branches. There is no new stack or paid service.

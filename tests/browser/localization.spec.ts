@@ -50,6 +50,8 @@ test("operational catalog preserves placeholders and covers rendered static copy
     "⌘ / Ctrl K",
     "v.",
     ":",
+    ";",
+    ".",
     ":00",
     "·",
     "–",

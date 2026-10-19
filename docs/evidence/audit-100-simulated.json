@@ -1,0 +1,25 @@
+{
+  "checked_at": "2026-10-19T17:32:06.859892+00:00",
+  "sessions": 100,
+  "provider": "simulated_test_only",
+  "actual_gemini_calls": 0,
+  "simulated_boundary": "invoke_alternative_query",
+  "actual_mcp_protocol_in_100_session_test": false,
+  "signed_workspace_context_validated": true,
+  "actual_http_session_upload_queue_history_paths": true,
+  "checks": {
+    "unique_workspaces": true,
+    "foreign_source_denied_100": true,
+    "foreign_run_denied_100": true,
+    "history_isolation_100": true,
+    "plan_isolation_100": true,
+    "plans_seeded_as_isolation_fixtures_not_solver_acceptance": true,
+    "one_outstanding_per_workspace": true,
+    "bounded_worker_pool": 2,
+    "at_least_98_queued_at_barrier": true,
+    "served_all_100": true,
+    "rolling_rpm_limit_15_respected": true,
+    "no_real_calendar_writes": true
+  },
+  "passed": true
+}

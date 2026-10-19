@@ -8,10 +8,10 @@ export async function importSelectedSource(file?: File): Promise<boolean> {
       if (
         !/\.(pdf|md|txt|ics)$/i.test(file.name) ||
         file.size <= 0 ||
-        file.size > 10 * 1024 * 1024
+        file.size > 2 * 1024 * 1024
       )
         throw new Error(
-          "UNSUPPORTED_INPUT: Choose a supported file within 10 MiB.",
+          "UNSUPPORTED_INPUT: Choose a supported file within 2 MiB.",
         );
       const bytes = new Uint8Array(await file.arrayBuffer());
       let binary = "";
@@ -22,6 +22,8 @@ export async function importSelectedSource(file?: File): Promise<boolean> {
     if (!chosen) return false;
     await api("/import-native", "POST", chosen);
   } else if (file) {
+    if (!/\.(pdf|md|txt|ics)$/i.test(file.name) || file.size <= 0 || file.size > 2*1024*1024)
+      throw new Error('UNSUPPORTED_INPUT: Choose a supported file within 2 MiB.');
     const form = new FormData();
     form.append("file", file);
     await api("/import", "POST", form);
