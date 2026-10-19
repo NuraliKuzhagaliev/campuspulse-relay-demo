@@ -92,6 +92,7 @@ def install(store,new_session,identity):
         from google_auth_oauthlib.flow import Flow
         config=configuration()
         state=secrets.token_urlsafe(32)
+        browser_binding=secrets.token_urlsafe(32)
         verifier=secrets.token_urlsafe(64)
         if pair:
             pairing=store.get('_server','pairings',pair)
@@ -101,22 +102,24 @@ def install(store,new_session,identity):
         else:tenant=identity(request)['tenant']
         scopes=EXISTING_SCOPES if existing else SCOPES
         ttl=300 if pair else 900
-        store.put('_server','oauth_states',digest(state),{'expires':time.time()+ttl,'verifier':verifier,'pair':pair,'status':'pending','workspace':tenant,'scopes':scopes})
+        store.put('_server','oauth_states',digest(state),{'expires':time.time()+ttl,'verifier':verifier,'pair':pair,'status':'pending','workspace':tenant,'scopes':scopes,'browser_binding_hash':digest(browser_binding)})
         flow=Flow.from_client_config(config,scopes=scopes,state=state,code_verifier=verifier)
         flow.redirect_uri=os.environ['RELAY_GATEWAY_URL']+'/auth/callback'
         url,_=flow.authorization_url(access_type='offline',include_granted_scopes='true',prompt='consent')
         response=RedirectResponse(url)
-        response.set_cookie('relay_oauth_state',state,httponly=True,secure=True,samesite='lax',max_age=ttl)
+        # The private browser cookie is independent of state in the URL. Knowing
+        # a callback URL must not let another browser reconstruct this binding.
+        response.set_cookie('relay_oauth_state',browser_binding,httponly=True,secure=True,samesite='lax',max_age=ttl)
         return response
 
     @router.get('/auth/callback')
     def callback(request:Request,code:str|None=None,state:str|None=None,error:str|None=None):
         if error or not code or not state:
             return consent_failure(request,'AUTH_REQUIRED','Google consent was cancelled or did not return a valid authorization code.')
-        if not secrets.compare_digest(request.cookies.get('relay_oauth_state',''),state):
-            return consent_failure(request,'ACCESS_DENIED','OAuth callback is not bound to the browser that initiated it.')
         try:record=store.get('_server','oauth_states',digest(state))
-        except RelayError:return consent_failure(request,'AUTH_REQUIRED','OAuth request is no longer available. Start a new connection in this browser.')
+        except RelayError:return consent_failure(request,'ACCESS_DENIED','OAuth callback is not bound to an available request in this browser. Start a new connection.')
+        if not secrets.compare_digest(digest(request.cookies.get('relay_oauth_state','')),record.get('browser_binding_hash','')):
+            return consent_failure(request,'ACCESS_DENIED','OAuth callback is not bound to the browser that initiated it.')
         if record['expires']<time.time() or not store.claim('_server','oauth_states',digest(state),{'status':'pending'},{'status':'consumed'}):
             return consent_failure(request,'AUTH_REQUIRED','OAuth state expired or was already used.')
         from google_auth_oauthlib.flow import Flow

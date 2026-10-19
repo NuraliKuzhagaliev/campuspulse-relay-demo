@@ -1,0 +1,13 @@
+{
+  "checked_at": "2026-10-19T19:06:38.036Z",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "model_calls": 0,
+  "google_calls": 0,
+  "checks": {
+    "actual_UI_2MiB_text_pdf_accepted": true,
+    "actual_backend_2MiB_plus_one_rejected": true
+  },
+  "deployed_commit": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
+  "passed": false,
+  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'UNSUPPORTED_INPUT'\n- 'PARSE_FAILED'\n"
+}

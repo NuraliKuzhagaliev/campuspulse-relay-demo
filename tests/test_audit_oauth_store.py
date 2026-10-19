@@ -41,7 +41,11 @@ def test_oauth_binds_same_anonymous_workspace_and_minimum_scopes(tmp_path,monkey
         connection=client.get('/connect');assert connection.status_code==307
         assert 'Max-Age=900' in connection.headers['set-cookie'] and 'HttpOnly' in connection.headers['set-cookie'] and 'Secure' in connection.headers['set-cookie'] and 'SameSite=lax' in connection.headers['set-cookie']
         assert oauth.SCOPES==seen['scopes'] and 'https://www.googleapis.com/auth/calendar.events' not in seen['scopes']
-        state=client.cookies.get('relay_oauth_state');assert state
+        state=seen['state'];binding=client.cookies.get('relay_oauth_state');assert state and binding and state!=binding
+        with TestClient(app,base_url='https://app.test',follow_redirects=False) as attacker:
+            attacker.cookies.set('relay_oauth_state',state) # URL knowledge cannot reconstruct the secret browser cookie.
+            assert attacker.get('/auth/callback',params={'state':state,'code':'SIMULATED_CODE'}).status_code==403
+        assert store.get('_server','oauth_states',digest(state))['status']=='pending'
         callback=client.get('/auth/callback',params={'state':state,'code':'SIMULATED_CODE'})
         assert callback.status_code==303
         private=store.get(tenant,'private_connections','google');assert 'SIMULATED_REFRESH' not in private['ciphertext']

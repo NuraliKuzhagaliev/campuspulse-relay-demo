@@ -1,0 +1,16 @@
+{
+  "checked_at": "2026-10-19T19:08:32.477Z",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "model_calls": 0,
+  "google_calls": 0,
+  "checks": {
+    "actual_UI_2MiB_text_pdf_accepted": true,
+    "actual_backend_2MiB_plus_one_rejected": true,
+    "empty_and_corrupt_typed_errors": true,
+    "actual_chunked_transport_over_3MiB_rejected": true,
+    "real_browser_callback_recovery_trilingual_no_token_echo": true,
+    "health_survives_all_rejections": true
+  },
+  "deployed_commit": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
+  "passed": true
+}

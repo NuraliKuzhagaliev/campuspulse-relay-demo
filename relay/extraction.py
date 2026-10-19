@@ -13,10 +13,12 @@ def page_citations(source,page):
     """
     text=next((p['text'] for p in source['pages'] if p['page']==page),'')
     spans=[(start,min(len(text),start+4000)) for start in range(0,len(text),4000)]
-    cursor=0
+    cursor=0;short_spans=0
     for line in text.splitlines(keepends=True):
         quote=line.rstrip('\r\n')
-        if quote.strip() and len(quote)<=4000:spans.append((cursor,cursor+len(quote)))
+        if quote.strip() and len(quote)<=4000:
+            spans.append((cursor,cursor+len(quote)));short_spans+=1
+            if short_spans>=256:break
         cursor+=len(line)
     return [dict(citation_id=digest([source['id'],source['version'],page,start,end])[:24],page=page,start=start,end=end,quote=text[start:end]) for start,end in dict.fromkeys(spans)]
 

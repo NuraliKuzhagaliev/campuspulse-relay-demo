@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-19T19:00:11.457094+00:00",
+  "checked_at": "2026-10-19T19:20:24.672849+00:00",
   "sdk": {
     "google-cloud-aiplatform": "2.5.0",
     "google-adk": "2.12.0",
@@ -30,7 +30,7 @@
     "relay/conversations.py": "3640ffd6963bbbcb10e0159c91c1f75ee67e00de1c1fb3b997a6c1c88b6f3a1b",
     "relay/domain.py": "dd60db6c79570c22c79793214b33c4678543142a5ec81e6966c9b546b764d610",
     "relay/evidence.py": "7dccc0e4bf13f0339b11a99da40244dbbc9bd8ccbbd8406bdf6209acafe67a98",
-    "relay/extraction.py": "25e94aba82ab08586fa4e211bb59c6e71dc12f1c1a860b40145f3c90c92e791d",
+    "relay/extraction.py": "47a4afffa0b45f647f711898ae7ba466c39aca47a9aae0d94909954bd12c808c",
     "relay/funding.py": "c60c6bf1390705cebb6ab88250743b1df51b2b457b71bf6edf811db268bdb65b",
     "relay/gateway.py": "0dccd600a943f385c45f7b62f20e98771789d849b5196489d72c080b7d100105",
     "relay/handoff.py": "09692cbeb0cad14e6707bd82299cc0d213dd46798d3a87ef86db88b3d01e7a3e",
@@ -42,7 +42,7 @@
     "relay/managed_state.py": "3300dec9d8ce30de0fe09e485742fd2982fc33e3edf98b5aeed1e21c9467de25",
     "relay/mcp_server.py": "1dfd5996979e8977a15ec31bef8b16d52ef085a810303e63222bbdfa75f479ff",
     "relay/model_usage.py": "0fa3014fb0750546d02fc59eff646bd2874b0b620074ef8df83fca5d85263c41",
-    "relay/oauth.py": "045bb0799e4b2aede4877e94651e4908c33ce198bb445b5a88241af481974ab0",
+    "relay/oauth.py": "da0c26b0d22565b34ac7b85b5f4192e7aacc538a6a1ac21084006ea53bb327d5",
     "relay/passport.py": "14a85896ee8462578f4b851d5bbebba75904fdfe575882e80fddeccd70c5e40c",
     "relay/pdf_worker.py": "a898ad9fc1f471905ea2ea63069cfc0802c3d0e46766e1d95599788c3822c0f9",
     "relay/planning_context.py": "75463a190f4b8956c777ad83b79dd8eefa06d516d174ff565948d6d2b95869f9",

@@ -251,3 +251,10 @@ def test_citation_response_bounded_and_search_tail_refs_exact():
     refs=visible_citations(s,1,29000,30000)
     assert refs and sum(len(r['quote']) for r in refs)<=8000 and len(refs)<=80
     assert all(r['quote']==s['pages'][0]['text'][r['start']:r['end']] for r in refs)
+
+def test_dense_source_citation_index_stays_bounded_and_tail_available():
+    s=source('x\n'*100000)
+    refs=page_citations(s,1)
+    assert len(refs)<=50+256 # full chunks plus a bounded short-line index
+    tail=visible_citations(s,1,190000,190200)
+    assert tail and all(r['quote']==s['pages'][0]['text'][r['start']:r['end']] for r in tail)

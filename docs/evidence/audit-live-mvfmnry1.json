@@ -1,0 +1,1076 @@
+{
+  "at": "2026-10-19T19:08:36.032Z",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "version": "0.5.0",
+  "provider_substitution": false,
+  "google_login": false,
+  "invitations": false,
+  "personal_spending": 0,
+  "checks": {
+    "two_clean_automatic_workspaces": true,
+    "documents_history_runs_plans_isolated": true,
+    "followup_same_real_conversation_and_canonical_progress": true,
+    "internal_routes_protected": true
+  },
+  "cases": [
+    {
+      "file": "holdout-en.txt",
+      "sha256": "7eb6d09e5919d0e961d8f2b376ddaddcf5c12b6522036576880638acc6d1aba0",
+      "passed": true,
+      "source_id": "6fe1cd44d333ee878c1415eb",
+      "source_version": "11955a66e83265359ac5eef7",
+      "actual_answer_status": "complete",
+      "plan": {
+        "id": "95a3299fff371ba85f4a82ae",
+        "required_minutes": 150,
+        "feasible": true,
+        "scope_complete": true
+      },
+      "receipt": {
+        "id": "fac5c07120b3e91fd6c4ff9371fe864d",
+        "status": "verified",
+        "mode": "illustrative"
+      },
+      "confirmation_plan_whatif_illustrative_receipt_progress_passport_refresh": true
+    },
+    {
+      "file": "holdout-ru.txt",
+      "sha256": "f65f3d5623e5351c9ec074836c2c1a3e3e13db321b34380e887d1e4c80ae776b",
+      "passed": true,
+      "source_id": "1cfb7b5881d172b7d0aa07c2",
+      "source_version": "a356fd80c445cb3eadb5907f",
+      "actual_answer_status": "complete",
+      "plan": {
+        "id": "cb98aaca2b81cdda8101c7a5",
+        "required_minutes": 90,
+        "feasible": true,
+        "scope_complete": true
+      },
+      "receipt": {
+        "id": "aaafb9f688297bd49fb19a8d0ea5aa7a",
+        "status": "verified",
+        "mode": "illustrative"
+      },
+      "confirmation_plan_whatif_illustrative_receipt_progress_passport_refresh": true
+    },
+    {
+      "file": "holdout-kk.txt",
+      "sha256": "cedbc929b781ada39355bfa897fc5553d43ef82ecde69b60687cf6c2a6a094be",
+      "passed": true,
+      "source_id": "b751fc2f01f756df94e66b4d",
+      "source_version": "52bb68a558b54fb807a8cf5a",
+      "actual_answer_status": "complete",
+      "plan": {
+        "id": "a8f9df35745608ec6c59fcac",
+        "required_minutes": 60,
+        "feasible": true,
+        "scope_complete": true
+      },
+      "receipt": {
+        "id": "a0cdf039894d30e92be5063b8bb4e27f",
+        "status": "verified",
+        "mode": "illustrative"
+      },
+      "confirmation_plan_whatif_illustrative_receipt_progress_passport_refresh": true
+    },
+    {
+      "file": "11-continued-brief.pdf",
+      "sha256": "dbfbef67958436e01bbd7ec21cf591ca7c58593938adb32a644298095e0572c4",
+      "passed": true,
+      "source_id": "9e042d60ceff1bb997ff8f2b",
+      "source_version": "e102692699fd951f659baa41",
+      "actual_answer_status": "complete",
+      "plan": {
+        "id": "e043aa8e57589a921806d85b",
+        "required_minutes": 90,
+        "feasible": true,
+        "scope_complete": true
+      },
+      "receipt": {
+        "id": "5e6be7b0d628a2c1e74cd03133c56de6",
+        "status": "verified",
+        "mode": "illustrative"
+      },
+      "confirmation_plan_whatif_illustrative_receipt_progress_passport_refresh": true
+    },
+    {
+      "file": "12-table-brief.pdf",
+      "sha256": "7e4acb08b756e29152efac0b6204b26cc8e54fecb75dff59d73ff427e920dfce",
+      "passed": true,
+      "source_id": "df5968730625fcbf788ae4c2",
+      "source_version": "2079d0166d1890c478cb34fa",
+      "actual_answer_status": "complete",
+      "plan": {
+        "id": "13d47559771bf56c2cf665f6",
+        "required_minutes": 150,
+        "feasible": true,
+        "scope_complete": true
+      },
+      "receipt": {
+        "id": "a2a8ca77975232ddf26eec417e544e88",
+        "status": "verified",
+        "mode": "illustrative"
+      },
+      "confirmation_plan_whatif_illustrative_receipt_progress_passport_refresh": true
+    }
+  ],
+  "runs": [
+    {
+      "status": "complete",
+      "required_tool_failed": false,
+      "tool_observations": [
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "08967c1fa2abedb4fb8c78b6e23dcbd4518869baa71fd32ff8aaf3055d6250e2",
+          "provenance": [
+            {
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "page": 1,
+              "version": "11955a66e83265359ac5eef7",
+              "fetched_at": "2026-10-19T19:10:05.284936+00:00",
+              "mode": "selected_upload"
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "propose_academic_extraction",
+          "status": "observed",
+          "response_sha256": "629f5aa9419ca55897361e5ee2510bd5607da440fca2e6a257c2f4dc9072a675",
+          "provenance": [
+            {
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "5b73bf3368e86b693efa339912201445",
+      "conversation_id": "b1a4489a769d0e673688e26246a5fb83",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
+      "duration_ms": 20242,
+      "gateway_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
+      "observed_latency_ms": 37391,
+      "answer_sha256": "9f62a75d044ffb88b546b5c11ef7a5ad0c442dd428fd1177a0f2d7f5eabf6c96",
+      "answer_characters": 1248
+    },
+    {
+      "status": "complete",
+      "required_tool_failed": false,
+      "tool_observations": [
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "ec330eeaf577b813b780852ccdca19b40f7f5046e436ec365aeda82183b13363",
+          "provenance": [
+            {
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "page": 1,
+              "version": "a356fd80c445cb3eadb5907f",
+              "fetched_at": "2026-10-19T19:10:54.673813+00:00",
+              "mode": "selected_upload"
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "propose_academic_extraction",
+          "status": "observed",
+          "response_sha256": "6029119c15e2d999797934e30622c0258ede87f4234e6eaf4ab80ff5f13d13b0",
+          "provenance": [
+            {
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "6d3d49a1418cfd22cbc31909e2303b71",
+      "conversation_id": "a64cdd3d7e29a3e8a5f66e35f9766ee1",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
+      "duration_ms": 18226,
+      "gateway_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
+      "observed_latency_ms": 19303,
+      "answer_sha256": "2b99780e8bc7aabb893fec45481a3c76ad410423b48f359718985db63c6d5c68",
+      "answer_characters": 1080
+    },
+    {
+      "status": "complete",
+      "required_tool_failed": false,
+      "tool_observations": [
+        {
+          "tool": "list_course_sources",
+          "status": "observed",
+          "response_sha256": "dc58bcbc0cb8a6503a8dfe156e18b66225b6119efc9731053ef879b5651b128b",
+          "provenance": [
+            {
+              "version": "52bb68a558b54fb807a8cf5a",
+              "fetched_at": "2026-10-19T19:11:26.659312+00:00",
+              "mode": "selected_upload"
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "fa67e633309f219e74c6244e11cb6e4e14b703e6d37f4a3d6c7a029bab952382",
+          "provenance": [
+            {
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "page": 1,
+              "version": "52bb68a558b54fb807a8cf5a",
+              "fetched_at": "2026-10-19T19:11:26.659312+00:00",
+              "mode": "selected_upload"
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "propose_academic_extraction",
+          "status": "observed",
+          "response_sha256": "02b6f8b3914f5ff72684e13151d47e32b8ca8d2288195ffc1766e44060a4c480",
+          "provenance": [
+            {
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "8dee675be2c395a0caa32f1f62ea61e2",
+      "conversation_id": "841a3cd51ebf4f098446616446ea70f2",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
+      "duration_ms": 18607,
+      "gateway_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
+      "observed_latency_ms": 19435,
+      "answer_sha256": "a3920edf27675ed2ba652bc70b033c01f941ebfc5f7ae8e4be8d6bfb3aef8d28",
+      "answer_characters": 887
+    },
+    {
+      "status": "complete",
+      "required_tool_failed": false,
+      "tool_observations": [
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "a407f0bec72c92149abaf76670d6d7d995b77245e61184b1687c3d8bc5ebf656",
+          "provenance": [
+            {
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "page": 1,
+              "version": "e102692699fd951f659baa41",
+              "fetched_at": "2026-10-19T19:12:02.522210+00:00",
+              "mode": "selected_upload"
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "a0e81bc42d04a2a178952c44f1c0f6322c0fca2de171f9a8ce40ab41f7acf94e",
+          "provenance": [
+            {
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "page": 2,
+              "version": "e102692699fd951f659baa41",
+              "fetched_at": "2026-10-19T19:12:02.522210+00:00",
+              "mode": "selected_upload"
+            },
+            {
+              "page": 2
+            },
+            {
+              "page": 2
+            },
+            {
+              "page": 2
+            },
+            {
+              "page": 2
+            },
+            {
+              "page": 2
+            },
+            {
+              "page": 2
+            },
+            {
+              "page": 2
+            },
+            {
+              "page": 2
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "propose_academic_extraction",
+          "status": "observed",
+          "response_sha256": "90f260442edd0dc6751ae04aa8a9f1cef6a67c59ae10b7d69e5533a34ae66f2f",
+          "provenance": [
+            {
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "0bed8978bb7261930b67dc083190f6d5",
+      "conversation_id": "84be3d697787a263f15186dbef8b9fea",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
+      "duration_ms": 18549,
+      "gateway_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
+      "observed_latency_ms": 22431,
+      "answer_sha256": "4c7754d4e54a521f7e216b7a95e677484cf4dd432e8cf397fe1ef501c9ada6a1",
+      "answer_characters": 971
+    },
+    {
+      "status": "complete",
+      "required_tool_failed": false,
+      "tool_observations": [
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "9e8bf07e3ef333a0d0165ea7005fc344fcb8ef5a8632e7813eede89abc02742c",
+          "provenance": [
+            {
+              "source_id": "df5968730625fcbf788ae4c2",
+              "page": 1,
+              "version": "2079d0166d1890c478cb34fa",
+              "fetched_at": "2026-10-19T19:12:41.420359+00:00",
+              "mode": "selected_upload"
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "propose_academic_extraction",
+          "status": "observed",
+          "response_sha256": "61220bf33345b1e0ddc67cde82732f07e2c6dd950c98b9b9daafc665976d299c",
+          "provenance": [
+            {
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "2e50bda89cf066343bf940142f193eae",
+      "conversation_id": "38dcb96becde5d7c3eefb8a3ae1516c9",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
+      "duration_ms": 20330,
+      "gateway_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
+      "observed_latency_ms": 22345,
+      "answer_sha256": "f2d52d641817dd6dc73d962ec2f12fb6d8b6a9c6b1aa2b02a1429ab25f2ac5ec",
+      "answer_characters": 1848
+    },
+    {
+      "status": "complete",
+      "required_tool_failed": false,
+      "tool_observations": [
+        {
+          "tool": "get_progress_summary",
+          "status": "observed",
+          "response_sha256": "c5c41d0ad51290e9408f0c209ed2fc795609c0b49a9f75e8970708687a8dbcbf",
+          "provenance": [],
+          "error_codes": []
+        }
+      ],
+      "run_id": "411bfaf3b2415257b3d202afa7dad6ce",
+      "conversation_id": "b1a4489a769d0e673688e26246a5fb83",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
+      "duration_ms": 14988,
+      "gateway_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
+      "observed_latency_ms": 15990,
+      "answer_sha256": "d5caaa73c0641fc831cf4c115aa98a232f88242a8eb6afcdede57e8a09dc4924",
+      "answer_characters": 606
+    }
+  ],
+  "deployed_commit": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
+  "passed": true
+}

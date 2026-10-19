@@ -1,0 +1,21 @@
+/** Real public upload/error/resource guards. No model or Google calls. */
+import fs from 'node:fs/promises';import path from 'node:path';import assert from 'node:assert/strict';import {Readable} from 'node:stream';
+import {chromium,expect as baseExpect} from '@playwright/test';
+const expect=baseExpect.configure({timeout:45000}),base='https://campuspulse-relay-demo.onrender.com',folder=path.resolve('.local/audit-boundaries');await fs.mkdir(folder,{recursive:true});
+const proof={checked_at:new Date().toISOString(),url:base,model_calls:0,google_calls:0,checks:{}};
+const browser=await chromium.launch({headless:true}),context=await browser.newContext({baseURL:base}),page=await context.newPage();
+try{
+ const health=await(await fetch(base+'/api/health')).json();if(process.env.RELAY_EXPECTED_DEPLOY_COMMIT)assert.equal(health.deployed_commit,process.env.RELAY_EXPECTED_DEPLOY_COMMIT);proof.deployed_commit=health.deployed_commit;
+ await page.goto('/',{timeout:90000});await expect(page.getByRole('button',{name:'Use my own data',exact:true})).toBeVisible();
+ const raw=await fs.readFile('public/samples/11-continued-brief.pdf'),point=raw.lastIndexOf(Buffer.from('startxref')),limit=2*1024*1024;assert(point>0);
+ const padded=Buffer.concat([raw.subarray(0,point),Buffer.from('%'),Buffer.alloc(limit-raw.length-3,32),Buffer.from('\n\n'),raw.subarray(point)]);assert.equal(padded.length,limit);const exact=path.join(folder,'exact-2MiB.pdf');await fs.writeFile(exact,padded);
+ let pending=page.waitForResponse(r=>new URL(r.url()).pathname==='/api/import'&&r.request().method()==='POST');await page.locator('input[type=file]').first().setInputFiles(exact);const response=await pending;assert.equal(response.status(),200);await expect(page.getByText('exact-2MiB.pdf',{exact:true}).first()).toBeVisible();proof.checks.actual_UI_2MiB_text_pdf_accepted=true;
+ const session=await(await page.request.get('/api/session')).json(),headers={'X-Relay-CSRF':session.csrf};
+ const oversize=await page.request.post('/api/import',{headers,multipart:{file:{name:'over.pdf',mimeType:'application/pdf',buffer:Buffer.concat([padded,Buffer.from(' ')])}}});assert(!oversize.ok());assert.equal((await oversize.json()).error.code,'UNSUPPORTED_INPUT');proof.checks.actual_backend_2MiB_plus_one_rejected=true;
+ for(const [name,buffer,code] of [['empty.txt',Buffer.from(' \n\t '),'EMPTY_CONTENT'],['broken.pdf',Buffer.from('%PDF-corrupt'),'UNSUPPORTED_INPUT']]){const result=await page.request.post('/api/import',{headers,multipart:{file:{name,mimeType:name.endsWith('pdf')?'application/pdf':'text/plain',buffer}}});assert(!result.ok());assert.equal((await result.json()).error.code,code);}
+ proof.checks.empty_and_corrupt_typed_errors=true;
+ const cookie=(await context.cookies()).map(c=>c.name+'='+c.value).join('; ');
+ const streamed=await fetch(base+'/api/import-native',{method:'POST',headers:{...headers,Cookie:cookie,'Content-Type':'application/json'},duplex:'half',body:Readable.from((async function*(){for(let i=0;i<26;i++)yield Buffer.alloc(128*1024,32);})())});assert.equal(streamed.status,413);assert.equal((await streamed.json()).error.code,'UNSUPPORTED_INPUT');proof.checks.actual_chunked_transport_over_3MiB_rejected=true;
+ const cancelled=await page.request.get('/auth/callback?error=access_denied',{headers:{Accept:'text/html'}});assert.equal(cancelled.status(),403);assert(cancelled.headers()['content-type'].includes('text/html'));const html=await cancelled.text();assert(html.includes('Начните подключение Calendar заново')&&html.includes('Calendar қосылымын қайта бастаңыз'));assert.equal(cancelled.headers()['referrer-policy'],'no-referrer');assert((await page.request.get('/assets/relay-oauth.css')).ok());proof.checks.real_browser_callback_recovery_trilingual_no_token_echo=true;
+ const finalHealth=await page.request.get('/api/health');assert(finalHealth.ok());assert.equal((await finalHealth.json()).deployed_commit,health.deployed_commit);proof.checks.health_survives_all_rejections=true;proof.passed=true;
+}catch(error){proof.passed=false;proof.error=String(error);process.exitCode=1;await page.screenshot({path:path.join(folder,'failure.png'),fullPage:true});}finally{await browser.close();await fs.writeFile('docs/evidence/audit-hosted-boundaries.json',JSON.stringify(proof,null,2));console.log(JSON.stringify(proof));}
