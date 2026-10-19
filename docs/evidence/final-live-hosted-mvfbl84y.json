@@ -1,0 +1,37 @@
+{
+  "checked_at": "2026-10-19T13:58:41.267Z",
+  "kind": "hosted_https_real_gemini",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "development_certificate_only": false,
+  "provider": "gemini_developer",
+  "managed_agent_engine": false,
+  "source_commit": "6915d2e855dff33ded3b2fda15f82928056d1d3a",
+  "checks": {
+    "two_fresh_private_sessions": {
+      "separate_workspaces": true,
+      "calendar_permission": false
+    },
+    "unseen_document_and_cross_workspace_denial": {
+      "independent_uploads": true,
+      "foreign_reads_denied": true
+    },
+    "consent_denial_before_any_inference": true,
+    "real_gemini_source_quotes_and_injection_boundary": {
+      "failed": true,
+      "message": "AssertionError [ERR_ASSERTION]: No useful model outcome"
+    }
+  },
+  "runs": [
+    {
+      "language": "en",
+      "status": "unknown",
+      "text": "",
+      "reason": "The gateway wait timed out. Remote compute may still be running. Review events and receipts before retrying.",
+      "remote_compute_stopped": false,
+      "gateway_revision": "6915d2e855dff33ded3b2fda15f82928056d1d3a"
+    }
+  ],
+  "calendar": "illustrative_only",
+  "sensitive_material": false,
+  "passed": false
+}

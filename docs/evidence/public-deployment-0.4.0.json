@@ -1,0 +1,132 @@
+{
+  "checked_at": "2026-10-19T14:10:27.477959+00:00",
+  "verified": true,
+  "real_gemini_verified": true,
+  "provider": "Render",
+  "plan": "Free",
+  "service_id": "srv-dbajs73bc2fs73bm9mfg",
+  "workspace_id": "tea-d3pt0sbipnbc73a5v810",
+  "public_url": "https://campuspulse-relay-demo.onrender.com",
+  "version": "0.4.0",
+  "deployed_commit": "6915d2e855dff33ded3b2fda15f82928056d1d3a",
+  "deploy_id": "dep-dbb21oe1egvs73cj1et0",
+  "deploy_finished_at": "2026-10-19T13:55:04.481921Z",
+  "inference_provider": "gemini_developer",
+  "model": "gemini-3.5-flash-lite",
+  "model_metadata_version": "3.5-flash-lite-07-2026",
+  "managed_agent_engine": false,
+  "mandatory_gcp": "UNMET_GCP_EXCEPTION_PENDING",
+  "real_calendar": "pending_illustrative_receipts_only",
+  "evidence": {
+    "public": "docs/evidence/public-demo-browser-0.4.0.json",
+    "live": "docs/evidence/final-live-hosted-mvfbojtp.json",
+    "features": "docs/evidence/final-features-hosted-mvfbrp3z.json",
+    "installed_windows": "docs/evidence/final-desktop-hosted-mvfbz5y0.json",
+    "deploy": "docs/evidence/render-cutover-0.4.0.json"
+  },
+  "actual_complete_browser_turns": 8,
+  "actual_complete_installed_turns": 2,
+  "retained_failed_attempts": [
+    {
+      "evidence": "docs/evidence/final-live-hosted-mvfbl84y.json",
+      "runs": [
+        {
+          "status": "unknown",
+          "reason": "The gateway wait timed out. Remote compute may still be running. Review events and receipts before retrying."
+        }
+      ]
+    }
+  ],
+  "retained_desktop_failures": [
+    {
+      "evidence": "docs/evidence/final-desktop-hosted-mvfbvr3q.json",
+      "import_succeeded": true,
+      "gemini_succeeded": true,
+      "failure": "Native POST /api/demo/reset rejected by exact IPC allowlist; repaired route and CSRF rotation, then reinstalled and reran."
+    }
+  ],
+  "latency_ms": {
+    "sample_browser_turns": 8,
+    "min": 13836,
+    "max": 51226,
+    "cold_start_included": false,
+    "statistical_sla": false
+  },
+  "checks": {
+    "fresh_public_illustrative_workflow": {
+      "demo_entry": true,
+      "capability_cookie": {
+        "secure": true,
+        "httpOnly": true,
+        "sameSite": "Strict"
+      },
+      "new_upload_exact_evidence": true,
+      "explicit_assignment_mapping": true,
+      "conflict_resolved": true,
+      "plan_and_isolated_what_if": true,
+      "illustrative_approval_receipt_and_execution": true,
+      "hosted_github_read": {
+        "repository": "NuraliKuzhagaliev/campuspulse-relay-demo",
+        "commit": "66fd068bc1cf142f8152e717f662e11c20f96a97",
+        "blob": "f08157273402f59aec8289366aef4b0d7623d66c",
+        "fetched_at": "2026-10-19T13:56:40.776080+00:00",
+        "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/blob/66fd068bc1cf142f8152e717f662e11c20f96a97/coursework.md",
+        "cache_age_seconds": null
+      },
+      "translations_mobile_automated_aa_and_refresh": true,
+      "visitor_isolation_csrf_internal_and_unavailable_integrations": true,
+      "fresh_demo_reset": true
+    },
+    "private_web": {
+      "two_fresh_private_sessions": {
+        "separate_workspaces": true,
+        "calendar_permission": false,
+        "reused_after_recorded_timeout": true
+      },
+      "unseen_document_and_cross_workspace_denial": {
+        "independent_uploads": true,
+        "foreign_reads_denied": true
+      },
+      "consent_denial_before_any_inference": true,
+      "real_gemini_source_quotes_and_injection_boundary": true,
+      "russian_followup_same_conversation": true,
+      "kazakh_followup_same_conversation": true,
+      "independent_gemini_preserves_ambiguous_deadline": true,
+      "responsive_languages_keyboard_and_automated_AA": {
+        "layout_states": 12,
+        "automated_AA_primary_state": true
+      },
+      "refresh_keeps_conversation_but_requires_fresh_processing_confirmation": true,
+      "protected_operator_and_internal_mcp": true
+    },
+    "private_features": {
+      "real_conflict_and_bounded_clarification": true,
+      "real_agent_saves_server_validated_feasible_plan": true,
+      "browser_infeasible_whatif_and_illustrative_receipt": true,
+      "real_progress_followup_keeps_explicit_remaining": true,
+      "real_github_and_handoff_mcp_observations": true
+    },
+    "installed_windows": {
+      "installed_package_and_D_profile": true,
+      "real_import_request_and_exact_readback": true,
+      "actual_installed_UI_to_public_gemini_MCP": true,
+      "reopen_keeps_hosted_workspace_and_conversation": true,
+      "native_reset_rotates_workspace_and_csrf": true
+    }
+  },
+  "native_dialog_visibility_verified": false,
+  "notification_visibility_verified": false,
+  "funding": {
+    "personal_spending_authorized_usd": 0,
+    "paid_resources_provisioned": false,
+    "new_hosting_resources_created": false,
+    "invoice_or_remaining_credit_balance_inferred": false
+  },
+  "limitations": [
+    "One first hosted model turn timed out; a bounded retry in the same two test workspaces completed. No automatic paid/canned fallback.",
+    "Temporary storage and two-hour sessions may reset earlier on sleep/restart/redeploy; invitations also reset. No durable or always-on background service.",
+    "Private AI access only for invited adult Kazakhstan evaluators with permitted non-sensitive material. Self-attestation is not independent eligibility proof.",
+    "Tests use four authorized private invitations for agent-owned sessions only; no invitations distributed to other people.",
+    "Original managed Agent Engine, Google cloud-to-MCP service identity, real Calendar consent/writes/read-back and new native picker/banner/click acceptance remain pending."
+  ]
+}

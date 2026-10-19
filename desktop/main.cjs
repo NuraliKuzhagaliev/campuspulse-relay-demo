@@ -147,6 +147,7 @@ async function request(apiPath, method = "GET", body) {
   }
   if (
     apiPath === "/api/session" ||
+    apiPath === "/api/demo/reset" ||
     /^\/api\/passport\/[a-f0-9]+\/restore$/.test(apiPath)
   )
     csrf = value.csrf;

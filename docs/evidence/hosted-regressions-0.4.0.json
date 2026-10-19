@@ -1,0 +1,17 @@
+{
+  "checked_date": "2026-10-19",
+  "scope": "Actual additional checks after hosted cutover; unchanged local baseline retained separately",
+  "owner_clock": {"command": ".venv/Scripts/python.exe -m unittest tests.test_owner_clock -v", "passed": 2, "failed": 0, "seconds": 0.0, "server_signature_window_widened": false},
+  "ipc_policy": {"command": "node --test tests/desktop_policy.test.cjs", "passed": 5, "failed": 0, "seconds": 0.0612977},
+  "production_windows_build": {"command": "npm run package:win", "typescript_vite": "passed", "nsis": "passed", "portable": "passed", "unsigned": true},
+  "reinstall": {"installer_exit_code": 0, "product_version": "0.4.0.0", "previous_install_backup_hash_verified_files": 75, "previous_install_backup": "D:/projects/CampusPulseRELAY/installed/preserved-0.4.0-local-integration-r1"},
+  "installed_hosted": "docs/evidence/final-desktop-hosted-mvfbz5y0.json",
+  "both_import_paths": "docs/evidence/desktop-import-regression-0.4.0-hosted-r1.json",
+  "original_45_95_preserved": "docs/evidence/final-preserved-native-after-hosted.json",
+  "defects": [
+    {"issue": "Owner signature rejected because actual local clock lagged server by83.247seconds", "fix": "Use normal-TLS HTTPS health timestamp with RTT<=10s and skew<=300s; server signature freshness remains60s", "recheck": "Two deterministic cases and actual explicitly authorized bounded invitation issuance passed"},
+    {"issue": "Installed Start a fresh demo rejected POST /api/demo/reset after successful import, state refresh, Gemini query and reopening", "fix": "Add only exact POST route and update native CSRF from reset response; narrow allowlist preserved", "recheck": "Rebuilt/reinstalled package, actual hosted query/reopen/reset/subsequent mutation and both local import paths passed"}
+  ],
+  "new_native_picker_banner_click_verified": false,
+  "passed": true
+}

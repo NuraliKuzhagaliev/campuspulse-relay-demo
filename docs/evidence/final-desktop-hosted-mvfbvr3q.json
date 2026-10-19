@@ -1,0 +1,68 @@
+{
+  "checked_at": "2026-10-19T14:06:52.407Z",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "version": "0.4.0",
+  "executable": "D:\\projects\\CampusPulseRELAY\\installed\\CampusPulse RELAY\\CampusPulse RELAY.exe",
+  "profile": "D:\\projects\\CampusPulseRELAY\\.local\\final-desktop-hosted\\mvfbvr3q\\profile",
+  "checks": {
+    "installed_package_and_D_profile": true,
+    "real_import_request_and_exact_readback": true,
+    "actual_installed_UI_to_public_gemini_MCP": true,
+    "reopen_keeps_hosted_workspace_and_conversation": true
+  },
+  "real_native_picker": false,
+  "native_picker_substitution": false,
+  "notification_visibility_checked": false,
+  "calendar": "illustrative_only",
+  "health": {
+    "ok": true,
+    "version": "0.4.0",
+    "mode": "alternative_live",
+    "agent_configured": true,
+    "agent_verified": true,
+    "agent": {
+      "configured": true,
+      "resource": "gemini-developer:gemini-3.5-flash-lite",
+      "verified": true,
+      "evidence": {
+        "resource": "gemini-developer:gemini-3.5-flash-lite",
+        "run_id": "2edf95429134576aa47783cdc1c6917f",
+        "revision": "6915d2e855dff33ded3b2fda15f82928056d1d3a",
+        "observed_at": "2026-10-19T14:07:01.145564+00:00",
+        "expires": 1792419121.1455915,
+        "provider": "gemini_developer",
+        "deployment_mode": "alternative_hosted",
+        "model": "gemini-3.5-flash-lite"
+      },
+      "provider": "gemini_developer",
+      "deployment_mode": "alternative_hosted",
+      "model": "gemini-3.5-flash-lite",
+      "managed_agent_engine": false,
+      "mode": "live_gemini_alternative",
+      "last_failure": {
+        "failed_at": "2026-10-19T14:01:44.169761+00:00",
+        "run_id": "a9dc94a81d16406c3e6b4edb5178b9fb",
+        "status": "unknown",
+        "code": null
+      }
+    },
+    "time": "2026-10-19T14:08:18.447578+00:00",
+    "deployed_commit": "6915d2e855dff33ded3b2fda15f82928056d1d3a",
+    "demo": {
+      "public": true,
+      "storage": "temporary",
+      "session_seconds": 7200,
+      "max_upload_mib": 2,
+      "max_sources": 12,
+      "github_cache_seconds": 300,
+      "calendar": "illustrative_local_adapter",
+      "gemini": "private_invitation_required",
+      "mandatory_gcp": "exception_pending"
+    }
+  },
+  "answer": "Based on the Desktop optics dac99f0d source (`fbb4b60cbe9c96dc9014f799`, page 1):\n\n* **Exact Deadline:** `2026-10-24T18:00:00+05:00` (Source: `fbb4b60cbe9c96dc9014f799`, page 1, quoting: `\"Due: 2026-10-24T18:00:00+05:00\"`)\n* **Exact Rubric Item:** `- [ ] Explain wavelength uncertainty dac99f0d` (Source: `fbb4b60cbe9c96dc9014f799`, page 1, quoting: `\"- [ ] Explain wavelength uncertainty dac99f0d\"`)\n\n**Deployment Mode:** \nThis deployment is operating in **alternative_hosted** mode.",
+  "run_id": "32ab6ee0f0f2720ca58604489b14be06",
+  "gateway_revision": "6915d2e855dff33ded3b2fda15f82928056d1d3a",
+  "passed": false,
+  "error": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Enter public demo', exact: true })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" getByRole('button', { name: 'Enter public demo', exact: true }) with timeout 5000ms\n  - waiting for getByRole('button', { name: 'Enter public demo', exact: true })\n"
+}

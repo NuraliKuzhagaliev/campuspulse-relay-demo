@@ -12,6 +12,8 @@ process.env.RUNTIME_NODE_MODULES=runtime+'/node/node_modules';process.env.RUNTIM
 const {Presentation,PresentationFile}=await import(pathToFileURL(require.resolve('@oai/artifact-tool',{paths:[process.env.RUNTIME_NODE_MODULES]})).href);
 let hosted={};try{hosted=JSON.parse(await fs.readFile('docs/evidence/public-deployment-0.4.0.json','utf8'));}catch{}
 const live=hosted.verified===true&&hosted.real_gemini_verified===true;
+const hostedLive=live?JSON.parse(await fs.readFile(hosted.evidence.live,'utf8')):null;
+const hostedMarker=live?[...hostedLive.runs[0].text.matchAll(/Compare compensator models ([a-f0-9]{8})/g)].at(-1)?.[1]:null;
 const evidence=JSON.parse(await fs.readFile('docs/evidence/final-verification-0.4.0.json','utf8'));
 const revision=process.env.RELAY_PRESENTATION_REVISION||'integration-r1';
 const stem='CampusPulse-RELAY-0.4.0-'+revision;
@@ -59,9 +61,9 @@ function col(s,title,body,x=64,y=255,w=530){txt(s,title,x,y,w,58,31,C.ink,true);
  txt(s,'Minimal Rescue compares only the extra windows the student permits',64,586,1130,60,25,C.muted);
 }
 {
- const s=slide('Gemini reads an unseen source and keeps context','Actual browser evidence final-live-local-mvf8h3vr.json and focused correction final-focus-local-mvf8uiq4.json. First English answer was partial due to an unnecessary failed extraction call. The source-only instruction and typed extraction schema were repaired; two affected real turns completed. RU/KK continuations preserved exact source quotes. This observed sample is not a statistical success guarantee.');
+ const s=slide('Gemini reads an unseen source and keeps context',live?`Actual public browser evidence ${hosted.evidence.live}, deployed ${hosted.deployed_commit}. Eight complete hosted browser turns and ${hosted.actual_complete_installed_turns} installed turns. The first hosted turn timed out; one bounded retry in the same two authorized test workspaces passed. All original failures are retained. No statistical reliability guarantee. RU/KK follow-ups used the same conversation; no Calendar writes.`:'Actual browser evidence final-live-local-mvf8h3vr.json and focused correction final-focus-local-mvf8uiq4.json. First English answer was partial due to an unnecessary failed extraction call. The source-only instruction and typed extraction schema were repaired; two affected real turns completed. RU/KK continuations preserved exact source quotes. This observed sample is not a statistical success guarantee.');
  txt(s,'New synthetic Optics document',64,238,1120,52,32,C.ink,true);
- txt(s,'“Due: 2026-10-24T18:30:00+05:00”\n“- [ ] Compare two reference surfaces mvf8uiq4”',64,318,1120,104,29,C.blue);
+ txt(s,live?`“Due: 2026-10-23T20:00:00+05:00”\n“- [ ] Compare compensator models ${hostedMarker}”`:'“Due: 2026-10-24T18:30:00+05:00”\n“- [ ] Compare two reference surfaces mvf8uiq4”',64,318,1120,104,29,C.blue);
  txt(s,'Actual source/page citations and MCP reads\nRussian and Kazakh follow-ups in the same conversation\nAn ambiguous 03/04 date remains unknown',64,474,1120,152,28,C.muted);
 }
 {
@@ -72,16 +74,16 @@ function col(s,title,body,x=64,y=255,w=530){txt(s,title,x,y,w,58,31,C.ink,true);
  txt(s,'Managed reasoningEngines resource: UNMET / GCP_EXCEPTION_PENDING',64,618,1130,34,22,C.muted);
 }
 {
- const s=slide('Observed tool results and approval boundaries','Actual final-features-local-mvf943c1.json: Gemini chose recommend_clarification, save_validated_plan, get_progress_summary, get_assignment_repo_status and observe_handoff_gate. Repo main commit66fd068bc1cf142f8152e717f662e11c20f96a97 was observed at test time. Flask PR6168 merged with merge SHA728c5e440af704a786384159184f695cf04ecbe7. No GitHub writes. All Calendar receipts in this batch are local-adapter illustrative receipts.');
+ const s=slide('Observed tool results and approval boundaries','Actual local final-features-local-mvf943c1.json; hosted final-features-hosted-mvfbrp3z.json: Gemini chose recommend_clarification, save_validated_plan, get_progress_summary, get_assignment_repo_status and observe_handoff_gate. Repo main commit66fd068bc1cf142f8152e717f662e11c20f96a97 was observed at test time. Flask PR6168 merged with merge SHA728c5e440af704a786384159184f695cf04ecbe7. No GitHub writes. All Calendar receipts in this batch are local-adapter illustrative receipts.');
  col(s,'Actual external reads','Gemini selected useful MCP tools.\nGitHub status includes immutable revision.\nFlask PR #6168 was observed merged.',64,243,536);
  col(s,'Illustrative Calendar','Exact preview and explicit UI approval\nRead-back receipt and idempotent operations\nNo real Google event created by this batch',682,243,532);
  txt(s,'Documents cannot authorize writes or reveal server credentials',64,593,1130,60,29,C.ink,true);
 }
 {
- const s=slide('Verification and remaining native observations','Final evidence final-verification-0.4.0.json. Tests are this integration execution, not copied historical counts. Installed main/preload/policy/renderer match current source. Dialog substitutions are explicit; old real picker/banner evidence belongs to0.1.1 and human45/95 persistence to0.3.0. Accessibility fix gives the scrollable execution region keyboard focus.');
+ const s=slide('Verification and remaining native observations','Final evidence final-verification-0.4.0.json. Tests are this integration execution, not copied historical counts. Installed main/preload/policy/renderer match current source. Hosted actual reset IPC rejection repaired with exact POST route and CSRF refresh; reinstall and affected contracts passed. New IPC suite5 passes, separate owner-clock suite2 passes; the121 Python/13 browser+1skip counts below are the preserved local baseline. Dialog substitutions are explicit; old real picker/banner evidence belongs to0.1.1 and human45/95 persistence to0.3.0. Accessibility fix gives the scrollable execution region keyboard focus.');
  txt(s,String(evidence.python.tests),64,238,480,100,80,C.blue,true);txt(s,'Python regressions passed',68,349,530,50,28,C.ink,true);
  txt(s,'13 + 1',682,238,480,100,80,C.ink,true);txt(s,'browser passes + public-only skip',686,349,530,60,27,C.ink,true);
- txt(s,'Installed 0.4.0 package, IPC, import and passport contracts passed\nEN / RU / KK at 390, 768, 1280 and 1440px\nReal native Open/Save/cancel and new toast click remain separate checks',64,470,1140,155,26,C.muted);
+ txt(s,'Installed package, import and public Gemini/MCP query passed\nHosted EN / RU / KK at 390, 768, 1280 and 1440px\nReal native Open/Save/cancel and new toast click remain separate checks',64,470,1140,155,26,C.muted);
 }
 {
  const s=slide('Funding and privacy limits','Actual account assessment final-account-assessment.json: GCP Free trial account closed, prepayment required, no visible credits. No payment/billing change. Gemini project free-tier status and actual successful requests observed. https://ai.google.dev/gemini-api/terms and pricing, https://render.com/docs/free rechecked2026-10-19. UI attestation is not independent age/location verification. Free quotas are not a remaining balance or invoice.');

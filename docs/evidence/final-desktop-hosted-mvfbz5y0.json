@@ -1,0 +1,105 @@
+{
+  "checked_at": "2026-10-19T14:09:31.609Z",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "version": "0.4.0",
+  "executable": "D:\\projects\\CampusPulseRELAY\\installed\\CampusPulse RELAY\\CampusPulse RELAY.exe",
+  "profile": "D:\\projects\\CampusPulseRELAY\\.local\\final-desktop-hosted\\mvfbvr3q\\profile",
+  "checks": {
+    "installed_package_and_D_profile": true,
+    "real_import_request_and_exact_readback": true,
+    "actual_installed_UI_to_public_gemini_MCP": true,
+    "reopen_keeps_hosted_workspace_and_conversation": true,
+    "native_reset_rotates_workspace_and_csrf": true
+  },
+  "real_native_picker": false,
+  "native_picker_substitution": false,
+  "notification_visibility_checked": false,
+  "calendar": "illustrative_only",
+  "packaged_files": [
+    {
+      "file": "desktop\\locales.cjs",
+      "sha256": "9d3a76f3534b5c09669e2f249e7eda8e272432f1e6b02351a030829b5a8c2e74",
+      "matches_current_source": true
+    },
+    {
+      "file": "desktop\\main.cjs",
+      "sha256": "aa912247f099335efb8afff413d964b0a6092240eec633f604a4af7b53a3db84",
+      "matches_current_source": true
+    },
+    {
+      "file": "desktop\\preload.cjs",
+      "sha256": "def16c63fa8563bfefa18ddc535cf952da93b8f388413570eb54daaf7e5994d6",
+      "matches_current_source": true
+    },
+    {
+      "file": "desktop\\request-policy.cjs",
+      "sha256": "0effc3e2ef1151249affca93e4024a91e68438823f4aef82646bf769e57d3be7",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\assets\\index-C4oo56nS.css",
+      "sha256": "63cc1201e7b2d7578815abaeafa99c637c1660642a59e9ff2275286c87888f71",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\assets\\index-IycBXAnW.js",
+      "sha256": "79126612d812db4864f3ef81eb0ba3dc1d8a92a44a9bc09643cd49d827602617",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\index.html",
+      "sha256": "d3fbf78e44da06d423bc429e72b19d24478766a5295c6707a668d6f19219dd66",
+      "matches_current_source": true
+    }
+  ],
+  "health": {
+    "ok": true,
+    "version": "0.4.0",
+    "mode": "alternative_live",
+    "agent_configured": true,
+    "agent_verified": true,
+    "agent": {
+      "configured": true,
+      "resource": "gemini-developer:gemini-3.5-flash-lite",
+      "verified": true,
+      "evidence": {
+        "resource": "gemini-developer:gemini-3.5-flash-lite",
+        "run_id": "32ab6ee0f0f2720ca58604489b14be06",
+        "revision": "6915d2e855dff33ded3b2fda15f82928056d1d3a",
+        "observed_at": "2026-10-19T14:08:35.899508+00:00",
+        "expires": 1792419215.8995214,
+        "provider": "gemini_developer",
+        "deployment_mode": "alternative_hosted",
+        "model": "gemini-3.5-flash-lite"
+      },
+      "provider": "gemini_developer",
+      "deployment_mode": "alternative_hosted",
+      "model": "gemini-3.5-flash-lite",
+      "managed_agent_engine": false,
+      "mode": "live_gemini_alternative",
+      "last_failure": {
+        "failed_at": "2026-10-19T14:01:44.169761+00:00",
+        "run_id": "a9dc94a81d16406c3e6b4edb5178b9fb",
+        "status": "unknown",
+        "code": null
+      }
+    },
+    "time": "2026-10-19T14:10:56.860463+00:00",
+    "deployed_commit": "6915d2e855dff33ded3b2fda15f82928056d1d3a",
+    "demo": {
+      "public": true,
+      "storage": "temporary",
+      "session_seconds": 7200,
+      "max_upload_mib": 2,
+      "max_sources": 12,
+      "github_cache_seconds": 300,
+      "calendar": "illustrative_local_adapter",
+      "gemini": "private_invitation_required",
+      "mandatory_gcp": "exception_pending"
+    }
+  },
+  "answer": "Based on the Desktop optics 526dfe33 source (`d6b9fc2f594dd44cae619e6f`, page 1):\n\n* **Exact Deadline:** `2026-10-24T18:00:00+05:00` (Source: `d6b9fc2f594dd44cae619e6f`, page 1, quoting: `\"Due: 2026-10-24T18:00:00+05:00\"`)\n* **Exact Rubric Item:** `- [ ] Explain wavelength uncertainty 526dfe33` (Source: `d6b9fc2f594dd44cae619e6f`, page 1, quoting: `\"- [ ] Explain wavelength uncertainty 526dfe33\"`)\n\n**Deployment Mode:**\nThis deployment is operating in **alternative_hosted** mode.",
+  "run_id": "3072fd149cd82fbe7e1c1da993b9afee",
+  "gateway_revision": "6915d2e855dff33ded3b2fda15f82928056d1d3a",
+  "passed": true
+}

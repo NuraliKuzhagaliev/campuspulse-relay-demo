@@ -1,6 +1,6 @@
 # CampusPulse RELAY: judge access
 
-Entry: **https://campuspulse-relay-demo.onrender.com**. Check the adjacent release manifest for the actually deployed version. Until the0.4 cutover is verified, the public service remains the preserved0.2.1 illustrative demo. A prepared0.4 build or local real Gemini run does not change that fact.
+Entry: **https://campuspulse-relay-demo.onrender.com**. Check the adjacent release manifest for the actually deployed version. Public0.4.0 and actual alternative Gemini/MCP were verified at commit `6915d2e855dff33ded3b2fda15f82928056d1d3a`. Original managed GCP and real Calendar are still pending.
 
 ## Supported public demonstration
 
@@ -13,7 +13,7 @@ Entry: **https://campuspulse-relay-demo.onrender.com**. Check the adjacent relea
 
 The actual current backend may need about a minute to wake on the free host. A reset/expired session creates a fresh workspace. Export a Workspace Passport before leaving. Files, conversations, settings, receipts and invitations are temporary and may be lost on sleep/restart/deploy. A passport restores an untrusted archived copy, without approvals, credentials or an AI access grant. It does not make an old observation current.
 
-## Private real Gemini evaluation after0.4 cutover
+## Private real Gemini evaluation
 
 The owner privately distributes a fresh one-use AI invitation. At entry or in Ask RELAY choose **Use a private AI invitation**, paste the invitation into its private form, then open the isolated workspace. Tokens do not belong in URLs, screenshots, public files or a shared password. Judges need no gcloud account, project or API key.
 
@@ -25,6 +25,8 @@ Actual model quota observed in AI Studio on2026-10-19:15RPM,250kTPM,500RPD for t
 
 ## Windows and recorded fallback
 
-The unsigned0.4.0 installed app is under `D:\projects\CampusPulseRELAY\installed\CampusPulse RELAY`. Its default gateway is the public HTTPS entry. For an explicit local0.4 check, start the D: local gateway and set `RELAY_GATEWAY_URL=http://127.0.0.1:8000` only in that launch process. Do not infer that current public0.2.1 supplies every0.4 addition before cutover.
+The unsigned0.4.0 installed app is under `D:\projects\CampusPulseRELAY\installed\CampusPulse RELAY`. Its default gateway is the public HTTPS entry. For an explicit local0.4 check, start the D: local gateway and set `RELAY_GATEWAY_URL=http://127.0.0.1:8000` only in that launch process. Installed0.4.0 was checked against the actual public HTTPS backend and retained its test workspace/conversation after reopening.
 
 The historical `release/recordings/CampusPulse-RELAY-recorded-local-demo.webm` is a labeled0.1.0 local fallback, not a current live Gemini/Google Calendar recording. The final0.4 presentation states actual evidence and pending gates. The owner decides submission. Codex has not submitted an entry or sent organizer/judge messages.
+
+The four invitations used for implementation acceptance were authorized solely for agent-owned tests. Do not distribute them to judges. Obtain the owner's explicit authorization for the intended judge count/window before issuing and distributing new private access. The owner issuer uses the authenticated HTTPS server clock within bounded skew; server signature validation remains60seconds.

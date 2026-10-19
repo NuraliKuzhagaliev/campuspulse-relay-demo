@@ -1,0 +1,93 @@
+{
+  "checked_at": "2026-10-19T13:59:41.958Z",
+  "service": {
+    "autoDeploy": "no",
+    "autoDeployTrigger": "off",
+    "branch": "local/final-integration-0.4.0",
+    "createdAt": "2026-10-18T21:46:06.043416Z",
+    "dashboardUrl": "https://dashboard.render.com/web/srv-dbajs73bc2fs73bm9mfg",
+    "id": "srv-dbajs73bc2fs73bm9mfg",
+    "name": "campuspulse-relay-demo",
+    "notifyOnFail": "default",
+    "ownerId": "tea-d3pt0sbipnbc73a5v810",
+    "repo": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo",
+    "rootDir": "",
+    "serviceDetails": {
+      "buildPlan": "starter",
+      "cache": {
+        "profile": "no-cache"
+      },
+      "env": "docker",
+      "envSpecificDetails": {
+        "dockerCommand": "",
+        "dockerContext": ".",
+        "dockerfilePath": "infra/Dockerfile.alternative"
+      },
+      "healthCheckPath": "/api/health",
+      "ipAllowList": [
+        {
+          "cidrBlock": "0.0.0.0/0",
+          "description": "everywhere"
+        }
+      ],
+      "maintenanceMode": {
+        "enabled": false,
+        "uri": ""
+      },
+      "numInstances": 1,
+      "openPorts": [],
+      "plan": "free",
+      "previews": {
+        "generation": "off"
+      },
+      "pullRequestPreviewsEnabled": "no",
+      "region": "frankfurt",
+      "renderSubdomainPolicy": "enabled",
+      "runtime": "docker",
+      "sshAddress": "srv-dbajs73bc2fs73bm9mfg@ssh.frankfurt.render.com",
+      "url": "https://campuspulse-relay-demo.onrender.com"
+    },
+    "slug": "campuspulse-relay-demo",
+    "suspended": "not_suspended",
+    "suspenders": [],
+    "type": "web_service",
+    "updatedAt": "2026-10-19T13:55:04.608504Z"
+  },
+  "deployments": [
+    {
+      "commit": {
+        "createdAt": "2026-10-19T13:24:36Z",
+        "id": "6915d2e855dff33ded3b2fda15f82928056d1d3a",
+        "message": "Record sealed integration delivery and preserved native workspace"
+      },
+      "createdAt": "2026-10-19T13:53:37.700424Z",
+      "finishedAt": "2026-10-19T13:55:04.481921Z",
+      "id": "dep-dbb21oe1egvs73cj1et0",
+      "startedAt": "2026-10-19T13:53:37.645806Z",
+      "status": "live",
+      "trigger": "api",
+      "updatedAt": "2026-10-19T13:55:31.243062Z"
+    },
+    {
+      "commit": {
+        "createdAt": "2026-10-18T23:09:40Z",
+        "id": "66fd068bc1cf142f8152e717f662e11c20f96a97",
+        "message": "Publish hashed 0.2.1 illustrative release manifest with preserved artifact history"
+      },
+      "createdAt": "2026-10-19T13:52:11.394494Z",
+      "finishedAt": "2026-10-19T13:52:35.239945Z",
+      "id": "dep-dbb212tg1s2s73dvhe1g",
+      "startedAt": "2026-10-19T13:52:11.355124Z",
+      "status": "canceled",
+      "trigger": "api",
+      "updatedAt": "2026-10-19T13:52:35.241349Z"
+    }
+  ],
+  "secret_handling": "Owner saved eligible key privately; its value was not read or logged.",
+  "nonsecret_environment_merge_triggered_old_build": "dep-dbb212tg1s2s73dvhe1g canceled before publication",
+  "workspace": "tea-d3pt0sbipnbc73a5v810",
+  "personal_spending_authorized_usd": 0,
+  "managed_gcp_provisioned": false,
+  "server_clock_ahead_seconds": 83.247,
+  "signature_clock_fix": "HTTPS health timestamp, RTT<=10s, skew<=300s; unchanged server signature freshness <=60s"
+}

@@ -1,0 +1,40 @@
+{
+  "checked_at": "2026-10-19T13:55:07.251Z",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "version": "0.4.0",
+  "fresh_browser_context": true,
+  "checks": {
+    "demo_entry": true,
+    "capability_cookie": {
+      "secure": true,
+      "httpOnly": true,
+      "sameSite": "Strict"
+    },
+    "new_upload_exact_evidence": true,
+    "explicit_assignment_mapping": true,
+    "conflict_resolved": true,
+    "plan_and_isolated_what_if": true,
+    "illustrative_approval_receipt_and_execution": true,
+    "hosted_github_read": {
+      "repository": "NuraliKuzhagaliev/campuspulse-relay-demo",
+      "commit": "66fd068bc1cf142f8152e717f662e11c20f96a97",
+      "blob": "f08157273402f59aec8289366aef4b0d7623d66c",
+      "fetched_at": "2026-10-19T13:56:40.776080+00:00",
+      "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/blob/66fd068bc1cf142f8152e717f662e11c20f96a97/coursework.md",
+      "cache_age_seconds": null
+    },
+    "translations_mobile_automated_aa_and_refresh": true,
+    "visitor_isolation_csrf_internal_and_unavailable_integrations": true,
+    "fresh_demo_reset": true
+  },
+  "limitations": [
+    "Illustrative Calendar adapter only. Private Gemini is tested separately; real Calendar and mandatory GCP acceptance remain pending.",
+    "Temporary storage: two-hour sessions, with earlier resets possible on inactivity/restarts/redeploys.",
+    "GitHub public observations may be reused for five minutes while retaining their original commit/fetch time."
+  ],
+  "deployed_commit": "6915d2e855dff33ded3b2fda15f82928056d1d3a",
+  "browser_origins": [
+    "https://campuspulse-relay-demo.onrender.com"
+  ],
+  "passed": true
+}

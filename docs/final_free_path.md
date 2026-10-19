@@ -10,7 +10,7 @@ The owner ran `scripts/configure-gemini-free.ps1 -ConfirmFreeTierOnly`. The key 
 
 ## Existing no-cost target and local staging
 
-Authorized Render workspace:`Kuzhagaliev Nurali's workspace`, `tea-d3pt0sbipnbc73a5v810`. Reuse the existing Free service `srv-dbajs73bc2fs73bm9mfg`, `https://campuspulse-relay-demo.onrender.com`, with `infra/Dockerfile.alternative`, one worker and automatic deploys off. Its currently live0.2.1 deployment/commit remains the rollback reference until the verified cutover. No new infrastructure, paid database, disk, background worker, cron or upgrade is selected. Automatic approval review rejected creating a separate service because the previous authorization restricts infrastructure to the existing service; no new service was created.
+Authorized Render workspace:`Kuzhagaliev Nurali's workspace`, `tea-d3pt0sbipnbc73a5v810`. Reuse the existing Free service `srv-dbajs73bc2fs73bm9mfg`, `https://campuspulse-relay-demo.onrender.com`, with `infra/Dockerfile.alternative`, one worker and automatic deploys off. Actual0.4.0 public cutover and real Gemini/MCP acceptance are recorded in `evidence/public-deployment-0.4.0.json`. The former0.2.1 deployment remains the historical rollback reference. No new infrastructure, paid database, disk, background worker, cron or upgrade is selected. Automatic approval review rejected creating a separate service because the previous authorization restricts infrastructure to the existing service; no new service was created.
 
 Local browser staging uses `https://localhost:8017`, a loopback-only Node TLS proxy forwarding to the isolated gateway on8016. `prepare_local_tls.py` saves a development certificate on D: without installing a trust root. Test-only acceptance of this local certificate is explicitly separate from valid public TLS. `verify_final_ui.mjs` makes no inference calls; `verify_final_live*.mjs` records actual model outcomes, including partial failures. Do not use loopback certificate handling on the public deployment.
 
@@ -28,7 +28,7 @@ RELAY_JUDGE_ENABLED=true
 RELAY_AI_ADMIN_PUBLIC_KEY=<actual public key from .local/private/ai-owner-public.json>
 ```
 
-Set `RELAY_GEMINI_API_KEY` only in the intended service's private environment configuration. The existing D: key is not automatically permission to expose it in a tool result or UI screenshot. The owner can complete the exact prepared secret field. Docker startup generates distinct ephemeral internal service/context secrets; internal MCP requires both the machine credential and a bounded signed workspace context. The gateway origin comes from the actual Render URL. Startup rejects missing keys or incompatible provider/mode settings.
+Set `RELAY_GEMINI_API_KEY` only in the intended service's private environment configuration. The existing D: key is not automatically permission to expose it in a tool result or UI screenshot. The owner completed the private secret field before the verified deployment; its value was never read or logged. Docker startup generates distinct ephemeral internal service/context secrets; internal MCP requires both the machine credential and a bounded signed workspace context. The gateway origin comes from the actual Render URL. Startup rejects missing keys or incompatible provider/mode settings.
 
 ## Private evaluator access; Calendar remains separate
 
@@ -49,3 +49,5 @@ Real Calendar requires separate app OAuth/scoped service access, the explicitly 
 ## Availability and retention
 
 No synthetic keep-alive traffic is used. A real request may take about a minute to wake a sleeping free service; pending/expired-session recovery must be tested. Confirm remaining quota and privately provision short invitations shortly before the actual judging window. Keep the free service available through that window. Afterwards the owner decides retirement/data retention and any guarded Calendar cleanup; no automated deletion, event clearing or paid upgrade is implied.
+
+Hosted0.4 acceptance is now complete for the documented alternative route; it does not amend the managed GCP criterion. Four AI-only invitations were issued with explicit owner authorization for these agent-owned tests only. Initial owner-clock skew and first model timeout are retained in deployment evidence.

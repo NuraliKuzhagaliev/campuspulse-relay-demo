@@ -1,6 +1,6 @@
 # CampusPulse RELAY
 
-Evidence-linked academic recovery for GDG Astana Topic2. Current installed/local candidate **0.4.0** starts from preserved0.3.0-r1. Existing public demo: **https://campuspulse-relay-demo.onrender.com**, currently **0.2.1**. Hosted0.4 is pending the owner's server-side key save and verified cutover. Original managed Agent Engine criterion: **UNMET / GCP_EXCEPTION_PENDING**.
+Evidence-linked academic recovery for GDG Astana Topic2. Current installed/local candidate **0.4.0** starts from preserved0.3.0-r1. Public web: **https://campuspulse-relay-demo.onrender.com**, verified **0.4.0** on the existing Render Free service. Actual Gemini Developer/ADK/MCP acceptance passed in isolated web and installed Windows sessions. Original managed Agent Engine criterion: **UNMET / GCP_EXCEPTION_PENDING**.
 
 RELAY imports selected academic documents, retains page/version quotations and disagreements, computes independently validated CP-SAT plans, compares what-if/Minimal Rescue changes, previews explicitly approved effects and records read-back receipts. Progress & Remaining Work, Clarify First, Handoff Radar and Workspace Passport preserve student control. F1–F5 remain **locally implemented**, with real Calendar and full Gemini acceptance pending. EN/RU/Kazakh operational UI is preserved.
 
@@ -31,8 +31,12 @@ Windows installer/portable, complete frontend+Python web bundle, source archive,
 
 ## Deployment and required gates
 
-Use the **existing** Free Render service in the authorized workspace. Review `docs/final_cutover_plan.md`; owner saves `RELAY_GEMINI_API_KEY` using Save only, then publish the exact pushed source with `infra/Dockerfile.alternative`, one worker, auto-deploy off. No new infrastructure/paid upgrade. Run fresh public HTTPS and installed Windows acceptance before marking cutover verified. Free storage/session reset and cold starts are disclosed; no fake always-on autonomy.
+The **existing** Free Render service was updated using `infra/Dockerfile.alternative`, one worker, auto-deploy off. The owner saved the eligible key privately; its value was never read or logged. Public and installed Windows HTTPS acceptance passed at commit `6915d2e855dff33ded3b2fda15f82928056d1d3a`. No new infrastructure or paid upgrade was created. Free storage/session reset and cold starts are disclosed; no fake always-on autonomy.
 
 The GCP Free Trial account is closed, requires prepayment and has no visible credits. No personal expenses or billing changes are authorized. Organizer credits will not arrive. Prepared funding/deployment guards remain separate from actual managed acceptance. Real Calendar also needs separate app consent/scoped runtime access and concrete authenticated UI approval. Current receipts are illustrative. See `REQUIREMENTS.md`, `BLOCKERS.md`, `docs/cloud_setup.md` and `docs/organizer_update.md`.
 
 Deadline:20October2026,23:59, organizer timezone unconfirmed. Planning assumes UTC+5, internal freeze20:00 local. Owner decides and submits the contest entry. No organizer/judge messages or submission were sent. Historical README: `docs/history/before-final-integration-0.4.0/README.md`.
+
+## Public0.4 acceptance
+
+Actual hosted0.4.0 evidence: `docs/evidence/public-deployment-0.4.0.json`. Existing Render Free service `srv-dbajs73bc2fs73bm9mfg`, deploy `dep-dbb21oe1egvs73cj1et0`, commit `6915d2e855dff33ded3b2fda15f82928056d1d3a`. Valid public HTTPS was checked without a certificate bypass. Eight complete real browser model turns and 2 installed Windows model turns passed. One earlier hosted turn timed out and remains recorded; this sample is not a reliability percentage. Installed demo reset initially failed separately from successful import/chat, then exact IPC route/CSRF repair, reinstall and repeat passed. All Calendar receipts remain illustrative. New native dialog/banner/click observations and mandatory managed GCP acceptance remain separate.

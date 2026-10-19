@@ -1,0 +1,17 @@
+{
+  "checked_at": "2026-10-19T13:54:35.335Z",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "version": "0.4.0",
+  "fresh_browser_context": true,
+  "checks": {
+    "demo_entry": true
+  },
+  "limitations": [
+    "Illustrative Calendar adapter only. Private Gemini is tested separately; real Calendar and mandatory GCP acceptance remain pending.",
+    "Temporary storage: two-hour sessions, with earlier resets possible on inactivity/restarts/redeploys.",
+    "GitHub public observations may be reused for five minutes while retaining their original commit/fetch time."
+  ],
+  "deployed_commit": "6915d2e855dff33ded3b2fda15f82928056d1d3a",
+  "passed": false,
+  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'alternative_live'\n- 'public_demo'\n"
+}

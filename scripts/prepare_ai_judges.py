@@ -8,11 +8,23 @@ import subprocess
 import sys
 import time
 import ssl
+from datetime import datetime
 from pathlib import Path
 import httpx
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from relay.domain import digest
+
+
+def bounded_server_timestamp(value, started, finished):
+    """Allow small owner clock skew; never weaken the server's 60-second signature gate."""
+    remote=datetime.fromisoformat(value)
+    if remote.tzinfo is None or not 0<=finished-started<=10:
+        raise ValueError('A fast timezone-aware HTTPS clock observation is required.')
+    epoch=remote.timestamp()
+    if abs(epoch-(started+finished)/2)>300:
+        raise ValueError('Server/owner clock disagreement exceeds five minutes; verify the clocks.')
+    return int(epoch+(finished-started)/2)
 
 
 def main():
@@ -31,13 +43,18 @@ def main():
     from windows_dpapi import unprotect
     raw=unprotect(keypath)
     key=Ed25519PrivateKey.from_private_bytes(base64.b64decode(raw))
-    body=dict(count=a.count,hours=a.hours,nonce=secrets.token_hex(16),timestamp=int(time.time()))
-    signed=digest(dict(method='POST',path='/internal/ai-invitations',body=body)).encode()
-    signature=base64.b64encode(key.sign(signed)).decode()
     verify=True
     if a.local_development_ca:
         if a.url.rstrip('/')!='https://localhost:8017':p.error('Development CA is only allowed for this project loopback staging URL.')
         verify=ssl.create_default_context(cafile=str(root/'.local/final-integration/tls/cert.pem'))
+    started=time.time()
+    clock=httpx.get(a.url.rstrip('/')+'/api/health',timeout=75,verify=verify)
+    finished=time.time()
+    clock.raise_for_status()
+    timestamp=bounded_server_timestamp(clock.json()['time'],started,finished)
+    body=dict(count=a.count,hours=a.hours,nonce=secrets.token_hex(16),timestamp=timestamp)
+    signed=digest(dict(method='POST',path='/internal/ai-invitations',body=body)).encode()
+    signature=base64.b64encode(key.sign(signed)).decode()
     response=httpx.post(a.url.rstrip('/')+'/internal/ai-invitations',json=body,headers={'X-Relay-Owner-Signature':signature},timeout=75,verify=verify)
     if response.status_code!=200:
         print('Invitation preparation failed: HTTP '+str(response.status_code)+'. No token is printed.',file=sys.stderr)

@@ -17,6 +17,13 @@ test("native import and state refresh remain allowed; multipart and invalid IPC 
   ])
     assert.equal(permits(route, method), false);
 });
+
+test("hosted demo reset permits only its exact POST route", () => {
+  assert(permits("/api/demo/reset", "POST"));
+  assert.deepEqual(metadata("/api/demo/reset", "POST"), {method:"POST",path:"/api/demo/reset"});
+  for (const [route,method] of [["/api/demo/reset","GET"],["/api/demo/reset","DELETE"],["/api/demo/reset?tenant=other","POST"],["/api/demo/admin","POST"],["/api/demo/../reset","POST"]])
+    assert(!permits(route,method));
+});
 test("rejected-request diagnostics redact all input except fixed route/method vocabulary", () => {
   const tokens = ["my-file.md", "private-token", "approval-digest", "secret"];
   const result = JSON.stringify(

@@ -5,29 +5,34 @@ import crypto from 'node:crypto';
 import assert from 'node:assert/strict';
 import {chromium,expect} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-const [url,invitationFile]=process.argv.slice(2);
+const [url,invitationFile,resumeFolder]=process.argv.slice(2);
 assert(url?.startsWith('https://') && invitationFile,'HTTPS URL and D: private invitation file required');
 const local=url==='https://localhost:8017';
 const privateData=JSON.parse(await fs.readFile(invitationFile,'utf8'));
 const invitations=privateData.invitations.map(v=>v.token);
 assert(invitations.length>=2);
+const states=resumeFolder?(await fs.readdir(resumeFolder)).filter(n=>n.startsWith('private-session-')).map(n=>path.join(resumeFolder,n)):[];
+if(resumeFolder)assert.equal(states.length,2,'Resume only the two existing authorized test workspaces');
 const id=Date.now().toString(36),folder=path.join(process.cwd(),'.local/final-live',id);
 await fs.mkdir(folder,{recursive:true});
 const proof={checked_at:new Date().toISOString(),kind:local?'local_https_real_gemini':'hosted_https_real_gemini',url,
   development_certificate_only:local,provider:'gemini_developer',managed_agent_engine:false,
-  source_commit:process.env.RELAY_SOURCE_COMMIT||'working-tree',checks:{},runs:[],calendar:'illustrative_only',sensitive_material:false};
+  source_commit:process.env.RELAY_SOURCE_COMMIT||'working-tree',checks:{},runs:[],calendar:'illustrative_only',sensitive_material:false,
+  fresh_browser_contexts:true,reused_authorized_workspaces:!!resumeFolder,prior_attempt:resumeFolder?path.basename(resumeFolder):null};
 const out=path.join(process.cwd(),'docs/evidence',`final-live-${local?'local':'hosted'}-${id}.json`);
 function scrub(value){let s=JSON.stringify(value);for(const token of invitations)s=s.replaceAll(token,'[private invitation redacted]');return JSON.parse(s.replace(/AIza[0-9A-Za-z_-]{25,}/g,'[credential redacted]'));}
 async function save(){await fs.writeFile(out,JSON.stringify(scrub(proof),null,2));}
 async function step(name,fn){try{const result=await fn();proof.checks[name]=result??true;await save();}catch(error){proof.checks[name]={failed:true,message:scrub(String(error))};await save();throw new Error(name+' failed; see redacted evidence.');}}
 const browser=await chromium.launch({headless:true});
 let a,b;
-async function open(token){
- const context=await browser.newContext({baseURL:url,ignoreHTTPSErrors:local,viewport:{width:1440,height:900}});
+async function open(token,index){
+ const context=await browser.newContext({baseURL:url,ignoreHTTPSErrors:local,viewport:{width:1440,height:900},...(resumeFolder?{storageState:states[index]}:{})});
  const page=await context.newPage();await page.goto('/');
+ if(!resumeFolder){
  await page.getByText('Use a private AI invitation',{exact:true}).click();
  await page.getByLabel('Owner-issued one-use judge invitation').fill(token);
  await Promise.all([page.waitForNavigation({waitUntil:'load'}),page.getByRole('button',{name:'Open isolated demo',exact:true}).click()]);
+ }
  // A claimed private workspace opens directly; the illustrative entry modal is not shown again.
  await expect(page.locator('.live-access input[type=checkbox]')).toBeVisible();
  const state=await (await page.request.get('/api/state')).json();
@@ -58,7 +63,7 @@ async function ask(session,message,language='en'){
  return result;
 }
 try {
- await step('two_fresh_private_sessions',async()=>{a=await open(invitations[0]);b=await open(invitations[1]);assert(a.state.workspace_id!==b.state.workspace_id);return {separate_workspaces:true,calendar_permission:false};});
+ await step('two_fresh_private_sessions',async()=>{a=await open(invitations[0],0);b=await open(invitations[1],1);assert(a.state.workspace_id!==b.state.workspace_id);return {separate_workspaces:true,calendar_permission:false,reused_after_recorded_timeout:!!resumeFolder};});
  const unique=crypto.randomBytes(4).toString('hex');
  let sourceA,sourceB;
  const due='2026-10-23T20:00:00+05:00';

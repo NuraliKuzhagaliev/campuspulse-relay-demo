@@ -1,0 +1,724 @@
+{
+  "checked_at": "2026-10-19T14:03:43.200Z",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "development_certificate_only": false,
+  "provider": "gemini_developer",
+  "managed_agent_engine": false,
+  "calendar": "illustrative",
+  "checks": {
+    "real_conflict_and_bounded_clarification": true,
+    "real_agent_saves_server_validated_feasible_plan": true,
+    "browser_infeasible_whatif_and_illustrative_receipt": true,
+    "real_progress_followup_keeps_explicit_remaining": true,
+    "real_github_and_handoff_mcp_observations": true
+  },
+  "runs": [
+    {
+      "text": "### Inspection of Network Security Lab Deadlines\n\nThe workspace contains two conflicting deadline variants for the **Network Security lab** task across approved sources:\n\n1. **`security-pdf`** (Network Security · original brief)\n   - **Deadline:** `2026-10-22T18:00:00+05:00`\n   - **Quote (Page 1):** `\"Due: 2026-10-22T18:00:00+05:00\"`\n\n2. **`security-repo`** (Network Security · revised repo)\n   - **Deadline:** `2026-10-21T18:00:00+05:00`\n   - **Quote (Page 1):** `\"Due: 2026-10-21T18:00:00+05:00\"`\n\n---\n\n### Scenario Comparison\n\nUsing the bounded solver to evaluate both candidate options against your current study availability:\n\n* **Feasibility:** Both candidate dates remain fully feasible; neither option introduces unscheduled minutes or causes schedule overflow.\n* **Scheduling Impact:** \n  * Selecting the earlier deadline (`2026-10-21T18:00:00+05:00` from `security-repo`) requires front-loading the lab hours to finish before the October 21 cutoff.\n  * Selecting the later deadline (`2026-10-22T18:00:00+05:00` from `security-pdf`) allows the solver more schedule flexibility across adjacent days, resulting in **12 block entries changed** across the active workspace plan (note: block count changes reflect removed plus added entries).\n\n---\n\n### Recommended Clarification\n\nYou should clarify whether the correct authoritative deadline is **October 21, 2026 at 18:00+05:00** (as stated in the revised repository brief `security-repo`) or **October 22, 2026 at 18:00+05:00** (as stated in the original brief PDF `security-pdf`). Resolving this discrepancy matters because it determines whether you have an extra 24 hours of buffer and alters how the solver distributes your 240 minutes of required lab effort across your study windows.",
+      "status": "complete",
+      "required_tool_failed": false,
+      "tool_observations": [
+        {
+          "tool": "list_course_sources",
+          "status": "observed",
+          "response_sha256": "b70f56cb1a17f4d97bee6e03ee9fd99a2cf0c7bf72bd36419c5d5eaefa2c223a",
+          "provenance": [
+            {
+              "version": "2f1365369bcaca0fc2410e36",
+              "fetched_at": "2026-10-19T14:05:08.895327+00:00",
+              "mode": "illustrative"
+            },
+            {
+              "version": "f533bc53b7a3908263273afb",
+              "fetched_at": "2026-10-19T14:05:08.882429+00:00",
+              "mode": "illustrative"
+            },
+            {
+              "version": "3d59531452b6fcba20721a8d",
+              "fetched_at": "2026-10-19T14:05:08.887881+00:00",
+              "mode": "illustrative"
+            },
+            {
+              "version": "74cb3670dd78e6fa05f7d1eb",
+              "fetched_at": "2026-10-19T14:05:08.942079+00:00",
+              "mode": "illustrative"
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "get_workspace_plan_inputs",
+          "status": "observed",
+          "response_sha256": "756ecd19189e1658bf492bb4fcbf0c9a81ae2f7bdb1b4b0b9fc079b816aa5a98",
+          "provenance": [
+            {
+              "source_id": "security-pdf",
+              "source_version": "f533bc53b7a3908263273afb",
+              "fetched_at": "2026-10-19T14:05:08.882429+00:00",
+              "page": 1
+            },
+            {
+              "source_id": "security-repo",
+              "source_version": "3d59531452b6fcba20721a8d",
+              "fetched_at": "2026-10-19T14:05:08.887881+00:00",
+              "page": 1
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "recommend_clarification",
+          "status": "observed",
+          "response_sha256": "742a8cd4194ce4413db2349d89df5c7d9b78a7d854e7bcaab5d455c28d9ddf18",
+          "provenance": [
+            {
+              "source_id": "security-pdf",
+              "page": 1
+            },
+            {
+              "source_id": "security-repo",
+              "page": 1
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "4f44cfb04f2fba4b309547faab264428",
+      "conversation_id": "ae80ab4d284ec0f354fa0b889a7e4c93",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "6915d2e855dff33ded3b2fda15f82928056d1d3a",
+      "duration_ms": 22622,
+      "gateway_revision": "6915d2e855dff33ded3b2fda15f82928056d1d3a"
+    },
+    {
+      "text": "### Recovery Plan Status\n\nYour recovery plan has been successfully built and saved using the server validator and confirmed workspace facts.\n\n* **Feasibility:** **Feasible** (`OPTIMAL`). All 540 required minutes are fully allocated across available study windows without exceeding capacity or violating deadlines.\n* **Calendar Classification:** **Illustrative** (this workspace Calendar is illustrative).",
+      "status": "complete",
+      "required_tool_failed": false,
+      "tool_observations": [
+        {
+          "tool": "get_workspace_plan_inputs",
+          "status": "observed",
+          "response_sha256": "fd85d15f5ceaf8136273b162bc0e0ac4bbe23fecfa84af76b92ada2841eb65d5",
+          "provenance": [
+            {
+              "source_id": "security-pdf",
+              "source_version": "f533bc53b7a3908263273afb",
+              "fetched_at": "2026-10-19T14:05:08.882429+00:00",
+              "page": 1
+            },
+            {
+              "source_id": "security-repo",
+              "source_version": "3d59531452b6fcba20721a8d",
+              "fetched_at": "2026-10-19T14:05:08.887881+00:00",
+              "page": 1
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "save_validated_plan",
+          "status": "observed",
+          "response_sha256": "8a877c9eed5c9b9d22f06a29b4b84d8845e75c541879f2cab507b33a2d5446c0",
+          "provenance": [
+            {
+              "mode": "judge_ai"
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "190980c6088aa33777c4c5c6e5769295",
+      "conversation_id": "ae80ab4d284ec0f354fa0b889a7e4c93",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "6915d2e855dff33ded3b2fda15f82928056d1d3a",
+      "duration_ms": 39767,
+      "gateway_revision": "6915d2e855dff33ded3b2fda15f82928056d1d3a"
+    },
+    {
+      "text": "### Progress Inspection and Future Allocation Analysis\n\nAccording to the progress summary for the **Web project**:\n\n* **Logged Duration:** You have logged 45 minutes of student-reported work.\n* **Remaining Effort:** You explicitly reported 95 minutes remaining.\n\n#### What this means for future allocation and completion:\n1. **Student Report vs. Validation:** Logged durations and remaining minutes are student reports, never independently validated completion or attention. Time is not attention or submission proof.\n2. **Solver Allocation:** Because positive remaining work is rounded up to 30-minute units for solver allocation, the 95 remaining minutes will be rounded up to **120 minutes** (four 30-minute study units) for future plan allocations.\n3. **No Double Subtraction:** In accordance with your instruction and our current plan mechanics, we do not subtract the already-logged 45 minutes again from the remaining estimate; the solver allocates future study blocks based directly on the reported remaining requirement.",
+      "status": "complete",
+      "required_tool_failed": false,
+      "tool_observations": [
+        {
+          "tool": "get_progress_summary",
+          "status": "observed",
+          "response_sha256": "e1941cc951ab34aa9e3a72c8d8bedf3460bcfb5bfb9f822370f99cbd1b97bd4e",
+          "provenance": [],
+          "error_codes": []
+        }
+      ],
+      "run_id": "84e8806f9bdae715a93053757276bcbf",
+      "conversation_id": "ae80ab4d284ec0f354fa0b889a7e4c93",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "6915d2e855dff33ded3b2fda15f82928056d1d3a",
+      "duration_ms": 20046,
+      "gateway_revision": "6915d2e855dff33ded3b2fda15f82928056d1d3a"
+    },
+    {
+      "text": "### Repository & Handoff Status Inspection\n\n#### 1. Coursework Repository Status\n- **Repository:** `NuraliKuzhagaliev/campuspulse-relay-demo`\n- **Mode:** `live`\n- **Ref:** `main`\n- **Commit:** `66fd068bc1cf142f8152e717f662e11c20f96a97`\n- **Updated At:** `2026-10-18T23:09:40Z`\n- **Open Issues:** None (`[]`)\n\n#### 2. Handoff Gate Observation (`3d8b9bea728154b05e1b3f66`)\n- **Target Repository:** `pallets/flask` (PR #6168)\n- **State:** `closed` (Merged)\n- **Merged At:** `2026-10-07T13:56:06Z`\n- **Head SHA:** `7689f98403e2c0b0bc8d1031e60f8cff2620e86a`\n- **Merge SHA:** `728c5e440af704a786384159184f695cf04ecbe7`\n- **Provenance:** `live_public_github` (HTTP status 200, verified via live public GitHub observation at `2026-10-19T14:06:58.548251+00:00`)\n\n#### 3. Deployment Mode\n- **Deployment Mode:** Alternative hosted (`alternative_hosted`). \n- *Note:* This deployment is never described as Agent Engine.",
+      "status": "complete",
+      "required_tool_failed": false,
+      "tool_observations": [
+        {
+          "tool": "get_assignment_repo_status",
+          "status": "observed",
+          "response_sha256": "7d10616071f235198aa108ee18b7b318ee9420a9d6c14d023c840bf798b4b9e2",
+          "provenance": [
+            {
+              "mode": "live",
+              "repository": "NuraliKuzhagaliev/campuspulse-relay-demo",
+              "commit": "66fd068bc1cf142f8152e717f662e11c20f96a97",
+              "fetched_at": "2026-10-19T14:06:58.262258+00:00"
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "observe_handoff_gate",
+          "status": "observed",
+          "response_sha256": "bc5947615ddbb53009126a8436591226a06a37aae38b71f82ad9440f2d1bd75c",
+          "provenance": [],
+          "error_codes": []
+        }
+      ],
+      "run_id": "2edf95429134576aa47783cdc1c6917f",
+      "conversation_id": "ae80ab4d284ec0f354fa0b889a7e4c93",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "6915d2e855dff33ded3b2fda15f82928056d1d3a",
+      "duration_ms": 17078,
+      "gateway_revision": "6915d2e855dff33ded3b2fda15f82928056d1d3a"
+    }
+  ],
+  "setup": "Own isolated workspace API setup for explicit windows, progress and a public PR gate. Model turns and plan/what-if/approval are browser actions.",
+  "baseline_plan": {
+    "blocks": [
+      {
+        "task_id": "649252a6bf0780d1575235a3",
+        "start": "2026-10-19T20:00:00+05:00",
+        "end": "2026-10-19T20:30:00+05:00",
+        "pinned": false
+      },
+      {
+        "task_id": "e55e6fb082e0e970afc7494e",
+        "start": "2026-10-19T20:30:00+05:00",
+        "end": "2026-10-19T21:00:00+05:00",
+        "pinned": false
+      },
+      {
+        "task_id": "649252a6bf0780d1575235a3",
+        "start": "2026-10-19T21:00:00+05:00",
+        "end": "2026-10-19T22:00:00+05:00",
+        "pinned": false
+      },
+      {
+        "task_id": "649252a6bf0780d1575235a3",
+        "start": "2026-10-20T19:00:00+05:00",
+        "end": "2026-10-20T20:00:00+05:00",
+        "pinned": false
+      },
+      {
+        "task_id": "649252a6bf0780d1575235a3",
+        "start": "2026-10-21T16:00:00+05:00",
+        "end": "2026-10-21T17:00:00+05:00",
+        "pinned": false
+      },
+      {
+        "task_id": "e55e6fb082e0e970afc7494e",
+        "start": "2026-10-21T17:00:00+05:00",
+        "end": "2026-10-21T17:30:00+05:00",
+        "pinned": false
+      },
+      {
+        "task_id": "649252a6bf0780d1575235a3",
+        "start": "2026-10-21T17:30:00+05:00",
+        "end": "2026-10-21T18:00:00+05:00",
+        "pinned": false
+      },
+      {
+        "task_id": "d9dd0d91ddb3ca79124d5760",
+        "start": "2026-10-22T16:00:00+05:00",
+        "end": "2026-10-22T18:00:00+05:00",
+        "pinned": false
+      },
+      {
+        "task_id": "e55e6fb082e0e970afc7494e",
+        "start": "2026-10-22T18:00:00+05:00",
+        "end": "2026-10-22T19:00:00+05:00",
+        "pinned": false
+      },
+      {
+        "task_id": "e55e6fb082e0e970afc7494e",
+        "start": "2026-10-23T16:00:00+05:00",
+        "end": "2026-10-23T17:00:00+05:00",
+        "pinned": false
+      }
+    ],
+    "feasible": true,
+    "solver_status": "OPTIMAL",
+    "required_minutes": 540,
+    "capacity_minutes": 540,
+    "scheduled_minutes": 540,
+    "unscheduled_minutes": 0,
+    "unscheduled_by_task": {},
+    "slack_minutes": 0,
+    "preserved_units": 0,
+    "assumptions": [
+      "Effort values are estimates, not completion probabilities.",
+      "Only the supplied study windows are available. Hard deadlines remain fixed."
+    ],
+    "input": {
+      "tasks": [
+        {
+          "id": "e55e6fb082e0e970afc7494e",
+          "title": "ML report",
+          "course": "Machine Learning",
+          "minutes": 180,
+          "effort_max": 180,
+          "due": "2026-10-23T18:00:00+05:00",
+          "priority": 1,
+          "dependencies": [],
+          "source_ids": [
+            "ml-brief"
+          ],
+          "rubric": [
+            "State the experiment",
+            "Compare baseline metrics",
+            "Discuss limitations"
+          ],
+          "completion": "planned",
+          "remaining_minutes": null,
+          "identity": {
+            "id": "e55e6fb082e0e970afc7494e",
+            "course": "Machine Learning",
+            "term": "Illustrative 2026-10",
+            "assignment_key": "ML report",
+            "status": "confirmed",
+            "origin": "owned_fixture_mapping"
+          },
+          "section_key": "64add74c0f6428a5928aafd5",
+          "gaps": []
+        },
+        {
+          "id": "649252a6bf0780d1575235a3",
+          "title": "Network Security lab",
+          "course": "Network Security",
+          "minutes": 240,
+          "effort_max": 240,
+          "due": "2026-10-21T18:00:00+05:00",
+          "priority": 1,
+          "dependencies": [],
+          "source_ids": [
+            "security-repo",
+            "security-pdf"
+          ],
+          "rubric": [
+            "Explain the threat model",
+            "Capture test evidence",
+            "Document mitigations"
+          ],
+          "completion": "planned",
+          "remaining_minutes": null,
+          "identity": {
+            "id": "649252a6bf0780d1575235a3",
+            "course": "Network Security",
+            "term": "Illustrative 2026-10",
+            "assignment_key": "Network Security lab",
+            "status": "confirmed",
+            "origin": "owned_fixture_mapping"
+          },
+          "section_key": "135b3cad59258e440c7be58a",
+          "gaps": []
+        },
+        {
+          "id": "d9dd0d91ddb3ca79124d5760",
+          "title": "Web project",
+          "course": "Web Engineering",
+          "minutes": 120,
+          "effort_max": 120,
+          "due": "2026-10-23T20:00:00+05:00",
+          "priority": 1,
+          "dependencies": [],
+          "source_ids": [
+            "web-brief"
+          ],
+          "rubric": [
+            "Implement the interface",
+            "Show responsive states",
+            "Include setup instructions"
+          ],
+          "completion": "planned",
+          "remaining_minutes": null,
+          "identity": {
+            "id": "d9dd0d91ddb3ca79124d5760",
+            "course": "Web Engineering",
+            "term": "Illustrative 2026-10",
+            "assignment_key": "Web project",
+            "status": "confirmed",
+            "origin": "owned_fixture_mapping"
+          },
+          "section_key": "a8293095700757d49a1e2bdd",
+          "gaps": []
+        }
+      ],
+      "windows": [
+        {
+          "start": "2026-10-19T20:00:00+05:00",
+          "end": "2026-10-19T22:00:00+05:00"
+        },
+        {
+          "start": "2026-10-20T18:00:00+05:00",
+          "end": "2026-10-20T20:00:00+05:00"
+        },
+        {
+          "start": "2026-10-21T16:00:00+05:00",
+          "end": "2026-10-21T18:00:00+05:00"
+        },
+        {
+          "start": "2026-10-22T16:00:00+05:00",
+          "end": "2026-10-22T19:00:00+05:00"
+        },
+        {
+          "start": "2026-10-23T16:00:00+05:00",
+          "end": "2026-10-23T17:00:00+05:00"
+        }
+      ],
+      "busy": [
+        {
+          "start": "2026-10-20T18:00:00+05:00",
+          "end": "2026-10-20T19:00:00+05:00"
+        }
+      ],
+      "pins": [],
+      "baseline": [],
+      "timezone": "Asia/Almaty",
+      "daily_cap_minutes": 240,
+      "conservative": false,
+      "not_before": "2026-10-19T14:06:07.975293+00:00"
+    },
+    "id": "4e20d13ff85c96830fa15901",
+    "sources": {
+      "ml-brief": "2f1365369bcaca0fc2410e36",
+      "security-pdf": "f533bc53b7a3908263273afb",
+      "security-repo": "3d59531452b6fcba20721a8d",
+      "web-brief": "74cb3670dd78e6fa05f7d1eb",
+      "_identity": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "_resolutions": "ab16b70384f7797543b4dd93be13e9a8f925bcb73ef640b6d89c3c01c63eafb1",
+      "_settings": "cd57f3d0bb2dac23b986bcd055235117d454340c7bf104e57c401353d8f16520",
+      "_task_overrides": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "_progress": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "_gates": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "_workspace_revision": 0
+    },
+    "created_at": "2026-10-19T14:06:08.215791+00:00",
+    "run_id": "b300c563772d474dac218fa0225c8e2f",
+    "mode": "judge_ai",
+    "gate_notes": [],
+    "historical_blocks": [],
+    "change_reason": "Explicit remaining work, current gate observations and eligible future availability.",
+    "block_diff": {
+      "removed": [],
+      "added": [
+        [
+          "649252a6bf0780d1575235a3",
+          "2026-10-19T20:00:00+05:00",
+          "2026-10-19T20:30:00+05:00"
+        ],
+        [
+          "649252a6bf0780d1575235a3",
+          "2026-10-19T21:00:00+05:00",
+          "2026-10-19T22:00:00+05:00"
+        ],
+        [
+          "649252a6bf0780d1575235a3",
+          "2026-10-20T19:00:00+05:00",
+          "2026-10-20T20:00:00+05:00"
+        ],
+        [
+          "649252a6bf0780d1575235a3",
+          "2026-10-21T16:00:00+05:00",
+          "2026-10-21T17:00:00+05:00"
+        ],
+        [
+          "649252a6bf0780d1575235a3",
+          "2026-10-21T17:30:00+05:00",
+          "2026-10-21T18:00:00+05:00"
+        ],
+        [
+          "d9dd0d91ddb3ca79124d5760",
+          "2026-10-22T16:00:00+05:00",
+          "2026-10-22T18:00:00+05:00"
+        ],
+        [
+          "e55e6fb082e0e970afc7494e",
+          "2026-10-19T20:30:00+05:00",
+          "2026-10-19T21:00:00+05:00"
+        ],
+        [
+          "e55e6fb082e0e970afc7494e",
+          "2026-10-21T17:00:00+05:00",
+          "2026-10-21T17:30:00+05:00"
+        ],
+        [
+          "e55e6fb082e0e970afc7494e",
+          "2026-10-22T18:00:00+05:00",
+          "2026-10-22T19:00:00+05:00"
+        ],
+        [
+          "e55e6fb082e0e970afc7494e",
+          "2026-10-23T16:00:00+05:00",
+          "2026-10-23T17:00:00+05:00"
+        ]
+      ]
+    }
+  },
+  "receipt": {
+    "id": "238172284f35f93850c45e41719b89c5",
+    "plan_id": "4e20d13ff85c96830fa15901",
+    "calendar_id": "local-illustrative-calendar",
+    "mode": "illustrative",
+    "status": "verified",
+    "outcomes": [
+      {
+        "event_id": "a51c6b79a073ca96555a05d6522fdd1e83c4f348",
+        "operation": "create",
+        "status": "verified",
+        "url": null,
+        "verified_at": "2026-10-19T14:06:18.231470+00:00",
+        "observed": {
+          "summary": "Study · Network Security lab",
+          "description": "CampusPulse RELAY | 4e20d13ff85c96830fa15901 | planned study, not submission or proof of learning",
+          "start": "2026-10-19T15:00:00+00:00",
+          "end": "2026-10-19T15:30:00+00:00",
+          "private": {
+            "relay_workspace": "judge-2b9fbf54d9b453524642b47e8b6fd00f013461cab34e3dea",
+            "relay_plan": "4e20d13ff85c96830fa15901",
+            "relay_task": "649252a6bf0780d1575235a3"
+          },
+          "attendees": [],
+          "status": "confirmed"
+        },
+        "etag": "75ff8c88b9697c0611dbb71395d791d3ef5d69a1a709ef096cf4e4f575d16f41"
+      },
+      {
+        "event_id": "42fde8feb3d94dae8679b83a872c7b411ffeff38",
+        "operation": "create",
+        "status": "verified",
+        "url": null,
+        "verified_at": "2026-10-19T14:06:18.259898+00:00",
+        "observed": {
+          "summary": "Study · ML report",
+          "description": "CampusPulse RELAY | 4e20d13ff85c96830fa15901 | planned study, not submission or proof of learning",
+          "start": "2026-10-19T15:30:00+00:00",
+          "end": "2026-10-19T16:00:00+00:00",
+          "private": {
+            "relay_workspace": "judge-2b9fbf54d9b453524642b47e8b6fd00f013461cab34e3dea",
+            "relay_plan": "4e20d13ff85c96830fa15901",
+            "relay_task": "e55e6fb082e0e970afc7494e"
+          },
+          "attendees": [],
+          "status": "confirmed"
+        },
+        "etag": "c81a0b07d81675436175956b3cd333e335cfd3ea44dfa66abb9cd9bbc5071d07"
+      },
+      {
+        "event_id": "cc3ac0a773d0cd10aa93d81e766e82fdd188f0a6",
+        "operation": "create",
+        "status": "verified",
+        "url": null,
+        "verified_at": "2026-10-19T14:06:18.268717+00:00",
+        "observed": {
+          "summary": "Study · Network Security lab",
+          "description": "CampusPulse RELAY | 4e20d13ff85c96830fa15901 | planned study, not submission or proof of learning",
+          "start": "2026-10-19T16:00:00+00:00",
+          "end": "2026-10-19T17:00:00+00:00",
+          "private": {
+            "relay_workspace": "judge-2b9fbf54d9b453524642b47e8b6fd00f013461cab34e3dea",
+            "relay_plan": "4e20d13ff85c96830fa15901",
+            "relay_task": "649252a6bf0780d1575235a3"
+          },
+          "attendees": [],
+          "status": "confirmed"
+        },
+        "etag": "69b7573bacef970b8139979bc013441b806e73e71a280cae1f3e3fdfdd254d64"
+      },
+      {
+        "event_id": "506ecc54186d6925ee2d9e27320aa7e31aef974b",
+        "operation": "create",
+        "status": "verified",
+        "url": null,
+        "verified_at": "2026-10-19T14:06:18.277543+00:00",
+        "observed": {
+          "summary": "Study · Network Security lab",
+          "description": "CampusPulse RELAY | 4e20d13ff85c96830fa15901 | planned study, not submission or proof of learning",
+          "start": "2026-10-20T14:00:00+00:00",
+          "end": "2026-10-20T15:00:00+00:00",
+          "private": {
+            "relay_workspace": "judge-2b9fbf54d9b453524642b47e8b6fd00f013461cab34e3dea",
+            "relay_plan": "4e20d13ff85c96830fa15901",
+            "relay_task": "649252a6bf0780d1575235a3"
+          },
+          "attendees": [],
+          "status": "confirmed"
+        },
+        "etag": "5db8373aded3080aab170af941b4f0449e4f6ba2c1207f265c669d809dd448fc"
+      },
+      {
+        "event_id": "54df772023ced6c5d47f3579b978721c1a29adda",
+        "operation": "create",
+        "status": "verified",
+        "url": null,
+        "verified_at": "2026-10-19T14:06:18.287983+00:00",
+        "observed": {
+          "summary": "Study · Network Security lab",
+          "description": "CampusPulse RELAY | 4e20d13ff85c96830fa15901 | planned study, not submission or proof of learning",
+          "start": "2026-10-21T11:00:00+00:00",
+          "end": "2026-10-21T12:00:00+00:00",
+          "private": {
+            "relay_workspace": "judge-2b9fbf54d9b453524642b47e8b6fd00f013461cab34e3dea",
+            "relay_plan": "4e20d13ff85c96830fa15901",
+            "relay_task": "649252a6bf0780d1575235a3"
+          },
+          "attendees": [],
+          "status": "confirmed"
+        },
+        "etag": "4c91daa88dbd5a44fcccf5e95f3969ab92e65f10df6dc089bb041a4c82e851c1"
+      },
+      {
+        "event_id": "d9306658d7d22415f3324de188f654ffbf57a0e6",
+        "operation": "create",
+        "status": "verified",
+        "url": null,
+        "verified_at": "2026-10-19T14:06:18.299040+00:00",
+        "observed": {
+          "summary": "Study · ML report",
+          "description": "CampusPulse RELAY | 4e20d13ff85c96830fa15901 | planned study, not submission or proof of learning",
+          "start": "2026-10-21T12:00:00+00:00",
+          "end": "2026-10-21T12:30:00+00:00",
+          "private": {
+            "relay_workspace": "judge-2b9fbf54d9b453524642b47e8b6fd00f013461cab34e3dea",
+            "relay_plan": "4e20d13ff85c96830fa15901",
+            "relay_task": "e55e6fb082e0e970afc7494e"
+          },
+          "attendees": [],
+          "status": "confirmed"
+        },
+        "etag": "6cd52bf69f1c4959f7a71e7de82a3703d9a3535d6a31fc5a2562bd6d7ba72f15"
+      },
+      {
+        "event_id": "e6ee40b171d935c0bfae354b69e0fbc00b67a1e6",
+        "operation": "create",
+        "status": "verified",
+        "url": null,
+        "verified_at": "2026-10-19T14:06:18.347572+00:00",
+        "observed": {
+          "summary": "Study · Network Security lab",
+          "description": "CampusPulse RELAY | 4e20d13ff85c96830fa15901 | planned study, not submission or proof of learning",
+          "start": "2026-10-21T12:30:00+00:00",
+          "end": "2026-10-21T13:00:00+00:00",
+          "private": {
+            "relay_workspace": "judge-2b9fbf54d9b453524642b47e8b6fd00f013461cab34e3dea",
+            "relay_plan": "4e20d13ff85c96830fa15901",
+            "relay_task": "649252a6bf0780d1575235a3"
+          },
+          "attendees": [],
+          "status": "confirmed"
+        },
+        "etag": "5748ad11269921dc6812f2aea27846cee005ecd57afdcfceee0c74395fe31a59"
+      },
+      {
+        "event_id": "f9a6f1bb7e68ac829c68c1b54290aefc3045323c",
+        "operation": "create",
+        "status": "verified",
+        "url": null,
+        "verified_at": "2026-10-19T14:06:18.356666+00:00",
+        "observed": {
+          "summary": "Study · Web project",
+          "description": "CampusPulse RELAY | 4e20d13ff85c96830fa15901 | planned study, not submission or proof of learning",
+          "start": "2026-10-22T11:00:00+00:00",
+          "end": "2026-10-22T13:00:00+00:00",
+          "private": {
+            "relay_workspace": "judge-2b9fbf54d9b453524642b47e8b6fd00f013461cab34e3dea",
+            "relay_plan": "4e20d13ff85c96830fa15901",
+            "relay_task": "d9dd0d91ddb3ca79124d5760"
+          },
+          "attendees": [],
+          "status": "confirmed"
+        },
+        "etag": "c1c9b6f43cd4fb80c82c1a0d8ad48474b001ec75a1ec53ce3044dcb4b74b1bcf"
+      },
+      {
+        "event_id": "011b024ccc615d1bbf91cbeb092e025a6ed92878",
+        "operation": "create",
+        "status": "verified",
+        "url": null,
+        "verified_at": "2026-10-19T14:06:18.365527+00:00",
+        "observed": {
+          "summary": "Study · ML report",
+          "description": "CampusPulse RELAY | 4e20d13ff85c96830fa15901 | planned study, not submission or proof of learning",
+          "start": "2026-10-22T13:00:00+00:00",
+          "end": "2026-10-22T14:00:00+00:00",
+          "private": {
+            "relay_workspace": "judge-2b9fbf54d9b453524642b47e8b6fd00f013461cab34e3dea",
+            "relay_plan": "4e20d13ff85c96830fa15901",
+            "relay_task": "e55e6fb082e0e970afc7494e"
+          },
+          "attendees": [],
+          "status": "confirmed"
+        },
+        "etag": "aa96d058563f9dc0e868467f392736791474309ad184d5d2b98c205d69c7d474"
+      },
+      {
+        "event_id": "d24adf058be5666cf7adca8d34fdc22eced78387",
+        "operation": "create",
+        "status": "verified",
+        "url": null,
+        "verified_at": "2026-10-19T14:06:18.374114+00:00",
+        "observed": {
+          "summary": "Study · ML report",
+          "description": "CampusPulse RELAY | 4e20d13ff85c96830fa15901 | planned study, not submission or proof of learning",
+          "start": "2026-10-23T11:00:00+00:00",
+          "end": "2026-10-23T12:00:00+00:00",
+          "private": {
+            "relay_workspace": "judge-2b9fbf54d9b453524642b47e8b6fd00f013461cab34e3dea",
+            "relay_plan": "4e20d13ff85c96830fa15901",
+            "relay_task": "e55e6fb082e0e970afc7494e"
+          },
+          "attendees": [],
+          "status": "confirmed"
+        },
+        "etag": "1075ece10f33c884e3a5929d219db3b5d77e18d0bcbb5ae3b26bc883319d6058"
+      }
+    ],
+    "created_at": "2026-10-19T14:06:18.377424+00:00",
+    "digest": "b030a9de02cc4de5053177b7fbaf6a9b0698565e3af61f228dd5968819574caa"
+  },
+  "handoff": {
+    "repo": "pallets/flask",
+    "number": 6168,
+    "url": "https://github.com/pallets/flask/pull/6168",
+    "state": "closed",
+    "merged": true,
+    "merged_at": "2026-10-07T13:56:06Z",
+    "head_sha": "7689f98403e2c0b0bc8d1031e60f8cff2620e86a",
+    "merge_sha": "728c5e440af704a786384159184f695cf04ecbe7",
+    "observed_at": "2026-10-19T14:06:58.548251+00:00",
+    "last_checked_at": "2026-10-19T14:06:58.548251+00:00",
+    "http_status": 200,
+    "provenance": "live_public_github",
+    "response_sha256": "9460d681d4b8fd7f5c98f5b8178e62594bbef04a5e546dedf4c6196061b6a603",
+    "cache_age_seconds": 0
+  },
+  "passed": true
+}

@@ -1,11 +1,11 @@
 {
   "version": "0.4.0",
   "slides": 12,
-  "pptx": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.4.0-integration-r2.pptx",
-  "pdf": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.4.0-integration-r2.pdf",
-  "renders": "D:\\projects\\CampusPulseRELAY\\.local\\presentation-final\\integration-r2",
-  "hosted_gemini_verified": false,
+  "pptx": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.4.0-hosted-r1.pptx",
+  "pdf": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.4.0-hosted-r1.pdf",
+  "renders": "D:\\projects\\CampusPulseRELAY\\.local\\presentation-final\\hosted-r1",
+  "hosted_gemini_verified": true,
   "editable": true,
   "pdf_kind": "rendered_slide_pages",
-  "validation": "D:\\projects\\CampusPulseRELAY\\.local\\presentation-final\\integration-r2\\validation.json"
+  "validation": "D:\\projects\\CampusPulseRELAY\\.local\\presentation-final\\hosted-r1\\validation.json"
 }
