@@ -94,7 +94,7 @@ async function documentCase(c,index){
  }catch(e){item.error=String(e);await save();await v.page.screenshot({path:path.join(folder,c.file+'-failure.png'),fullPage:true});throw e;}
 }
 try{
- const health=await (await fetch(base+'/api/health')).json();assert.equal(health.version,'0.5.0');proof.deployed_commit=health.deployed_commit;
+ const health=await (await fetch(base+'/api/health')).json();assert.equal(health.version,'0.5.0');if(process.env.RELAY_EXPECTED_DEPLOY_COMMIT)assert.equal(health.deployed_commit,process.env.RELAY_EXPECTED_DEPLOY_COMMIT);proof.deployed_commit=health.deployed_commit;
  if(resumed){for(const f of (await fs.readdir(resumeFolder)).filter(n=>n.startsWith('private-session-')))await open(path.join(resumeFolder,f));if(!(await state(visitors[0])).sources.length)visitors.reverse();assert.equal(proof.deployed_commit,resumed.deployed_commit);}
  else {await open();await open();}assert.notEqual(visitors[0].workspace,visitors[1].workspace);proof.checks.two_clean_automatic_workspaces=resumed?resumed.checks.two_clean_automatic_workspaces:true;await save();
  for(let i=0;i<cases.length;i++)await documentCase(cases[i],i);

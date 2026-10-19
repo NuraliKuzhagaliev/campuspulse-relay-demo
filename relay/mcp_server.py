@@ -70,7 +70,7 @@ def read_course_source(source_id:str,page:int=1,offset:int=0,limit:int=12000,sea
             if found<0:return dict(source_id=source_id,page=page,found=False,next_page=page+1 if page<len(source['pages']) else None)
             offset=max(offset,found-min(200,(limit-len(search))//2))
         end=min(len(text),offset+limit)
-        return dict(source_id=source_id,page=page,text=text[offset:end],offset=offset,next_offset=end if end<len(text) else None,total_characters=len(text),page_count=len(source['pages']),truncated=end<len(text),version=source['version'],fetched_at=source['fetched_at'],mode=source['mode'],remote=source.get('remote'))
+        return dict(source_id=source_id,page=page,text=text[offset:end],quote_lines=[line for line in text[offset:end].splitlines() if line.strip()][:80],entity_hints=[dict(section_key=d['section_key'],title=d['title']) for d in source.get('drafts',[])][:25],offset=offset,next_offset=end if end<len(text) else None,total_characters=len(text),page_count=len(source['pages']),truncated=end<len(text),version=source['version'],fetched_at=source['fetched_at'],mode=source['mode'],remote=source.get('remote'))
     except RelayError as exc:
         return {'error':exc.as_dict()}
 
@@ -176,11 +176,11 @@ def build_next_action_packet(task_id:str) -> dict:
 @mcp.tool()
 def propose_academic_extraction(source_id:str,candidates:list[ExtractionCandidate]) -> dict:
     """Only when extraction is requested: propose cited fields from selected prose/tables. Use field due for deadline, minutes for effort, rubric for requirements. Dates retain timezone/year/ambiguity. Every quote must match the page exactly. Never applies facts or confirms identity; UI confirmation is mandatory."""
-    from .extraction import extraction_proposal,record_proposal
+    from .extraction import validated_batch,record_proposal
     s=svc()
     def propose():
         source=store.get(s.tenant,'sources',source_id)
-        proposal=extraction_proposal(source,[c.model_dump() for c in candidates])
+        proposal=validated_batch(source,[c.model_dump() for c in candidates])
         return record_proposal(s,proposal)
     return result(propose)
 

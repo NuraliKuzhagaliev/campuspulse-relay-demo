@@ -6,7 +6,7 @@ from concurrent.futures import ThreadPoolExecutor
 import pytest
 from relay.domain import RelayError,instant
 from relay.evidence import read_upload,extract_facts,MAX_BYTES
-from relay.extraction import extraction_proposal,confirm
+from relay.extraction import extraction_proposal,validated_batch,record_proposal,current_proposals,confirm
 from relay.service import RelayService
 from relay.store import Store
 from relay.planning_context import local_timestamp,update
@@ -178,3 +178,37 @@ def test_model_deadline_offset_must_match_cited_timezone():
     assert error.value.code=='SOURCE_CONFLICT' and error.value.details['expected_offset']=='5:00:00'
     correct=extraction_proposal(s,[candidate|{'value':'2026-10-23T18:30:00+05:00'}])
     assert correct['fields'][0]['validation_status']=='needs_confirmation'
+
+def test_partial_page_two_keeps_valid_fields_and_correction_merges(tmp_path):
+    svc=service(tmp_path)
+    s=svc.import_source('continued.txt',b'Assignment: Polarization memo\nCourse: Optics\nTerm: Autumn 2026\nKey: POLAR-16')
+    s['pages'].append(dict(page=2,text='Due: 2026-10-23T18:00:00+05:00\nEffort: 75 minutes\n- [ ] Compare two filters'))
+    svc.store.put(svc.tenant,'sources',s['id'],s)
+    def field(name,value,page,quote,**kw):return dict(entity_id='polarization',field=name,value=value,page=page,quote=quote,**kw)
+    p1=record_proposal(svc,validated_batch(s,[field('title','Polarization memo',1,'Assignment: Polarization memo'),field('assignment_key','POLAR-16',1,'Key: POLAR-16')]))
+    # Actual model failure: one checklist quote changed its markers. The deadline
+    # and effort on that same second page must survive as unconfirmed fields.
+    p2=record_proposal(svc,validated_batch(s,[
+        field('due','2026-10-23T18:00:00+05:00',2,'Due: 2026-10-23T18:00:00+05:00',timezone='Asia/Almaty',year_explicit=True),
+        field('minutes',75,2,'Effort: 75 minutes'),
+        field('rubric',['Compare two filters'],2,'- Compare two filters')]))
+    assert p2['status']=='partial' and p2['validation_issues'][0]['field']=='rubric'
+    assert {f['field'] for f in p2['fields']}=={'title','assignment_key','due','minutes'}
+    assert p2['merged_proposal_ids']==[p1['id']] and not p2['applied']
+    p3=record_proposal(svc,validated_batch(s,[field('rubric',['Compare two filters'],2,'- [ ] Compare two filters')]))
+    assert not p3['validation_issues'] and p3['status']=='requires_explicit_confirmation'
+    assert next(f for f in p3['fields'] if f['field']=='minutes')['value']==75
+    assert len(current_proposals(svc))==1 and current_proposals(svc)[0]['id']==p3['id']
+    assert not any(f.get('kind')=='user_confirmed_proposal' for f in svc.sources()[0]['facts'])
+    assert not svc.sources()[0].get('confirmed_extractions')
+
+def test_rejected_semantic_batch_does_not_apply_or_cross_entities(tmp_path):
+    svc=service(tmp_path);s=svc.import_source('notes.txt',b'Optics report: 45 minutes. Calibration: 75 minutes.')
+    a=dict(entity_id='optics',field='minutes',value=45,page=1,quote='45 minutes')
+    record_proposal(svc,validated_batch(s,[a]))
+    b=record_proposal(svc,validated_batch(s,[a|{'entity_id':'calibration','value':75,'quote':'75 minutes'}]))
+    assert len(b['entities'])==1 and b['fields'][0]['value']==75
+    assert len(current_proposals(svc))==2
+    with pytest.raises(RelayError) as error:validated_batch(s,[a|{'quote':'Invented quote'}])
+    assert error.value.code=='SOURCE_CONFLICT' and error.value.details['rejected_fields'][0]['reason']=='field_or_exact_page_quote_invalid'
+    assert not svc.sources()[0].get('confirmed_extractions')

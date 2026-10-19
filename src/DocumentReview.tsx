@@ -22,6 +22,7 @@ type Proposal = {
   source_id: string;
   source_version: string;
   entities: Entity[];
+  validation_issues?: {field:string;page:number}[];
 };
 type Work = (label: string, fn: () => Promise<void>) => Promise<void>;
 const local = (value: string, zone: string) => {
@@ -110,6 +111,7 @@ function ReviewEntity({
           "Missing information stays unknown. Any correction is recorded as your interpretation; original quotations stay unchanged.",
         )}
       </p>
+      {!!proposal.validation_issues?.length && <p role="status">{tr("Some proposed fields were rejected. Review source quotations and complete missing information; no rejected value was applied.")}</p>}
       <div className="review-fields">
         {(
           ["title", "course", "term", "assignment_key", "minutes"] as const

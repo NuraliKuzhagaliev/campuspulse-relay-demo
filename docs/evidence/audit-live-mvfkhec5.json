@@ -1,0 +1,248 @@
+{
+  "at": "2026-10-19T18:07:39.228Z",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "version": "0.5.0",
+  "provider_substitution": false,
+  "google_login": false,
+  "invitations": false,
+  "personal_spending": 0,
+  "checks": {
+    "two_clean_automatic_workspaces": true
+  },
+  "cases": [
+    {
+      "file": "holdout-en.txt",
+      "sha256": "7eb6d09e5919d0e961d8f2b376ddaddcf5c12b6522036576880638acc6d1aba0",
+      "passed": false,
+      "source_id": "6fe1cd44d333ee878c1415eb",
+      "source_version": "11955a66e83265359ac5eef7",
+      "error": "Assertion failed; private diagnostics retained on D:."
+    }
+  ],
+  "runs": [
+    {
+      "status": "partial",
+      "required_tool_failed": true,
+      "tool_observations": [
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "18422ded000f5fc47083a3241b736c5623c337028873a10a16b5a61b8344eb3f",
+          "provenance": [
+            {
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "page": 1,
+              "version": "11955a66e83265359ac5eef7",
+              "fetched_at": "2026-10-19T18:09:10.956672+00:00",
+              "mode": "selected_upload"
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "propose_academic_extraction",
+          "status": "failed",
+          "response_sha256": "c347f4d479b8b97799c703c07cecbd1037cd91fe3f7194996aa5dd79e2c31fdf",
+          "provenance": [],
+          "error_codes": []
+        },
+        {
+          "tool": "propose_academic_extraction",
+          "status": "failed",
+          "response_sha256": "435812cc0ef8a182486e2cc90dec2088c1a3c2969b6fc1574a87b2d8e5a2015a",
+          "provenance": [],
+          "error_codes": [
+            "SOURCE_CONFLICT"
+          ]
+        },
+        {
+          "tool": "propose_academic_extraction",
+          "status": "observed",
+          "response_sha256": "0c50d16781b8f859be8d5c2c407d1d8dc38deb3b09a4166d6f6cac3efeae7f11",
+          "provenance": [
+            {
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "e1f3389dbf30339472c9b33ed9de606a",
+      "conversation_id": "9252aed63656455fe119f88db444d125",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "e48649d251a4af9e7d75470f4eddf0d2bbf164d9",
+      "duration_ms": 33658,
+      "gateway_revision": "e48649d251a4af9e7d75470f4eddf0d2bbf164d9",
+      "observed_latency_ms": 46434,
+      "answer_sha256": "5add851bd338470de507bea9f08b3a702724d031133823da84692aff1f88c72e",
+      "answer_characters": 2058
+    }
+  ],
+  "deployed_commit": "3797e12209230c5692bb8a214d26242ca60e9638",
+  "passed": false,
+  "error": "Acceptance assertion failed; private diagnostics retained on D:."
+}

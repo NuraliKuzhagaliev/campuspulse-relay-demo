@@ -15,9 +15,9 @@ def extraction_proposal(source,candidates):
         field=c.get('field');quote=c.get('quote');page=c.get('page');entity=c.get('entity_id','document')
         if not isinstance(entity,str) or not 1<=len(entity)<=80:raise RelayError('PARSE_FAILED','Use a bounded entity label.')
         if field not in ALLOWED or not isinstance(quote,str) or not 0<len(quote)<=4000 or not isinstance(page,int) or isinstance(page,bool) or quote not in pages.get(page,''):
-            raise RelayError('SOURCE_CONFLICT','Every proposed field must cite an exact quote on its selected source page.')
+            raise RelayError('SOURCE_CONFLICT','Every proposed field must cite an exact quote on its selected source page.',{'field':str(field)[:40],'page':page if type(page) is int else None,'reason':'field_or_exact_page_quote_invalid'})
         value=c.get('value');status='needs_confirmation';expression=c.get('original_expression',quote)
-        if not isinstance(expression,str) or expression not in quote:raise RelayError('SOURCE_CONFLICT','The original expression must occur in the exact quote.')
+        if not isinstance(expression,str) or expression not in quote:raise RelayError('SOURCE_CONFLICT','The original expression must occur in the exact quote.',{'field':field,'page':page,'reason':'original_expression_not_inside_quote'})
         if value is None:status='unknown'
         elif field=='due':
             if not isinstance(value,str):value=None;status='invalid'
@@ -51,10 +51,40 @@ def extraction_proposal(source,candidates):
     return dict(id=digest([source['id'],source['version'],fields])[:24],source_id=source['id'],source_version=source['version'],source_hash=source['content_hash'],
                 proposed_at=now(),fields=fields,entities=grouped,status='requires_explicit_confirmation',applied=False)
 
+def validated_batch(source,candidates):
+    """Stage valid cited fields; never apply a value rejected in the same batch."""
+    if not isinstance(candidates,list) or not 0<len(candidates)<=100:raise RelayError('UNSUPPORTED_INPUT','Propose 1–100 bounded cited fields.')
+    valid=[];issues=[]
+    for candidate in candidates:
+        if not isinstance(candidate,dict):raise RelayError('PARSE_FAILED','Each proposed field must be an object.')
+        try:extraction_proposal(source,[candidate]);valid.append(candidate)
+        except RelayError as exc:
+            issues.append(dict(entity_id=str(candidate.get('entity_id','document'))[:80],field=str(candidate.get('field',''))[:40],page=candidate.get('page'),code=exc.code,reason=(exc.details or {}).get('reason','field_validation_failed')))
+    if not valid:raise RelayError('SOURCE_CONFLICT','No proposed field passed exact source validation. Copy exact quote_lines from read_course_source; original_expression must be a substring of quote.',{'rejected_fields':issues[:20]})
+    proposal=extraction_proposal(source,valid);proposal['validation_issues']=issues
+    if issues:proposal['status']='partial'
+    return proposal
+
 def record_proposal(svc,proposal):
     def save(tx):
         source=tx.get('sources',proposal['source_id'])
-        if not source or source['version']!=proposal['source_version']:raise RelayError('STALE_REVISION','Source changed during extraction. Review its current version.')
+        if not source or source['version']!=proposal['source_version'] or source['content_hash']!=proposal['source_hash']:raise RelayError('STALE_REVISION','Source changed during extraction. Review its current version.')
+        # A model can submit identity on page1 and effort/deadline on page2.
+        # Retain earlier validated, unapplied fields for this exact entity/version.
+        if proposal.get('origin')!='deterministic_review':
+            older=sorted([p for p in tx.list('extraction_proposals') if p['source_id']==source['id'] and p['source_version']==source['version'] and p.get('origin')!='deterministic_review'],key=lambda p:p['proposed_at'])
+            issues=list(proposal.get('validation_issues',[]));merged=[]
+            for entity in proposal['entities']:
+                prior=next((e for p in reversed(older) for e in p['entities'] if e['entity_id']==entity['entity_id'] and not e.get('applied')),None)
+                if not prior:continue
+                incoming={f['field'] for f in entity['fields']}
+                entity['fields']=[copy.deepcopy(f) for f in prior['fields'] if f['field'] not in incoming]+entity['fields']
+                previous=next(p for p in reversed(older) if any(e is prior for e in p['entities']));merged.append(previous['id'])
+                issues=[copy.deepcopy(i) for i in previous.get('validation_issues',[]) if i['entity_id']==entity['entity_id'] and i['field'] not in incoming]+issues
+            proposal['fields']=[f for e in proposal['entities'] for f in e['fields']]
+            if len(proposal['fields'])>100:raise RelayError('UNSUPPORTED_INPUT','This merged proposal exceeds 100 fields. Review fewer assignments at once.')
+            proposal.update(validation_issues=issues,status='partial' if issues else 'requires_explicit_confirmation',merged_proposal_ids=sorted(set(merged)))
+            proposal['id']=digest([source['id'],source['version'],proposal['fields'],issues])[:24]
         if tx.get('extraction_proposals',proposal['id']):return proposal
         if len(tx.list('extraction_proposals'))>=24:raise RelayError('UNSUPPORTED_INPUT','This temporary workspace reached its proposal limit. Export reviewed coursework or start a fresh workspace.')
         tx.put('extraction_proposals',proposal['id'],proposal)

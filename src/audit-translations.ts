@@ -1,4 +1,5 @@
 export const auditTranslations: Record<string, [string, string]> = {
+ 'Some proposed fields were rejected. Review source quotations and complete missing information; no rejected value was applied.':['Часть предложенных полей отклонена. Проверьте цитаты и уточните недостающие сведения; отклонённые значения не применялись.','Ұсынылған кейбір өрістер қабылданбады. Дәйексөздерді тексеріп, жетіспейтін мәліметтерді толықтырыңыз; қабылданбаған мәндер қолданылған жоқ.'],
  'The tool-step limit was reached. No final AI answer was produced. Review saved document proposals before retrying.':['Достигнут предел шагов инструментов. Итоговый ответ ИИ не получен. Перед повтором проверьте сохранённые предложения в разделе проверки документа.','Құрал қадамдарының шегіне жетті. ЖИ-дің қорытынды жауабы алынбады. Қайта сұрамас бұрын құжатты тексеру бөліміндегі сақталған ұсыныстарды қарап шығыңыз.'],
  'Connections':['Подключения','Қосылымдар'],
  'Public temporary workspace':['Публичная временная рабочая область','Жалпыға ашық уақытша жұмыс кеңістігі'],
