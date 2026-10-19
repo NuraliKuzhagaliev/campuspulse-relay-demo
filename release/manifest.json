@@ -1,22 +1,22 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "product": "CampusPulse RELAY",
-  "version": "0.2.1",
-  "created_at": "2026-10-18T23:08:54.197731+00:00",
-  "status": "public_illustrative_release_verified_mandatory_gcp_pending",
+  "version": "0.3.0",
+  "created_at": "2026-10-19T00:23:40.084914+00:00",
+  "status": "local_reviewable_candidate_native_human_gate_pending_not_published",
   "project_root": "D:\\projects\\CampusPulseRELAY",
-  "source_commit": "24ab8f73ff0e31dba28ff63ae90394b69bcd0c61",
-  "source_commit_semantics": "Source archive includes final evidence/authoring scripts; public runtime is pinned separately. Runtime paths match that deployed commit. No paid GCP deployment is claimed.",
+  "source_commit": "2644622d13922866421ba9d8e9d51f37df494c96",
+  "source_commit_semantics": "Local committed source, verification and docs are archived. Final generated manifest is distributed separately. No public/cloud deployment of0.3.0.",
   "repository": {
     "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo",
-    "branch": "main",
-    "source_commit": "24ab8f73ff0e31dba28ff63ae90394b69bcd0c61",
-    "published": true
+    "branch": "local/four-additions-0.3.0",
+    "source_commit": "2644622d13922866421ba9d8e9d51f37df494c96",
+    "published": false
   },
   "urls": {
-    "public_web": "https://campuspulse-relay-demo.onrender.com",
     "local_web": "http://127.0.0.1:8000",
-    "local_mcp": "http://127.0.0.1:8001/mcp/",
+    "public_web": "https://campuspulse-relay-demo.onrender.com",
+    "public_version": "0.2.1",
     "agent_api": null
   },
   "public_demo_deployment": {
@@ -72,16 +72,14 @@
     },
     "preflight_effort_range_recovery_verified": true
   },
+  "public_deployment_replaced": false,
   "cloud": {
     "provider": "GCP",
-    "status": "pending_organizer_credit_activation_and_verification",
-    "resource": null,
-    "revision": null,
-    "model_success_verified": false,
-    "paid_resources_provisioned": false,
-    "personal_spending_authorized_usd": 0,
-    "credits_confirmed": false,
-    "public_illustrative_hosting_satisfies_mandatory_gate": false
+    "status": "deferred_pending_organizer_credit_eligibility_balance_expiration",
+    "model_calls": 0,
+    "real_calendar_writes": 0,
+    "new_resources_provisioned": 0,
+    "personal_spending_authorized_usd": 0
   },
   "enhancements": {
     "F1": "locally_implemented",
@@ -89,11 +87,13 @@
     "F3": "locally_implemented",
     "F4": "locally_implemented",
     "F5": "locally_implemented",
-    "D1": "locally_and_publicly_verified_illustrative",
-    "D2": "locally_and_publicly_verified_structural_only",
-    "D3": "public_illustrative_judge_verified_live_gcp_pending",
-    "real_calendar_acceptance": "pending",
-    "real_gemini_acceptance": "pending"
+    "A1": "implemented_local_and_installed_contracts_verified",
+    "A2": "implemented_local_browser_verified",
+    "A3": "implemented_live_public_read_and_signed_local_MCP_verified",
+    "A4": "implemented_cross_device_contracts_verified_unmodified_native_dialog_gate_pending",
+    "D1_D2_D3": "preserved",
+    "real_gemini_acceptance": "pending",
+    "real_calendar_acceptance": "pending"
   },
   "languages": {
     "operational_ui": [
@@ -101,54 +101,161 @@
       "ru",
       "kk"
     ],
-    "browser_verified": true,
-    "original_evidence_preserved": true,
-    "live_model_acceptance": "pending"
+    "viewport_widths": [
+      390,
+      768,
+      1280,
+      1440
+    ],
+    "model_acceptance": "pending"
   },
   "verification": {
+    "version": "0.3.0",
+    "checked_at": "2026-10-19T00:18:52.868140+00:00",
+    "kind": "local_reviewable_candidate_not_published",
     "python": {
       "name": "pytest",
       "errors": "0",
       "failures": "0",
       "skipped": "0",
-      "tests": "78",
-      "time": "6.275",
-      "timestamp": "2026-10-19T04:00:26.040143+05:00",
+      "tests": "110",
+      "time": "8.769",
+      "timestamp": "2026-10-19T05:13:01.542740+05:00",
       "hostname": "BlackWolf"
     },
-    "browser_scenarios": 10,
-    "public_workflow_passed": true,
-    "hosted_challenge_scenarios": 2,
-    "native_policy_tests": 3,
-    "installed_windows_contract": {
-      "secure_installed_package": true,
-      "task_packet_plan_scenario_rescue_approval_verify_undo": true,
-      "source_export_conversation_reset": true,
-      "preflight_json_contract": true,
-      "preflight_missing_work_recovery_validated": true,
-      "locale_and_workspace_persist_after_reopen": true
+    "browser": {
+      "passed": 13,
+      "skipped": 1,
+      "duration_seconds": 33.1,
+      "log": ".local/logs/four-browser-all.log",
+      "viewport_widths": [
+        390,
+        768,
+        1280,
+        1440
+      ],
+      "languages": [
+        "en",
+        "ru",
+        "kk"
+      ],
+      "automated_accessibility": "four new panels plus existing primary states; not full certification"
     },
-    "installed_import_regression": true,
-    "packaged_files_match": true,
-    "windows_signature": "NotSigned",
-    "native_human_proof_release": "0.1.1",
-    "native_picker_reobserved_in_current_release": false,
-    "native_banner_reobserved_in_current_release": false,
-    "native_click_focus_verified": false,
-    "mcp_tools": 13,
-    "real_github_read": {
-      "repository": "NuraliKuzhagaliev/campuspulse-relay-demo",
-      "commit": "83552161ec22c7cf44746433425d3b2b99e042c4",
-      "blob": "f08157273402f59aec8289366aef4b0d7623d66c",
-      "fetched_at": "2026-10-18T23:06:37.584687+00:00",
-      "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/blob/83552161ec22c7cf44746433425d3b2b99e042c4/coursework.md",
+    "local_public_mode": {
+      "passed": 4,
+      "skipped": 0,
+      "duration_seconds": 21.9,
+      "log": ".local/logs/four-public-mode-browser.log",
+      "backend": "minimal public-venv",
+      "https": false,
+      "hosted": false,
+      "two_tab_reset": true
+    },
+    "desktop_policy": {
+      "passed": 4,
+      "log": ".local/logs/four-policy.log"
+    },
+    "installed": {
+      "version": "0.3.0",
+      "contract": true,
+      "both_import_paths": true,
+      "cross_device": {
+        "instrumented_native_cancel_keeps_workspace": true,
+        "web_to_installed_desktop_native_path": true,
+        "restored_bridge_csrf_and_retry": true,
+        "ipc_allowlist_remains_narrow": true,
+        "installed_save_uses_actual_file_write_on_D": true,
+        "C_drive_save_denied": true,
+        "installed_restart_persistence": true,
+        "installed_to_fresh_web_semantic_identity_citation_time_progress_comparison": true
+      },
+      "asar_matches_source": true,
+      "dialogs_substituted": true,
+      "unmodified_native_human": "pending",
+      "signature": "NotSigned"
+    },
+    "mcp": {
+      "tools": 14,
+      "passed": true,
+      "cloud_agent": false
+    },
+    "live_public_read": {
+      "repo": "pallets/flask",
+      "number": 6168,
+      "url": "https://github.com/pallets/flask/pull/6168",
+      "state": "closed",
+      "merged": true,
+      "merged_at": "2026-10-07T13:56:06Z",
+      "head_sha": "7689f98403e2c0b0bc8d1031e60f8cff2620e86a",
+      "merge_sha": "728c5e440af704a786384159184f695cf04ecbe7",
+      "observed_at": "2026-10-18T23:54:15.955161+00:00",
+      "last_checked_at": "2026-10-18T23:54:15.955161+00:00",
+      "http_status": 200,
+      "provenance": "live_public_github",
+      "response_sha256": "c257e1840e7c397d515ebd47f0853c7ddc659bf0f2407264fed67cd516b60ba5",
       "cache_age_seconds": 0
     },
-    "paid_model_calls": 0,
+    "latency": {
+      "environment": {
+        "python": "3.13.2",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "backend": "local SQLite / CP-SAT single worker",
+        "workload": "3 structured tasks, 540 minutes, two cited deadline alternatives, 10 study hours before protected busy subtraction"
+      },
+      "samples": [
+        {
+          "milliseconds": 50.24,
+          "branches": 2,
+          "status": "complete",
+          "cached": false
+        },
+        {
+          "milliseconds": 57.07,
+          "branches": 2,
+          "status": "complete",
+          "cached": false
+        },
+        {
+          "milliseconds": 54.09,
+          "branches": 2,
+          "status": "complete",
+          "cached": false
+        },
+        {
+          "milliseconds": 60.51,
+          "branches": 2,
+          "status": "complete",
+          "cached": false
+        },
+        {
+          "milliseconds": 46.87,
+          "branches": 2,
+          "status": "complete",
+          "cached": false
+        }
+      ],
+      "n": 5,
+      "median_ms": 54.09,
+      "max_ms": 60.51,
+      "failures": 0,
+      "budget": {
+        "selected_uncertainties": 3,
+        "joint_branches": 8,
+        "per_solve_seconds": 1,
+        "overall_model_build_solve_seconds": 8,
+        "github_connect_read_seconds": 10,
+        "github_stream_elapsed_guard_seconds": 12
+      },
+      "p95_claim": false,
+      "public_stress_requests": 0
+    },
+    "real_model_calls": 0,
     "real_calendar_writes": 0,
-    "presentation_slides": 10,
-    "presentation_pdf": "rendered slide pages",
-    "presentation_pptx": "native editable"
+    "gcp_resources_provisioned": 0,
+    "public_deployment_replaced": false,
+    "github_writes": false,
+    "inherited_gates": "Gemini / Agent Engine / cloud MCP auth / real Calendar / authenticated hosted judge remain pending",
+    "complete_web_bundle": "docs/evidence/four-web-bundle.json"
   },
   "preserved_releases": [
     {
@@ -170,70 +277,68 @@
       "version": "0.2.0",
       "directory": "D:\\projects\\CampusPulseRELAY\\release\\versions\\0.2.0",
       "artifacts_hash_verified": 6
+    },
+    {
+      "version": "0.2.1",
+      "directory": "D:\\projects\\CampusPulseRELAY\\release\\versions\\0.2.1",
+      "artifacts_hash_verified": 6
     }
   ],
   "artifacts": [
     {
       "kind": "windows_installer",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.2.1-x64-setup.exe",
-      "relative_path": "windows/CampusPulse-RELAY-0.2.1-x64-setup.exe",
-      "bytes": 118750574,
-      "sha256": "941cc03cf15f16425cd40c6cae04321b62284f75fd2194d0e452ed592194496c"
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.3.0-x64-setup.exe",
+      "relative_path": "windows/CampusPulse-RELAY-0.3.0-x64-setup.exe",
+      "bytes": 118762479,
+      "sha256": "b363f5f56b8129ef6bc19b37cfca3aa3dc9b9882ef8a9dcc871ec18545c3f933"
     },
     {
       "kind": "windows_portable",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.2.1-x64-portable.exe",
-      "relative_path": "windows/CampusPulse-RELAY-0.2.1-x64-portable.exe",
-      "bytes": 118525370,
-      "sha256": "1159261ec4b6b2e766b90e92cb2feec67cafbfe383a49d032afbaf1634eb214a"
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.3.0-x64-portable.exe",
+      "relative_path": "windows/CampusPulse-RELAY-0.3.0-x64-portable.exe",
+      "bytes": 118537274,
+      "sha256": "1e43ae2c581043e1bfeada1c78048f2b3eb12052a5576e41ca904d74f75d8045"
+    },
+    {
+      "kind": "complete_web_application",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\web\\CampusPulseRELAY-0.3.0-web-app.zip",
+      "relative_path": "web/CampusPulseRELAY-0.3.0-web-app.zip",
+      "bytes": 1138994,
+      "sha256": "311849f7791616e4789ecc625d51a61e55b869570667bc7a8f7c299310c730af"
     },
     {
       "kind": "source_archive",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\source\\CampusPulseRELAY-0.2.1-source.zip",
-      "relative_path": "source/CampusPulseRELAY-0.2.1-source.zip",
-      "bytes": 9557507,
-      "sha256": "21254fa3c1b54fff82018b7809d24b355a86f45dba06d366653ff63eed24da09"
-    },
-    {
-      "kind": "web_frontend_build",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\web\\CampusPulseRELAY-0.2.1-web-build.zip",
-      "relative_path": "web/CampusPulseRELAY-0.2.1-web-build.zip",
-      "bytes": 1031801,
-      "sha256": "291175c0768955c520cae5879f7b8428f9cf63866a1f9cc08bea77b005645305"
-    },
-    {
-      "kind": "editable_presentation",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.2.1-quality-verified.pptx",
-      "relative_path": "presentation/CampusPulse-RELAY-0.2.1-quality-verified.pptx",
-      "bytes": 62178,
-      "sha256": "126263706ad2cc33b1469b5d6011a53d93c0d35fd386d4b1878132957560b6c6"
-    },
-    {
-      "kind": "presentation_pdf",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.2.1-quality-verified.pdf",
-      "relative_path": "presentation/CampusPulse-RELAY-0.2.1-quality-verified.pdf",
-      "bytes": 489307,
-      "sha256": "1b33df80e9a1b82cd51df17472e8c89570f33046feaa189803ea41184c7696c0"
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\source\\CampusPulseRELAY-0.3.0-source.zip",
+      "relative_path": "source/CampusPulseRELAY-0.3.0-source.zip",
+      "bytes": 43818555,
+      "sha256": "206716f14b50ac0d6203dea3976e30475a4b291518aecb280dacec372d715fdb"
     }
   ],
+  "preserved_presentation": {
+    "version": "0.2.1",
+    "pptx": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.2.1-quality-verified.pptx",
+    "pdf": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.2.1-quality-verified.pdf",
+    "regenerated": false,
+    "scope": "Verified prior public release; not a claim that0.3.0 is public or GCP complete"
+  },
   "blockers": [
-    "Organizer credits: eligible project, billing account, balance and expiration unconfirmed; no personal spending authorized.",
-    "Real Gemini/Agent Engine resource and managed end-to-end path, cloud-to-MCP renewal/restart, real Calendar consent/write/read-back/revocation and isolated unseen-document live judge acceptance remain pending.",
-    "Real prose/table model extraction and confirmation UX acceptance pending; local cited proposal contract is not live evidence.",
-    "Windows native notification click/focus unverified; 0.1.1 human picker/banner proof retained separately."
+    "True unmodified Windows passport Open/Save/cancel/restore/restart interaction pending human after supported helper initialization failure.",
+    "Firestore addition transactions fail closed until separately verified.",
+    "Mandatory actual Gemini/Agent Engine/cloud-to-MCP auth/Calendar consent-write-readback/authenticated hosted unseen-document judge acceptance deferred.",
+    "Organizer eligible project/billing/credit balance/expiration unconfirmed; no uncovered personal spend authorized.",
+    "0.3.0 is not published or deployed; public remains the preserved0.2.1 revision."
   ],
   "limitations": [
-    "Free single-instance Render demo: temporary SQLite and two-hour visitor capability sessions, with earlier reset on hosting inactivity/restarts/redeploys. No durable or multi-instance public persistence claimed.",
-    "Public imports 2 MiB / 12 sources including examples; manual GitHub observations cached five minutes with original provenance. Actual anonymous provider 429 and recovery are recorded.",
-    "Deterministic parser requires structured facts. Missing identity/course/term stays unresolved; scans have no OCR. Semantic draft correctness and grades are not inferred.",
-    "Unsigned Windows app requires the running local gateway for connected operations. Automated import checks substitute the native picker; new real native interaction is not claimed.",
-    "Prior 0.1.0 local recording is a preserved historical backup and was not re-recorded for this release."
+    "Manual unencrypted portable extracts are archived untrusted copies, not original binary/upstream verification. Calendar busy details, approvals, journals and accepted plans are excluded; re-import/reconnect/recompute.",
+    "Timers/logs/completion are personal reports; positive remaining rounds up to30 minutes. Suggestions require five eligible pre-start frozen samples and remain a heuristic.",
+    "Clarification evaluates a bounded selected set; unknown is not infeasible. Waiting PR gates have no assumed release time; latest safe handoff unknown.",
+    "Unsigned desktop requires a running local gateway. Real new banner/click visibility not claimed. Public storage remains temporary; this candidate has local public-mode tests, not hosted0.3.0 HTTPS acceptance."
   ],
   "instructions": {
-    "judge": "docs/judge_quickstart.md",
-    "evaluation": "docs/evaluation_results.md",
-    "defects": "docs/defect_ledger.md",
-    "contracts": "docs/contract_inventory.md",
-    "after_credits": "docs/live_acceptance_batch.md"
+    "acceptance": "docs/four_additions_acceptance.md",
+    "design_and_demo": "docs/four_additions_design.md",
+    "passport": "docs/workspace_passport.md",
+    "native_human": "docs/native_passport_check.md",
+    "later_cloud": "docs/live_acceptance_batch.md"
   }
 }
