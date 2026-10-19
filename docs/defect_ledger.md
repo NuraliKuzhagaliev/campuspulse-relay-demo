@@ -22,6 +22,8 @@ Migration: current legacy sources are backed up in identity_history, alias decis
 No known P0/P1 remains in the locally supported paths covered by the recorded checks. This is not a claim of zero defects. Mandatory GCP, Gemini, cloud-to-MCP auth renewal, real Calendar consent/write/read-back/revocation and an isolated live judge are blocked by unconfirmed organizer credits/access, not declared passed by these tests.
 # 0.3.0 additive continuation findings
 
+Finalr1 check: actual `/api/health` still reported0.2.1 while the API/renderer/package were0.3.0. Corrected the stale constant to`app.version`; added an HTTP version-consistency regression.111-test full suite and actual running health probe pass. Original sealed0.3.0 is preserved; corrected web/backend/source are distributed as0.3.0-r1, with unchanged verified Windows binaries.
+
 | Finding | How established | Correction / actual regression |
 |---|---|---|
 | Portable checksum changed after browser reserialization of45.0→45 | Actual new browser export/download/restore failed PASSPORT_CHECKSUM; initial failure log retained `.local/logs/four-browser-slice-2.log` | Canonical integral-number normalization; dedicated regression plus actual browser and installed round trips pass |

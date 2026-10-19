@@ -47,6 +47,11 @@ def test_event_reconnect_order(client):
     assert client.get('/api/events',params={'after':0}).json()['events']==events
 
 
+def test_health_version_matches_actual_backend_metadata(client):
+    response=client.get('/api/health')
+    assert response.status_code==200 and response.json()['version']==gateway.app.version=='0.3.0'
+
+
 def test_upload_path_rejected(client):
     assert client.post('/api/import',files={'file':('../escape.md',b'Assignment: Lab')}).status_code==403
 

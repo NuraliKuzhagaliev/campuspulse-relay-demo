@@ -1,5 +1,7 @@
 # Four additions — implementation acceptance ledger
 
+**Current distribution:0.3.0-r1** (Windows version remains0.3.0, with the same verified binary hashes). A final actual health probe found a remaining hardcoded0.2.1 string. The backend now derives health version from its FastAPI metadata, with an HTTP regression. Fresh full suite: **111 passed**,9.20s (`.local/logs/four-python-r1.log`, JUnit`four-python-r1.xml`). Actual running localhost8000 health now reports0.3.0; a fresh minimal-runtime complete-web copy also passes health/frontend/backend/passport restore. The original0.3.0 archives/manifests stay preserved. Earlier110-test results below remain historical measurements, not the current total. Browser and installed runtime files did not change inr1; their independently verified hashes remain identical.
+
 Specification read completely: `inputs/CampusPulse_RELAY_Four_Additions_Codex_Prompt.txt` (210 lines). This is an additive local continuation. Release 0.2.1 / deployed runtime `83552161ec22c7cf44746433425d3b2b99e042c4` is preserved. No public replacement, PR/issue/comment, GitHub mutation, model request or Google Calendar write is authorized by this continuation.
 
 ## Baseline actually rerun

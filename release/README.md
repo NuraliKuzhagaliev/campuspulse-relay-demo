@@ -1,4 +1,4 @@
-# CampusPulse RELAY0.3.0 — reviewable local candidate
+# CampusPulse RELAY0.3.0-r1 — reviewable local candidate
 
 The four additions are implemented and independently verified locally/installed: Progress & Remaining Work, Clarify First, Handoff Radar and Workspace Passport. Real unmodified native passport Open/Save/cancel interaction remains a human gate; see `docs/native_passport_check.md`. Installed automated dialogs were explicitly substituted. This is not a published GitHub release or a complete live GCP submission.
 
@@ -6,9 +6,9 @@ The four additions are implemented and independently verified locally/installed:
 
 - `windows/CampusPulse-RELAY-0.3.0-x64-setup.exe`: unsigned NSIS x64 installer; install only under D:.
 - `windows/CampusPulse-RELAY-0.3.0-x64-portable.exe`: unsigned portable app. Set `RELAY_DESKTOP_DATA` to a D: profile. Connected functionality needs the actual local backend on localhost8000; Python is not embedded.
-- `web/CampusPulseRELAY-0.3.0-web-app.zip`: complete built React client **and actual Python backend**, minimal requirements, sample fixtures and D: launcher. Extract under D: and run `scripts/run-web-bundle.ps1` using existing Python3.13. Dependencies/temp/cache/data are created under that D: directory. It is a local illustrative web package, not an independently hosted URL.
-- `source/CampusPulseRELAY-0.3.0-source.zip`: committed local source, locks, tests, evidence, docs and full future deployment infrastructure. Source revision/branch recorded in manifest and archive metadata. Not pushed/published.
-- `manifest.json`, `SHA256SUMS.txt`: actual artifact hashes and verification/pending boundaries. Sealed copies under `versions/0.3.0/` cannot be overwritten by the recorder.
+- `web/CampusPulseRELAY-0.3.0-r1-web-app.zip`: complete built React client **and actual Python backend**, minimal requirements, sample fixtures and D: launcher. Extract under D: and run `scripts/run-web-bundle.ps1` using existing Python3.13. Dependencies/temp/cache/data are created under that D: directory. It is a local illustrative web package, not an independently hosted URL.
+- `source/CampusPulseRELAY-0.3.0-r1-source.zip`: committed local source, locks, tests, evidence, docs and full future deployment infrastructure. Source revision/branch recorded in manifest and archive metadata. Not pushed/published.
+- `manifest.json`, `SHA256SUMS.txt`: actual artifact hashes and verification/pending boundaries. Sealed copies under `versions/0.3.0-r1/` cannot be overwritten by the recorder.
 
 Prior0.1.0, corrected0.1.1, public0.1.1, superseded0.2.0 and public0.2.1 artifacts are preserved with original hashes under `versions/`. The installed0.2.1 directory is separately retained as `D:\projects\CampusPulseRELAY\installed\preserved-0.2.1`.
 
@@ -20,7 +20,7 @@ The preserved ten-slide prior-release presentation remains at `presentation/Camp
 
 ## Verified and pending
 
-110 Python tests;13 local browser workflows plus one public-only skip;4 local public-mode workflows including two-tab reset;4 desktop route-policy tests; installed both-import-path and feature/approval/language/persistence gates; bidirectional web/installed passport semantic comparison;14 actual signed local MCP tools and real read-only public PR metadata. Three operational languages and four viewport widths checked. Detailed evidence: `docs/four_additions_acceptance.md` and `docs/evidence/four-evaluation-0.3.0.json`.
+111 Python tests;13 local browser workflows plus one public-only skip;4 local public-mode workflows including two-tab reset;4 desktop route-policy tests; installed both-import-path and feature/approval/language/persistence gates; bidirectional web/installed passport semantic comparison;14 actual signed local MCP tools and real read-only public PR metadata. Three operational languages and four viewport widths checked. Detailed evidence: `docs/four_additions_acceptance.md` and `docs/evidence/four-evaluation-0.3.0.json`.
 
 Passport files are unencrypted untrusted archived extracts/personal claims. They exclude original binaries, Calendar busy details/connections, approvals/journals and accepted plans. Re-import/reconnect/recompute before operational use. They are manual transfer, not automatic sync or durable hosting. No credentials belong in the file.
 

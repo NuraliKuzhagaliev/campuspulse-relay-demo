@@ -218,7 +218,7 @@ def google_auth(body:GoogleToken):
 def health():
     from .conversations import availability
     agent=availability(store,os.getenv('RELAY_AGENT_RESOURCE'))
-    return dict(ok=True,version='0.2.1',mode='public_demo' if PUBLIC_DEMO else 'cloud' if CLOUD else 'local',agent_configured=agent['configured'],agent_verified=agent['verified'],agent=agent,time=now(),
+    return dict(ok=True,version=app.version,mode='public_demo' if PUBLIC_DEMO else 'cloud' if CLOUD else 'local',agent_configured=agent['configured'],agent_verified=agent['verified'],agent=agent,time=now(),
                 deployed_commit=os.getenv('RELAY_DEPLOYED_COMMIT') or os.getenv('RENDER_GIT_COMMIT'),
                 demo=public_demo.metadata() if PUBLIC_DEMO else None)
 
