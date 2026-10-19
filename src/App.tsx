@@ -890,7 +890,7 @@ export default function App() {
         conversationId.current = (
           await api<{ id: string }>("/conversation")
         ).id;
-      const r = await api<{ text: string; status: string; reason?: string }>(
+      const r = await api<{ text: string; status: string; reason?: string; code?: string }>(
         "/chat",
         "POST",
         {
@@ -905,8 +905,9 @@ export default function App() {
       );
       if (generation !== chatGeneration.current) return;
       setAnswer(
-        r.text ||
-          tr("No usable final answer. Review the outcome before retrying."),
+        r.text || (r.code
+          ? errorMessage(r.code, lang)
+          : tr("No usable final answer. Review the outcome before retrying.")),
       );
       setNotice(tr("Agent outcome") + ": " + label(r.status, lang));
       setPrompt("");

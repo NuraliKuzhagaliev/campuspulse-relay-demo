@@ -1,11 +1,12 @@
 """Create a complete illustrative web application ZIP, then stage it for minimal-runtime verification."""
 import json
+import os
 import zipfile
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]
 version=json.loads((root/'package.json').read_text())['version']
 output=root/f'.local/final-integration/CampusPulseRELAY-{version}-web-app.zip'
-stage=root/'.local/final-integration/web-bundle'
+stage=root/('.local/final-integration/web-bundle-'+os.getenv('RELAY_WEB_BUNDLE_REVISION','r2'))
 assert not stage.exists(),'Preserve an existing verification extraction; choose a new path.'
 with zipfile.ZipFile(output,'w',zipfile.ZIP_DEFLATED) as z:
     for folder in ('dist','relay','fixtures'):

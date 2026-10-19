@@ -55,9 +55,9 @@
     },
     "nsis": {
       "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true,
+      "allowToChangeInstallationDirectory": false,
+      "createDesktopShortcut": false,
+      "createStartMenuShortcut": false,
       "include": "desktop/installer.nsh",
       "runAfterFinish": false,
       "deleteAppDataOnUninstall": false,

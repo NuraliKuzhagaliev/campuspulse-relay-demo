@@ -2,7 +2,7 @@
 
 The manifest/checksums name the exact committed source, installed Windows candidate, complete local web bundle and12-slide presentation. This is a local Gemini-verified candidate, not a completed hosted0.4 or managed-GCP submission. Current public service remains0.2.1 until verified cutover. Read `docs/final_cutover_plan.md` and `docs/final_judge_guide.md`.
 
-Keep extraction, installer, portable profile, dependencies, caches and data on D:. Installer and portable binaries are unsigned. Installed location: `D:\projects\CampusPulseRELAY\installed\CampusPulse RELAY`.0.3 installation was hash-checked and copied to `installed/preserved-0.3.0`; prior sealed archives/manifests remain untouched. Install/uninstall does not mean cloud or native dialog acceptance.
+Keep extraction, installer, portable profile, dependencies, caches and data on D:. Launch via the adjacent `windows/Install-D.cmd` or `windows/Launch-Portable-D.cmd` so the NSIS/self-extractor also inherits D: TEMP/TMP/TMPDIR. Desktop/Start-menu shortcut creation is disabled to avoid project shortcuts on C:. Installer target is fixed to `D:\projects\CampusPulseRELAY\installed\CampusPulse RELAY`. Binaries are unsigned.0.3 installation was hash-checked and copied to `installed/preserved-0.3.0`; prior sealed archives/manifests remain untouched. Install/uninstall does not mean cloud or native dialog acceptance.
 
 The0.4 desktop defaults to the public HTTPS gateway. Until the0.4 backend cutover, use the explicit local launch environment `RELAY_GATEWAY_URL=http://127.0.0.1:8000` with a running0.4 local gateway for all new features. No GCP/Google authentication is needed for illustrative file import/planning. API keys never belong in Electron, renderer, passport or source archives.
 

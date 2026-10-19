@@ -7,7 +7,7 @@ import sys
 from datetime import datetime,timezone
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]
-stage=root/'.local/final-integration/web-bundle'
+stage=root/('.local/final-integration/web-bundle-'+os.getenv('RELAY_WEB_BUNDLE_REVISION','r2'))
 os.environ['RELAY_MODE']='local';os.environ['RELAY_DATA_DIR']=str(root/'.local/final-integration/web-bundle-data')
 for key in ('RELAY_GEMINI_API_KEY','RELAY_INFERENCE_PROVIDER','RELAY_DEPLOYMENT_MODE','RELAY_AGENT_RESOURCE'):os.environ.pop(key,None)
 sys.path.insert(0,str(stage));os.chdir(stage)

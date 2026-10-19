@@ -1,8 +1,8 @@
 {
-  "checked_at": "2026-10-19T13:10:26.654542+00:00",
+  "checked_at": "2026-10-19T13:14:30.763153+00:00",
   "version": "0.4.0",
   "environment": "D:\\projects\\CampusPulseRELAY\\.local\\public-venv\\Scripts\\python.exe",
-  "extracted_root": "D:\\projects\\CampusPulseRELAY\\.local\\final-integration\\web-bundle",
+  "extracted_root": "D:\\projects\\CampusPulseRELAY\\.local\\final-integration\\web-bundle-r2",
   "checks": {
     "plan_whatif_illustrative_approval_readback": true,
     "new_file_exact_readback_no_google": true,
@@ -13,7 +13,7 @@
   "real_calendar_writes": 0,
   "runtime_files": {
     "dist/assets/index-C4oo56nS.css": "63cc1201e7b2d7578815abaeafa99c637c1660642a59e9ff2275286c87888f71",
-    "dist/assets/index-xmUG9mlc.js": "a4a2a0747be34f54f598e704b704c1f1fd5f33c91dbd813f374611ab9144fba9",
+    "dist/assets/index-IycBXAnW.js": "79126612d812db4864f3ef81eb0ba3dc1d8a92a44a9bc09643cd49d827602617",
     "dist/assets/inter-cyrillic-400-normal-HOLc17fK.woff": "6e441a6c94788318fa02b6d0a633aa29eebe27b69c6567eb1e59b4edc68ed70e",
     "dist/assets/inter-cyrillic-400-normal-obahsSVq.woff2": "f0bb586459ce8f09b238285040f17e3e9e9538b2c5a7aae0775194e33c36c3c3",
     "dist/assets/inter-cyrillic-500-normal-BasfLYem.woff2": "b77a86ec16aadc157f4a99e8898d71cd75ea264753d9bdf13f962f8c3988cbb0",
@@ -75,7 +75,7 @@
     "dist/assets/licenses/Lucide-license.txt": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc",
     "dist/assets/licenses/React-MIT.txt": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
     "dist/assets/licenses/ReactDOM-MIT.txt": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
-    "dist/index.html": "721fec0a4a4632d96a68d4221d7945bc6f5377345318a1ae40febf401d8dfdc1",
+    "dist/index.html": "d3fbf78e44da06d423bc429e72b19d24478766a5295c6707a668d6f19219dd66",
     "docs/final_judge_guide.md": "71095abaca2b10299224dcb6c00d3cefdc2485cce9956bf353f2678765359b6e",
     "docs/workspace_passport.md": "ca193f4f84d5fb06422aa0ee2502dbf174d0f8ae6f49ee23d24bf863fd1f593d",
     "fixtures/network-security-original.pdf": "11a2d57b1ddf16764e8cf24d99d1f37ee2320d2f06d7667f31ef1deb89beeba5",

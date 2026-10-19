@@ -1,8 +1,8 @@
 {
   "version": "0.4.0",
-  "checked_at": "2026-10-19T12:47:52.908Z",
+  "checked_at": "2026-10-19T13:17:49.839Z",
   "executable": "D:\\projects\\CampusPulseRELAY\\installed\\CampusPulse RELAY\\CampusPulse RELAY.exe",
-  "profile": "D:\\projects\\CampusPulseRELAY\\.local\\desktop-contract\\0.4.0-mvf92630",
+  "profile": "D:\\projects\\CampusPulseRELAY\\.local\\desktop-contract\\0.4.0-mvfa4olr",
   "checks": {
     "secure_installed_package": true,
     "task_packet_plan_scenario_rescue_approval_verify_undo": true,
@@ -38,13 +38,13 @@
       "matches_current_source": true
     },
     {
-      "file": "dist\\assets\\index-xmUG9mlc.js",
-      "sha256": "a4a2a0747be34f54f598e704b704c1f1fd5f33c91dbd813f374611ab9144fba9",
+      "file": "dist\\assets\\index-IycBXAnW.js",
+      "sha256": "79126612d812db4864f3ef81eb0ba3dc1d8a92a44a9bc09643cd49d827602617",
       "matches_current_source": true
     },
     {
       "file": "dist\\index.html",
-      "sha256": "721fec0a4a4632d96a68d4221d7945bc6f5377345318a1ae40febf401d8dfdc1",
+      "sha256": "d3fbf78e44da06d423bc429e72b19d24478766a5295c6707a668d6f19219dd66",
       "matches_current_source": true
     }
   ],

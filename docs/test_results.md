@@ -8,4 +8,6 @@ Post-answer Axe initially found `scrollable-region-focusable` on `.run-events`. 
 
 Native Open/Save/cancel/banner/click need separate real observation. Historical0.1.1 picker/banner and0.3 human45/95 reopening are retained, not relabeled0.4 checks. Public remains0.2.1; hosted0.4, installed Windows public query, real Calendar, managed GCP and always-running hosted autonomy have not passed.
 
+Additional affected browser regression: one deterministic quota-failure test passed in3.9s, exercising EN/RU/KK localized recovery and preventing an English-only provider detail from appearing. It used an artificial failure response and zero real model calls, explicitly not live AI acceptance (`evidence/final-ui-quota-0.4.0.json`). The final installed candidate was rebuilt/reinstalled and package/import/passport checks repeated. D: launch wrappers configure NSIS/portable extraction temp paths. C:-profile shortcut creation and changing the installer target are disabled.
+
 Machine-readable index: `evidence/final-verification-0.4.0.json`. Historical test narrative is under `history/before-final-integration-0.4.0/docs__test_results.md`. All partial/failing development evidence remains retained and no failed run is overwritten into a pass.

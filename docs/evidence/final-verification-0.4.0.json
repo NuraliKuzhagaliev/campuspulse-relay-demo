@@ -1,8 +1,8 @@
 {
-  "checked_at": "2026-10-19T12:59:09.617873+00:00",
+  "checked_at": "2026-10-19T13:18:47.328730+00:00",
   "version": "0.4.0",
   "status": "LOCAL_GEMINI_VERIFIED_HOSTED_CALENDAR_GCP_PENDING",
-  "source_commit_at_collection": "f295df4396c852075c29a929a3a7b1ec24df53e9",
+  "source_commit_at_collection": "c7f13595929d544611e93e6d9cc2149d12369169",
   "source_has_uncommitted_integration_changes": true,
   "python": {
     "tests": 121,
@@ -87,6 +87,25 @@
     "automated_AA_primary_state": true,
     "all_accessibility_standards_claimed": false
   },
+  "additional_browser_fault_regression": {
+    "kind": "deterministic_browser_fault_only",
+    "not_live_model_acceptance": true,
+    "actual_model_calls": 0,
+    "languages": [
+      "en",
+      "ru",
+      "kk"
+    ],
+    "checks": {
+      "localized_recovery_message": true,
+      "provider_english_detail_not_shown": true
+    },
+    "tests_passed": 1,
+    "seconds": 3.9,
+    "app_source_sha256": "ec0df7856fd79248aa05a95d5fd13e5e5a4dbbba8db7385575b1e3865edbaaa6",
+    "log_sha256": "18c3d82218460b8f6ae5ae7ead2028bc4c0284361980724dfbbbbe13828f7eb5",
+    "passed": true
+  },
   "acceptance": {
     "unseen_cited_sources": "genuinely_live_verified_local_gateway",
     "conflict_and_clarification": "genuinely_live_verified_local_gateway",
@@ -133,15 +152,15 @@
     },
     {
       "path": "docs/evidence/desktop-contract-0.4.0.json",
-      "sha256": "2a7f1f2f3cf86f05dbd4360082e763ac48448b412933009e01dc80f339c231ed"
+      "sha256": "a1d80a4c00474b9071c20d55f46c6d88948949cb34c945087297836881ff9592"
     },
     {
       "path": "docs/evidence/desktop-import-regression-0.4.0.json",
-      "sha256": "b57d06936725db0e64756dfd3d3ee396de57fcd0ec3a6e4c931e5bd4375badd6"
+      "sha256": "282c9233797266dc0f67f59fc6dfa9c3f674c412d806b314ea9d75e66cf92072"
     },
     {
       "path": "docs/evidence/four-desktop-0.4.0.json",
-      "sha256": "9980749bb6d7183124dadc989b7ebdffdd1c935e01b7dd107bcd297b3c83485e"
+      "sha256": "3d65aa1f6ebfb2992ca3dc8f5037e32e29f6bd606c7b798657d3e0e1797db1bf"
     },
     {
       "path": "docs/evidence/final-account-assessment.json",

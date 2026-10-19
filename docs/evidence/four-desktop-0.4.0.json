@@ -1,7 +1,7 @@
 {
   "version": "0.4.0",
-  "checked_at": "2026-10-19T12:47:59.487Z",
-  "profile": "D:\\projects\\CampusPulseRELAY\\.local\\four-additions\\desktop-mvf92b5r",
+  "checked_at": "2026-10-19T13:15:12.576Z",
+  "profile": "D:\\projects\\CampusPulseRELAY\\.local\\four-additions\\desktop-mvfa1b9c",
   "executable": "D:\\projects\\CampusPulseRELAY\\installed\\CampusPulse RELAY\\CampusPulse RELAY.exe",
   "checks": {
     "instrumented_native_cancel_keeps_workspace": true,
@@ -45,13 +45,13 @@
       "matches_source": true
     },
     {
-      "file": "dist\\assets\\index-xmUG9mlc.js",
-      "sha256": "a4a2a0747be34f54f598e704b704c1f1fd5f33c91dbd813f374611ab9144fba9",
+      "file": "dist\\assets\\index-IycBXAnW.js",
+      "sha256": "79126612d812db4864f3ef81eb0ba3dc1d8a92a44a9bc09643cd49d827602617",
       "matches_source": true
     },
     {
       "file": "dist\\index.html",
-      "sha256": "721fec0a4a4632d96a68d4221d7945bc6f5377345318a1ae40febf401d8dfdc1",
+      "sha256": "d3fbf78e44da06d423bc429e72b19d24478766a5295c6707a668d6f19219dd66",
       "matches_source": true
     }
   ],

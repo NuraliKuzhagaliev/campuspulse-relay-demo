@@ -1,0 +1,19 @@
+{
+  "kind": "deterministic_browser_fault_only",
+  "not_live_model_acceptance": true,
+  "actual_model_calls": 0,
+  "languages": [
+    "en",
+    "ru",
+    "kk"
+  ],
+  "checks": {
+    "localized_recovery_message": true,
+    "provider_english_detail_not_shown": true
+  },
+  "tests_passed": 1,
+  "seconds": 3.9,
+  "app_source_sha256": "ec0df7856fd79248aa05a95d5fd13e5e5a4dbbba8db7385575b1e3865edbaaa6",
+  "log_sha256": "18c3d82218460b8f6ae5ae7ead2028bc4c0284361980724dfbbbbe13828f7eb5",
+  "passed": true
+}
