@@ -26,7 +26,7 @@ def test_funding_requires_exact_fresh_nonbillable_trial():
     assert validate_funding(r,'owned',15,24,'billingAccounts/test',at)['personal_spending_authorized_usd']==0
     for change in [dict(source='organizer-credits'),dict(account_type_human_confirmed='paid'),
                    dict(project_id='other'),dict(credit_balance_api_verified=True),dict(billing_open_api_verified=False),
-                   dict(balance_usd_human_confirmed=20),dict(expires_at_utc=at.isoformat()),
+                   dict(balance_usd_human_confirmed=20),dict(reserve_usd=0),dict(expires_at_utc=at.isoformat()),
                    dict(checked_at_utc=(at-timedelta(days=2)).isoformat())]:
         with pytest.raises(RelayError):validate_funding(r|change,'owned',15,24,'billingAccounts/test',at)
 
@@ -57,6 +57,19 @@ def test_failed_freshness_does_not_leave_green_success(clean_provider,monkeypatc
 def test_nested_tool_failures_are_not_green():
     assert tool_result_failed({'result':{'structuredContent':{'error':{'code':'ACCESS_DENIED'}}}})
     assert not tool_result_failed({'result':{'status':'verified','external_readback':True}})
+
+
+def test_extraction_schema_and_redacted_typed_diagnostics():
+    from relay.mcp_server import ExtractionCandidate
+    from relay.agent import safe_error_codes
+    from pydantic import ValidationError
+    with pytest.raises(ValidationError):
+        ExtractionCandidate(field='deadline',value='2026-10-23',page=1,quote='Due: 2026-10-23',original_expression='2026-10-23')
+    candidate=ExtractionCandidate(field='due',value='2026-10-23T20:00:00+05:00',page=1,quote='Due: 2026-10-23T20:00:00+05:00',original_expression='2026-10-23T20:00:00+05:00',timezone='Asia/Qyzylorda',year_explicit=True)
+    assert candidate.model_dump()['field']=='due'
+    data={'content':[{'type':'text','text':json.dumps({'error':{'code':'SOURCE_CONFLICT','message':'private document text'}})}]}
+    assert safe_error_codes(data)==['SOURCE_CONFLICT']
+    assert safe_error_codes({'error':{'code':'private text with spaces'}})==[]
 
 
 def test_adk_checkpoint_survives_service_recreation_without_tool_secrets(tmp_path):

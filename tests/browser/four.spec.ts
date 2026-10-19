@@ -174,7 +174,7 @@ test("four additions: cited clarification, explicit work, gate failure, passport
     page.getByRole("heading", { name: "Your week. Back in balance." }),
   ).toBeVisible();
   await fs.writeFile(
-    `docs/evidence/four-browser-timing-${process.env.RELAY_TEST_BASE_URL?.includes("8014") ? "public-mode" : "local"}.json`,
+    `docs/evidence/four-browser-timing-${process.env.RELAY_TEST_BASE_URL?.includes("8014") ? "public-mode" : "local"}${process.env.RELAY_EVIDENCE_SUFFIX || ""}.json`,
     JSON.stringify(
       {
         environment: process.env.RELAY_TEST_BASE_URL || "localhost",

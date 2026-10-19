@@ -1,0 +1,126 @@
+{
+  "checked_at": "2026-10-19T12:41:56.045Z",
+  "url": "https://localhost:8017",
+  "development_certificate_only": true,
+  "provider": "gemini_developer",
+  "managed_agent_engine": false,
+  "checks": {
+    "source_only_no_unnecessary_proposal": true,
+    "axe_after_live_answer": {
+      "violations": [
+        {
+          "id": "scrollable-region-focusable",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".run-events"
+              ],
+              "summary": "Fix any of the following:\n  Element should have focusable content\n  Element should be focusable"
+            }
+          ]
+        }
+      ],
+      "passes": 22
+    },
+    "actual_extraction_schema": true,
+    "refresh_conversation_and_fresh_consent": true
+  },
+  "runs": [
+    {
+      "text": "Based on the source `aspheric-mvf8uiq4` (source ID `0bcb580417bfbb33536f61f0`, page 1), here are the details requested:\n\n- **Deadline:** `2026-10-24T18:30:00+05:00` (from exact quote: `Due: 2026-10-24T18:30:00+05:00`)\n- **Rubric lines:**\n  1. `- [ ] Explain ray aberration mvf8uiq4`\n  2. `- [ ] Compare two reference surfaces mvf8uiq4`",
+      "status": "complete",
+      "required_tool_failed": false,
+      "tool_observations": [
+        {
+          "tool": "list_course_sources",
+          "status": "observed",
+          "response_sha256": "3aba27fbb9580755e8044cc7d71fc3bdd7fd60cc528bbdb3215c60b222c6dacb",
+          "provenance": [
+            {
+              "version": "cc733d7e139c93a2ed992158",
+              "fetched_at": "2026-10-19T12:41:57.949609+00:00",
+              "mode": "selected_upload"
+            },
+            {
+              "version": "2f1365369bcaca0fc2410e36",
+              "fetched_at": "2026-10-19T12:39:53.237176+00:00",
+              "mode": "illustrative"
+            },
+            {
+              "version": "f533bc53b7a3908263273afb",
+              "fetched_at": "2026-10-19T12:39:53.228671+00:00",
+              "mode": "illustrative"
+            },
+            {
+              "version": "3d59531452b6fcba20721a8d",
+              "fetched_at": "2026-10-19T12:39:53.232860+00:00",
+              "mode": "illustrative"
+            },
+            {
+              "version": "74cb3670dd78e6fa05f7d1eb",
+              "fetched_at": "2026-10-19T12:39:53.241489+00:00",
+              "mode": "illustrative"
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "d6c085e1069ffeccb62e70d0d9a8574b08c9d21bcadb2dcef53648b014611b22",
+          "provenance": [
+            {
+              "source_id": "0bcb580417bfbb33536f61f0",
+              "page": 1,
+              "version": "cc733d7e139c93a2ed992158",
+              "fetched_at": "2026-10-19T12:41:57.949609+00:00",
+              "mode": "selected_upload"
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "1d3bd9397df305bd71c3bbb491d115f9",
+      "conversation_id": "9979f3a6b83241c32dd7269f70e4d2b6",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "duration_ms": 16492
+    },
+    {
+      "text": "I have proposed the extraction for the deadline from source `0bcb580417bfbb33536f61f0` (page 1) using the exact quote `\"Due: 2026-10-24T18:30:00+05:00\"`, retaining the explicit year, original expression, and `+05:00` timezone.\n\n**Proposed Extraction Summary:**\n- **Field:** `due`\n- **Value / Expression:** `2026-10-24T18:30:00+05:00`\n- **Timezone:** `+05:00` (Year explicit: Yes)\n- **Page:** 1\n- **Exact Quote:** `Due: 2026-10-24T18:30:00+05:00`\n\nPlease note that this extraction proposal has **not** been applied or confirmed. UI confirmation is mandatory before this proposal can be confirmed or utilized in any plan.",
+      "status": "complete",
+      "required_tool_failed": false,
+      "tool_observations": [
+        {
+          "tool": "propose_academic_extraction",
+          "status": "observed",
+          "response_sha256": "e4f78f284677ee6431f2710c65ec1371490759247d472629b55d40d4fa91ee19",
+          "provenance": [
+            {
+              "source_id": "0bcb580417bfbb33536f61f0",
+              "source_version": "cc733d7e139c93a2ed992158"
+            },
+            {
+              "page": 1,
+              "source_id": "0bcb580417bfbb33536f61f0",
+              "source_version": "cc733d7e139c93a2ed992158"
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "04d94ad99465e5cae88ebaf070eaa1b8",
+      "conversation_id": "9979f3a6b83241c32dd7269f70e4d2b6",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "duration_ms": 15143
+    }
+  ],
+  "passed": false,
+  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n"
+}

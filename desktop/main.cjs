@@ -36,7 +36,7 @@ app.commandLine.appendSwitch("disable-http-cache");
 let window,
   tray,
   watcher,
-  gateway = process.env.RELAY_GATEWAY_URL || "http://127.0.0.1:8000",
+  gateway = process.env.RELAY_GATEWAY_URL || "https://campuspulse-relay-demo.onrender.com",
   csrf = "";
 const trustedOrigin = new URL(gateway).origin;
 if (

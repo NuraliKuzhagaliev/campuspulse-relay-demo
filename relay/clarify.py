@@ -134,7 +134,7 @@ def analyze(svc, body):
             ranked.sort(key=lambda c:(not c['impact_known'],not c['feasibility_changing'],c['earliest_deadline'],-c['minutes_affected'],-c['blocks_affected'],c['id']))
             result=dict(id=cache_id,candidates=ranked,gaps=gaps,branches=branches,status='complete' if len(branches)==2**len(chosen) and all(b['status']=='evaluated' for b in branches) else 'partial',
                         tested=len(branches),possible_in_selected_set=2**len(chosen),other_candidates=max(0,len(options)-len(chosen)),
-                        policy='Known impact first; feasibility change, earliest cited deadline, affected unscheduled minutes, changed blocks, stable identifier. Pairwise comparisons include all evaluated joint contexts; no probabilities or global relevance claim.')
+                        policy='Known impact first; feasibility change, earliest cited deadline, affected unscheduled minutes, changed blocks, stable identifier. blocks_changed counts removed plus added block entries, so a moved block can count twice; it is not a distinct moved-block count. Pairwise comparisons include all evaluated joint contexts; no probabilities or global relevance claim.')
         if event.is_set():raise RelayError('CANCELLED','Clarification cancelled. The original workspace is unchanged.')
         if svc.source_versions()!=fingerprint:raise RelayError('STALE_REVISION','Workspace changed during clarification; discard this comparison and retry.')
         result.update(sources=fingerprint,created_at=now(),duration_ms=round((time.perf_counter()-began)*1000),canonical_workspace_unchanged=True)

@@ -1,0 +1,29 @@
+{
+  "checked_at": "2026-10-19T12:54:32.414Z",
+  "url": "https://localhost:8017",
+  "development_certificate_only": true,
+  "managed_agent_engine": false,
+  "result": {
+    "text": "### Web Project Progress and Solver Allocation Re-Inspection\n\nCampusPulse RELAY has re-inspected the progress records for the **Web project** (`Web Engineering`). Here are the exact figures and verification statuses:\n\n1. **Logged and Remaining Minutes:**\n   * **Logged Duration:** **45 minutes** (`student_manual` log).\n   * **Remaining Minutes:** **95 minutes** (`student_report` progress record).\n\n2. **Solver Allocation Requirement:**\n   * Under the deterministic solver rules, positive remaining work is rounded up to **30-minute allocation units**.\n   * With **95 minutes remaining**, the solver allocates **120 minutes** (4 units of 30 minutes) to fully cover the remaining work before the deadline.\n\n3. **Independently Verified Facts About Completed Work:**\n   * **None.** As explicitly established by system policy and progress metadata (`time_is_not_completion: true`, `student_reports_are_not_validated_completion: true`), logged durations and student-reported remaining minutes are **student reports, never independently validated completion or attention**. They do not constitute proof of actual learning, task completion, or verified progress.",
+    "status": "complete",
+    "required_tool_failed": false,
+    "tool_observations": [
+      {
+        "tool": "get_progress_summary",
+        "status": "observed",
+        "response_sha256": "965b066e42951644e539665dd767661e0c7b6705cd8bb665d5ae4dc39bc785d9",
+        "provenance": [],
+        "error_codes": []
+      }
+    ],
+    "run_id": "00650495965d435653a1c1379feb5168",
+    "conversation_id": "fe4aaa72028d87c1dc79c3d951b29af5",
+    "mode": "live_gemini_alternative",
+    "provider": "gemini_developer",
+    "model": "gemini-3.5-flash-lite",
+    "deployment_mode": "alternative_hosted",
+    "duration_ms": 15800
+  },
+  "restart_checkpoint": true,
+  "passed": true
+}

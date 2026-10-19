@@ -1,0 +1,77 @@
+{
+  "checked_at": "2026-10-19T12:39:50.980Z",
+  "url": "https://localhost:8017",
+  "development_certificate_only": true,
+  "inference_calls": 0,
+  "checks": {
+    "layouts": [
+      {
+        "lang": "en",
+        "width": 390,
+        "fits": true
+      },
+      {
+        "lang": "en",
+        "width": 768,
+        "fits": true
+      },
+      {
+        "lang": "en",
+        "width": 1280,
+        "fits": true
+      },
+      {
+        "lang": "en",
+        "width": 1440,
+        "fits": true
+      },
+      {
+        "lang": "ru",
+        "width": 390,
+        "fits": true
+      },
+      {
+        "lang": "ru",
+        "width": 768,
+        "fits": true
+      },
+      {
+        "lang": "ru",
+        "width": 1280,
+        "fits": true
+      },
+      {
+        "lang": "ru",
+        "width": 1440,
+        "fits": true
+      },
+      {
+        "lang": "kk",
+        "width": 390,
+        "fits": true
+      },
+      {
+        "lang": "kk",
+        "width": 768,
+        "fits": true
+      },
+      {
+        "lang": "kk",
+        "width": 1280,
+        "fits": true
+      },
+      {
+        "lang": "kk",
+        "width": 1440,
+        "fits": true
+      }
+    ],
+    "axe": {
+      "violations": [],
+      "passes": 19
+    },
+    "consent_reset_after_reload": true,
+    "unsigned_operator_and_mcp_denied": true
+  },
+  "passed": true
+}

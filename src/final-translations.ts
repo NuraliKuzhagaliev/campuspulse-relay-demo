@@ -1,4 +1,5 @@
 export const finalTranslations: Record<string, readonly [string, string]> = {
+  "Execution events": ["События выполнения", "Орындау оқиғалары"],
   "Gemini access and privacy": [
     "Доступ к Gemini и конфиденциальность",
     "Gemini қолжетімділігі және құпиялылық",

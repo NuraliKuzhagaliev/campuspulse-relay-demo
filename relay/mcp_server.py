@@ -11,6 +11,23 @@ from .domain import RelayError, now
 from .store import make_store
 from .service import RelayService
 from .connectors import GitHub
+from pydantic import BaseModel, ConfigDict, Field
+from typing import Literal
+
+
+class ExtractionCandidate(BaseModel):
+    """The model sees the same finite field vocabulary enforced by the validator."""
+    model_config=ConfigDict(extra='forbid')
+    field:Literal['title','course','term','assignment_key','due','minutes','rubric']
+    value:str|int|list[str]|None
+    page:int=Field(ge=1,le=100)
+    quote:str=Field(min_length=1,max_length=4000,description='An exact contiguous substring of the selected page, unchanged.')
+    original_expression:str=Field(description='Original expression appearing verbatim within quote.')
+    context:str=Field(default='',max_length=1000)
+    assumptions:str=Field(default='',max_length=1000)
+    timezone:str|None=Field(default=None,description='Explicit source timezone for due, otherwise null.')
+    year_explicit:bool=False
+    ambiguous:bool=False
 
 store=make_store()
 mcp=FastMCP('CampusPulse RELAY',stateless_http=True,json_response=True,streamable_http_path='/')
@@ -97,7 +114,7 @@ def get_progress_summary() -> dict:
     return dict(revision=__import__('relay.progress',fromlist=['revision']).revision(s),
                 tasks=[{k:t.get(k) for k in ('id','title','course','minutes','remaining_minutes','completion','progress','source_ids')} for t in s.tasks()],
                 logs=[{k:r.get(k) for k in ('id','task_id','duration_minutes','origin','created_at')} for r in store.list(s.tenant,'work_logs')],
-                time_is_not_completion=True)
+                time_is_not_completion=True,student_reports_are_not_validated_completion=True,solver_allocation_unit_minutes=30)
 
 
 @mcp.tool()
@@ -148,13 +165,13 @@ def build_next_action_packet(task_id:str) -> dict:
 
 
 @mcp.tool()
-def propose_academic_extraction(source_id:str,candidates:list[dict]) -> dict:
-    """Propose cited fields from selected prose/tables (EN/RU/Kazakh). Each item needs field,value,page,exact quote,original_expression,context,assumptions; dates need timezone,year_explicit,ambiguity. Never applies inferred facts or confirms identity. UI confirmation remains mandatory."""
+def propose_academic_extraction(source_id:str,candidates:list[ExtractionCandidate]) -> dict:
+    """Only when extraction is requested: propose cited fields from selected prose/tables. Use field due for deadline, minutes for effort, rubric for requirements. Dates retain timezone/year/ambiguity. Every quote must match the page exactly. Never applies facts or confirms identity; UI confirmation is mandatory."""
     from .extraction import extraction_proposal
     s=svc()
     def propose():
         source=store.get(s.tenant,'sources',source_id)
-        proposal=extraction_proposal(source,candidates)
+        proposal=extraction_proposal(source,[c.model_dump() for c in candidates])
         store.put(s.tenant,'extraction_proposals',proposal['id'],proposal)
         return proposal
     return result(propose)

@@ -1,0 +1,19 @@
+{
+  "checked_at": "2026-10-19T12:28:12.870Z",
+  "kind": "local_https_real_gemini",
+  "url": "https://localhost:8017",
+  "development_certificate_only": true,
+  "provider": "gemini_developer",
+  "managed_agent_engine": false,
+  "source_commit": "f295df4396c852075c29a929a3a7b1ec24df53e9-plus-local-staging-changes",
+  "checks": {
+    "two_fresh_private_sessions": {
+      "failed": true,
+      "message": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: /^(Enter public demo|Open isolated demo)$/ }) resolved to 2 elements:\n    1) <button class=\"primary full\">…</button> aka getByRole('button', { name: 'Enter public demo' })\n    2) <button disabled class=\"secondary\">Open isolated demo</button> aka getByRole('button', { name: 'Open isolated demo' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /^(Enter public demo|Open isolated demo)$/ })\u001b[22m\n"
+    }
+  },
+  "runs": [],
+  "calendar": "illustrative_only",
+  "sensitive_material": false,
+  "passed": false
+}

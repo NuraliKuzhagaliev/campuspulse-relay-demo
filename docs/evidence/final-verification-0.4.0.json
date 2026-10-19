@@ -1,0 +1,151 @@
+{
+  "checked_at": "2026-10-19T12:59:09.617873+00:00",
+  "version": "0.4.0",
+  "status": "LOCAL_GEMINI_VERIFIED_HOSTED_CALENDAR_GCP_PENDING",
+  "source_commit_at_collection": "f295df4396c852075c29a929a3a7b1ec24df53e9",
+  "source_has_uncommitted_integration_changes": true,
+  "python": {
+    "tests": 121,
+    "failures": 0,
+    "errors": 0,
+    "seconds": 9.654
+  },
+  "browser": {
+    "passed": 13,
+    "skipped": 1,
+    "failed": 0,
+    "seconds": 36.04359699999999
+  },
+  "ipc_policy": {
+    "passed": 4,
+    "failed": 0,
+    "seconds": 0.0824866
+  },
+  "installed_desktop": {
+    "desktop-contract": true,
+    "desktop-import-regression": true,
+    "four-desktop": true
+  },
+  "windows_signature": "NotSigned",
+  "real_gemini": {
+    "provider": "gemini_developer",
+    "model": "gemini-3.5-flash-lite",
+    "metadata_version": "3.5-flash-lite-07-2026",
+    "project": "gen-lang-client-0595303951",
+    "environment": "local HTTPS gateway plus actual remote Gemini and live public GitHub",
+    "development_certificate_only": true,
+    "managed_agent_engine": false,
+    "frontend_turns": 11,
+    "complete": 10,
+    "partial": 1,
+    "latency_ms": {
+      "n": 11,
+      "min": 13874,
+      "max": 21413,
+      "mean": 17019,
+      "kind": "gateway agent duration; warm local server; no hosted cold-start or percentile claim"
+    },
+    "provider_reported_usage": {
+      "model_responses": 31,
+      "input_tokens": 106088,
+      "output_tokens": 4373,
+      "thinking_tokens": 0,
+      "total_tokens": 110461
+    },
+    "usage_scope": "All provider-reported model responses retained in the isolated local alternative data store, including development smoke/failures. Not a quota balance or final invoice."
+  },
+  "reviewed_defects": [
+    {
+      "issue": "Unnecessary proposal failed in first source-only turn",
+      "finding": "Original tool arguments were deliberately not persisted, so the historical rejected field cannot be reconstructed. Unconditional extraction instruction and unconstrained list[dict] contract were identified.",
+      "fix": "Source-only reads no longer create proposals; finite typed candidate schema and redacted error codes added.",
+      "recheck": "Two affected real turns completed, exact source read and non-applying extraction proposal."
+    },
+    {
+      "issue": "Post-answer Axe scrollable-region-focusable violation",
+      "fix": "Execution events are a named focusable region with EN/RU/KK label.",
+      "recheck": "UI-only existing real-run state, zero additional model calls; no automated AA violations."
+    },
+    {
+      "issue": "Model called a student remaining estimate validated and overstated changed-entry count as moved blocks",
+      "fix": "Explicit instruction/tool metadata distinguish reports, 30-minute units and removed-plus-added diff entries.",
+      "recheck": "Actual follow-up after server restart correctly reports45 logged,95 remaining,120 allocated and no independently verified completion."
+    }
+  ],
+  "accessibility": {
+    "viewports": [
+      390,
+      768,
+      1280,
+      1440
+    ],
+    "languages": [
+      "en",
+      "ru",
+      "kk"
+    ],
+    "automated_AA_primary_state": true,
+    "all_accessibility_standards_claimed": false
+  },
+  "acceptance": {
+    "unseen_cited_sources": "genuinely_live_verified_local_gateway",
+    "conflict_and_clarification": "genuinely_live_verified_local_gateway",
+    "real_github_and_public_pr": "genuinely_live_verified_local_gateway",
+    "planning_and_whatif": "real_agent_server_plan_and_browser_local_adapter_verified",
+    "explicit_progress_and_conversation_restart": "genuinely_live_verified_local_gateway",
+    "injection_and_two_visitor_source_isolation": "genuinely_live_verified_local_gateway",
+    "languages": "real_EN_RU_KK_answers_observed",
+    "passport_authority": "deterministic_browser_and_installed_contracts_verified",
+    "real_calendar": "NOT_RUN_CONSENT_AND_EXACT_UI_APPROVAL_PENDING",
+    "managed_gcp": "UNMET_GCP_EXCEPTION_PENDING",
+    "public_0_4_and_windows_https_model_query": "PENDING_EXISTING_RENDER_SECRET_AND_CUTOVER",
+    "hosted_background": "UNAVAILABLE_FREE_HOST_SLEEP",
+    "unmodified_0_4_native_dialogs_and_notification_click": "HUMAN_OBSERVATION_PENDING"
+  },
+  "enhancements": {
+    "F1": "locally_implemented_real_calendar_and_full_gemini_acceptance_pending",
+    "F2": "locally_implemented_real_calendar_and_full_gemini_acceptance_pending",
+    "F3": "locally_implemented_real_calendar_and_full_gemini_acceptance_pending",
+    "F4": "locally_implemented_real_calendar_and_full_gemini_acceptance_pending",
+    "F5": "locally_implemented_real_calendar_and_full_gemini_acceptance_pending"
+  },
+  "personal_spending_authorized_usd": 0,
+  "evidence": [
+    {
+      "path": "docs/evidence/final-live-local-mvf8h3vr.json",
+      "sha256": "7c70136e86d928e8d051a4604a73746756e9a4b52f662863ab1b466c9d0301c5"
+    },
+    {
+      "path": "docs/evidence/final-focus-local-mvf8uiq4.json",
+      "sha256": "19405d4b410d135041aa16df43ad26cbdcb3f1173147a87c654624112fae0547"
+    },
+    {
+      "path": "docs/evidence/final-features-local-mvf943c1.json",
+      "sha256": "b4edea2ac61e27ccdc42df747ff11f7c5fd14a78f2649d3544d664b458f8ffd8"
+    },
+    {
+      "path": "docs/evidence/final-ui-local-mvf8xcqp.json",
+      "sha256": "d3e7ee871a8f09605c71ebe62f64496a51091b1fb1de595c28852322fb81990e"
+    },
+    {
+      "path": "docs/evidence/final-semantics-local-mvf9aqce.json",
+      "sha256": "62148cb569d357e580fd8dbc2286e2b880efbc8265390f2d1f7a7ea57c0ab6eb"
+    },
+    {
+      "path": "docs/evidence/desktop-contract-0.4.0.json",
+      "sha256": "2a7f1f2f3cf86f05dbd4360082e763ac48448b412933009e01dc80f339c231ed"
+    },
+    {
+      "path": "docs/evidence/desktop-import-regression-0.4.0.json",
+      "sha256": "b57d06936725db0e64756dfd3d3ee396de57fcd0ec3a6e4c931e5bd4375badd6"
+    },
+    {
+      "path": "docs/evidence/four-desktop-0.4.0.json",
+      "sha256": "9980749bb6d7183124dadc989b7ebdffdd1c935e01b7dd107bcd297b3c83485e"
+    },
+    {
+      "path": "docs/evidence/final-account-assessment.json",
+      "sha256": "c76ad831e5f7cd0e503bafcedefd57b055820e77f95d44387dbfc07ae03b17c8"
+    }
+  ]
+}

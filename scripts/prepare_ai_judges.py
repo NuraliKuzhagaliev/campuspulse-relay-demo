@@ -7,6 +7,7 @@ import secrets
 import subprocess
 import sys
 import time
+import ssl
 from pathlib import Path
 import httpx
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
@@ -19,6 +20,7 @@ def main():
     p.add_argument('--url',required=True)
     p.add_argument('--count',type=int,default=2,choices=range(1,9))
     p.add_argument('--hours',type=int,default=4,choices=range(1,13))
+    p.add_argument('--local-development-ca',action='store_true')
     a=p.parse_args()
     if not a.url.startswith('https://') or os.name!='nt':
         p.error('Use the intended HTTPS host from the owner Windows workspace.')
@@ -26,13 +28,17 @@ def main():
     if root.drive.lower()!='d:':p.error('Owner configuration and private outputs must remain on D:.')
     keypath=root/'.local/private/ai-owner-key.dpapi'
     if not keypath.exists():p.error('Run scripts/configure-ai-owner.ps1 first.')
-    command="$s=Get-Content -LiteralPath '"+str(keypath).replace("'","''")+"' -Raw | ConvertTo-SecureString;$p=[Runtime.InteropServices.Marshal]::SecureStringToBSTR($s);try{[Console]::Out.Write([Runtime.InteropServices.Marshal]::PtrToStringBSTR($p))}finally{[Runtime.InteropServices.Marshal]::ZeroFreeBSTR($p)}"
-    raw=subprocess.check_output(['powershell.exe','-NoProfile','-Command',command],env=os.environ,stderr=subprocess.DEVNULL)
+    from windows_dpapi import unprotect
+    raw=unprotect(keypath)
     key=Ed25519PrivateKey.from_private_bytes(base64.b64decode(raw))
     body=dict(count=a.count,hours=a.hours,nonce=secrets.token_hex(16),timestamp=int(time.time()))
     signed=digest(dict(method='POST',path='/internal/ai-invitations',body=body)).encode()
     signature=base64.b64encode(key.sign(signed)).decode()
-    response=httpx.post(a.url.rstrip('/')+'/internal/ai-invitations',json=body,headers={'X-Relay-Owner-Signature':signature},timeout=75)
+    verify=True
+    if a.local_development_ca:
+        if a.url.rstrip('/')!='https://localhost:8017':p.error('Development CA is only allowed for this project loopback staging URL.')
+        verify=ssl.create_default_context(cafile=str(root/'.local/final-integration/tls/cert.pem'))
+    response=httpx.post(a.url.rstrip('/')+'/internal/ai-invitations',json=body,headers={'X-Relay-Owner-Signature':signature},timeout=75,verify=verify)
     if response.status_code!=200:
         print('Invitation preparation failed: HTTP '+str(response.status_code)+'. No token is printed.',file=sys.stderr)
         return 1

@@ -1,0 +1,56 @@
+{
+  "pdf_pages": 12,
+  "pdf_matches_inspected_slide_renders": [
+    {
+      "page": 1,
+      "pixel_match": true
+    },
+    {
+      "page": 2,
+      "pixel_match": true
+    },
+    {
+      "page": 3,
+      "pixel_match": true
+    },
+    {
+      "page": 4,
+      "pixel_match": true
+    },
+    {
+      "page": 5,
+      "pixel_match": true
+    },
+    {
+      "page": 6,
+      "pixel_match": true
+    },
+    {
+      "page": 7,
+      "pixel_match": true
+    },
+    {
+      "page": 8,
+      "pixel_match": true
+    },
+    {
+      "page": 9,
+      "pixel_match": true
+    },
+    {
+      "page": 10,
+      "pixel_match": true
+    },
+    {
+      "page": 11,
+      "pixel_match": true
+    },
+    {
+      "page": 12,
+      "pixel_match": true
+    }
+  ],
+  "all_12_slides_individually_reviewed": true,
+  "slide_2_boundary_repaired": true,
+  "native_powerpoint_opened": false
+}

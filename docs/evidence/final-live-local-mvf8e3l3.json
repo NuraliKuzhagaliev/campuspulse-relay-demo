@@ -1,0 +1,19 @@
+{
+  "checked_at": "2026-10-19T12:29:09.927Z",
+  "kind": "local_https_real_gemini",
+  "url": "https://localhost:8017",
+  "development_certificate_only": true,
+  "provider": "gemini_developer",
+  "managed_agent_engine": false,
+  "source_commit": "f295df4396c852075c29a929a3a7b1ec24df53e9-plus-local-staging-changes",
+  "checks": {
+    "two_fresh_private_sessions": {
+      "failed": true,
+      "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Enter public demo', exact: true })\u001b[22m\n"
+    }
+  },
+  "runs": [],
+  "calendar": "illustrative_only",
+  "sensitive_material": false,
+  "passed": false
+}

@@ -706,6 +706,7 @@ async def chat(body:Chat,svc=Depends(service)):
             from .model_usage import throttle
             throttle(store)
         result=dict(status='failed',text='',code='UPSTREAM_RATE_LIMITED' if limited else 'UPSTREAM_UNAVAILABLE',reason='Gemini rate limit reached. Retry after the allowance resets.' if limited else 'The selected Gemini route could not complete this request. Check account access and service configuration.')
+    result['gateway_revision']=os.getenv('RELAY_DEPLOYED_COMMIT') or os.getenv('RENDER_GIT_COMMIT') or os.getenv('RELAY_BUILD_REVISION')
     result=finish_run(store,svc.tenant,record,body.message,result)
     kind={'complete':'run_completed','partial':'run_partial','failed':'run_failed','unknown':'run_unknown','cancelled':'run_cancelled'}.get(result['status'],'run_unknown')
     store.event(svc.tenant,run,kind,summary='Agent outcome',resource=resource,provider=config['provider'],deployment_mode=config['deployment_mode'])

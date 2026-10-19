@@ -1,0 +1,31 @@
+{
+  "checked_at": "2026-10-19T13:01:04.156950+00:00",
+  "url": "https://campuspulse-relay-demo.onrender.com/api/health",
+  "status_code": 200,
+  "health": {
+    "ok": true,
+    "version": "0.2.1",
+    "mode": "public_demo",
+    "agent_configured": false,
+    "agent_verified": false,
+    "agent": {
+      "configured": false,
+      "verified": false,
+      "resource": null
+    },
+    "time": "2026-10-19T13:02:26.995218+00:00",
+    "deployed_commit": "83552161ec22c7cf44746433425d3b2b99e042c4",
+    "demo": {
+      "public": true,
+      "storage": "temporary",
+      "session_seconds": 7200,
+      "max_upload_mib": 2,
+      "max_sources": 12,
+      "github_cache_seconds": 300,
+      "calendar": "illustrative_local_adapter",
+      "gemini": "pending",
+      "mandatory_gcp": "pending"
+    }
+  },
+  "new_0_4_deployed": false
+}

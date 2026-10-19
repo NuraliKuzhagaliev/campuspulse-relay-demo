@@ -8,9 +8,11 @@ The owner ran `scripts/configure-gemini-free.ps1 -ConfirmFreeTierOnly`. The key 
 
 `scripts/run-alternative.ps1` starts an isolated local protocol gateway on8016. It uses the existing ADK reasoning loop, explicit Developer client, same-process signed Streamable HTTP MCP, shared scheduling/evidence services and tenant-owned durable ADK text checkpoints. Full tool payloads, hidden reasoning and credentials are not checkpointed. This local HTTP listener is protocol evidence; secure-cookie browser acceptance needs actual HTTPS staging. No service silently falls back between Vertex and Developer APIs.
 
-## Intended no-cost staging target
+## Existing no-cost target and local staging
 
-Authorized Render workspace:`Kuzhagaliev Nurali's workspace`, `tea-d3pt0sbipnbc73a5v810`. Preserve the existing0.2.1 illustrative service unchanged. Prepare one Free Docker service from the final-integration source branch, `infra/Dockerfile.alternative`, one worker, automatic deploys off. Use the returned URL/commit, not an invented deployment. No paid database, disk, background worker, cron or upgrade is selected.
+Authorized Render workspace:`Kuzhagaliev Nurali's workspace`, `tea-d3pt0sbipnbc73a5v810`. Reuse the existing Free service `srv-dbajs73bc2fs73bm9mfg`, `https://campuspulse-relay-demo.onrender.com`, with `infra/Dockerfile.alternative`, one worker and automatic deploys off. Its currently live0.2.1 deployment/commit remains the rollback reference until the verified cutover. No new infrastructure, paid database, disk, background worker, cron or upgrade is selected. Automatic approval review rejected creating a separate service because the previous authorization restricts infrastructure to the existing service; no new service was created.
+
+Local browser staging uses `https://localhost:8017`, a loopback-only Node TLS proxy forwarding to the isolated gateway on8016. `prepare_local_tls.py` saves a development certificate on D: without installing a trust root. Test-only acceptance of this local certificate is explicitly separate from valid public TLS. `verify_final_ui.mjs` makes no inference calls; `verify_final_live*.mjs` records actual model outcomes, including partial failures. Do not use loopback certificate handling on the public deployment.
 
 Required non-secret settings:
 

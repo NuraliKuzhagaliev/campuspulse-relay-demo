@@ -1,0 +1,63 @@
+{
+  "version": "0.4.0",
+  "checked_at": "2026-10-19T12:47:59.487Z",
+  "profile": "D:\\projects\\CampusPulseRELAY\\.local\\four-additions\\desktop-mvf92b5r",
+  "executable": "D:\\projects\\CampusPulseRELAY\\installed\\CampusPulse RELAY\\CampusPulse RELAY.exe",
+  "checks": {
+    "instrumented_native_cancel_keeps_workspace": true,
+    "web_to_installed_desktop_native_path": true,
+    "restored_bridge_csrf_and_retry": true,
+    "ipc_allowlist_remains_narrow": true,
+    "installed_save_uses_actual_file_write_on_D": true,
+    "C_drive_save_denied": true,
+    "installed_restart_persistence": true,
+    "installed_to_fresh_web_semantic_identity_citation_time_progress_comparison": true
+  },
+  "dialogs_substituted": true,
+  "native_picker_visibility_verified": false,
+  "native_save_dialog_visibility_verified": false,
+  "model_calls": 0,
+  "calendar_external_writes": 0,
+  "packaged_files": [
+    {
+      "file": "desktop\\locales.cjs",
+      "sha256": "9d3a76f3534b5c09669e2f249e7eda8e272432f1e6b02351a030829b5a8c2e74",
+      "matches_source": true
+    },
+    {
+      "file": "desktop\\main.cjs",
+      "sha256": "3eba88b0240f58abe53119174d99eb757030243ce93a32ab68fcc8d11b6e7625",
+      "matches_source": true
+    },
+    {
+      "file": "desktop\\preload.cjs",
+      "sha256": "def16c63fa8563bfefa18ddc535cf952da93b8f388413570eb54daaf7e5994d6",
+      "matches_source": true
+    },
+    {
+      "file": "desktop\\request-policy.cjs",
+      "sha256": "73902bfef9ca37bc84f34de7f52c253e165b4cae5e6f0d2b241be56ec44b92b3",
+      "matches_source": true
+    },
+    {
+      "file": "dist\\assets\\index-C4oo56nS.css",
+      "sha256": "63cc1201e7b2d7578815abaeafa99c637c1660642a59e9ff2275286c87888f71",
+      "matches_source": true
+    },
+    {
+      "file": "dist\\assets\\index-xmUG9mlc.js",
+      "sha256": "a4a2a0747be34f54f598e704b704c1f1fd5f33c91dbd813f374611ab9144fba9",
+      "matches_source": true
+    },
+    {
+      "file": "dist\\index.html",
+      "sha256": "721fec0a4a4632d96a68d4221d7945bc6f5377345318a1ae40febf401d8dfdc1",
+      "matches_source": true
+    }
+  ],
+  "files": {
+    "incoming": "D:\\projects\\CampusPulseRELAY\\.local\\four-additions\\browser-workspace.relay.json",
+    "outgoing": "D:\\projects\\CampusPulseRELAY\\.local\\four-additions\\desktop-workspace.relay.json"
+  },
+  "passed": true
+}

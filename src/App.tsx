@@ -567,7 +567,7 @@ function RunRail({
             ? tr("Managed resource configured")
             : tr("Agent Engine not connected")}
       </div>
-      <div className="run-events" aria-live="polite">
+      <div className="run-events" role="region" aria-label={tr("Execution events")} tabIndex={0} aria-live="polite">
         {recent.map((e) => (
           <div className="run-event" key={e.sequence}>
             <span

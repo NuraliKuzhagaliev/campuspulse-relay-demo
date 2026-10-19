@@ -22,14 +22,14 @@ def validate_funding(record, project, budget, hours, billing_account=None, at=No
         checked = datetime.fromisoformat(record['checked_at_utc'].replace('Z', '+00:00'))
         expiry = datetime.fromisoformat(record['expires_at_utc'].replace('Z', '+00:00'))
         balance = float(record['balance_usd_human_confirmed'])
-        reserve = float(record.get('reserve_usd', 0))
+        reserve = float(record['reserve_usd'])
         if checked.tzinfo is None or expiry.tzinfo is None:
             raise ValueError()
     except (KeyError, TypeError, ValueError):
         reject('Funding timestamps, balance or reserve are invalid.')
     if checked > at + timedelta(minutes=5) or checked < at - timedelta(hours=24):
         reject('Funding review is stale or future-dated. Recheck the account before provisioning.')
-    if not isfinite(balance) or not isfinite(reserve) or not balance >= budget + reserve or reserve < 0 or expiry <= at + timedelta(hours=hours):
+    if not isfinite(balance) or not isfinite(reserve) or not balance >= budget + reserve or reserve <= 0 or expiry <= at + timedelta(hours=hours):
         reject('Confirmed eligible trial credit and expiry do not cover the authorized envelope, reserve and full duration.')
     return dict(source=record['source'], project_id=project, authorized_credit_usage_usd=budget,
                 personal_spending_authorized_usd=0, hours=hours, balance_api_verified=False)

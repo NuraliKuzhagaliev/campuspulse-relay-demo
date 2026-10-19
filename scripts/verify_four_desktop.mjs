@@ -70,6 +70,7 @@ try{
   assert.equal(webState.plan,null);assert.deepEqual(webState.receipts,[]);assert(webState.gates.every(g=>g.status==='unknown'&&g.archived));
   proof.checks.installed_to_fresh_web_semantic_identity_citation_time_progress_comparison=true;
   proof.files={incoming,outgoing};proof.passed=true;
-  await web.screenshot({path:'docs/screenshots/0.3.0/restored-from-installed-1440.png',fullPage:true});
-}finally{if(browser)await browser.close();if(app)await app.close();await fs.writeFile('docs/evidence/four-desktop-0.3.0.json',JSON.stringify(proof,null,2));}
+  await fs.mkdir(`docs/screenshots/${version}`,{recursive:true});
+  await web.screenshot({path:`docs/screenshots/${version}/restored-from-installed-1440.png`,fullPage:true});
+}finally{if(browser)await browser.close();if(app)await app.close();await fs.writeFile(`docs/evidence/four-desktop-${version}.json`,JSON.stringify(proof,null,2));}
 console.log(JSON.stringify(proof,null,2));

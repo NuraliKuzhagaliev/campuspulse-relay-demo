@@ -1,87 +1,38 @@
 # CampusPulse RELAY
 
-**See what changed. Know what to do next.** Evidence-linked academic recovery for GDG Astana Topic 2. React web client, real sandboxed Windows Electron application, custom MCP service, deterministic CP-SAT scheduling and a Google ADK managed-agent deployment path.
+Evidence-linked academic recovery for GDG Astana Topic2. Current installed/local candidate **0.4.0** starts from preserved0.3.0-r1. Existing public demo: **https://campuspulse-relay-demo.onrender.com**, currently **0.2.1**. Hosted0.4 is pending the owner's server-side key save and verified cutover. Original managed Agent Engine criterion: **UNMET / GCP_EXCEPTION_PENDING**.
 
-## Final integration in progress - 0.4.0
+RELAY imports selected academic documents, retains page/version quotations and disagreements, computes independently validated CP-SAT plans, compares what-if/Minimal Rescue changes, previews explicitly approved effects and records read-back receipts. Progress & Remaining Work, Clarify First, Handoff Radar and Workspace Passport preserve student control. F1–F5 remain **locally implemented**, with real Calendar and full Gemini acceptance pending. EN/RU/Kazakh operational UI is preserved.
 
-The current final phase supersedes the earlier organizer-credit wait. The owner configured an eligible Gemini Developer API free-tier key; a real local Gemini/MCP/public-GitHub smoke passed using `gemini-3.5-flash-lite`. This is an alternative provider path, **not** Agent Engine. The original GCP criterion remains UNMET/EXCEPTION_PENDING. The existing public site is preserved until a separately verified deployment. The latest sealed distribution remains0.3.0-r1 / Windows0.3.0 while0.4.0 is being tested.
+## Actual Gemini contingency
 
-Reported deadline:20 October2026,23:59; organizer timezone unconfirmed. Planning assumption:Asia/Qyzylorda (UTC+05:00); internal freeze20 October20:00. Personal spending is prohibited. See [organizer update](docs/organizer_update.md), [final integration ledger](docs/final_integration_ledger.md) and [free-path setup](docs/final_free_path.md).
+The owner configured a Free-tier Gemini key for `gen-lang-client-0595303951`. Actual model: `gemini-3.5-flash-lite`, observed metadata version `3.5-flash-lite-07-2026`. The shared ADK agent performed real signed MCP calls, source-grounded EN/RU/KK answers, GitHub/PR observations and a follow-up after server restart through a local HTTPS browser.11 observed turns include an initial partial that was retained and corrected. This is **alternative Gemini hosting**, not a deployed `projects/.../reasoningEngines/...` resource.
 
-## Preserved release status
+Anonymous hosted visitors receive isolated illustrative workspaces and cannot spend model quota. Real AI access requires a private one-use invitation and adult Kazakhstan evaluator confirmation. Unpaid-service processing/human-review limits are disclosed; use only permitted non-sensitive documents. Keys remain server-side. No Calendar mutation tools or private event details enter this unpaid model path. See `docs/final_free_path.md`, `docs/final_judge_guide.md`, `docs/tool_catalog_final.md` and `docs/cost_estimate.md`.
 
-**Local continuation 0.3.0:** Progress & Remaining Work, Clarify First, Handoff Radar and Workspace Passport are implemented with deterministic Python services and EN/RU/Kazakh controls. This later candidate is built/installed and independently tested locally; it has **not replaced the public 0.2.1 deployment** and is not a published GitHub release. See [four-addition acceptance](docs/four_additions_acceptance.md), [design/demo script](docs/four_additions_design.md), [portable format](docs/workspace_passport.md) and [precise residual unmodified native check](docs/native_passport_check.md). Existing releases and the verified public revision remain preserved. No new Gemini/GCP connection or paid resource is part of this task.
+## Run on D:
 
-Latest distribution revision is **0.3.0-r1**: it corrects backend health-version metadata with an HTTP regression;111 Python tests pass. Windows0.3.0 binaries and their installed verification hashes remain unchanged. Original0.3.0 candidate archives are preserved alongside the corrected web/source revision.
-
-**[Open the public CampusPulse RELAY demo](https://campuspulse-relay-demo.onrender.com)** and choose **Enter public demo**. The React frontend and Python backend run together on a Render free web service. New-file import, evidence/conflict review, planning, what-if, explicitly simulated Calendar approvals/receipts, execution visualization, real backend GitHub reads, EN/RU/Kazakh, mobile layout, refresh and visitor isolation passed on the deployed HTTPS URL.
-
-This public illustrative demo is **separate from the mandatory GCP deployment**, which remains pending. No actual Vertex AI Agent Engine resource, successful Gemini call or real Calendar consent/write/read-back has been verified. The GCP Free Trial currently requires prohibited prepayment and has no issued credits; application OAuth setup remains an external gate. No uncovered personal spending is authorized. Read [REQUIREMENTS.md](REQUIREMENTS.md), [BLOCKERS.md](BLOCKERS.md) and [deployment proof](docs/deployment_proof.md) before presenting it.
-
-Each browser session gets an isolated temporary workspace, with Secure/HttpOnly capability cookies and CSRF-protected writes. Sessions expire after two hours; idle spin-down, restarts and redeploys may reset them sooner. Render may need about a minute to wake after 15 minutes idle. Public imports are limited to 2 MiB and 12 sources including examples. Use sample documents. The **Start a fresh demo** control invalidates the old workspace. See [public hosting details](docs/public_demo_hosting.md), [actual deployment evidence](docs/evidence/public-deployment-0.2.1.json) and [browser acceptance](docs/evidence/public-demo-browser-0.2.1.json).
-
-Verified local capabilities include conflicts with exact page/ref evidence, constrained recovery and isolated what-if, durable source polling using the real demo repository, immutable approval/journal/read-back using a clearly labeled local Calendar adapter, and cited next-action packets. No fixture is described as a live Calendar or Gemini result.
-
-### 0.2.1 reliability and differentiation
-
-The continuation fixes cross-course assignment collisions and adjacent-window validation, with explicit course/term/assignment mappings and a deliberate legacy migration. Historical sources/plans/receipts remain traceable; ambiguous old overrides require review. Missing identity is a separate draft, never a guessed merge.
-
-**Judge challenge** exposes three scoped additions: **Minimal Rescue** compares student-permitted time additions with deadline-specific bottlenecks; **Submission Preflight** checks a selected draft's observable structure against exact requirement quotes and proposes extra-effort recovery; visitors can inspect their source versions, tools, plan changes and read-back. Semantic correctness, screenshot validity and grades are not inferred.
-
-Managed-agent preparation includes tenant-owned expiring multi-turn history, idempotent turns, typed complete/partial/failed/unknown outcomes, bounded waiting/context renewal and truthful freshness. The Gemini prose-extraction proposal contract is prepared; actual multilingual model behavior and confirmation UX acceptance remain separate live gates. See [defect ledger](docs/defect_ledger.md), [evaluation](docs/evaluation_results.md), [contracts](docs/contract_inventory.md) and [12-scenario live batch](docs/live_acceptance_batch.md). Prior 0.1.0, corrected 0.1.1, public 0.1.1 and superseded 0.2.0 artifacts are preserved under `release/versions/`.
-
-## Run on Windows, entirely under D:
-
-Prerequisites: existing Python 3.13, Node.js 22+, npm and Git. Existing runtime executables on C: may be read; project environments and outputs remain on D:. Windows and host applications can make system-managed writes.
+Project root: `D:\projects\CampusPulseRELAY`. Read `scripts/env.ps1` before setup. It routes controlled Python/Node/Electron/Playwright/gcloud/HF caches, temp, data and profiles to D:. Use the existing locked environments/dependencies or `scripts/bootstrap.ps1`; do not install project dependencies/cache on C:.
 
 ```powershell
-cd D:\projects\CampusPulseRELAY
-.\scripts\bootstrap.ps1
-.\scripts\dev.ps1
+Set-Location D:\projects\CampusPulseRELAY
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\dev.ps1
 ```
 
-Open [the local web client](http://127.0.0.1:8000). `bootstrap.ps1` installs the exact Python lock and `npm ci` lock. `dev.ps1` serves the built UI and API together. It binds to localhost. Run `.\scripts\run-mcp.ps1` in another terminal for the genuine Streamable HTTP MCP server.
+The local illustrative gateway serves `http://127.0.0.1:8000`. It works without Google authentication. For the installed local path set `RELAY_GATEWAY_URL` to that URL in the launch process. The0.4 app defaults to the public HTTPS gateway, whose deployment version must be checked before expecting0.4 features. Native user data remains on D:. ExecutionPolicy Bypass is per process, not a system policy change.
 
-For Electron development, run `.\scripts\env.ps1` followed by `npm.cmd run desktop` while the gateway is running. The packaged application uses a local renderer; cloud credentials never enter it. The installed 0.2.1 package passes import, restricted IPC, task/plan/rescue/preflight/approval and persistence checks. Prior 0.1.1 native human proof and artifacts remain preserved. The separate public deployment verifies the browser client; hosted desktop OAuth/managed-agent acceptance remains pending.
+The owner-only live local route uses `scripts/run-alternative.ps1` on8016 and a loopback HTTPS proxy on8017. `scripts/prepare_local_tls.py` creates a development certificate on D: without a trust-root change. Only explicit local test contexts accept that development certificate. Public TLS must validate normally. The separate `scripts/gemini-env.ps1` decrypts the Windows-DPAPI key only in the server process; ordinary environment setup/builds do not load it.
 
-## Inspect and test
+## Verification and release
 
-```powershell
-. .\scripts\env.ps1
-.\.venv\Scripts\python.exe -m pytest tests -q
-node node_modules/@playwright/test/cli.js install chromium
-node node_modules/@playwright/test/cli.js test
-.\.venv\Scripts\python.exe scripts/smoke_mcp.py
-.\scripts\package.ps1
-node scripts/smoke_desktop.mjs
-node scripts/verify_public_demo.mjs https://campuspulse-relay-demo.onrender.com
-```
+Actual current local evidence:121 Python tests,13 browser passes/1 public-only skip,4 IPC policy tests and installed0.4 source/import/passport contracts.12 language/width combinations and the post-agent keyboard/AA defect were checked.11 real frontend model turns and provider-reported usage are indexed in `docs/evidence/final-verification-0.4.0.json`. Small samples do not establish a statistical success rate. Dialog substitution is not real native dialog/notification evidence.
 
-The desktop smoke expects the NSIS installer to have installed to `D:\projects\CampusPulseRELAY\installed\CampusPulse RELAY`. Read [desktop verification](docs/test_results.md) for instrumented-picker and OS notification limitations. Tests use isolated identities and explicitly illustrative calendars, not personal events.
+Windows installer/portable, complete frontend+Python web bundle, source archive, editable12-slide PPTX/PDF and candid manifest/checksums are under `release/` and the versioned D: submission directory. The manifest names the exact source commit and actual public deployment separately. All previous releases, hashes and human native evidence remain preserved. Windows binaries are unsigned. Read `release/README.md` before installation.
 
-## Cloud access and deployment
+## Deployment and required gates
 
-Organizer credits will not be supplied. A non-billable GCP Free Trial must be verified against its exact project, billing account, covered services, balance and expiry before any provisioning. The inspected account requires prepayment, so Route A is currently blocked by the zero-personal-spend policy. Continue the explicit free Gemini alternative instead. `.\scripts\inspect-access.ps1 -Login` provides read-only authentication/access inspection. No dedicated CampusPulse project was found previously; [cloud setup](docs/cloud_setup.md) provides the pending steps. Read the [cost estimate](docs/cost_estimate.md); any uncovered charges need separate approval before deployment.
+Use the **existing** Free Render service in the authorized workspace. Review `docs/final_cutover_plan.md`; owner saves `RELAY_GEMINI_API_KEY` using Save only, then publish the exact pushed source with `infra/Dockerfile.alternative`, one worker, auto-deploy off. No new infrastructure/paid upgrade. Run fresh public HTTPS and installed Windows acceptance before marking cutover verified. Free storage/session reset and cold starts are disclosed; no fake always-on autonomy.
 
-`scripts/deploy-cloud.ps1` orchestrates separate Cloud Run gateway/MCP services, Firestore, Secret Manager, an Agent Engine `reasoningEngines` resource, and an authenticated Cloud Scheduler job. It is implemented and schema-checked where possible, but **has not been executed against GCP**. `scripts/deploy_reasoning_engine.py` uses the currently documented `vertexai.Client(...).agent_engines.create` compatibility route. Installed SDK 2.5 emits a migration warning for `vertexai.Client`; the legacy resource mapping is documented. Inference uses ADK/Google Gen AI, not removed `vertexai.generative_models` modules.
+The GCP Free Trial account is closed, requires prepayment and has no visible credits. No personal expenses or billing changes are authorized. Organizer credits will not arrive. Prepared funding/deployment guards remain separate from actual managed acceptance. Real Calendar also needs separate app consent/scoped runtime access and concrete authenticated UI approval. Current receipts are illustrative. See `REQUIREMENTS.md`, `BLOCKERS.md`, `docs/cloud_setup.md` and `docs/organizer_update.md`.
 
-After deployment, configure the returned OAuth redirect URL, complete real consent in an external browser, select an authorized calendar, run `scripts/smoke_remote.py`, and perform the complete web → gateway → Agent Engine → MCP → external API test. A deployed resource alone does not establish acceptance. The final phase adds an explicit Gemini Developer alternative adapter; it is labeled alternative hosting and never counts as a managed Agent Engine deployment.
-
-## Dedicated external demo resources
-
-- [Owned repository](https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo), `coursework.md` on `main`.
-- Calendar name: **CampusPulse RELAY Demo**. Actual returned ID is in `docs/connections.json`; it is not an authorization credential.
-- Course material is illustrative. GitHub reads and controlled edits are real. The dedicated Calendar exists; the app does not yet have live access.
-
-Original supplied attachments are preserved locally under `inputs/`, excluded from Git and release source archives. No third-party submission or messaging is automated.
-
-## Layout and artifacts
-
-- `relay/`: typed domain, scheduler + independent validator, evidence, connectors, journals, service, API, MCP, ADK runtime, identity/OAuth and request limits.
-- `src/`, `desktop/`: shared UI and restricted Windows bridge.
-- `infra/`, `scripts/`: D: environment, bootstrap, deploy, seed, smoke, package, presentation and scoped cleanup.
-- `tests/`: deterministic, HTTP, failure, Calendar sync and browser scenarios.
-- `docs/`: evidence, security/architecture, judge instructions and actual results.
-- `release/`: installer, portable app, source archive, presentation, recording, hashes and manifest. Build output is excluded from source Git.
-
-EN/RU/Kazakh operational UI is translated, including confirmations, errors, receipts, packets, calendar labels and native dialog/tray text. Source quotations, exact event titles and diagnostic data remain verbatim. Live multilingual Gemini acceptance is pending. The remaining limitations include conservative structured text extraction, no scanned OCR, unsigned Windows packages and unverified cloud/Calendar consent. See [known limitations](docs/known_limitations.md) and the [real native Windows check](docs/native_windows_check.md).
+Deadline:20October2026,23:59, organizer timezone unconfirmed. Planning assumes UTC+5, internal freeze20:00 local. Owner decides and submits the contest entry. No organizer/judge messages or submission were sent. Historical README: `docs/history/before-final-integration-0.4.0/README.md`.
