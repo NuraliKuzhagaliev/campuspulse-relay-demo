@@ -1,0 +1,79 @@
+{
+  "slides": 12,
+  "individually_visually_reviewed": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "pdf_pages": [
+    {
+      "page": 1,
+      "pixel_match_to_individually_reviewed_render": true
+    },
+    {
+      "page": 2,
+      "pixel_match_to_individually_reviewed_render": true
+    },
+    {
+      "page": 3,
+      "pixel_match_to_individually_reviewed_render": true
+    },
+    {
+      "page": 4,
+      "pixel_match_to_individually_reviewed_render": true
+    },
+    {
+      "page": 5,
+      "pixel_match_to_individually_reviewed_render": true
+    },
+    {
+      "page": 6,
+      "pixel_match_to_individually_reviewed_render": true
+    },
+    {
+      "page": 7,
+      "pixel_match_to_individually_reviewed_render": true
+    },
+    {
+      "page": 8,
+      "pixel_match_to_individually_reviewed_render": true
+    },
+    {
+      "page": 9,
+      "pixel_match_to_individually_reviewed_render": true
+    },
+    {
+      "page": 10,
+      "pixel_match_to_individually_reviewed_render": true
+    },
+    {
+      "page": 11,
+      "pixel_match_to_individually_reviewed_render": true
+    },
+    {
+      "page": 12,
+      "pixel_match_to_individually_reviewed_render": true
+    }
+  ],
+  "source_pptx_imported_and_existing_shapes_edited": true,
+  "retained_font": "Arial",
+  "retained_geometry": true,
+  "layout_findings": 0,
+  "layout_warning_review": {
+    "slide": 12,
+    "kind": "dense_bold_paragraphs_without_spacing",
+    "accepted": true,
+    "reason": "Four short pending-gate lines remain readable in the existing bold source layout, with no clipping or overlap; preserved the established design."
+  },
+  "native_powerpoint_opened": false,
+  "all_12_slides_verified": true
+}
