@@ -3,6 +3,7 @@
 node_modules/
 dist/
 release/*
+submission/
 !release/manifest.json
 !release/README.md
 .env
