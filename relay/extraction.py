@@ -1,5 +1,7 @@
 """Version-bound semantic proposals and atomic, explicit per-entity review."""
-import copy
+import copy,re
+from datetime import datetime,timezone,timedelta
+from zoneinfo import ZoneInfo
 from .domain import RelayError, instant, digest, now, Task
 from .identity import assignment_id
 ALLOWED={'title','course','term','assignment_key','due','minutes','rubric','submission_requirement'}
@@ -22,7 +24,21 @@ def extraction_proposal(source,candidates):
             else:
                 try:instant(value)
                 except RelayError:value=None;status='ambiguous'
-            if status=='needs_confirmation' and (not c.get('timezone') or not c.get('year_explicit') or c.get('ambiguous')):status='ambiguous'
+            if status=='needs_confirmation':
+                zone_name=c.get('timezone')
+                if not zone_name or not c.get('year_explicit') or c.get('ambiguous'):
+                    value=None;status='ambiguous'
+                else:
+                    try:
+                        offset=re.fullmatch(r'(?:UTC|GMT)([+-])(\d{1,2})(?::?(\d{2}))?',zone_name,re.I)
+                        zone=timezone(timedelta(minutes=(1 if offset[1]=='+' else -1)*(int(offset[2])*60+int(offset[3] or 0)))) if offset else ZoneInfo(zone_name)
+                        cited=datetime.fromisoformat(value.replace('Z','+00:00'))
+                        actual=cited.astimezone(zone).utcoffset()
+                        if cited.utcoffset()!=actual:
+                            raise RelayError('SOURCE_CONFLICT','The proposed deadline offset disagrees with its cited timezone. Re-read the original wall time and explicit offset, then correct the proposal; do not shift the deadline.',{'timezone':zone_name,'provided_offset':str(cited.utcoffset()),'expected_offset':str(actual)})
+                    except RelayError:raise
+                    except (ValueError,TypeError,KeyError):
+                        value=None;status='ambiguous'
         elif field=='minutes':
             if type(value) is not int or not 1<=value<=10080:value=None;status='invalid'
         elif field in ('rubric','submission_requirement'):

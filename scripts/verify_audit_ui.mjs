@@ -1,9 +1,10 @@
-import {chromium,expect} from '@playwright/test';
+import {chromium,expect as baseExpect} from '@playwright/test';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import AxeBuilder from '@axe-core/playwright';
 const base=process.argv[2]||'http://127.0.0.1:8024';
+const expect=baseExpect.configure({timeout:30000});
 const folder=path.resolve(process.argv[3]||'.local/audit-ui/verification');await fs.mkdir(folder,{recursive:true});
 const browser=await chromium.launch({headless:true});
 const context=await browser.newContext({baseURL:base,viewport:{width:1440,height:1000}});const page=await context.newPage();

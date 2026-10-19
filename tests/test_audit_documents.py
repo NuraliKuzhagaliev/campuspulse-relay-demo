@@ -170,3 +170,11 @@ def test_document_context_inherited_but_section_course_overrides():
 def test_same_course_term_same_title_without_keys_stays_two_drafts():
     _,tasks=extract_facts(source('Course: Geology\nTerm: Autumn 2026\n# Assignment: Lab\nEffort: 45 minutes\n# Assignment: Lab\nEffort: 75 minutes'))
     assert len({t['id'] for t in tasks})==2 and all(t['identity']['status']=='unresolved' for t in tasks)
+
+def test_model_deadline_offset_must_match_cited_timezone():
+    s=source('Submit 23 October 2026 at 18:30 in Asia/Qyzylorda (UTC+05:00).')
+    candidate=dict(field='due',value='2026-10-23T18:30:00+06:00',page=1,quote=s['pages'][0]['text'],timezone='Asia/Qyzylorda',year_explicit=True)
+    with pytest.raises(RelayError) as error:extraction_proposal(s,[candidate])
+    assert error.value.code=='SOURCE_CONFLICT' and error.value.details['expected_offset']=='5:00:00'
+    correct=extraction_proposal(s,[candidate|{'value':'2026-10-23T18:30:00+05:00'}])
+    assert correct['fields'][0]['validation_status']=='needs_confirmation'
