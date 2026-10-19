@@ -35,7 +35,10 @@ def main():
         result['blockers'].append('Google Cloud ADC authentication required; run scripts/inspect-access.ps1 -Login, then scripts/connect-gcp.ps1 -ProjectId YOUR_PROJECT_ID.')
         result['exception_type']=type(exc).__name__
     result['provisioned_resources']=False
-    path=Path('docs/evidence/preflight.json');path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(result,indent=2))
+    result['organizer_credits_expected']=False
+    result['personal_spending_authorized_usd']=0
+    result['funding_record_present']=Path('.local/funding-verification.json').exists()
+    path=Path('docs/evidence/final-access-preflight.json');path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(result,indent=2),encoding='utf-8')
     print(json.dumps(result,indent=2))
     return bool(result['blockers'])
 

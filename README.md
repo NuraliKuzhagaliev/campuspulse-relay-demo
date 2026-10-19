@@ -2,7 +2,13 @@
 
 **See what changed. Know what to do next.** Evidence-linked academic recovery for GDG Astana Topic 2. React web client, real sandboxed Windows Electron application, custom MCP service, deterministic CP-SAT scheduling and a Google ADK managed-agent deployment path.
 
-## Actual release status
+## Final integration in progress - 0.4.0
+
+The current final phase supersedes the earlier organizer-credit wait. The owner configured an eligible Gemini Developer API free-tier key; a real local Gemini/MCP/public-GitHub smoke passed using `gemini-3.5-flash-lite`. This is an alternative provider path, **not** Agent Engine. The original GCP criterion remains UNMET/EXCEPTION_PENDING. The existing public site is preserved until a separately verified deployment. The latest sealed distribution remains0.3.0-r1 / Windows0.3.0 while0.4.0 is being tested.
+
+Reported deadline:20 October2026,23:59; organizer timezone unconfirmed. Planning assumption:Asia/Qyzylorda (UTC+05:00); internal freeze20 October20:00. Personal spending is prohibited. See [organizer update](docs/organizer_update.md), [final integration ledger](docs/final_integration_ledger.md) and [free-path setup](docs/final_free_path.md).
+
+## Preserved release status
 
 **Local continuation 0.3.0:** Progress & Remaining Work, Clarify First, Handoff Radar and Workspace Passport are implemented with deterministic Python services and EN/RU/Kazakh controls. This later candidate is built/installed and independently tested locally; it has **not replaced the public 0.2.1 deployment** and is not a published GitHub release. See [four-addition acceptance](docs/four_additions_acceptance.md), [design/demo script](docs/four_additions_design.md), [portable format](docs/workspace_passport.md) and [precise residual unmodified native check](docs/native_passport_check.md). Existing releases and the verified public revision remain preserved. No new Gemini/GCP connection or paid resource is part of this task.
 
@@ -10,7 +16,7 @@ Latest distribution revision is **0.3.0-r1**: it corrects backend health-version
 
 **[Open the public CampusPulse RELAY demo](https://campuspulse-relay-demo.onrender.com)** and choose **Enter public demo**. The React frontend and Python backend run together on a Render free web service. New-file import, evidence/conflict review, planning, what-if, explicitly simulated Calendar approvals/receipts, execution visualization, real backend GitHub reads, EN/RU/Kazakh, mobile layout, refresh and visitor isolation passed on the deployed HTTPS URL.
 
-This public illustrative demo is **separate from the mandatory GCP deployment**, which remains pending. No actual Vertex AI Agent Engine resource, successful Gemini call or real Calendar consent/write/read-back has been verified. Organizer credit eligibility/balance/expiration, GCP account/project/billing and OAuth setup remain external gates. No uncovered personal spending is authorized. Read [REQUIREMENTS.md](REQUIREMENTS.md), [BLOCKERS.md](BLOCKERS.md) and [deployment proof](docs/deployment_proof.md) before presenting it.
+This public illustrative demo is **separate from the mandatory GCP deployment**, which remains pending. No actual Vertex AI Agent Engine resource, successful Gemini call or real Calendar consent/write/read-back has been verified. The GCP Free Trial currently requires prohibited prepayment and has no issued credits; application OAuth setup remains an external gate. No uncovered personal spending is authorized. Read [REQUIREMENTS.md](REQUIREMENTS.md), [BLOCKERS.md](BLOCKERS.md) and [deployment proof](docs/deployment_proof.md) before presenting it.
 
 Each browser session gets an isolated temporary workspace, with Secure/HttpOnly capability cookies and CSRF-protected writes. Sessions expire after two hours; idle spin-down, restarts and redeploys may reset them sooner. Render may need about a minute to wake after 15 minutes idle. Public imports are limited to 2 MiB and 12 sources including examples. Use sample documents. The **Start a fresh demo** control invalidates the old workspace. See [public hosting details](docs/public_demo_hosting.md), [actual deployment evidence](docs/evidence/public-deployment-0.2.1.json) and [browser acceptance](docs/evidence/public-demo-browser-0.2.1.json).
 
@@ -22,7 +28,7 @@ The continuation fixes cross-course assignment collisions and adjacent-window va
 
 **Judge challenge** exposes three scoped additions: **Minimal Rescue** compares student-permitted time additions with deadline-specific bottlenecks; **Submission Preflight** checks a selected draft's observable structure against exact requirement quotes and proposes extra-effort recovery; visitors can inspect their source versions, tools, plan changes and read-back. Semantic correctness, screenshot validity and grades are not inferred.
 
-Managed-agent preparation includes tenant-owned expiring multi-turn history, idempotent turns, typed complete/partial/failed/unknown outcomes, bounded waiting/context renewal and truthful freshness. The Gemini prose-extraction proposal contract is prepared; actual multilingual model behavior and confirmation UX acceptance remain pending credits. See [defect ledger](docs/defect_ledger.md), [evaluation](docs/evaluation_results.md), [contracts](docs/contract_inventory.md) and [12-scenario live batch](docs/live_acceptance_batch.md). Prior 0.1.0, corrected 0.1.1, public 0.1.1 and superseded 0.2.0 artifacts are preserved under `release/versions/`.
+Managed-agent preparation includes tenant-owned expiring multi-turn history, idempotent turns, typed complete/partial/failed/unknown outcomes, bounded waiting/context renewal and truthful freshness. The Gemini prose-extraction proposal contract is prepared; actual multilingual model behavior and confirmation UX acceptance remain separate live gates. See [defect ledger](docs/defect_ledger.md), [evaluation](docs/evaluation_results.md), [contracts](docs/contract_inventory.md) and [12-scenario live batch](docs/live_acceptance_batch.md). Prior 0.1.0, corrected 0.1.1, public 0.1.1 and superseded 0.2.0 artifacts are preserved under `release/versions/`.
 
 ## Run on Windows, entirely under D:
 
@@ -55,11 +61,11 @@ The desktop smoke expects the NSIS installer to have installed to `D:\projects\C
 
 ## Cloud access and deployment
 
-Wait for the organizer credit activation instructions before choosing the final GCP project or billing account. Verify the exact eligible project, billing account, credit balance and expiration. `.\scripts\inspect-access.ps1 -Login` provides read-only authentication/access inspection. No dedicated CampusPulse project was found previously; [cloud setup](docs/cloud_setup.md) provides the pending steps. Read the [cost estimate](docs/cost_estimate.md); any uncovered charges need separate approval before deployment.
+Organizer credits will not be supplied. A non-billable GCP Free Trial must be verified against its exact project, billing account, covered services, balance and expiry before any provisioning. The inspected account requires prepayment, so Route A is currently blocked by the zero-personal-spend policy. Continue the explicit free Gemini alternative instead. `.\scripts\inspect-access.ps1 -Login` provides read-only authentication/access inspection. No dedicated CampusPulse project was found previously; [cloud setup](docs/cloud_setup.md) provides the pending steps. Read the [cost estimate](docs/cost_estimate.md); any uncovered charges need separate approval before deployment.
 
 `scripts/deploy-cloud.ps1` orchestrates separate Cloud Run gateway/MCP services, Firestore, Secret Manager, an Agent Engine `reasoningEngines` resource, and an authenticated Cloud Scheduler job. It is implemented and schema-checked where possible, but **has not been executed against GCP**. `scripts/deploy_reasoning_engine.py` uses the currently documented `vertexai.Client(...).agent_engines.create` compatibility route. Installed SDK 2.5 emits a migration warning for `vertexai.Client`; the legacy resource mapping is documented. Inference uses ADK/Google Gen AI, not removed `vertexai.generative_models` modules.
 
-After deployment, configure the returned OAuth redirect URL, complete real consent in an external browser, select an authorized calendar, run `scripts/smoke_remote.py`, and perform the complete web → gateway → Agent Engine → MCP → external API test. A deployed resource alone does not establish acceptance. No gateway-only agent fallback exists.
+After deployment, configure the returned OAuth redirect URL, complete real consent in an external browser, select an authorized calendar, run `scripts/smoke_remote.py`, and perform the complete web → gateway → Agent Engine → MCP → external API test. A deployed resource alone does not establish acceptance. The final phase adds an explicit Gemini Developer alternative adapter; it is labeled alternative hosting and never counts as a managed Agent Engine deployment.
 
 ## Dedicated external demo resources
 

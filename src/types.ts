@@ -123,6 +123,7 @@ export type Snapshot = {
   }[];
   calendar_mode?: string;
   settings: {
+    ai_access?: boolean;
     portable_origin?: string;
     mode: string;
     timezone: string;
@@ -147,7 +148,15 @@ export type Snapshot = {
     source_fetched_at: string | null;
     last_failed_attempt: { at: string; code: string } | null;
   };
-  agent: { configured: boolean; resource: string | null; verified: boolean };
+  agent: {
+    configured: boolean;
+    resource: string | null;
+    verified: boolean;
+    provider?: string;
+    deployment_mode?: string;
+    model?: string;
+    managed_agent_engine?: boolean;
+  };
   demo?: {
     public: boolean;
     storage: string;

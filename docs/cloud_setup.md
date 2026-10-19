@@ -1,38 +1,24 @@
-# Exact account actions
+# Verified funding and account setup - final phase
 
-All project-controlled tools/configuration remain on D:. Do not paste credentials in chat. The user declined personal spending. **Wait for the organizer activation instructions before final project/billing selection or any billable provisioning.** Credits are not confirmed and may require a new eligible project. The steps below are a prepared sequence, not authorization to execute paid actions.
+Organizer credits will not be supplied. Do not wait for them. The original managed Agent Engine path is preferred only if an actual eligible non-billable Free Trial is available. Personal spending, prepayment, paid activation/upgrades and billing attachment remain unauthorized.
 
-1. Open PowerShell and run:
+## Actual account assessment,19 October2026
 
-```powershell
-cd D:\projects\CampusPulseRELAY
-.\scripts\inspect-access.ps1 -Login
-```
+The authenticated Console shows an existing **Free trial account**, closed, with a prepayment banner. Credits has no issued entries. The D: gcloud configuration has no active account/ADC. No usable trial balance, expiry, eligible dedicated project or runtime quota is established. No payment was made. This blocks RouteA; it does not establish a Google outage.
 
-Complete Google sign-in yourself in the browser. This script reads accounts, projects and billing accounts. It does not create cloud resources. Existing browser sign-in is not CLI ADC.
+AI Studio separately reports Default Gemini Project `gen-lang-client-0595303951` on **Free tier**. The owner securely configured its key on D:. A real metadata request and Gemini/MCP/public GitHub smoke passed. This powers RouteB, not managed Agent Engine. See `final_free_path.md`.
 
-2. After the organizer instructions arrive, confirm whether they require a new project or organization/billing account. Follow that exact activation path. If a dedicated project must be created, use name **CampusPulse RELAY** and an available ID. Do not presume either existing project is eligible. Return the actual eligible project ID, not a secret.
+## RouteA preparation; no provisioning currently authorized
 
-3. In **Billing**, inspect the existing account's activation state and **Credits** page. The inspected account displayed a prepayment requirement. Any payment or billing activation is a human action; no available credit is established. Do not create or attach a new billing account automatically.
+1. Only if an existing eligible non-billable trial becomes available, inspect its actual account type/open status, project, covered services, balance, expiration and quotas. Owner sign-in command: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File D:\projects\CampusPulseRELAY\scripts\inspect-access.ps1 -Login`. Browser/Calendar connector login does not authenticate CLI/ADC.
+2. Do not make a payment or attach billing. A paid account carrying credits is not a non-billable trial. Owner facts must distinguish Console observations from API-verified project/billing state.
+3. `scripts/record-funding.ps1` reads the exact existing billing association/account, records separately labeled owner-confirmed type/eligibility/coverage/balance/expiry and saves `.local/funding-verification.json`. It does not approve a budget or activate funding. The historical organizer-only recorder is retired; no fake organizer record is generated.
+4. Review an exact credit-usage envelope, reserve and duration before deployment. `relay/funding.py` rejects stale/future records, mismatched project/account, paid/unverified sources, missing coverage or insufficient balance/expiry. Both deployment entry points require the record plus an explicitly approved positive envelope. USD25/72hours remains an old unapproved estimate, never personal-spend permission.
+5. Planned resources remain one managed runtime, dedicated gateway/MCP identities/services, Firestore, private bucket/image/secrets and authenticated Scheduler. No selected funded project exists. Region candidate `us-central1` and Vertex model must be verified against that trial before creation; model names/quota are not inherited from AI Studio.
+6. After actual eligible funding and explicit usage authorization, configure cloud-only ADC using `scripts/connect-gcp.ps1`, then run `scripts/preflight.py`. Its new final-phase evidence filename preserves the original record. Deploy only after IAM/API/region/model/store/spend-cap review; no plan is claimed executed.
 
-4. Verify credit eligibility for the exact project/billing account, actual balance, expiration, covered SKUs and usage conditions. Review `docs/cost_estimate.md` within that envelope. The earlier USD 25 / 72-hour estimate is **not approved personal spending**. Explain any uncovered cost and obtain separate approval. `scripts/record-credit-activation.ps1` records human-confirmed balance/expiry and checks actual existing project billing read-only; it never activates credits, attaches billing or verifies a credit balance through an API.
+## Calendar remains independent
 
-5. Set the actual project in `.env`, then authenticate ADC:
+The dedicated Calendar ID is in `connections.json`; no primary calendar is selected automatically. Its existence/connector session does not grant app access. Calendar OAuth can be configured without paid Vertex compute: enable the free Calendar API in an owned approved project, prepare a Web application OAuth client with the exact deployed origin and `HTTPS_GATEWAY/auth/callback`, and add the owner as a test user. Client secret/refresh encryption keys stay server-side. Any new consent must be completed by the owner in the system browser; the app cannot accept Google warnings or publishing terms for them.
 
-```powershell
-.\scripts\connect-gcp.ps1 -ProjectId YOUR_ACTUAL_PROJECT_ID
-. .\scripts\env.ps1
-.\.venv\Scripts\python.exe scripts/preflight.py
-```
-
-The ADC command may reject Calendar scopes under Google's built-in CLI OAuth client. Cloud-only ADC is sufficient for deployment: run the D: CLI's `auth application-default login` with cloud-platform scope and set-quota-project. Calendar consent uses the application's separate OAuth client below; an AI Studio key is insufficient for Agent Engine.
-
-6. Create/configure the project's **Google Auth Platform** consent screen and **Web application OAuth client**. Select only the required test users until publishing is appropriate. Set authorized origin to the actual HTTPS gateway and redirect URI to `ACTUAL_GATEWAY_URL/auth/callback`. These values become available after initial hosting; configure consent before testing. Store client ID/secret in `.env` on D:, never chat. Generate a Fernet key locally for `RELAY_TOKEN_ENCRYPTION_KEY`; deployment places secrets in Secret Manager. The desktop opens the system browser and asks for explicit pairing, never embedded Google login.
-
-7. Only after activated eligible funding and an approved specific usage envelope, run `scripts/deploy-cloud.ps1` with that amount and duration. It requires `.local/credit-activation.json`, matching project/billing, sufficient confirmed balance/expiry, and `-AcknowledgeBillableResources`. It refuses missing/disabled funding; it does not make payments or link billing. The orchestration is **unexecuted and requires live repair/verification**. Start with bounded local/remote model smoke, inspect actual spend, and reserve judge capacity before expanding. No claim of deployment follows from a script alone.
-
-8. Configure the actual gateway URL in `.env` and desktop environment, complete Google consent in the browser, select **CampusPulse RELAY Demo** from the verified Calendar list, and perform actual UI-approved actions. The dedicated Calendar ID is in `docs/connections.json`. Sharing it with a runtime service identity is an alternative explicit owner action; service accounts have no automatic access.
-
-9. Run `scripts/smoke_remote.py --workspace VERIFIED_WORKSPACE_ID --approve-model-call` only within the approved budget. Reserve judge capacity, verify request allowances, test clean sessions/consent revocation/restart/token renewal, and keep the deployment available through the actual judging window. That window was not supplied.
-
-For sustained GitHub reads, create a fine-grained repository-scoped credential for the dedicated demo repository with Contents: read, Issues: read and required metadata access. Enter it only into D: .env as RELAY_GITHUB_TOKEN. The Codex connector credential is not forwarded to the deployed app. Public unauthenticated reads back off when GitHub quota is exhausted.
+The current scopes are OpenID identity, Calendar events and calendar-list read-only; app-created-only scope cannot access this previously owner-created calendar. Scope breadth follows the actual existing secondary-calendar operations. Runtime credentials, exact selected target, seven-day Testing refresh-token behavior, read-back and revocation remain live acceptance gates. Real test writes need the actual immutable UI preview and explicit approval. No general chat request substitutes for that approval.

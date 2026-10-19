@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "application_version": "0.3.0",
+  "distribution_revision": "0.3.0-r1",
+  "recorded_at": "2026-10-19T01:22:07Z",
+  "record_type": "post_release_acceptance_followup",
+  "supersedes_pending_results_only": ["actual_restore", "actual_restart"],
+  "original_pending_record": "docs/evidence/four-native-pending-0.3.0.json",
+  "profile": "D:/projects/CampusPulseRELAY/.local/native-verification/0.3.0-passport/profile",
+  "launcher": "scripts/recheck_passport_native.ps1",
+  "dialog_substitutions_used_for_human_session": false,
+  "observations": {
+    "restore_display": {
+      "result": "passed_human_screenshot",
+      "coursework": "Web Engineering · Web project",
+      "actual_logged_minutes": 45,
+      "explicit_remaining_minutes": 95,
+      "source_stated_minutes": 120,
+      "solver_allocation_minutes": 120,
+      "evidence": "User-supplied screenshot Снимок экрана 2026-10-19 054550.png"
+    },
+    "restart_persistence": {
+      "result": "passed_human_confirmation",
+      "actual_logged_minutes": 45,
+      "explicit_remaining_minutes": 95,
+      "user_report": "yes, it still shows 45 minutes logged and 95 remaining after reopening",
+      "launch_note": "The user's direct script invocation was blocked by PowerShell execution policy before execution. The inspected launcher was subsequently run with a one-process policy override. The installed executable was confirmed running; no persistent execution-policy setting was changed."
+    }
+  },
+  "separate_unconfirmed_checks": {
+    "actual_unmodified_open_dialog_visibility": "pending_explicit_human_confirmation",
+    "actual_open_cancel_behavior": "pending_explicit_human_confirmation",
+    "actual_unmodified_save_dialog_visibility": "pending_explicit_human_confirmation",
+    "actual_save_cancel_behavior": "pending_explicit_human_confirmation",
+    "actual_human_saved_output_file": "pending_confirmation",
+    "new_notification_visibility": "not_rechecked",
+    "notification_click_focus": "unverified"
+  },
+  "scope": "Confirms local restored progress display and persistence across reopening. Does not establish native dialog visibility, saved-file acceptance, hosted 0.3.0 acceptance, real Calendar operations or Gemini/Agent Engine acceptance.",
+  "sealed_release_artifacts_modified": false,
+  "cloud_resources_provisioned": false
+}

@@ -1,0 +1,42 @@
+{
+  "checked_at": "2026-10-19T12:05:24.774947+00:00",
+  "method": "read_only_authenticated_browser_and_D_cli",
+  "gcp": {
+    "active_cli_account": false,
+    "billing_account_type": "Free trial account",
+    "account_status": "Closed",
+    "prepayment_required": true,
+    "issued_credits_visible": 0,
+    "credit_balance_established": false,
+    "route_a": "blocked_no_personal_spending"
+  },
+  "gemini": {
+    "project": "gen-lang-client-0595303951",
+    "tier": "Free tier",
+    "project_warning": "Action needed / Prepay required",
+    "key_listing_initially": "permission denied",
+    "owner_subsequently_configured_free_key": true,
+    "model": "gemini-3.5-flash-lite",
+    "quota": {
+      "rpm": 15,
+      "tpm": 250000,
+      "rpd": 500
+    },
+    "quota_is_not_remaining_balance": true,
+    "real_model_metadata_and_local_mcp_smoke": true
+  },
+  "render": {
+    "workspace": "tea-d3pt0sbipnbc73a5v810",
+    "plan": "Hobby",
+    "payment_method": "No card on file",
+    "unbilled_usd": 0,
+    "free_instance_hours_used": 28.28,
+    "free_instance_hours_included": 750,
+    "pipeline_minutes_used": 23,
+    "pipeline_minutes_included": 500,
+    "bandwidth_mb_used": 54,
+    "bandwidth_gb_included": 5
+  },
+  "personal_spending_authorized_usd": 0,
+  "billing_changes_performed": false
+}

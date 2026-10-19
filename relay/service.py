@@ -26,7 +26,7 @@ class RelayService:
                 raise RelayError('AUTH_REQUIRED','Create or connect an isolated workspace first.')
             self.seed()
             return self.store.get(self.tenant,'meta','settings')
-        if value.get('mode')=='judge' and value.get('judge_expires',0)<clock.time():
+        if value.get('mode') in ('judge','judge_ai') and value.get('judge_expires',0)<clock.time():
             raise RelayError('AUTH_REQUIRED','This judge workspace has expired. Its calendar is retired and is never reassigned to another visitor.')
         return value
 
@@ -84,7 +84,7 @@ class RelayService:
 
     def import_source(self,name,content,id=None,mode='selected_upload',title=None,remote=None):
         parsed=read_upload(name,content)
-        if public_demo.enabled() and parsed['type']=='ics' and len(self.store.list(self.tenant,'calendar'))+len(parsed['events'])>100:
+        if public_demo.temporary_enabled() and parsed['type']=='ics' and len(self.store.list(self.tenant,'calendar'))+len(parsed['events'])>100:
             raise RelayError('UNSUPPORTED_INPUT','Use at most 100 calendar events in this temporary demo.')
         if parsed['type']=='ics':
             for event in parsed['events']:
@@ -94,7 +94,7 @@ class RelayService:
         if same and (id is None or same[0]['id']==id):
             return dict(same[0],duplicate=True)
         id=id or digest([name,parsed['content_hash']])[:24]
-        if public_demo.enabled() and id not in {s['id'] for s in self.sources()} and len(self.sources())>=public_demo.MAX_SOURCES:
+        if public_demo.temporary_enabled() and id not in {s['id'] for s in self.sources()} and len(self.sources())>=public_demo.MAX_SOURCES:
             raise RelayError('UNSUPPORTED_INPUT','This temporary demo reached its source limit. Start a fresh demo to import more.')
         source=dict(**parsed,id=id,title=title or name,filename=name,version=parsed['content_hash'][:24],mode=mode,timezone='Asia/Almaty',remote=remote,observed_monotonic_ns=clock.monotonic_ns())
         if remote and remote.get('fetched_at'):
@@ -343,7 +343,7 @@ class RelayService:
                     identity_migrations=self.store.list(self.tenant,'identity_migrations'),
                     additions_revision=__import__('relay.progress',fromlist=['revision']).revision(self),
                     progress=self.store.list(self.tenant,'progress'),gates=__import__('relay.handoff',fromlist=['list_gates']).list_gates(self),
-                    agent=availability(self.store,os.getenv('RELAY_AGENT_RESOURCE')))
+                    agent=__import__('relay.providers',fromlist=['current_availability']).current_availability(self.store))
 
     def freshness(self):
         try:return self.store.get(self.tenant,'meta','freshness')

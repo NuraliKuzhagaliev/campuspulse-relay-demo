@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { LiveAccess } from "./LiveAccess";
 import {
   Activity,
   ArrowDown,
@@ -560,9 +561,11 @@ function RunRail({
       </p>
       <div className="resource-state">
         <span className="status-dot" />
-        {resource
-          ? tr("Managed resource configured")
-          : tr("Agent Engine not connected")}
+        {resource?.startsWith("gemini-developer:")
+          ? tr("Gemini · alternative host")
+          : resource
+            ? tr("Managed resource configured")
+            : tr("Agent Engine not connected")}
       </div>
       <div className="run-events" aria-live="polite">
         {recent.map((e) => (
@@ -631,6 +634,11 @@ export default function App() {
     [answer, setAnswer] = useState(""),
     [notice, setNotice] = useState("");
   const input = useRef<HTMLInputElement>(null);
+  const [processingWorkspace, setProcessingWorkspace] = useState<string | null>(
+    null,
+  );
+  const processingConsent =
+    !!data?.workspace_id && processingWorkspace === data.workspace_id;
   const ready = useRef(false);
   const workLock = useRef(false);
   const workGeneration = useRef(0);
@@ -890,6 +898,9 @@ export default function App() {
           language: lang,
           conversation_id: conversationId.current,
           request_id: crypto.randomUUID().replaceAll("-", ""),
+          adult_confirmed: processingConsent,
+          permitted_processing: processingConsent,
+          processing_region: processingConsent ? "KZ" : null,
         },
       );
       if (generation !== chatGeneration.current) return;
@@ -1056,11 +1067,13 @@ export default function App() {
             >
               {offline
                 ? tr("Offline snapshot")
-                : data.settings.mode === "illustrative"
-                  ? tr("Illustrative workspace")
-                  : data.settings.mode === "judge"
-                    ? tr("Exclusive judge demo")
-                    : tr("Connected workspace")}
+                : data.settings.mode === "judge_ai"
+                  ? tr("Private AI workspace · Calendar simulated")
+                  : data.settings.mode === "illustrative"
+                    ? tr("Illustrative workspace")
+                    : data.settings.mode === "judge"
+                      ? tr("Exclusive judge demo")
+                      : tr("Connected workspace")}
             </StatusPill>
             <select
               aria-label={tr("Language")}
@@ -1120,9 +1133,13 @@ export default function App() {
                 )}
               </p>
               <small>
-                {tr(
-                  "Calendar actions are simulated. Gemini/Agent Engine and real Google Calendar remain pending.",
-                )}
+                {data.agent.provider === "gemini_developer"
+                  ? tr(
+                      "Alternative Gemini is configured; Agent Engine and real Calendar acceptance remain pending.",
+                    )
+                  : tr(
+                      "Calendar actions are simulated. Gemini/Agent Engine and real Google Calendar remain pending.",
+                    )}
               </small>
             </div>
             <button
@@ -1866,11 +1883,19 @@ export default function App() {
                         ? tr("Configured · unverified")
                         : tr("Authentication required")}
                     </StatusPill>
-                    <h2>{tr("Gemini + Agent Engine")}</h2>
+                    <h2>
+                      {data.agent.provider === "gemini_developer"
+                        ? tr("Gemini · alternative host")
+                        : tr("Gemini + Agent Engine")}
+                    </h2>
                     <p>
-                      {tr(
-                        "The managed reasoningEngine is the actual agent query path. Its live deployment is not verified yet.",
-                      )}
+                      {data.agent.provider === "gemini_developer"
+                        ? tr(
+                            "Alternative Gemini is configured; Agent Engine and real Calendar acceptance remain pending.",
+                          )
+                        : tr(
+                            "The managed reasoningEngine is the actual agent query path. Its live deployment is not verified yet.",
+                          )}
                     </p>
                     <code>
                       {data.agent.resource ||
@@ -2198,13 +2223,27 @@ export default function App() {
               )}
             </p>
             <section className="assistant">
+              {!entry ? (
+                <LiveAccess
+                  key={data.workspace_id}
+                  data={data}
+                  consent={processingConsent}
+                  onConsent={(value) =>
+                    setProcessingWorkspace(
+                      value ? data.workspace_id || null : null,
+                    )
+                  }
+                />
+              ) : null}
               <div className="assistant-label">
                 <Sparkles size={17} />
                 <strong>{t.assistant}</strong>
                 <span>
-                  {data.agent.configured
-                    ? tr("Managed Gemini agent")
-                    : tr("Connect Agent Engine for live AI")}
+                  {data.agent.provider === "gemini_developer"
+                    ? tr("Gemini · alternative host")
+                    : data.agent.configured
+                      ? tr("Managed Gemini agent")
+                      : tr("Connect Agent Engine for live AI")}
                 </span>
               </div>
               <button
@@ -2699,15 +2738,27 @@ export default function App() {
                   ? tr("Public demo · mandatory GCP acceptance pending")
                   : tr("Live demo: cloud setup required")}
               </strong>
-              {data.demo?.public
+              {data.agent.provider === "gemini_developer"
                 ? tr(
-                    "Illustrative course data. Calendar actions are simulated. GitHub reads are real. Gemini/Agent Engine and real Calendar acceptance remain pending.",
+                    "Alternative Gemini is configured; Agent Engine and real Calendar acceptance remain pending.",
                   )
-                : tr(
-                    "Course examples are illustrative. The local Calendar is simulated. GitHub public reads are real. No Gemini success or cloud deployment is claimed.",
-                  )}
+                : data.demo?.public
+                  ? tr(
+                      "Illustrative course data. Calendar actions are simulated. GitHub reads are real. Gemini/Agent Engine and real Calendar acceptance remain pending.",
+                    )
+                  : tr(
+                      "Course examples are illustrative. The local Calendar is simulated. GitHub public reads are real. No Gemini success or cloud deployment is claimed.",
+                    )}
             </p>
           </div>
+          <LiveAccess
+            key={data.workspace_id}
+            data={data}
+            consent={processingConsent}
+            onConsent={(value) =>
+              setProcessingWorkspace(value ? data.workspace_id || null : null)
+            }
+          />
         </Modal>
       ) : null}
       {commands ? (

@@ -1,0 +1,148 @@
+{
+  "checked_at": "2026-10-19T11:50:39.213633+00:00",
+  "route": "alternative_hosted_local_protocol_smoke",
+  "provider": "gemini_developer",
+  "model": "gemini-3.5-flash-lite",
+  "managed_agent_engine": false,
+  "source_revision": "working_tree_not_yet_released",
+  "public_web_acceptance": false,
+  "calendar_actions": "not_called",
+  "personal_spending_authorized_usd": 0,
+  "account_free_tier_owner_confirmed": true,
+  "synthetic_public_material_only": true,
+  "mcp_tools": [
+    "list_course_sources",
+    "read_course_source",
+    "get_assignment_repo_status",
+    "observe_handoff_gate",
+    "get_calendar_window",
+    "read_assignment_repo_file",
+    "get_workspace_plan_inputs",
+    "get_progress_summary",
+    "recommend_clarification",
+    "preview_study_blocks",
+    "apply_approved_study_blocks",
+    "verify_study_blocks",
+    "undo_owned_study_blocks",
+    "build_next_action_packet",
+    "propose_academic_extraction",
+    "save_validated_plan"
+  ],
+  "result": {
+    "text": "**Repository Observation:**\n- **Repository Name:** `NuraliKuzhagaliev/campuspulse-relay-demo`\n- **Immutable Commit:** `66fd068bc1cf142f8152e717f662e11c20f96a97`\n\n**Progress Summary:**\n- No student work or progress logs have been recorded yet (`logs: []`, task completions are currently in `planned` status).",
+    "status": "complete",
+    "required_tool_failed": false,
+    "run_id": "ab0e87e295cb6972286fc37ec3662d7e",
+    "conversation_id": "0be2ea262955362134cbfeb039bb0768",
+    "mode": "live_gemini_alternative",
+    "provider": "gemini_developer",
+    "model": "gemini-3.5-flash-lite",
+    "deployment_mode": "alternative_hosted",
+    "duration_ms": 19019
+  },
+  "events": [
+    {
+      "sequence": 1,
+      "run_id": "seed-137300a30c1147c3bf0b3606f5fc6cc4",
+      "type": "run_completed",
+      "timestamp": "2026-10-19T11:50:39.209674+00:00",
+      "summary": "Illustrative workspace loaded. No Gemini or external Calendar calls.",
+      "mode": "illustrative"
+    },
+    {
+      "sequence": 2,
+      "run_id": "ab0e87e295cb6972286fc37ec3662d7e",
+      "type": "model_call_reserved",
+      "timestamp": "2026-10-19T11:50:53.334184+00:00",
+      "estimated_max_tokens": 13381,
+      "summary": "Reserved a bounded free-tier model call; no provider output is yet verified."
+    },
+    {
+      "sequence": 3,
+      "run_id": "ab0e87e295cb6972286fc37ec3662d7e",
+      "type": "model_usage",
+      "timestamp": "2026-10-19T11:50:54.515304+00:00",
+      "input_tokens": 1829,
+      "output_tokens": 14,
+      "thinking_tokens": 0,
+      "total_tokens": 1843,
+      "observed_at": "2026-10-19T11:50:54.515289+00:00",
+      "summary": "Provider-reported token usage; billing is not inferred."
+    },
+    {
+      "sequence": 4,
+      "run_id": "ab0e87e295cb6972286fc37ec3662d7e",
+      "type": "tool_started",
+      "timestamp": "2026-10-19T11:50:54.519035+00:00",
+      "tool": "get_assignment_repo_status",
+      "summary": "Calling get_assignment_repo_status."
+    },
+    {
+      "sequence": 5,
+      "run_id": "ab0e87e295cb6972286fc37ec3662d7e",
+      "type": "tool_finished",
+      "timestamp": "2026-10-19T11:50:58.207120+00:00",
+      "tool": "get_assignment_repo_status",
+      "duration_ms": 3688,
+      "summary": "Tool returned an observation. Open the evidence to inspect it."
+    },
+    {
+      "sequence": 6,
+      "run_id": "ab0e87e295cb6972286fc37ec3662d7e",
+      "type": "model_call_reserved",
+      "timestamp": "2026-10-19T11:50:58.219763+00:00",
+      "estimated_max_tokens": 14194,
+      "summary": "Reserved a bounded free-tier model call; no provider output is yet verified."
+    },
+    {
+      "sequence": 7,
+      "run_id": "ab0e87e295cb6972286fc37ec3662d7e",
+      "type": "model_usage",
+      "timestamp": "2026-10-19T11:50:59.010065+00:00",
+      "input_tokens": 2063,
+      "output_tokens": 12,
+      "thinking_tokens": 0,
+      "total_tokens": 2075,
+      "observed_at": "2026-10-19T11:50:59.010054+00:00",
+      "summary": "Provider-reported token usage; billing is not inferred."
+    },
+    {
+      "sequence": 8,
+      "run_id": "ab0e87e295cb6972286fc37ec3662d7e",
+      "type": "tool_started",
+      "timestamp": "2026-10-19T11:50:59.014222+00:00",
+      "tool": "get_progress_summary",
+      "summary": "Calling get_progress_summary."
+    },
+    {
+      "sequence": 9,
+      "run_id": "ab0e87e295cb6972286fc37ec3662d7e",
+      "type": "tool_finished",
+      "timestamp": "2026-10-19T11:50:59.029278+00:00",
+      "tool": "get_progress_summary",
+      "duration_ms": 15,
+      "summary": "Tool returned an observation. Open the evidence to inspect it."
+    },
+    {
+      "sequence": 10,
+      "run_id": "ab0e87e295cb6972286fc37ec3662d7e",
+      "type": "model_call_reserved",
+      "timestamp": "2026-10-19T11:50:59.041404+00:00",
+      "estimated_max_tokens": 15708,
+      "summary": "Reserved a bounded free-tier model call; no provider output is yet verified."
+    },
+    {
+      "sequence": 11,
+      "run_id": "ab0e87e295cb6972286fc37ec3662d7e",
+      "type": "model_usage",
+      "timestamp": "2026-10-19T11:51:00.024793+00:00",
+      "input_tokens": 2465,
+      "output_tokens": 104,
+      "thinking_tokens": 0,
+      "total_tokens": 2569,
+      "observed_at": "2026-10-19T11:51:00.024783+00:00",
+      "summary": "Provider-reported token usage; billing is not inferred."
+    }
+  ],
+  "passed": true
+}

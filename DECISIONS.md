@@ -1,5 +1,9 @@
 # Decisions
 
+- Final phase2026-10-19 supersedes organizer-only funding waits. Preferred managed route requires an actual verified non-billable Free Trial; current account requires prepayment and cannot be used under the zero-personal-spend policy. Select the explicit Gemini Developer free-tier alternative, preserving the managed criterion as unresolved. No automatic provider fallback or paid upgrade.
+- Public illustrative sessions remain separate from invitation-only adult evaluator AI access in Kazakhstan. Unpaid processing excludes personal/confidential material and real Calendar details; the model has no approval authority. Owner-signed AI-only invitations carry no Calendar grant.
+- Original0.3.0-r1 artifacts and0.2.1 public site remain rollback evidence. Current0.4.0 source is an integration candidate until live/browser/Windows gates pass. Prior phase-specific no-publication instructions below retain their historical scope; this final prompt authorizes preparing/publishing the verified integration.
+
 - 0.3.0 adds four deterministic capabilities on the existing stack. It does not invoke or substitute another model provider. Local SQLite uses tenant-scoped multi-record transactions/revisions; the new Firestore transaction boundary fails closed until verified.
 - Portable workspaces are untrusted selected extracts and personal claims. They restore a fresh server-generated namespace with no credentials, accepted plans, approvals or operation journals. No automatic device sync, original-file verification or permanent public storage is promised.
 - Clarification compares actual/source/user-offered alternatives under explicit branch/model-build/solver bounds. Unknown is not infeasible. PR gates require explicit merged metadata; closed alone does not release work. Waiting gates have no invented release time.

@@ -3,7 +3,7 @@ import hashlib
 import os
 import secrets
 import time
-from contextlib import asynccontextmanager
+from contextlib import asynccontextmanager, AsyncExitStack
 from pathlib import Path
 from fastapi import FastAPI, Request, UploadFile, File, Depends
 from fastapi.responses import JSONResponse, FileResponse
@@ -14,10 +14,17 @@ from .store import make_store
 from .service import RelayService
 from .auth import sign_context
 from . import public_demo
+from . import alternative_live
+from .providers import selected, current_availability
 
 store=make_store()
 CLOUD=os.getenv('RELAY_MODE')=='cloud'
 PUBLIC_DEMO=public_demo.enabled()
+ALTERNATIVE=alternative_live.enabled()
+TEMPORARY_WEB=PUBLIC_DEMO or ALTERNATIVE
+selected()  # Refuse invalid provider/deployment combinations before serving traffic.
+if ALTERNATIVE:
+    alternative_live.configuration()
 if PUBLIC_DEMO:
     public_demo.configuration()
 if CLOUD:
@@ -34,7 +41,7 @@ async def lifespan(app):
         # Local background polling is genuine server-side work, but not hosted autonomy proof.
         while True:
             await asyncio.sleep(max(30,int(os.getenv('RELAY_POLL_SECONDS','60'))))
-            if PUBLIC_DEMO:
+            if TEMPORARY_WEB:
                 await asyncio.to_thread(public_demo.cleanup,store)
                 continue
             if CLOUD:
@@ -48,14 +55,20 @@ async def lifespan(app):
                 except RelayError as exc:
                     if exc.code!='AUTH_REQUIRED':
                         store.event(workspace['id'],'radar-error','run_failed',summary=exc.message,code=exc.code)
-    task=asyncio.create_task(poll())
-    yield
-    task.cancel()
+    async with AsyncExitStack() as stack:
+        if ALTERNATIVE:
+            from .mcp_server import mcp
+            await stack.enter_async_context(mcp.session_manager.run())
+        task=asyncio.create_task(poll())
+        try:
+            yield
+        finally:
+            task.cancel()
 
 
-app=FastAPI(title='CampusPulse RELAY',version='0.3.0',lifespan=lifespan,
-            docs_url=None if PUBLIC_DEMO else '/docs',redoc_url=None if PUBLIC_DEMO else '/redoc',
-            openapi_url=None if PUBLIC_DEMO else '/openapi.json')
+app=FastAPI(title='CampusPulse RELAY',version='0.4.0',lifespan=lifespan,
+            docs_url=None if TEMPORARY_WEB else '/docs',redoc_url=None if TEMPORARY_WEB else '/redoc',
+            openapi_url=None if TEMPORARY_WEB else '/openapi.json')
 expensive_requests=asyncio.Semaphore(2)
 
 
@@ -72,8 +85,9 @@ async def validation_error(request,exc):
 
 @app.middleware('http')
 async def protect(request,call_next):
-    if PUBLIC_DEMO:
-        if not public_demo.route_allowed(request.url.path,request.method):
+    if TEMPORARY_WEB:
+        allowed_route=alternative_live.route_allowed if ALTERNATIVE else public_demo.route_allowed
+        if not allowed_route(request.url.path,request.method):
             return JSONResponse({'error':{'code':'ACCESS_DENIED','message':'This public illustrative demo does not expose Google connections, managed AI, MCP, administrative or test operations. Mandatory GCP acceptance remains pending.'}},status_code=403)
         try:
             public_demo.limit('_global','requests',1200)
@@ -93,20 +107,20 @@ async def protect(request,call_next):
     if request.method not in ('GET','HEAD','OPTIONS') and request.url.path.startswith('/api/'):
         origin=request.headers.get('origin')
         allowed={str(request.base_url).rstrip('/'),os.getenv('RELAY_GATEWAY_URL','')}
-        if PUBLIC_DEMO and (os.getenv('RELAY_GATEWAY_URL') or os.getenv('RENDER_EXTERNAL_URL')):
+        if TEMPORARY_WEB and (os.getenv('RELAY_GATEWAY_URL') or os.getenv('RENDER_EXTERNAL_URL')):
             allowed={os.getenv('RELAY_GATEWAY_URL') or os.getenv('RENDER_EXTERNAL_URL')}
-        if not PUBLIC_DEMO:
+        if not TEMPORARY_WEB:
             allowed.update({'http://127.0.0.1:5173','http://localhost:5173'})
         if origin and origin not in allowed:
             return JSONResponse({'error':{'code':'ACCESS_DENIED','message':'Request origin is not allowed.'}},status_code=403)
-    if PUBLIC_DEMO and request.method=='POST':
+    if TEMPORARY_WEB and request.method=='POST' and not request.url.path.startswith('/_relay/'):
         async with expensive_requests:
             response=await call_next(request)
     else:
         response=await call_next(request)
     response.headers['X-Content-Type-Options']='nosniff'
     response.headers['Referrer-Policy']='no-referrer'
-    if PUBLIC_DEMO:
+    if TEMPORARY_WEB:
         response.headers['X-Frame-Options']='DENY'
         response.headers['X-Robots-Tag']='noindex, nofollow'
         response.headers['Content-Security-Policy']="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'"
@@ -128,8 +142,8 @@ def identity(request:Request):
         raise RelayError('AUTH_REQUIRED','Session expired. Sign in again.')
     if request.method not in ('GET','HEAD') and request.headers.get('x-relay-csrf')!=record['csrf']:
         raise RelayError('ACCESS_DENIED','Missing workspace request protection.')
-    if PUBLIC_DEMO:
-        if not record['tenant'].startswith('demo-'):
+    if TEMPORARY_WEB:
+        if not record['tenant'].startswith(('demo-','judge-') if ALTERNATIVE else ('demo-',)):
             raise RelayError('ACCESS_DENIED','This session is not a public demo workspace.')
         if request.method not in ('GET','HEAD'):
             public_demo.limit(record['tenant'],'writes',30)
@@ -142,12 +156,12 @@ def service(record=Depends(identity)):
 
 def new_session(tenant,expires=None):
     token,csrf=secrets.token_urlsafe(32),secrets.token_urlsafe(24)
-    seconds=public_demo.SESSION_SECONDS if PUBLIC_DEMO else 86400
+    seconds=public_demo.SESSION_SECONDS if TEMPORARY_WEB else 86400
     lifetime=max(1,int(min(expires or time.time()+seconds,time.time()+seconds)-time.time()))
     store.put('_server','sessions',digest(token),dict(tenant=tenant,csrf=csrf,expires=time.time()+lifetime))
     store.put('_server','workspaces',tenant,{'id':tenant},create=True)
-    response=JSONResponse(dict(csrf=csrf,tenant=tenant,mode='public_demo' if PUBLIC_DEMO else 'cloud' if CLOUD else 'local',authenticated=CLOUD))
-    response.set_cookie('relay_session',token,httponly=True,secure=CLOUD or PUBLIC_DEMO,samesite='strict',max_age=lifetime)
+    response=JSONResponse(dict(csrf=csrf,tenant=tenant,mode='alternative_live' if ALTERNATIVE else 'public_demo' if PUBLIC_DEMO else 'cloud' if CLOUD else 'local',authenticated=CLOUD or tenant.startswith('judge-')))
+    response.set_cookie('relay_session',token,httponly=True,secure=CLOUD or TEMPORARY_WEB,samesite='strict',max_age=lifetime)
     return response
 
 
@@ -156,12 +170,12 @@ def session(request:Request):
     if request.cookies.get('relay_session'):
         try:
             record=identity(request)
-            return dict(csrf=record['csrf'],tenant=record['tenant'],mode='public_demo' if PUBLIC_DEMO else 'cloud' if CLOUD else 'local',authenticated=CLOUD)
+            return dict(csrf=record['csrf'],tenant=record['tenant'],mode='alternative_live' if ALTERNATIVE else 'public_demo' if PUBLIC_DEMO else 'cloud' if CLOUD else 'local',authenticated=CLOUD or record['tenant'].startswith('judge-'))
         except RelayError:
             pass
     if CLOUD:
         raise RelayError('AUTH_REQUIRED','Sign in through Google in the system browser, or use an owner-issued one-use judge invitation.')
-    if PUBLIC_DEMO:
+    if TEMPORARY_WEB:
         public_demo.cleanup(store)
         public_demo.limit('_global','new-sessions',60,3600)
         if len(store.list('_server','workspaces'))>=100:
@@ -172,7 +186,7 @@ def session(request:Request):
 
 @app.post('/api/demo/reset')
 def reset_demo(record=Depends(identity)):
-    if not PUBLIC_DEMO:
+    if not TEMPORARY_WEB:
         raise RelayError('ACCESS_DENIED','Public demo reset is unavailable in this mode.')
     public_demo.limit('_global','new-sessions',60,3600)
     public_demo.forget(store,record['tenant'])
@@ -216,17 +230,16 @@ def google_auth(body:GoogleToken):
 
 @app.get('/api/health')
 def health():
-    from .conversations import availability
-    agent=availability(store,os.getenv('RELAY_AGENT_RESOURCE'))
-    return dict(ok=True,version=app.version,mode='public_demo' if PUBLIC_DEMO else 'cloud' if CLOUD else 'local',agent_configured=agent['configured'],agent_verified=agent['verified'],agent=agent,time=now(),
+    agent=current_availability(store)
+    return dict(ok=True,version=app.version,mode='alternative_live' if ALTERNATIVE else 'public_demo' if PUBLIC_DEMO else 'cloud' if CLOUD else 'local',agent_configured=agent['configured'],agent_verified=agent['verified'],agent=agent,time=now(),
                 deployed_commit=os.getenv('RELAY_DEPLOYED_COMMIT') or os.getenv('RENDER_GIT_COMMIT'),
-                demo=public_demo.metadata() if PUBLIC_DEMO else None)
+                demo=dict(public_demo.metadata(),gemini='private_invitation_required',mandatory_gcp='exception_pending') if ALTERNATIVE else public_demo.metadata() if PUBLIC_DEMO else None)
 
 
 @app.get('/api/state')
 def state(svc=Depends(service)):
     value=svc.snapshot()
-    if PUBLIC_DEMO:
+    if TEMPORARY_WEB:
         value['demo']=public_demo.metadata()
     return value
 
@@ -244,7 +257,7 @@ def source(source_id:str,svc=Depends(service)):
 @app.post('/api/import')
 async def import_file(file:UploadFile=File(...),svc=Depends(service)):
     content=await file.read(10*1024*1024+1)
-    if PUBLIC_DEMO and len(content)>public_demo.MAX_UPLOAD_BYTES:
+    if TEMPORARY_WEB and len(content)>public_demo.MAX_UPLOAD_BYTES:
         raise RelayError('UNSUPPORTED_INPUT','Public demo imports must be at most 2 MiB.')
     return await asyncio.to_thread(svc.import_source,file.filename or 'upload.txt',content)
 
@@ -261,7 +274,7 @@ def import_native(body:NativeFile,svc=Depends(service)):
         content=base64.b64decode(body.content,validate=True)
     except Exception:
         raise RelayError('PARSE_FAILED','The selected file could not be decoded.')
-    if PUBLIC_DEMO and len(content)>public_demo.MAX_UPLOAD_BYTES:
+    if TEMPORARY_WEB and len(content)>public_demo.MAX_UPLOAD_BYTES:
         raise RelayError('UNSUPPORTED_INPUT','Public demo imports must be at most 2 MiB.')
     return svc.import_source(body.name,content)
 
@@ -331,7 +344,7 @@ class Preferences(BaseModel):
 
 @app.post('/api/preferences')
 def preferences(body:Preferences,svc=Depends(service)):
-    if PUBLIC_DEMO and body.watch_enabled:
+    if TEMPORARY_WEB and body.watch_enabled:
         raise RelayError('ACCESS_DENIED','The public demo supports manual GitHub refresh. Durable background execution requires the pending GCP deployment.')
     s=svc.settings()
     if body.timezone:
@@ -363,7 +376,7 @@ def export(svc=Depends(service)):
 
 @app.delete('/api/workspace')
 def delete_workspace(svc=Depends(service)):
-    public_demo.forget(store,svc.tenant) if PUBLIC_DEMO else store.delete_workspace(svc.tenant)
+    public_demo.forget(store,svc.tenant) if TEMPORARY_WEB else store.delete_workspace(svc.tenant)
     return {'deleted':True,'external_resources_deleted':False}
 
 
@@ -588,7 +601,7 @@ def restore_passport(id:str,record=Depends(identity)):
     svc=RelayService(store,record['tenant'])
     try:result=store.get(svc.tenant,'passport_copies',id)
     except RelayError:
-        if PUBLIC_DEMO:
+        if TEMPORARY_WEB:
             public_demo.cleanup(store)
             if len(store.list('_server','workspaces'))>=100:raise RelayError('UPSTREAM_RATE_LIMITED','Public demo workspace capacity is full; the original remains unchanged.')
         result=commit(svc,id)
@@ -612,7 +625,7 @@ def select_calendar(body:CalendarSelection,svc=Depends(service)):
     from .oauth import calendar_list
     calendars=calendar_list(store,svc.tenant)
     chosen=next((c for c in calendars if c['id']==body.calendar_id),None)
-    if not chosen:
+    if not chosen or chosen.get('primary') or chosen.get('id')=='primary':
         raise RelayError('ACCESS_DENIED','Choose a calendar verified for your Google identity.')
     settings=svc.settings();settings.update(calendar_id=chosen['id'],calendar_live=True,mode='personal')
     store.put(svc.tenant,'meta','settings',settings)
@@ -624,6 +637,9 @@ class Chat(BaseModel):
     language:str=Field(default='en',pattern='^(en|ru|kk)$')
     conversation_id:str|None=Field(default=None,pattern='^[a-f0-9]{32}$')
     request_id:str|None=Field(default=None,pattern='^[a-zA-Z0-9_-]{16,80}$')
+    adult_confirmed:bool=False
+    permitted_processing:bool=False
+    processing_region:str|None=None
 
 
 @app.get('/api/conversation')
@@ -662,9 +678,12 @@ def cancel_run(id:str,svc=Depends(service)):
 
 @app.post('/api/chat')
 async def chat(body:Chat,svc=Depends(service)):
-    resource=os.getenv('RELAY_AGENT_RESOURCE')
-    if not resource:
+    config=selected()
+    resource=config['resource']
+    if not config['configured']:
         raise RelayError('AUTH_REQUIRED','The real Gemini Agent Engine is not connected. Local planning and evidence tools remain available.')
+    if config['provider']=='gemini_developer':
+        alternative_live.authorize_query(svc.settings(),body.adult_confirmed,body.permitted_processing,body.processing_region)
     from .conversations import begin_run, finish_run, conversation, RUN_SECONDS
     body.conversation_id=body.conversation_id or get_conversation(svc)['id']
     body.request_id=body.request_id or secrets.token_hex(16)
@@ -672,22 +691,28 @@ async def chat(body:Chat,svc=Depends(service)):
     if not created:
         return record.get('result',dict(status=record['status'],text='',run_id=record['id'],remote_compute_stopped=False))
     run=record['id']
-    store.event(svc.tenant,run,'run_started',summary='Sending your request to the managed Gemini agent.',resource=resource)
+    store.event(svc.tenant,run,'run_started',summary='Sending your request to the selected Gemini route.',resource=resource,provider=config['provider'],deployment_mode=config['deployment_mode'])
     token=sign_context(svc.tenant,os.environ['RELAY_MCP_URL'],os.environ['RELAY_CONTEXT_SECRET'])
     try:
-        from .limits import model_request
-        model_request(store,svc.tenant,judge=svc.settings().get('mode')=='judge')
-        result=await asyncio.wait_for(asyncio.to_thread(invoke_managed_query,resource,user_id=svc.tenant,message=body.message,context_token=token,language=body.language,run_id=run,
+        invoke=invoke_alternative_query if config['provider']=='gemini_developer' else invoke_managed_query
+        result=await asyncio.wait_for(asyncio.to_thread(invoke,resource,user_id=svc.tenant,message=body.message,context_token=token,language=body.language,run_id=run,
             conversation_id=body.conversation_id,history=conversation(store,svc.tenant,body.conversation_id)['turns']),timeout=RUN_SECONDS)
     except asyncio.TimeoutError:
         result=dict(status='unknown',text='',reason='The gateway wait timed out. Remote compute may still be running. Review events and receipts before retrying.',remote_compute_stopped=False)
     except Exception as exc:
-        result=dict(status='failed',text='',reason='The managed agent could not complete this request. Check deployment and consent.')
+        code=getattr(exc,'code',None)
+        limited=code in (429,'RESOURCE_EXHAUSTED','UPSTREAM_RATE_LIMITED')
+        if limited:
+            from .model_usage import throttle
+            throttle(store)
+        result=dict(status='failed',text='',code='UPSTREAM_RATE_LIMITED' if limited else 'UPSTREAM_UNAVAILABLE',reason='Gemini rate limit reached. Retry after the allowance resets.' if limited else 'The selected Gemini route could not complete this request. Check account access and service configuration.')
     result=finish_run(store,svc.tenant,record,body.message,result)
     kind={'complete':'run_completed','partial':'run_partial','failed':'run_failed','unknown':'run_unknown','cancelled':'run_cancelled'}.get(result['status'],'run_unknown')
-    store.event(svc.tenant,run,kind,summary='Managed agent outcome: '+result['status'],resource=resource)
+    store.event(svc.tenant,run,kind,summary='Agent outcome',resource=resource,provider=config['provider'],deployment_mode=config['deployment_mode'])
     if result['status']=='complete':
-        store.put('_server','agent_evidence',digest(resource),dict(resource=resource,run_id=run,revision=os.getenv('RELAY_AGENT_REVISION','unreported'),observed_at=now(),expires=time.time()+300))
+        store.put('_server','agent_evidence',digest(resource),dict(resource=resource,run_id=run,revision=config['revision'] or 'unreported',observed_at=now(),expires=time.time()+300,provider=config['provider'],deployment_mode=config['deployment_mode'],model=config['model']))
+    else:
+        store.put('_server','agent_failures',digest(resource),dict(failed_at=now(),run_id=run,status=result['status'],code=result.get('code')))
     return result
 
 
@@ -696,6 +721,11 @@ def invoke_managed_query(resource,**kwargs):
     import vertexai
     client=vertexai.Client(project=os.environ['GOOGLE_CLOUD_PROJECT'],location=os.environ['GOOGLE_CLOUD_LOCATION'])
     return client.agent_engines.get(name=resource).query(**kwargs)
+
+
+def invoke_alternative_query(resource,**kwargs):
+    from .agent import RelayRuntime
+    return RelayRuntime().query(**kwargs)
 
 
 class AssignmentMapping(BaseModel):
@@ -758,7 +788,7 @@ def submission_preflight(body:SubmissionBody,svc=Depends(service)):
     task=svc.packet(body.task_id)['task']
     try:content=base64.b64decode(body.content,validate=True)
     except Exception:raise RelayError('PARSE_FAILED','The selected draft could not be decoded.')
-    if PUBLIC_DEMO and len(content)>public_demo.MAX_UPLOAD_BYTES:
+    if TEMPORARY_WEB and len(content)>public_demo.MAX_UPLOAD_BYTES:
         raise RelayError('UNSUPPORTED_INPUT','Public demo draft limit is 2 MiB.')
     facts=[f for f in svc.current_facts() if f['task_id']==body.task_id]
     result=check_submission(body.name,content,facts,body.exceptions,body.present_files)
@@ -816,6 +846,21 @@ async def scheduled_sync(request:Request):
 
 from .oauth import install as install_oauth
 app.include_router(install_oauth(store,new_session,identity))
+
+if ALTERNATIVE:
+    class AIInvitationBatch(StrictBody):
+        count:int=Field(ge=1,le=8)
+        hours:int=Field(ge=1,le=12)
+        timestamp:int
+        nonce:str=Field(pattern='^[a-f0-9]{32}$')
+
+    @app.post('/internal/ai-invitations')
+    def ai_invitation_batch(body:AIInvitationBatch,request:Request):
+        from .ai_invitations import issue
+        return issue(store,body.model_dump(),request.headers.get('x-relay-owner-signature',''))
+
+    from .mcp_server import app as internal_mcp_app
+    app.mount('/_relay',internal_mcp_app)
 
 dist=Path(__file__).parent.parent/'dist'
 if dist.exists():

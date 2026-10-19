@@ -9,8 +9,10 @@ from relay.domain import digest, RelayError
 @pytest.fixture
 def demo(tmp_path, monkeypatch):
     monkeypatch.setenv('RELAY_MODE','public_demo')
+    monkeypatch.delenv('RELAY_GEMINI_API_KEY',raising=False)
     monkeypatch.setenv('RELAY_GATEWAY_URL','https://demo.test')
     monkeypatch.setattr(gateway,'PUBLIC_DEMO',True)
+    monkeypatch.setattr(gateway,'TEMPORARY_WEB',True)
     monkeypatch.setattr(gateway,'store',Store(tmp_path/'demo.sqlite3'))
     public_demo._buckets.clear()
     public_demo._public_cache.clear()

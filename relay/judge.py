@@ -43,6 +43,16 @@ def claim(store, invitation):
     if record['expires'] < time.time() or not store.claim('_server','judge_invites',key,{'status':'pending'},{'status':'consumed'}):
         raise RelayError('ACCESS_DENIED', 'Invitation is invalid, expired or already used.')
     tenant='judge-'+secrets.token_hex(24)
+    if record.get('kind')=='read_only_ai':
+        from .service import RelayService
+        expires=min(record['expires'],time.time()+record['lifetime_seconds'])
+        svc=RelayService(store,tenant)
+        svc.seed()
+        settings=svc.settings()
+        settings.update(mode='judge_ai',ai_access=True,calendar_live=False,judge_expires=expires,watch_enabled=False)
+        store.put(tenant,'meta','settings',settings)
+        store.event(tenant,'judge-open','run_completed',summary='Private AI workspace opened. Gemini uses permitted non-sensitive documents; Calendar actions remain illustrative.',mode='judge_ai')
+        return tenant,expires
     lease=store.get('_server','judge_calendars',record['lease_id'])
     expires=time.time()+record['lifetime_seconds']
     if not store.claim('_server','judge_calendars',record['lease_id'],{'status':'reserved'},
@@ -62,3 +72,12 @@ def claim(store, invitation):
     store.put(tenant,'meta','settings',settings)
     store.event(tenant,'judge-open','run_completed',summary='Exclusive judge workspace opened. Upload permitted academic material; Calendar operations are real and require approval.',mode='judge')
     return tenant,expires
+
+
+def register_ai(store,hours=2):
+    """Owner-side only: AI invitation grants no Google/Calendar permission."""
+    if os.getenv('RELAY_MODE')!='alternative_live' or not 1<=hours<=12:
+        raise RelayError('ACCESS_DENIED','Read-only AI invitations require the explicitly configured alternative live host and a bounded lifetime.')
+    invitation=secrets.token_urlsafe(32)
+    store.put('_server','judge_invites',digest(invitation),dict(kind='read_only_ai',status='pending',expires=time.time()+hours*3600,lifetime_seconds=hours*3600),create=True)
+    return invitation

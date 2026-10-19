@@ -49,7 +49,9 @@ def test_event_reconnect_order(client):
 
 def test_health_version_matches_actual_backend_metadata(client):
     response=client.get('/api/health')
-    assert response.status_code==200 and response.json()['version']==gateway.app.version=='0.3.0'
+    import json
+    from pathlib import Path
+    assert response.status_code==200 and response.json()['version']==gateway.app.version==json.loads(Path('package.json').read_text())['version']
 
 
 def test_upload_path_rejected(client):

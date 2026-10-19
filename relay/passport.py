@@ -231,7 +231,7 @@ def commit(svc, stage_id):
     if staged['source_binding']!=svc.source_versions():raise RelayError('STALE_REVISION','Current workspace changed. Revalidate before switching to a fresh copy.')
     envelope=validate(staged['envelope']);p=envelope['payload']
     from . import public_demo
-    destination=('demo-' if public_demo.enabled() else 'local-')+secrets.token_hex(16) # Server generated, never a file authorization field.
+    destination=('demo-' if public_demo.temporary_enabled() else 'local-')+secrets.token_hex(16) # Server generated, never a file authorization field.
     source_map={s['id']:'portable-'+secrets.token_hex(12) for s in p['sources']}
     sources=[];fact_map={}
     for old in p['sources']:

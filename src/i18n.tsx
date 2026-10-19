@@ -131,6 +131,12 @@ const labelKeys: Record<string, string> = {
   run_failed: "Run failed",
   tool_started: "Tool started",
   tool_finished: "Tool finished",
+  tool_failed: "Tool failed",
+  model_call_reserved: "Model allowance reserved",
+  model_usage: "Observed model usage",
+  get_progress_summary: "Read work progress",
+  recommend_clarification: "Compare clarification impact",
+  observe_handoff_gate: "Observe handoff gate",
   source_conflict: "Source conflict",
   plan_validated: "Plan validated",
   approval_required: "Approval required",
@@ -261,6 +267,8 @@ const errorKeys: Record<string, string> = {
   CANCELLED: "Comparison cancelled. The accepted plan is unchanged.",
   FEATURE_PENDING:
     "Sign in or reconnect the required service, then retry. Cloud acceptance remains pending.",
+  PROCESSING_CONSENT_REQUIRED:
+    "Confirm adult access and permitted non-sensitive processing before using free Gemini.",
   AUTH_REQUIRED:
     "Sign in or reconnect the required service, then retry. Cloud acceptance remains pending.",
   ACCESS_DENIED:

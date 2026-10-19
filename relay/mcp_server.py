@@ -1,5 +1,6 @@
 """Genuine MCP Streamable HTTP server. Signed workspace context is never a tool argument."""
 import os
+import hmac
 from contextlib import asynccontextmanager
 from mcp.server.fastmcp import FastMCP
 from starlette.applications import Starlette
@@ -90,6 +91,24 @@ def get_workspace_plan_inputs() -> dict:
 
 
 @mcp.tool()
+def get_progress_summary() -> dict:
+    """Read actual reported remaining/completion and logged durations. Time is not attention or submission proof. No personal notes or Calendar details."""
+    s=svc()
+    return dict(revision=__import__('relay.progress',fromlist=['revision']).revision(s),
+                tasks=[{k:t.get(k) for k in ('id','title','course','minutes','remaining_minutes','completion','progress','source_ids')} for t in s.tasks()],
+                logs=[{k:r.get(k) for k in ('id','task_id','duration_minutes','origin','created_at')} for r in store.list(s.tenant,'work_logs')],
+                time_is_not_completion=True)
+
+
+@mcp.tool()
+def recommend_clarification() -> dict:
+    """Compare existing cited deadline alternatives under the current bounded solver. Does not answer/resolve a conflict or invent effort bounds."""
+    from .clarify import analyze
+    import secrets
+    return result(analyze,svc(),dict(request_id=secrets.token_hex(16),bounds=[],offered_windows=[],candidate_ids=[]))
+
+
+@mcp.tool()
 def preview_study_blocks(plan_id:str) -> dict:
     """Return an immutable exact external write preview. Does not authorize or mutate Calendar."""
     s=svc()
@@ -156,6 +175,10 @@ class WorkspaceMiddleware:
             return await self.app(scope,receive,send)
         headers={k.decode().lower():v.decode() for k,v in scope['headers']}
         try:
+            if os.getenv('RELAY_INFERENCE_PROVIDER')=='gemini_developer':
+                secret=os.getenv('RELAY_MCP_SERVICE_SECRET','')
+                if len(secret)<32 or not hmac.compare_digest(headers.get('authorization',''),'Bearer '+secret):
+                    raise RelayError('ACCESS_DENIED','Valid internal service identity is required in addition to workspace context.')
             tenant=verify_context(headers.get('x-relay-context',''),os.environ['RELAY_MCP_URL'],os.environ['RELAY_CONTEXT_SECRET'])
         except (RelayError,KeyError):
             return await JSONResponse({'error':{'code':'ACCESS_DENIED','message':'A valid signed workspace context is required.'}},status_code=403)(scope,receive,send)

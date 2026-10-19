@@ -12,15 +12,19 @@ foreach ($key in @('GOOGLE_CLOUD_PROJECT','GOOGLE_CLOUD_LOCATION','RELAY_AUTH_AU
 $RelayGcloud = Join-Path $RelayLocal 'tools/google-cloud-sdk/bin/gcloud.cmd'
 $RelayProject = $env:GOOGLE_CLOUD_PROJECT
 $RelayRegion = $env:GOOGLE_CLOUD_LOCATION
-$RelayFundingPath=Join-Path $RelayLocal 'credit-activation.json'
-if (!(Test-Path $RelayFundingPath)) { throw 'Organizer credits are pending. Run record-credit-activation.ps1 only after actual activation/eligibility confirmation. Personal spending is not authorized.' }
+$RelayFundingPath=Join-Path $RelayLocal 'funding-verification.json'
+if (!(Test-Path $RelayFundingPath)) { throw 'An actual eligible non-billable GCP Free Trial record is required. See record-funding.ps1. Organizer credits are not expected; no payment or billing change is authorized.' }
 $RelayFunding=Get-Content -LiteralPath $RelayFundingPath -Raw | ConvertFrom-Json
-if ($RelayFunding.project_id -ne $RelayProject -or !$RelayFunding.eligibility_human_confirmed -or $RelayFunding.source -ne 'organizer-credits') { throw 'Credit eligibility is not confirmed for this exact project.' }
-if ($RelayFunding.balance_usd_human_confirmed -lt $ApprovedBudgetUsd -or [datetime]::Parse($RelayFunding.expires_at_utc).ToUniversalTime() -le [datetime]::UtcNow.AddHours($PilotHours)) { throw 'Confirmed credits do not cover the proposed amount/duration. Explain uncovered cost and obtain separate approval before proceeding.' }
+& '.venv/Scripts/python.exe' scripts/check-funding.py --record $RelayFundingPath --project $RelayProject --budget $ApprovedBudgetUsd --hours $PilotHours
+if ($LASTEXITCODE) { throw 'Verified funding does not cover this exact authorized credit-usage envelope. No resource was provisioned.' }
 function Invoke-Cloud { & $RelayGcloud @args; if ($LASTEXITCODE) { throw 'Google Cloud command failed. Read the diagnostic; no further resources will be created.' } }
 $RelayBilling = & $RelayGcloud billing projects describe $RelayProject --format=json | ConvertFrom-Json
 if (!$RelayBilling.billingEnabled) { throw 'Existing billing is not enabled. This script does not attach a billing account or make a payment.' }
-if ($RelayBilling.billingAccountName -ne $RelayFunding.billing_account) { throw 'Billing changed since the credit review. Stop and recheck organizer eligibility.' }
+if ($RelayBilling.billingAccountName -ne $RelayFunding.billing_account) { throw 'Billing changed since the funding review. Stop and recheck trial eligibility.' }
+$RelayAccount=& $RelayGcloud billing accounts describe $RelayFunding.billing_account --format=json | ConvertFrom-Json
+if ($LASTEXITCODE -or !$RelayAccount.open) { throw 'The reviewed trial account is not accessible/open.' }
+$RelaySourceCommit=git rev-parse HEAD
+if ($LASTEXITCODE -or (git status --porcelain)) { throw 'Deploy a clean committed source revision before creating any resources.' }
 Invoke-Cloud services enable aiplatform.googleapis.com run.googleapis.com cloudbuild.googleapis.com artifactregistry.googleapis.com firestore.googleapis.com storage.googleapis.com secretmanager.googleapis.com cloudscheduler.googleapis.com calendar-json.googleapis.com --project=$RelayProject
 $RelayAuthLogFilter='resource.type="cloud_run_revision" AND resource.labels.service_name="relay-gateway" AND httpRequest.requestUrl:"/auth/callback"'
 $RelayDefaultSink=& $RelayGcloud logging sinks describe _Default --project=$RelayProject --format=json | ConvertFrom-Json
@@ -58,7 +62,7 @@ $RelayBucket="$RelayProject-relay-staging"
 if ($LASTEXITCODE) { Invoke-Cloud storage buckets create "gs://$RelayBucket" --location=$RelayRegion --uniform-bucket-level-access --project=$RelayProject }
 & $RelayGcloud artifacts repositories describe relay --location=$RelayRegion --project=$RelayProject *> $null
 if ($LASTEXITCODE) { Invoke-Cloud artifacts repositories create relay --repository-format=docker --location=$RelayRegion --project=$RelayProject }
-$RelayImage="$RelayRegion-docker.pkg.dev/$RelayProject/relay/app:0.1.0"
+$RelayImage="$RelayRegion-docker.pkg.dev/$RelayProject/relay/app:$RelaySourceCommit"
 Invoke-Cloud builds submit --config=infra/cloudbuild.yaml --substitutions="_IMAGE=$RelayImage" --project=$RelayProject
 Invoke-Cloud run deploy relay-mcp --image=$RelayImage --region=$RelayRegion --project=$RelayProject --service-account="relay-mcp@$RelayProject.iam.gserviceaccount.com" --no-allow-unauthenticated --min-instances=0 --max-instances=2 --memory=1Gi --cpu=1 --concurrency=8 --set-env-vars="RELAY_SERVICE=mcp,RELAY_MODE=cloud,GOOGLE_CLOUD_PROJECT=$RelayProject,RELAY_GITHUB_REPO=$env:RELAY_GITHUB_REPO" --set-secrets='RELAY_CONTEXT_SECRET=relay-context:latest,RELAY_TOKEN_ENCRYPTION_KEY=relay-token-key:latest'
 $RelayMcpOrigin=& $RelayGcloud run services describe relay-mcp --region=$RelayRegion --project=$RelayProject --format='value(status.url)'
@@ -67,7 +71,7 @@ Invoke-Cloud run services update relay-mcp --region=$RelayRegion --project=$Rela
 Invoke-Cloud run services add-iam-policy-binding relay-mcp --region=$RelayRegion --project=$RelayProject --member="serviceAccount:relay-runtime@$RelayProject.iam.gserviceaccount.com" --role=roles/run.invoker
 $env:RELAY_STAGING_BUCKET="gs://$RelayBucket"
 $env:RELAY_RUNTIME_SERVICE_ACCOUNT="relay-runtime@$RelayProject.iam.gserviceaccount.com"
-& '.venv/Scripts/python.exe' scripts/deploy_reasoning_engine.py --approved-budget-usd $ApprovedBudgetUsd
+& '.venv/Scripts/python.exe' scripts/deploy_reasoning_engine.py --approved-budget-usd $ApprovedBudgetUsd --pilot-hours $PilotHours
 if ($LASTEXITCODE) { throw 'Managed Agent Engine deployment failed. Gateway will not bypass it.' }
 $RelayProof=Get-Content 'docs/evidence/deployment.json' -Raw | ConvertFrom-Json
 $env:RELAY_AGENT_RESOURCE=$RelayProof.name

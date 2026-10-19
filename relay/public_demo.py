@@ -15,6 +15,10 @@ def enabled():
     return os.getenv('RELAY_MODE') == 'public_demo'
 
 
+def temporary_enabled():
+    return os.getenv('RELAY_MODE') in ('public_demo', 'alternative_live')
+
+
 SESSION_SECONDS = 7200
 MAX_UPLOAD_BYTES = 2 * 1024 * 1024
 MAX_SOURCES = 12
