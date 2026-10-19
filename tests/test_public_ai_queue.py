@@ -115,6 +115,31 @@ def test_finish_idempotent_and_pacific_midnight_is_daily_boundary(tmp_path):
 
 
 @pytest.mark.asyncio
+async def test_provider_failure_is_redacted_and_next_queued_workspace_completes(tmp_path,monkeypatch):
+    from relay.public_ai import worker,TERMINAL
+    monkeypatch.setenv('RELAY_MCP_URL','http://127.0.0.1:8022/_relay/mcp/')
+    monkeypatch.setenv('RELAY_CONTEXT_SECRET','s'*64)
+    s=Store(tmp_path/'q.db');q=PublicQueue(s)
+    a=q.submit('a',question(workspace(s,'a')),time.time()+7200)
+    b=q.submit('b',question(workspace(s,'b')),time.time()+7200)
+    class ProviderError(Exception):code=504
+    def invoke(resource,**args):
+        if args['user_id']=='a':raise ProviderError('NEVER_LOG_PRIVATE_CONTENT')
+        return dict(status='complete',text='Second workspace completed')
+    task=asyncio.create_task(worker(s,invoke,lambda *args:None))
+    try:
+        for _ in range(100):
+            if q.status('b',b['run_id'])['status'] in TERMINAL:break
+            await asyncio.sleep(.02)
+        failed=q.status('a',a['run_id'])
+        assert failed['status']=='failed' and failed['upstream_status']==504
+        assert 'NEVER_LOG_PRIVATE_CONTENT' not in json.dumps(failed)
+        assert q.status('b',b['run_id'])['status']=='complete'
+    finally:
+        task.cancel();await asyncio.gather(task,return_exceptions=True)
+
+
+@pytest.mark.asyncio
 async def test_100_http_sessions_simulated_provider_only(tmp_path,monkeypatch):
     """Actual HTTP session/upload/queue/history paths. Provider alone is simulated."""
     from relay import public_ai,public_demo

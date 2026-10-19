@@ -310,6 +310,10 @@ async def worker(store,invoke,on_complete):
                 result=dict(status='cancelled',text='',code=code,reason='Question cancelled before another model call.',remote_compute_stopped=False)
             else:
                 result=dict(status='failed',text='',code=code if isinstance(code,str) else 'UPSTREAM_UNAVAILABLE',reason='The selected free Gemini route could not complete this turn. No fallback was used.')
+            # Type and numeric status only: provider exception strings can contain
+            # document text or credentials and must never enter events/results.
+            result['failure_type']=type(exc).__name__[:80]
+            if isinstance(code,int):result['upstream_status']=code
         result['gateway_revision']=os.getenv('RELAY_DEPLOYED_COMMIT') or os.getenv('RENDER_GIT_COMMIT') or os.getenv('RELAY_BUILD_REVISION')
         result=await asyncio.to_thread(queue.finish,tenant,run,result)
         on_complete(tenant,run,result)

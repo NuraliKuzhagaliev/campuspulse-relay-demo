@@ -1223,9 +1223,9 @@ export default function App() {
                   setNotice("");
                   setCalendars([]);
                   conversationId.current = null;
-                  await refresh();
+                  const fresh = await refresh();
                   setView("week");
-                  setEntry(true);
+                  setEntry(!fresh.agent.public_access);
                 })
               }
             >

@@ -7,6 +7,7 @@ test("public queue UI resumes after refresh without duplicate submission; locali
   let posts = 0,
     active = false,
     complete = false;
+  let reset = false;
   const run = "a".repeat(32),
     conversation = "b".repeat(32);
   await page.route("**/api/state", async (route) => {
@@ -17,7 +18,13 @@ test("public queue UI resumes after refresh without duplicate submission; locali
       public_access: true,
       provider: "gemini_developer",
     });
+    state.demo={public:true,session_seconds:7200,storage:'temporary'};
+    if(reset) state.workspace_id='demo-reset-ui-only';
     await route.fulfill({ response, json: state });
+  });
+  await page.route('**/api/demo/reset',route=>{
+    reset=true;
+    return route.fulfill({json:{csrf:'ui-reset-only'}});
   });
   await page.route("**/api/conversation", (route) =>
     route.fulfill({
@@ -107,4 +114,10 @@ test("public queue UI resumes after refresh without duplicate submission; locali
   await expect(page.getByTestId("ai-queue")).toBeVisible();
   await page.getByRole("button", { name: "Stop waiting", exact: true }).click();
   await expect(page.getByTestId("ai-queue")).toHaveCount(0);
+  const response=page.waitForResponse('**/api/demo/reset');
+  await page.getByRole('button',{name:'Start a fresh demo',exact:true}).click();
+  await response;
+  await expect(page.locator('.working')).toHaveCount(0);
+  await expect(page.getByRole('button',{name:'Explore illustrative workspace',exact:true})).toHaveCount(0);
+  await expect(page.locator('.live-access input[type=checkbox]')).toBeVisible();
 });

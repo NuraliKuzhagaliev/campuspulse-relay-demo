@@ -1,0 +1,104 @@
+{
+  "checked_at": "2026-10-19T14:58:54.995Z",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "version": "0.4.1",
+  "fresh_browser_sessions": 2,
+  "personal_invitations": 0,
+  "user_logins": 0,
+  "user_api_keys": 0,
+  "provider_substitution": false,
+  "mandatory_agent_engine": false,
+  "real_calendar_writes": 0,
+  "checks": {
+    "two_clean_automatic_isolated_workspaces": {
+      "secure_http_only_strict_cookies": true,
+      "no_registration_or_codes": true
+    },
+    "two_unseen_document_uploads_and_foreign_denial": true,
+    "consent_and_csrf_checked_before_inference": true,
+    "refresh_resumes_same_run": true,
+    "two_real_gemini_signed_mcp_answers": {
+      "failed": true,
+      "reason": "Acceptance assertion failed; complete diagnostics retained privately on D:."
+    }
+  },
+  "runs": [
+    {
+      "status": "complete",
+      "required_tool_failed": false,
+      "tool_observations": [
+        {
+          "tool": "list_course_sources",
+          "status": "observed",
+          "response_sha256": "65f37257cab6605c0e845e668ca5b78b5946594a05e4a2a175574294fb4d266d",
+          "provenance": [
+            {
+              "version": "ea4f3f81025b82cbdab3b08a",
+              "fetched_at": "2026-10-19T15:00:28.833347+00:00",
+              "mode": "selected_upload"
+            },
+            {
+              "version": "2f1365369bcaca0fc2410e36",
+              "fetched_at": "2026-10-19T15:00:26.622799+00:00",
+              "mode": "illustrative"
+            },
+            {
+              "version": "f533bc53b7a3908263273afb",
+              "fetched_at": "2026-10-19T15:00:26.554530+00:00",
+              "mode": "illustrative"
+            },
+            {
+              "version": "3d59531452b6fcba20721a8d",
+              "fetched_at": "2026-10-19T15:00:26.612786+00:00",
+              "mode": "illustrative"
+            },
+            {
+              "version": "74cb3670dd78e6fa05f7d1eb",
+              "fetched_at": "2026-10-19T15:00:26.710104+00:00",
+              "mode": "illustrative"
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "1e090768de88ec43581dc08b2a862cf45173505fcfad6e617b77737a171d444e",
+          "provenance": [
+            {
+              "source_id": "f95dac0c837b994c92252b81",
+              "page": 1,
+              "version": "ea4f3f81025b82cbdab3b08a",
+              "fetched_at": "2026-10-19T15:00:28.833347+00:00",
+              "mode": "selected_upload"
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "3be7afd3c363f4611ccd95205796021b",
+      "conversation_id": "8ca867707211d7500e3e1d10786ff64e",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "6f776dac78b1b9d3592a4334ffe41b3e761c7795",
+      "duration_ms": 65719,
+      "gateway_revision": "6f776dac78b1b9d3592a4334ffe41b3e761c7795",
+      "answer_sha256": "b47dab4d6052f62baf38f2cc5d6f38e962689edfa99d9084258807cbb7e18a5b",
+      "answer_characters": 623
+    },
+    {
+      "status": "failed",
+      "code": "UPSTREAM_UNAVAILABLE",
+      "gateway_revision": "6f776dac78b1b9d3592a4334ffe41b3e761c7795",
+      "run_id": "ad01e76d2b49a4a0ccfa98c3ee1952d2",
+      "conversation_id": "827b4f718c2af5595d2d44e9e1e1e08f",
+      "answer_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "answer_characters": 0
+    }
+  ],
+  "deployed_commit": "6f776dac78b1b9d3592a4334ffe41b3e761c7795",
+  "passed": false,
+  "error": "Acceptance assertion failed; complete diagnostics retained privately on D:."
+}
