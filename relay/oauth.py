@@ -20,6 +20,15 @@ router=APIRouter()
 SCOPES=['openid','https://www.googleapis.com/auth/userinfo.email','https://www.googleapis.com/auth/calendar.app.created']
 EXISTING_SCOPES=['openid','https://www.googleapis.com/auth/userinfo.email','https://www.googleapis.com/auth/calendar.events','https://www.googleapis.com/auth/calendar.calendarlist.readonly']
 
+def consent_failure(request,code,message):
+    """A safe browser recovery page; API clients retain typed errors.
+
+    Never echo OAuth query parameters or weaken cookie/state/PKCE validation.
+    """
+    if 'text/html' not in request.headers.get('accept',''):raise RelayError(code,message)
+    html='''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Calendar connection needs a new request</title><link rel="stylesheet" href="/assets/relay-oauth.css"><main><h1>Start Calendar connection again</h1><p>This request expired, was cancelled, or did not match this browser. This attempt did not complete a new RELAY connection or write Calendar events.</p><p>Return to RELAY → Connections → Connect Google. Complete the fresh flow in the same browser. Web requests expire after 15 minutes, desktop pairing after 5 minutes. Do not reuse or share a callback address.</p><h2 lang="ru">Начните подключение Calendar заново</h2><p lang="ru">Запрос истёк, отменён или не совпал с этим браузером. Новое подключение RELAY не завершено; эта попытка не записывала события.</p><p lang="ru">Вернитесь в RELAY → Подключения → Подключить Google. Завершите новый поток в том же браузере. Веб-запрос действует 15 минут, сопряжение Windows — 5 минут. Не открывайте повторно и не передавайте адрес callback.</p><h2 lang="kk">Calendar қосылымын қайта бастаңыз</h2><p lang="kk">Сұраудың мерзімі аяқталған, ол тоқтатылған немесе осы браузерге сәйкес келмейді. Бұл әрекет жаңа RELAY қосылымын аяқтамады және күнтізбеге оқиға жазбады.</p><p lang="kk">RELAY → Қосылымдар → Google қосу жолына оралып, жаңа сұрауды сол браузерде аяқтаңыз. Веб-сұрау 15 минут, Windows жұптастыруы 5 минут жарамды. Callback мекенжайын қайта ашпаңыз және бөліспеңіз.</p><a href="/">Return to RELAY / Вернуться в RELAY / RELAY-ге оралу</a></main></html>'''
+    return HTMLResponse(html,status_code=403,headers={'Cache-Control':'no-store','Referrer-Policy':'no-referrer'})
+
 
 def configuration():
     for key in ('RELAY_OAUTH_CLIENT_ID','RELAY_OAUTH_CLIENT_SECRET','RELAY_TOKEN_ENCRYPTION_KEY','RELAY_GATEWAY_URL'):
@@ -91,23 +100,25 @@ def install(store,new_session,identity):
             tenant=pairing['workspace']
         else:tenant=identity(request)['tenant']
         scopes=EXISTING_SCOPES if existing else SCOPES
-        store.put('_server','oauth_states',digest(state),{'expires':time.time()+300,'verifier':verifier,'pair':pair,'status':'pending','workspace':tenant,'scopes':scopes})
+        ttl=300 if pair else 900
+        store.put('_server','oauth_states',digest(state),{'expires':time.time()+ttl,'verifier':verifier,'pair':pair,'status':'pending','workspace':tenant,'scopes':scopes})
         flow=Flow.from_client_config(config,scopes=scopes,state=state,code_verifier=verifier)
         flow.redirect_uri=os.environ['RELAY_GATEWAY_URL']+'/auth/callback'
         url,_=flow.authorization_url(access_type='offline',include_granted_scopes='true',prompt='consent')
         response=RedirectResponse(url)
-        response.set_cookie('relay_oauth_state',state,httponly=True,secure=True,samesite='lax',max_age=300)
+        response.set_cookie('relay_oauth_state',state,httponly=True,secure=True,samesite='lax',max_age=ttl)
         return response
 
     @router.get('/auth/callback')
     def callback(request:Request,code:str|None=None,state:str|None=None,error:str|None=None):
         if error or not code or not state:
-            raise RelayError('AUTH_REQUIRED','Google consent was cancelled or did not return a valid authorization code.')
+            return consent_failure(request,'AUTH_REQUIRED','Google consent was cancelled or did not return a valid authorization code.')
         if not secrets.compare_digest(request.cookies.get('relay_oauth_state',''),state):
-            raise RelayError('ACCESS_DENIED','OAuth callback is not bound to the browser that initiated it.')
-        record=store.get('_server','oauth_states',digest(state))
+            return consent_failure(request,'ACCESS_DENIED','OAuth callback is not bound to the browser that initiated it.')
+        try:record=store.get('_server','oauth_states',digest(state))
+        except RelayError:return consent_failure(request,'AUTH_REQUIRED','OAuth request is no longer available. Start a new connection in this browser.')
         if record['expires']<time.time() or not store.claim('_server','oauth_states',digest(state),{'status':'pending'},{'status':'consumed'}):
-            raise RelayError('AUTH_REQUIRED','OAuth state expired or was already used.')
+            return consent_failure(request,'AUTH_REQUIRED','OAuth state expired or was already used.')
         from google_auth_oauthlib.flow import Flow
         from google.oauth2 import id_token
         from google.auth.transport.requests import Request as GoogleRequest

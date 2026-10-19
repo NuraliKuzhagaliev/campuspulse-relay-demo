@@ -179,6 +179,12 @@ def test_model_deadline_offset_must_match_cited_timezone():
     correct=extraction_proposal(s,[candidate|{'value':'2026-10-23T18:30:00+05:00'}])
     assert correct['fields'][0]['validation_status']=='needs_confirmation'
 
+@pytest.mark.parametrize('zone',['+05:00','UTC+05:00','Asia/Almaty'])
+def test_explicit_pdf_offset_is_not_misclassified_ambiguous(zone):
+    s=source('Due: 2026-10-23T18:00:00+05:00')
+    proposal=extraction_proposal(s,[dict(field='due',value='2026-10-23T18:00:00+05:00',page=1,quote=s['pages'][0]['text'],timezone=zone,year_explicit=True)])
+    assert proposal['fields'][0]['value']=='2026-10-23T18:00:00+05:00' and proposal['fields'][0]['validation_status']=='needs_confirmation'
+
 def test_partial_page_two_keeps_valid_fields_and_correction_merges(tmp_path):
     svc=service(tmp_path)
     s=svc.import_source('continued.txt',b'Assignment: Polarization memo\nCourse: Optics\nTerm: Autumn 2026\nKey: POLAR-16')

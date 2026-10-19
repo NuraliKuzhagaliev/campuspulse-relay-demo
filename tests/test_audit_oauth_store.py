@@ -38,7 +38,8 @@ def test_oauth_binds_same_anonymous_workspace_and_minimum_scopes(tmp_path,monkey
     with TestClient(app,base_url='https://app.test',follow_redirects=False) as client:
         client.cookies.set('test_capability','owned')
         start=client.get('/api/auth/start');assert start.status_code==200
-        assert client.get('/connect').status_code==307
+        connection=client.get('/connect');assert connection.status_code==307
+        assert 'Max-Age=900' in connection.headers['set-cookie'] and 'HttpOnly' in connection.headers['set-cookie'] and 'Secure' in connection.headers['set-cookie'] and 'SameSite=lax' in connection.headers['set-cookie']
         assert oauth.SCOPES==seen['scopes'] and 'https://www.googleapis.com/auth/calendar.events' not in seen['scopes']
         state=client.cookies.get('relay_oauth_state');assert state
         callback=client.get('/auth/callback',params={'state':state,'code':'SIMULATED_CODE'})
@@ -47,6 +48,13 @@ def test_oauth_binds_same_anonymous_workspace_and_minimum_scopes(tmp_path,monkey
         assert not store.get(tenant,'meta','settings')['calendar_live']
         assert len(store.list('_server','workspaces'))==1
         assert client.get('/auth/callback',params={'state':state,'code':'SIMULATED_CODE'}).status_code==403
+        client.cookies.delete('relay_oauth_state')
+        browser_error=client.get('/auth/callback',params={'state':state,'code':'DO_NOT_ECHO_CALLBACK_CODE'},headers={'Accept':'text/html'})
+        assert browser_error.status_code==403 and 'Начните подключение Calendar заново' in browser_error.text and 'Calendar қосылымын қайта бастаңыз' in browser_error.text
+        assert 'DO_NOT_ECHO_CALLBACK_CODE' not in browser_error.text and state not in browser_error.text
+        assert browser_error.headers['referrer-policy']=='no-referrer' and browser_error.headers['cache-control']=='no-store'
+        assert '<script' not in browser_error.text and 'href="/"' in browser_error.text
+        assert len(store.list(tenant,'private_connections'))==1 # no new connection or token exchange
 
 class Ref:
     def __init__(self,data,tenant,kind,id=None):self.data,self.tenant,self.kind,self.id=data,tenant,kind,id

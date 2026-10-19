@@ -13,6 +13,7 @@ const frozen=JSON.parse(await fs.readFile('.local/audit-holdouts/frozen.json','u
 const cases=frozen.files.map(f=>({...f,path:path.resolve('.local/audit-holdouts',f.file)}));
 cases.push({file:'11-continued-brief.pdf',path:path.resolve('public/samples/11-continued-brief.pdf'),expected:[{key:'polar-16',minutes:75,due:'2026-10-23T18:00:00+05:00'}]},
  {file:'12-table-brief.pdf',path:path.resolve('public/samples/12-table-brief.pdf'),expected:[{key:'soil-31',minutes:45,due:'2026-10-23T18:00:00+05:00'},{key:'mineral-32',minutes:75,due:'2026-10-23T20:00:00+05:00'}]});
+if(process.env.RELAY_AUDIT_CASES){const chosen=process.env.RELAY_AUDIT_CASES.split(',');for(let i=cases.length-1;i>=0;i--)if(!chosen.includes(cases[i].file))cases.splice(i,1);assert(cases.length>=2,'Isolation acceptance needs at least two independently uploaded documents');}
 const proof={at:new Date().toISOString(),url:base,version:'0.5.0',provider_substitution:false,google_login:false,invitations:false,personal_spending:0,checks:{},cases:[],runs:[]};
 if(resumed)proof.resumes_owned_sessions_from={evidence:path.basename(resumeFolder),original_at:resumed.at,original_status:resumed.runs[0]?.status,original_fresh_sessions:resumed.checks.two_clean_automatic_workspaces};
 const hash=v=>crypto.createHash('sha256').update(v).digest('hex');

@@ -1,0 +1,882 @@
+{
+  "at": "2026-10-19T18:41:53.856Z",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "version": "0.5.0",
+  "provider_substitution": false,
+  "google_login": false,
+  "invitations": false,
+  "personal_spending": 0,
+  "checks": {
+    "two_clean_automatic_workspaces": true
+  },
+  "cases": [
+    {
+      "file": "holdout-en.txt",
+      "sha256": "7eb6d09e5919d0e961d8f2b376ddaddcf5c12b6522036576880638acc6d1aba0",
+      "passed": true,
+      "source_id": "6fe1cd44d333ee878c1415eb",
+      "source_version": "11955a66e83265359ac5eef7",
+      "actual_answer_status": "partial",
+      "plan": {
+        "id": "8c778a34f6d747d431e153d1",
+        "required_minutes": 150,
+        "feasible": true,
+        "scope_complete": true
+      },
+      "receipt": {
+        "id": "9852c697ecde34da00c6551ef552cbe4",
+        "status": "verified",
+        "mode": "illustrative"
+      },
+      "confirmation_plan_whatif_illustrative_receipt_progress_passport_refresh": true
+    },
+    {
+      "file": "holdout-ru.txt",
+      "sha256": "f65f3d5623e5351c9ec074836c2c1a3e3e13db321b34380e887d1e4c80ae776b",
+      "passed": true,
+      "source_id": "1cfb7b5881d172b7d0aa07c2",
+      "source_version": "a356fd80c445cb3eadb5907f",
+      "actual_answer_status": "partial",
+      "initial_validation_issues": [
+        {
+          "entity_id": "42c4800294e84553b2f41d46",
+          "field": "minutes",
+          "page": 1,
+          "code": "SOURCE_CONFLICT",
+          "reason": "field_or_exact_page_quote_invalid"
+        },
+        {
+          "entity_id": "42c4800294e84553b2f41d46",
+          "field": "submission_requirement",
+          "page": 1,
+          "code": "SOURCE_CONFLICT",
+          "reason": "field_or_exact_page_quote_invalid"
+        }
+      ],
+      "repair_run_id": "641e104c2e1a0162e47d4c2ed7066a95",
+      "plan": {
+        "id": "a4da5de29d7ff3fe2d723158",
+        "required_minutes": 90,
+        "feasible": true,
+        "scope_complete": true
+      },
+      "receipt": {
+        "id": "880393f0ded7d10ef508326c907766ca",
+        "status": "verified",
+        "mode": "illustrative"
+      },
+      "confirmation_plan_whatif_illustrative_receipt_progress_passport_refresh": true
+    },
+    {
+      "file": "holdout-kk.txt",
+      "sha256": "cedbc929b781ada39355bfa897fc5553d43ef82ecde69b60687cf6c2a6a094be",
+      "passed": true,
+      "source_id": "b751fc2f01f756df94e66b4d",
+      "source_version": "52bb68a558b54fb807a8cf5a",
+      "actual_answer_status": "complete",
+      "plan": {
+        "id": "2c7b148ac5549203264a174f",
+        "required_minutes": 60,
+        "feasible": true,
+        "scope_complete": true
+      },
+      "receipt": {
+        "id": "766032409c0d5e2093e467e25e574b76",
+        "status": "verified",
+        "mode": "illustrative"
+      },
+      "confirmation_plan_whatif_illustrative_receipt_progress_passport_refresh": true
+    },
+    {
+      "file": "11-continued-brief.pdf",
+      "sha256": "dbfbef67958436e01bbd7ec21cf591ca7c58593938adb32a644298095e0572c4",
+      "passed": false,
+      "source_id": "9e042d60ceff1bb997ff8f2b",
+      "source_version": "e102692699fd951f659baa41",
+      "actual_answer_status": "complete",
+      "error": "Assertion failed; private diagnostics retained on D:."
+    }
+  ],
+  "runs": [
+    {
+      "status": "partial",
+      "required_tool_failed": true,
+      "tool_observations": [
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "ad249fd8a2f02c67a912101e988677d064e245adf7b4e1545731ee8793748a67",
+          "provenance": [
+            {
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "page": 1,
+              "version": "11955a66e83265359ac5eef7",
+              "fetched_at": "2026-10-19T18:43:26.159948+00:00",
+              "mode": "selected_upload"
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "propose_academic_extraction",
+          "status": "failed",
+          "response_sha256": "4236e7bc8b417bc8844f8e3d1008d1c645c83ceda14085a2e52b4e0c7907b314",
+          "provenance": [
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            }
+          ],
+          "error_codes": [
+            "SOURCE_CONFLICT"
+          ]
+        },
+        {
+          "tool": "propose_academic_extraction",
+          "status": "observed",
+          "response_sha256": "7425041ba48906ef0fa3db6ca9e35877a20cef07f4a01d5a1ab3aafeaadf2510",
+          "provenance": [
+            {
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            },
+            {
+              "page": 1,
+              "source_id": "6fe1cd44d333ee878c1415eb",
+              "source_version": "11955a66e83265359ac5eef7"
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "92c7826b67df7de48bfbc1756b340df9",
+      "conversation_id": "73ef84072fb0282273d855e182636f45",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "6a569136e08628987345a4be7dab078ed0ff8167",
+      "duration_ms": 45244,
+      "gateway_revision": "6a569136e08628987345a4be7dab078ed0ff8167",
+      "observed_latency_ms": 59978,
+      "answer_sha256": "40e1d4639ddb0d535125164cce3dc6330a06edb85183d476bb84f047eedb7b0e",
+      "answer_characters": 992
+    },
+    {
+      "status": "partial",
+      "required_tool_failed": true,
+      "tool_observations": [
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "1e951a0654304d8e8ee6970e2e8300392b24cc31f5a70d84e4fe4950c2090da5",
+          "provenance": [
+            {
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "page": 1,
+              "version": "a356fd80c445cb3eadb5907f",
+              "fetched_at": "2026-10-19T18:44:38.301967+00:00",
+              "mode": "selected_upload"
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "propose_academic_extraction",
+          "status": "failed",
+          "response_sha256": "39e1c192698b094cfbd85a10c6c78a7a205bfd31cc4982743e7875f3d5ccb82a",
+          "provenance": [
+            {
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "44f0a98de1992e4209e8aa82538edb2a",
+      "conversation_id": "a1221b05f363b94ba67b2010d65895e0",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "6a569136e08628987345a4be7dab078ed0ff8167",
+      "duration_ms": 36941,
+      "gateway_revision": "6a569136e08628987345a4be7dab078ed0ff8167",
+      "observed_latency_ms": 38099,
+      "answer_sha256": "13727e2bac202ff44dd790bd690106a2ef6c583bf162722141761d5b7360381d",
+      "answer_characters": 809
+    },
+    {
+      "status": "complete",
+      "required_tool_failed": false,
+      "tool_observations": [
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "1e951a0654304d8e8ee6970e2e8300392b24cc31f5a70d84e4fe4950c2090da5",
+          "provenance": [
+            {
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "page": 1,
+              "version": "a356fd80c445cb3eadb5907f",
+              "fetched_at": "2026-10-19T18:44:38.301967+00:00",
+              "mode": "selected_upload"
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "propose_academic_extraction",
+          "status": "observed",
+          "response_sha256": "7f5def6a2142cfb9ab9f800519946b24fad0887c740c672d58ddc134a7dace87",
+          "provenance": [
+            {
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            },
+            {
+              "page": 1,
+              "source_id": "1cfb7b5881d172b7d0aa07c2",
+              "source_version": "a356fd80c445cb3eadb5907f"
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "641e104c2e1a0162e47d4c2ed7066a95",
+      "conversation_id": "a1221b05f363b94ba67b2010d65895e0",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "6a569136e08628987345a4be7dab078ed0ff8167",
+      "duration_ms": 20065,
+      "gateway_revision": "6a569136e08628987345a4be7dab078ed0ff8167",
+      "observed_latency_ms": 22394,
+      "answer_sha256": "d0367238d1ef7df6575c465a37be5d1c155a642cfc9966d65d6875b32d38e382",
+      "answer_characters": 1078
+    },
+    {
+      "status": "complete",
+      "required_tool_failed": false,
+      "tool_observations": [
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "27699b9cccfdc714a4deed94ba7a7d5d4d878981f9a66c0be1a068084fde1545",
+          "provenance": [
+            {
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "page": 1,
+              "version": "52bb68a558b54fb807a8cf5a",
+              "fetched_at": "2026-10-19T18:45:51.727192+00:00",
+              "mode": "selected_upload"
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "propose_academic_extraction",
+          "status": "observed",
+          "response_sha256": "0f91ac5cf0873d1519b695f10152ed09c79f25935897d6fd09bfafb3c7393a24",
+          "provenance": [
+            {
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            },
+            {
+              "page": 1,
+              "source_id": "b751fc2f01f756df94e66b4d",
+              "source_version": "52bb68a558b54fb807a8cf5a"
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "58c1935f821eba0f4ac0d7294adbcf7d",
+      "conversation_id": "5a4633d4420bb54e26f30cd1aac64973",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "6a569136e08628987345a4be7dab078ed0ff8167",
+      "duration_ms": 19849,
+      "gateway_revision": "6a569136e08628987345a4be7dab078ed0ff8167",
+      "observed_latency_ms": 22329,
+      "answer_sha256": "b05cc6449ca207dbc4d560b1074f23adfc530eb63b34068925717f9205c59272",
+      "answer_characters": 941
+    },
+    {
+      "status": "complete",
+      "required_tool_failed": false,
+      "tool_observations": [
+        {
+          "tool": "list_course_sources",
+          "status": "observed",
+          "response_sha256": "52f4fcdfd2dd982562002f131b7526617c3972df581d8bcea9823da99fed103f",
+          "provenance": [
+            {
+              "version": "e102692699fd951f659baa41",
+              "fetched_at": "2026-10-19T18:46:30.764603+00:00",
+              "mode": "selected_upload"
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "3e3e2aabac738cd8d9c45074547a47e7758ba735daa3028a3181c0fc48b45eb4",
+          "provenance": [
+            {
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "page": 1,
+              "version": "e102692699fd951f659baa41",
+              "fetched_at": "2026-10-19T18:46:30.764603+00:00",
+              "mode": "selected_upload"
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "8c543d79550b21f4b343f2c1e707e5ab0cfdf0c3ac74ec57d3eaff459e5e2e38",
+          "provenance": [
+            {
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "page": 2,
+              "version": "e102692699fd951f659baa41",
+              "fetched_at": "2026-10-19T18:46:30.764603+00:00",
+              "mode": "selected_upload"
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "propose_academic_extraction",
+          "status": "observed",
+          "response_sha256": "f576d847c0a1001d25ac65b5ec88af7b17b61a22f62d00d121d5283bbc1a6193",
+          "provenance": [
+            {
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "5c2ac6ec4c7b42d8d2d990351a29313d",
+      "conversation_id": "11f689579a728d66723466357b891417",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "6a569136e08628987345a4be7dab078ed0ff8167",
+      "duration_ms": 25350,
+      "gateway_revision": "6a569136e08628987345a4be7dab078ed0ff8167",
+      "observed_latency_ms": 28615,
+      "answer_sha256": "c527c7d50ca0e8ddb00af541677153c31a359ce21b4d8326717e4b44b3f21b45",
+      "answer_characters": 1057
+    }
+  ],
+  "deployed_commit": "6a569136e08628987345a4be7dab078ed0ff8167",
+  "passed": false,
+  "error": "Acceptance assertion failed; private diagnostics retained on D:."
+}

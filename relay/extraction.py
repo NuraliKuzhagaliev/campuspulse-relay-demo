@@ -30,7 +30,7 @@ def extraction_proposal(source,candidates):
                     value=None;status='ambiguous'
                 else:
                     try:
-                        offset=re.fullmatch(r'(?:UTC|GMT)([+-])(\d{1,2})(?::?(\d{2}))?',zone_name,re.I)
+                        offset=re.fullmatch(r'(?:UTC|GMT)?([+-])(\d{1,2})(?::?(\d{2}))?',zone_name,re.I)
                         zone=timezone(timedelta(minutes=(1 if offset[1]=='+' else -1)*(int(offset[2])*60+int(offset[3] or 0)))) if offset else ZoneInfo(zone_name)
                         cited=datetime.fromisoformat(value.replace('Z','+00:00'))
                         actual=cited.astimezone(zone).utcoffset()
