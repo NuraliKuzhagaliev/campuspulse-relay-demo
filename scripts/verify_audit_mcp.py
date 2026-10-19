@@ -24,6 +24,7 @@ async def main():
             await session.initialize();catalog=await session.list_tools();tool=next(t for t in catalog.tools if t.name=='read_course_source');assert {'offset','limit','search'}<=set(tool.inputSchema['properties'])
             first=value(await session.call_tool('read_course_source',{'source_id':source['id'],'limit':12000}));assert first['next_offset']==12000 and first['truncated']
             assert first['quote_lines'] and all(line in first['text'] for line in first['quote_lines'])
+            assert first['citation_refs'] and all(c['quote'] in source['pages'][0]['text'] for c in first['citation_refs'])
             tail=value(await session.call_tool('read_course_source',{'source_id':source['id'],'search':'lithic density','limit':200}));assert tail['offset']>20000 and 'lithic density' in tail['text']
             proof['checks']['bounded_continuation_search_tail']=True
             quote=source['pages'][0]['text'][-50:]
@@ -36,5 +37,9 @@ async def main():
             assert batch['status']=='partial' and batch['validation_issues'][0]['field']=='rubric'
             assert {f['field'] for f in batch['fields']}=={'due','title'} and not batch['applied']
             proof['checks']['actual_protocol_partial_batch_preserves_valid_unapplied_fields']=True
+            reference=next(c for c in tail['citation_refs'] if 'lithic density' in c['quote'])
+            cited=value(await session.call_tool('propose_academic_extraction',{'source_id':source['id'],'candidates':[{'entity_id':'tail','field':'rubric','value':['Discuss lithic density and uncertainty'],'page':1,'citation_id':reference['citation_id']}]}))
+            field=next(f for f in cited['fields'] if f['field']=='rubric');assert field['quote']==reference['quote'] and field['original_expression']==reference['quote'] and not cited['applied']
+            proof['checks']['actual_reference_protocol_keeps_exact_unconfirmed_multiline_quote']=True
     proof['passed']=True;Path('docs/evidence/audit-mcp.json').write_text(json.dumps(proof,indent=2),encoding='utf-8');print(json.dumps(proof,indent=2))
 if __name__=='__main__':asyncio.run(main())

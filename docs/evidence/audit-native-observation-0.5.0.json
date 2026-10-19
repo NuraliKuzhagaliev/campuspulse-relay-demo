@@ -1,0 +1,80 @@
+{
+  "installed_asar_sha256": "dde58b08757d46bdfff8db5eedff788aa9effc68778e79ded476e3c77bed6024",
+  "note": "Actual native picker through installed build before sample-link correction. Source appeared in owner screenshot; import POST and subsequent state refresh both returned 200. Open/Save/banner are separate results.",
+  "native_dialog_substituted": false,
+  "import_confirmed_by_owner_screenshot": true,
+  "gcp_calls": 0,
+  "notification_visibility_observed": false,
+  "successful_import_stages": [
+    {
+      "stage": "picker-opened",
+      "method": null,
+      "path": null,
+      "status": null,
+      "at": "2026-10-19T18:42:14.058Z"
+    },
+    {
+      "stage": "picker-selected",
+      "method": null,
+      "path": null,
+      "status": null,
+      "at": "2026-10-19T18:42:36.916Z"
+    },
+    {
+      "stage": "file-read-started",
+      "method": null,
+      "path": null,
+      "status": null,
+      "at": "2026-10-19T18:42:36.917Z"
+    },
+    {
+      "stage": "file-read-completed",
+      "method": null,
+      "path": null,
+      "status": null,
+      "at": "2026-10-19T18:42:36.919Z"
+    },
+    {
+      "stage": "import-request-started",
+      "method": "POST",
+      "path": "/api/import-native",
+      "status": null,
+      "at": "2026-10-19T18:42:36.92Z"
+    },
+    {
+      "stage": "import-request-completed",
+      "method": "POST",
+      "path": "/api/import-native",
+      "status": 200,
+      "at": "2026-10-19T18:42:37.123Z"
+    },
+    {
+      "stage": "state-refresh-started",
+      "method": "GET",
+      "path": "/api/state",
+      "status": null,
+      "at": "2026-10-19T18:42:37.124Z"
+    },
+    {
+      "stage": "state-refresh-completed",
+      "method": "GET",
+      "path": "/api/state",
+      "status": 200,
+      "at": "2026-10-19T18:42:37.277Z"
+    },
+    {
+      "stage": "snapshot-save-completed",
+      "method": null,
+      "path": null,
+      "status": null,
+      "at": "2026-10-19T18:42:37.282Z"
+    }
+  ],
+  "save_dialog_visibility_observed": false,
+  "checked_at": "2026-10-19T18:52:36.4178703Z",
+  "version": "0.5.0",
+  "picker_appearance_observed_by_agent": true,
+  "successful_native_trace_groups": 1,
+  "model_calls": 0,
+  "cancel_observed_by_agent": true
+}

@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-19T18:31:13.474Z",
+  "checked_at": "2026-10-19T18:59:37.405Z",
   "version": "0.5.0",
   "model_calls": 0,
   "real_calendar_writes": 0,
@@ -20,7 +20,7 @@
     },
     {
       "file": "desktop\\main.cjs",
-      "sha256": "348bcaed09014126e44fda3aae969daec88b7774b928dafd98b382c77f83b7ba",
+      "sha256": "f4bf805ccce67cd04a226d9fecf8317592e82c7ae58480a2166227a57639f0ab",
       "matches_current_source": true
     },
     {
@@ -39,8 +39,13 @@
       "matches_current_source": true
     },
     {
-      "file": "dist\\assets\\index-BtA3JmI6.js",
-      "sha256": "e4dfb4723f79e9ac5dd0ea37fb985539707de6a9817e045cbe460f4fd80ec52a",
+      "file": "dist\\assets\\index-CUiVfiL5.js",
+      "sha256": "688aaeb5f1380cd9ed118511bc3cb321775e8c791fd06e98bdde2b30244e6da6",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\assets\\relay-oauth.css",
+      "sha256": "08ecaab876ad057a8f60261b0da26a505c31bfa190fb1d5f8ad863d2257d1369",
       "matches_current_source": true
     },
     {
@@ -50,7 +55,7 @@
     },
     {
       "file": "dist\\index.html",
-      "sha256": "5f1d2aeb70178bdbe9e4c399b63d5b4df9a7aac920c91d3d16107c1377584216",
+      "sha256": "539249fc8ee705e9e40eae8e8c062645e873b64ec22f07be144cef1f4f3e7742",
       "matches_current_source": true
     },
     {
@@ -64,6 +69,6 @@
       "matches_current_source": true
     }
   ],
-  "deployed_commit": "73a71dcab2918bb0197a08345784d197bcabcdac",
+  "deployed_commit": "22d848033ebdf04be333d04d9c9a9a061132cf58",
   "passed": true
 }

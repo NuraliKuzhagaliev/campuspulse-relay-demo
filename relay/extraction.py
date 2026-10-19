@@ -6,12 +6,40 @@ from .domain import RelayError, instant, digest, now, Task
 from .identity import assignment_id
 ALLOWED={'title','course','term','assignment_key','due','minutes','rubric','submission_requirement'}
 
+def page_citations(source,page):
+    """Version-bound exact spans, including multiline table/PDF text.
+
+    References select existing evidence; they never authorize a field value.
+    """
+    text=next((p['text'] for p in source['pages'] if p['page']==page),'')
+    spans=[(start,min(len(text),start+4000)) for start in range(0,len(text),4000)]
+    cursor=0
+    for line in text.splitlines(keepends=True):
+        quote=line.rstrip('\r\n')
+        if quote.strip() and len(quote)<=4000:spans.append((cursor,cursor+len(quote)))
+        cursor+=len(line)
+    return [dict(citation_id=digest([source['id'],source['version'],page,start,end])[:24],page=page,start=start,end=end,quote=text[start:end]) for start,end in dict.fromkeys(spans)]
+
+def visible_citations(source,page,start,end):
+    selected=[];size=0
+    for citation in page_citations(source,page):
+        if citation['end']<=start or citation['start']>=end:continue
+        if len(selected)>=80 or size+len(citation['quote'])>8000:continue
+        selected.append(citation);size+=len(citation['quote'])
+    return selected
+
 def extraction_proposal(source,candidates):
     if not isinstance(candidates,list) or not 0<len(candidates)<=100:
         raise RelayError('UNSUPPORTED_INPUT','Propose 1–100 cited fields from the selected source.')
     pages={p['page']:p['text'] for p in source['pages']};fields=[];groups={}
     for c in candidates:
         if not isinstance(c,dict):raise RelayError('PARSE_FAILED','Each proposed field must be an object.')
+        if c.get('citation_id'):
+            reference=next((r for r in page_citations(source,c.get('page')) if r['citation_id']==c['citation_id']),None)
+            if not reference:raise RelayError('SOURCE_CONFLICT','Citation reference is not on this current source/version/page. Read the source again.',{'field':str(c.get('field',''))[:40],'page':c.get('page'),'reason':'citation_not_current_page'})
+            # Reference mode copies the original span verbatim. Model-generated
+            # normalized values remain unconfirmed interpretations.
+            c=dict(c,quote=reference['quote'],original_expression=reference['quote'])
         field=c.get('field');quote=c.get('quote');page=c.get('page');entity=c.get('entity_id','document')
         if not isinstance(entity,str) or not 1<=len(entity)<=80:raise RelayError('PARSE_FAILED','Use a bounded entity label.')
         if field not in ALLOWED or not isinstance(quote,str) or not 0<len(quote)<=4000 or not isinstance(page,int) or isinstance(page,bool) or quote not in pages.get(page,''):
@@ -45,7 +73,7 @@ def extraction_proposal(source,candidates):
             if not (isinstance(value,str) or isinstance(value,list) and all(isinstance(v,str) for v in value)):value=None;status='invalid'
         elif not isinstance(value,str) or not value.strip() or len(value)>180:value=None;status='invalid'
         item=dict(field=field,value=value,page=page,quote=quote,original_expression=expression,source_id=source['id'],source_version=source['version'],hash=source['content_hash'],
-                  assumptions=str(c.get('assumptions',''))[:1000],context=str(c.get('context',''))[:1000],timezone=c.get('timezone'),validation_status=status,entity_id=entity)
+                  assumptions=str(c.get('assumptions',''))[:1000],context=str(c.get('context',''))[:1000],timezone=c.get('timezone'),validation_status=status,entity_id=entity,citation_id=c.get('citation_id'))
         fields.append(item);groups.setdefault(entity,[]).append(item)
     grouped=[dict(id=digest([source['id'],source['version'],key])[:24],entity_id=key,fields=fs,status='requires_explicit_confirmation') for key,fs in groups.items()]
     return dict(id=digest([source['id'],source['version'],fields])[:24],source_id=source['id'],source_version=source['version'],source_hash=source['content_hash'],

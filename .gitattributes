@@ -4,3 +4,4 @@
 *.ico binary
 *.pptx binary
 *.zip binary
+/public/samples/*.ics -text

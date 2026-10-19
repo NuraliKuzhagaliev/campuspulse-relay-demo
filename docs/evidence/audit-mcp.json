@@ -1,12 +1,13 @@
 {
-  "checked_at": "2026-10-19T18:25:44.571449+00:00",
+  "checked_at": "2026-10-19T19:02:27.198426+00:00",
   "transport": "actual MCP Streamable HTTP",
   "model_calls": 0,
   "cloud_calls": 0,
   "checks": {
     "bounded_continuation_search_tail": true,
     "null_due_grouped_unapplied": true,
-    "actual_protocol_partial_batch_preserves_valid_unapplied_fields": true
+    "actual_protocol_partial_batch_preserves_valid_unapplied_fields": true,
+    "actual_reference_protocol_keeps_exact_unconfirmed_multiline_quote": true
   },
   "passed": true
 }

@@ -12,7 +12,11 @@ const executable=path.join(root,'installed/CampusPulse RELAY/CampusPulse RELAY.e
 const env={...process.env,RELAY_DESKTOP_DATA:profile,RELAY_GATEWAY_URL:'https://campuspulse-relay-demo.onrender.com'};delete env.ELECTRON_RUN_AS_NODE;
 const proof={checked_at:new Date().toISOString(),version:'0.5.0',model_calls:0,real_calendar_writes:0,native_dialog_visibility_checked:false,notification_visibility_checked:false,checks:{},packaged_files:[]};
 const archive=path.join(path.dirname(executable),'resources/app.asar');
-for(const name of asar.listPackage(archive).map(n=>n.slice(1)).filter(n=>/^(desktop[\\/].*\.cjs|dist[\\/].*\.(js|html|css))$/.test(n))){
+const packaged=asar.listPackage(archive).map(n=>n.slice(1));
+async function expectedFiles(folder){const out=[];for(const item of await fs.readdir(folder,{withFileTypes:true})){const name=path.join(folder,item.name);if(item.isDirectory())out.push(...await expectedFiles(name));else if(/\.(js|html|css|cjs)$/.test(name))out.push(name);}return out;}
+for(const expected of [...await expectedFiles('dist'),...await expectedFiles('desktop')])assert(packaged.some(name=>path.normalize(name)===path.normalize(expected)),`Missing packaged runtime file: ${expected}`);
+const initialHealth=await(await fetch('https://campuspulse-relay-demo.onrender.com/api/health')).json();if(process.env.RELAY_EXPECTED_DEPLOY_COMMIT)assert.equal(initialHealth.deployed_commit,process.env.RELAY_EXPECTED_DEPLOY_COMMIT);
+for(const name of packaged.filter(n=>/^(desktop[\\/].*\.cjs|dist[\\/].*\.(js|html|css))$/.test(n))){
  const bytes=asar.extractFile(archive,name);assert(bytes.equals(await fs.readFile(name)),name);
  proof.packaged_files.push({file:name,sha256:crypto.createHash('sha256').update(bytes).digest('hex'),matches_current_source:true});
 }
@@ -28,6 +32,7 @@ try{
  const call=(route,method='GET',body)=>page.evaluate(({route,method,body})=>window.relay.request('/api'+route,method,body),{route,method,body});
  let state=await call('/state');const tenant=state.workspace_id;assert(state.agent.public_access&&!state.settings.calendar_live);
  proof.deployed_commit=(await call('/health')).deployed_commit;
+ assert.equal(proof.deployed_commit,initialHealth.deployed_commit,'Deployment changed while desktop acceptance was running');
  const text='Assignment: Installed public contract\nCourse: Optics\nTerm: Autumn 2026\nAssignment ID: installed-public\nDue: 2026-10-24T18:00:00+05:00\nEffort: 30 minutes\n- [ ] Explain the observed aberration';
  const source=await call('/import-native','POST',{name:'installed-public-contract.md',content:Buffer.from(text).toString('base64')});
  assert.equal((await call('/sources/'+source.id)).pages[0].text,text);

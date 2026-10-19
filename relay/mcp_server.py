@@ -23,8 +23,9 @@ class ExtractionCandidate(BaseModel):
     field:Literal['title','course','term','assignment_key','due','minutes','rubric','submission_requirement']
     value:str|int|list[str]|None
     page:int=Field(ge=1,le=100)
-    quote:str=Field(min_length=1,max_length=4000,description='An exact contiguous substring of the selected page, unchanged.')
-    original_expression:str=Field(description='Original expression appearing verbatim within quote.')
+    citation_id:str|None=Field(default=None,pattern=r'^[a-f0-9]{24}$',description='Preferred: copy one citation_id from read_course_source.citation_refs for this page. The server copies its exact original span; omit quote and original_expression in this mode.')
+    quote:str=Field(default='',max_length=4000,description='Legacy literal mode only: exact contiguous page substring, unchanged. Prefer citation_id for multiline PDF/table evidence.')
+    original_expression:str=Field(default='',max_length=4000,description='Legacy literal mode: original expression verbatim inside quote. Omit when using citation_id.')
     context:str=Field(default='',max_length=1000)
     assumptions:str=Field(default='',max_length=1000)
     timezone:str|None=Field(default=None,description='Explicit source timezone for due, otherwise null.')
@@ -70,7 +71,8 @@ def read_course_source(source_id:str,page:int=1,offset:int=0,limit:int=12000,sea
             if found<0:return dict(source_id=source_id,page=page,found=False,next_page=page+1 if page<len(source['pages']) else None)
             offset=max(offset,found-min(200,(limit-len(search))//2))
         end=min(len(text),offset+limit)
-        return dict(source_id=source_id,page=page,text=text[offset:end],quote_lines=[line for line in text[offset:end].splitlines() if line.strip()][:80],entity_hints=[dict(section_key=d['section_key'],title=d['title']) for d in source.get('drafts',[])][:25],offset=offset,next_offset=end if end<len(text) else None,total_characters=len(text),page_count=len(source['pages']),truncated=end<len(text),version=source['version'],fetched_at=source['fetched_at'],mode=source['mode'],remote=source.get('remote'))
+        from .extraction import visible_citations
+        return dict(source_id=source_id,page=page,text=text[offset:end],citation_refs=visible_citations(source,page,offset,end),quote_lines=[line for line in text[offset:end].splitlines() if line.strip()][:80],entity_hints=[dict(section_key=d['section_key'],title=d['title']) for d in source.get('drafts',[])][:25],offset=offset,next_offset=end if end<len(text) else None,total_characters=len(text),page_count=len(source['pages']),truncated=end<len(text),version=source['version'],fetched_at=source['fetched_at'],mode=source['mode'],remote=source.get('remote'))
     except RelayError as exc:
         return {'error':exc.as_dict()}
 
@@ -175,7 +177,7 @@ def build_next_action_packet(task_id:str) -> dict:
 
 @mcp.tool()
 def propose_academic_extraction(source_id:str,candidates:list[ExtractionCandidate]) -> dict:
-    """Only when extraction is requested: propose cited fields from selected prose/tables. Use field due for deadline, minutes for effort, rubric for requirements. Dates retain timezone/year/ambiguity. Every quote must match the page exactly. Never applies facts or confirms identity; UI confirmation is mandatory."""
+    """Only when extraction is requested: propose cited fields. Prefer citation_id copied from read_course_source.citation_refs (server copies exact span, including PDF/table line breaks); omit quote/original_expression in reference mode. Use due, minutes, rubric and submission_requirement. Values remain unconfirmed. Literal quotes must match exactly. Never applies facts or confirms identity; UI confirmation is mandatory."""
     from .extraction import validated_batch,record_proposal
     s=svc()
     def propose():

@@ -1,0 +1,606 @@
+{
+  "at": "2026-10-19T18:54:32.291Z",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "version": "0.5.0",
+  "provider_substitution": false,
+  "google_login": false,
+  "invitations": false,
+  "personal_spending": 0,
+  "checks": {
+    "two_clean_automatic_workspaces": true
+  },
+  "cases": [
+    {
+      "file": "11-continued-brief.pdf",
+      "sha256": "dbfbef67958436e01bbd7ec21cf591ca7c58593938adb32a644298095e0572c4",
+      "passed": true,
+      "source_id": "9e042d60ceff1bb997ff8f2b",
+      "source_version": "e102692699fd951f659baa41",
+      "actual_answer_status": "complete",
+      "plan": {
+        "id": "4cbc79b8f79be394d3fe3e8b",
+        "required_minutes": 90,
+        "feasible": true,
+        "scope_complete": true
+      },
+      "receipt": {
+        "id": "7c33f29242853d7db26c8b95d822300b",
+        "status": "verified",
+        "mode": "illustrative"
+      },
+      "confirmation_plan_whatif_illustrative_receipt_progress_passport_refresh": true
+    },
+    {
+      "file": "12-table-brief.pdf",
+      "sha256": "7e4acb08b756e29152efac0b6204b26cc8e54fecb75dff59d73ff427e920dfce",
+      "passed": false,
+      "source_id": "df5968730625fcbf788ae4c2",
+      "source_version": "2079d0166d1890c478cb34fa",
+      "actual_answer_status": "partial",
+      "initial_validation_issues": [
+        {
+          "entity_id": "soil-conductivity",
+          "field": "title",
+          "page": 1,
+          "code": "SOURCE_CONFLICT",
+          "reason": "field_or_exact_page_quote_invalid"
+        },
+        {
+          "entity_id": "soil-conductivity",
+          "field": "rubric",
+          "page": 1,
+          "code": "SOURCE_CONFLICT",
+          "reason": "field_or_exact_page_quote_invalid"
+        },
+        {
+          "entity_id": "soil-conductivity",
+          "field": "submission_requirement",
+          "page": 1,
+          "code": "SOURCE_CONFLICT",
+          "reason": "field_or_exact_page_quote_invalid"
+        },
+        {
+          "entity_id": "mineral-reflection",
+          "field": "title",
+          "page": 1,
+          "code": "SOURCE_CONFLICT",
+          "reason": "field_or_exact_page_quote_invalid"
+        },
+        {
+          "entity_id": "mineral-reflection",
+          "field": "rubric",
+          "page": 1,
+          "code": "SOURCE_CONFLICT",
+          "reason": "field_or_exact_page_quote_invalid"
+        },
+        {
+          "entity_id": "mineral-reflection",
+          "field": "submission_requirement",
+          "page": 1,
+          "code": "SOURCE_CONFLICT",
+          "reason": "field_or_exact_page_quote_invalid"
+        }
+      ],
+      "repair_run_id": "b8ce406f572fe2f4a3f4109f8c417f0d",
+      "error": "Assertion failed; private diagnostics retained on D:."
+    }
+  ],
+  "runs": [
+    {
+      "status": "complete",
+      "required_tool_failed": false,
+      "tool_observations": [
+        {
+          "tool": "list_course_sources",
+          "status": "observed",
+          "response_sha256": "0f7537d9573a2178abd1dbef7b9243593db66631e4965cfa39ab1f61cc1c1950",
+          "provenance": [
+            {
+              "version": "e102692699fd951f659baa41",
+              "fetched_at": "2026-10-19T18:56:06.730630+00:00",
+              "mode": "selected_upload"
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "4fcad3e48412c770da2c2f5bc5591e88476b08fd92790d3edeed6170fef8036b",
+          "provenance": [
+            {
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "page": 1,
+              "version": "e102692699fd951f659baa41",
+              "fetched_at": "2026-10-19T18:56:06.730630+00:00",
+              "mode": "selected_upload"
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "86e3828b6e816d3671f71f25a47b2b23ce4ef26121934e77ba8eca8f71c137da",
+          "provenance": [
+            {
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "page": 2,
+              "version": "e102692699fd951f659baa41",
+              "fetched_at": "2026-10-19T18:56:06.730630+00:00",
+              "mode": "selected_upload"
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "propose_academic_extraction",
+          "status": "observed",
+          "response_sha256": "176d13064a4f387dc0cce7c4b023ec508d2551a4e8e0a7869bc20686ff894804",
+          "provenance": [
+            {
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 1,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            },
+            {
+              "page": 2,
+              "source_id": "9e042d60ceff1bb997ff8f2b",
+              "source_version": "e102692699fd951f659baa41"
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "b51de90b4e74c3a23f1218dd735e750d",
+      "conversation_id": "80db6007ef6277cbba468339b170beff",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "22d848033ebdf04be333d04d9c9a9a061132cf58",
+      "duration_ms": 20591,
+      "gateway_revision": "22d848033ebdf04be333d04d9c9a9a061132cf58",
+      "observed_latency_ms": 32499,
+      "answer_sha256": "f1bc6839ada132f1ec4145da65642381921fbb0801821ccf8cc42d52cfc9dc42",
+      "answer_characters": 1011
+    },
+    {
+      "status": "partial",
+      "required_tool_failed": true,
+      "tool_observations": [
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "36e8be9eddb1ae742bf901a6a8090d98f77d8a6cec9335754c955773ad0277f4",
+          "provenance": [
+            {
+              "source_id": "df5968730625fcbf788ae4c2",
+              "page": 1,
+              "version": "2079d0166d1890c478cb34fa",
+              "fetched_at": "2026-10-19T18:56:53.232256+00:00",
+              "mode": "selected_upload"
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "propose_academic_extraction",
+          "status": "failed",
+          "response_sha256": "81a253082f6e544c8774ffd8416961225791b305dd052c546d9150f7b55dc1bb",
+          "provenance": [
+            {
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "edeb47f69eb9111c6d2f5221f595a1ca",
+      "conversation_id": "00004e8072d5b785f3bbe3c02f62de59",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "22d848033ebdf04be333d04d9c9a9a061132cf58",
+      "duration_ms": 19433,
+      "gateway_revision": "22d848033ebdf04be333d04d9c9a9a061132cf58",
+      "observed_latency_ms": 22266,
+      "answer_sha256": "93217cabd044a7a87115a7a00465f48a032d96d20f7bb94390dece2b31170789",
+      "answer_characters": 1212
+    },
+    {
+      "status": "partial",
+      "required_tool_failed": true,
+      "tool_observations": [
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "36e8be9eddb1ae742bf901a6a8090d98f77d8a6cec9335754c955773ad0277f4",
+          "provenance": [
+            {
+              "source_id": "df5968730625fcbf788ae4c2",
+              "page": 1,
+              "version": "2079d0166d1890c478cb34fa",
+              "fetched_at": "2026-10-19T18:56:53.232256+00:00",
+              "mode": "selected_upload"
+            }
+          ],
+          "error_codes": []
+        },
+        {
+          "tool": "propose_academic_extraction",
+          "status": "failed",
+          "response_sha256": "9d81cac75ce18a2f918c2c6e990122cb336538ce033e05904008966db70ddc9c",
+          "provenance": [
+            {
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1,
+              "source_id": "df5968730625fcbf788ae4c2",
+              "source_version": "2079d0166d1890c478cb34fa"
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            },
+            {
+              "page": 1
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "b8ce406f572fe2f4a3f4109f8c417f0d",
+      "conversation_id": "00004e8072d5b785f3bbe3c02f62de59",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "22d848033ebdf04be333d04d9c9a9a061132cf58",
+      "duration_ms": 18181,
+      "gateway_revision": "22d848033ebdf04be333d04d9c9a9a061132cf58",
+      "observed_latency_ms": 19175,
+      "answer_sha256": "0fac60e22e62c6a26db9f198075cdcd52172f445251f72b784b550f9703147a0",
+      "answer_characters": 1138
+    }
+  ],
+  "deployed_commit": "22d848033ebdf04be333d04d9c9a9a061132cf58",
+  "passed": false,
+  "error": "Acceptance assertion failed; private diagnostics retained on D:."
+}

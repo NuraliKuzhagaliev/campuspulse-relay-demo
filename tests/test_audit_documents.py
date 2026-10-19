@@ -6,7 +6,7 @@ from concurrent.futures import ThreadPoolExecutor
 import pytest
 from relay.domain import RelayError,instant
 from relay.evidence import read_upload,extract_facts,MAX_BYTES
-from relay.extraction import extraction_proposal,validated_batch,record_proposal,current_proposals,confirm
+from relay.extraction import extraction_proposal,validated_batch,record_proposal,current_proposals,confirm,page_citations,visible_citations
 from relay.service import RelayService
 from relay.store import Store
 from relay.planning_context import local_timestamp,update
@@ -229,3 +229,25 @@ def test_repaired_neighbor_diagnostics_disappear_from_visible_proposals(tmp_path
     assert len(visible)==2 and sum(len(p['entities']) for p in visible)==2
     assert all(not p['validation_issues'] and p['status']=='requires_explicit_confirmation' for p in visible)
     assert next(p for p in visible if p['id']==corrected['id'])['entities'][0]['fields'][0]['value']=='Noise comparison memo'
+
+def test_multiline_citation_reference_copies_exact_text_but_never_confirms(tmp_path):
+    svc=service(tmp_path);s=svc.import_source('table.txt',b'Course: Earth Science\nSoil | 45 minutes\nCriteria:\n- Explain conductivity\n- Compare samples')
+    reference=page_citations(s,1)[0]
+    p=record_proposal(svc,validated_batch(s,[dict(entity_id='soil',field='rubric',value=['Explain conductivity','Compare samples'],page=1,citation_id=reference['citation_id'])]))
+    field=p['fields'][0];assert field['quote']==reference['quote']==s['pages'][0]['text']
+    assert field['original_expression']==reference['quote'] and field['validation_status']=='needs_confirmation'
+    assert not p['applied'] and not svc.sources()[0].get('confirmed_extractions')
+    # Literal mode still rejects a model's reformatted quote.
+    with pytest.raises(RelayError):extraction_proposal(s,[dict(field='rubric',value=['Explain conductivity'],page=1,quote='Criteria: Explain conductivity')])
+
+@pytest.mark.parametrize('change',[{'id':'foreign-source'},{'version':'stale-version'},{'pages':[dict(page=2,text='Same content on another page')]}])
+def test_citation_reference_rejects_foreign_stale_or_wrong_page(change):
+    s=source('Actual source text.');reference=page_citations(s,1)[0]
+    with pytest.raises(RelayError) as error:extraction_proposal(s|change,[dict(field='title',value='Report',page=1,citation_id=reference['citation_id'])])
+    assert error.value.code=='SOURCE_CONFLICT' and error.value.details['reason']=='citation_not_current_page'
+
+def test_citation_response_bounded_and_search_tail_refs_exact():
+    s=source('intro '*5000+'\nFinal appendix: lithic density\n')
+    refs=visible_citations(s,1,29000,30000)
+    assert refs and sum(len(r['quote']) for r in refs)<=8000 and len(refs)<=80
+    assert all(r['quote']==s['pages'][0]['text'][r['start']:r['end']] for r in refs)

@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-19T18:51:57.070564+00:00",
+  "checked_at": "2026-10-19T19:00:11.457094+00:00",
   "sdk": {
     "google-cloud-aiplatform": "2.5.0",
     "google-adk": "2.12.0",
@@ -19,7 +19,7 @@
     "relay/__init__.py": "988441d8aec049936eecda1e74869eb327fc66bade0d1a8352630189e9920b4d",
     "relay/academic.py": "04fbf1e7a59c66050ef032a8449e4c3490219d5c3d3bc76c3675b34e5eb16474",
     "relay/actions.py": "932e6cd384a3923c550b097e3498fe9a86f1509df7f22c044ab75e1c181a3984",
-    "relay/agent.py": "26136cd73529f99a74bd9a86ac6b342e8cf41b4299a87b9f06039e4fa5b210ba",
+    "relay/agent.py": "a305cf59d9c9f17001dc6834d5b0d552e2bb5ec41a7b09d8c8d0179acaba702b",
     "relay/agent_sessions.py": "7c24d785412e75efd62e06a816cfacd07a2239c38c5969719c7939aa7b7ee753",
     "relay/ai_invitations.py": "44df16d6288daa4467f30dee50b1790e4956e7a224db500271542a39bb096d60",
     "relay/alternative_live.py": "ce492f0db71ce1074f0a255f8621b02903274df84c739ec09cf732368d373e97",
@@ -30,7 +30,7 @@
     "relay/conversations.py": "3640ffd6963bbbcb10e0159c91c1f75ee67e00de1c1fb3b997a6c1c88b6f3a1b",
     "relay/domain.py": "dd60db6c79570c22c79793214b33c4678543142a5ec81e6966c9b546b764d610",
     "relay/evidence.py": "7dccc0e4bf13f0339b11a99da40244dbbc9bd8ccbbd8406bdf6209acafe67a98",
-    "relay/extraction.py": "922c8a243eb9468b5967bcd737765fb00cc6dcc9ad9db1067ac30c6b4a489c6f",
+    "relay/extraction.py": "25e94aba82ab08586fa4e211bb59c6e71dc12f1c1a860b40145f3c90c92e791d",
     "relay/funding.py": "c60c6bf1390705cebb6ab88250743b1df51b2b457b71bf6edf811db268bdb65b",
     "relay/gateway.py": "0dccd600a943f385c45f7b62f20e98771789d849b5196489d72c080b7d100105",
     "relay/handoff.py": "09692cbeb0cad14e6707bd82299cc0d213dd46798d3a87ef86db88b3d01e7a3e",
@@ -40,7 +40,7 @@
     "relay/managed_bridge.py": "4b798f0db134edea355da67488a67396d94950c1ca23a5ce26b1e014946280a8",
     "relay/managed_operator.py": "1fc05ce7b8c6fb08de8f9607172ce5d192bb28d5625e3bec4ef69cb4ea802893",
     "relay/managed_state.py": "3300dec9d8ce30de0fe09e485742fd2982fc33e3edf98b5aeed1e21c9467de25",
-    "relay/mcp_server.py": "eddfb000d27880826043f8fc4b0f531603c2dddbb224aca294e03f9634107bb8",
+    "relay/mcp_server.py": "1dfd5996979e8977a15ec31bef8b16d52ef085a810303e63222bbdfa75f479ff",
     "relay/model_usage.py": "0fa3014fb0750546d02fc59eff646bd2874b0b620074ef8df83fca5d85263c41",
     "relay/oauth.py": "045bb0799e4b2aede4877e94651e4908c33ce198bb445b5a88241af481974ab0",
     "relay/passport.py": "14a85896ee8462578f4b851d5bbebba75904fdfe575882e80fddeccd70c5e40c",
