@@ -1,135 +1,139 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "product": "CampusPulse RELAY",
-  "version": "0.3.0",
-  "release_revision": "0.3.0-r1",
-  "created_at": "2026-10-19T00:28:01.411759+00:00",
-  "status": "local_reviewable_candidate_native_human_gate_pending_not_published",
+  "version": "0.4.0",
+  "release_revision": "0.4.0-local-integration-r1",
+  "status": "LOCAL_GEMINI_VERIFIED_HOSTED_CALENDAR_GCP_PENDING",
+  "created_at": "2026-10-19T13:19:34.977441+00:00",
   "project_root": "D:\\projects\\CampusPulseRELAY",
-  "source_commit": "660211d3bf570b89bca9d45033fc2224cd1a0ba4",
-  "source_commit_semantics": "Local committed source, verification and docs are archived. Final generated manifest is distributed separately. No public/cloud deployment of0.3.0.",
+  "source_commit": "1d843bc85ece697aaf6e2314d7d91abab08700f5",
+  "source_commit_semantics": "Exact clean pushed source archived; generated manifest/checksums added separately. A subsequent metadata-only commit may contain this manifest.",
   "repository": {
     "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo",
-    "branch": "local/four-additions-0.3.0",
-    "source_commit": "660211d3bf570b89bca9d45033fc2224cd1a0ba4",
-    "published": false
+    "branch": "local/final-integration-0.4.0",
+    "source_commit": "1d843bc85ece697aaf6e2314d7d91abab08700f5",
+    "published": true
   },
   "urls": {
-    "local_web": "http://127.0.0.1:8000",
     "public_web": "https://campuspulse-relay-demo.onrender.com",
     "public_version": "0.2.1",
-    "agent_api": null
+    "local_web": "http://127.0.0.1:8000",
+    "local_https_staging": "https://localhost:8017",
+    "managed_agent_api": null
   },
-  "public_demo_deployment": {
-    "version": "0.2.1",
-    "provider": "Render",
-    "public_url": "https://campuspulse-relay-demo.onrender.com",
+  "public_deployment": {
     "service_id": "srv-dbajs73bc2fs73bm9mfg",
-    "service_plan": "free",
-    "region": "frankfurt",
-    "runtime": "Docker: React frontend + FastAPI Python backend",
-    "auto_deploy": false,
-    "deploy_id": "dep-dbal14m1egvs73b4fp8g",
-    "deployed_commit": "83552161ec22c7cf44746433425d3b2b99e042c4",
-    "status": "live",
-    "finished_at": "2026-10-18T23:05:47.411754Z",
-    "verified": true,
-    "full_https_browser_acceptance": true,
-    "browser_evidence": "docs/evidence/public-demo-browser-0.2.1.json",
-    "hosted_challenge_evidence": "docs/evidence/hosted-challenge-0.2.1.json",
-    "google_runtime_enabled": false,
-    "real_calendar_enabled": false,
-    "mandatory_gcp_deployment": "pending_unconfirmed_organizer_credits",
-    "uncovered_personal_spending_authorized_usd": 0,
-    "storage": "ephemeral SQLite, one worker/instance; two-hour isolated capability sessions, earlier reset possible on host restart/redeploy/inactivity",
-    "initial_github_429_evidence": "docs/evidence/public-demo-browser-0.2.0-initial-429.json",
-    "github_retry_result": "Fresh immutable backend read succeeded after reported reset; cache_age_seconds=0",
-    "prior_live_runtime_commit": "8e74950e2437e5b2af0159ae3c88bb31caa86a61",
-    "two_tab_reset_failure_before": "Actual focused second tab retained old source list beyond 10 seconds on a86bd9c; final regression passed on 8e74950.",
-    "health": {
-      "ok": true,
-      "version": "0.2.1",
-      "mode": "public_demo",
-      "agent_configured": false,
-      "agent_verified": false,
-      "agent": {
-        "configured": false,
-        "verified": false,
-        "resource": null
-      },
-      "time": "2026-10-18T23:08:09.512667+00:00",
-      "deployed_commit": "83552161ec22c7cf44746433425d3b2b99e042c4",
-      "demo": {
-        "public": true,
-        "storage": "temporary",
-        "session_seconds": 7200,
-        "max_upload_mib": 2,
-        "max_sources": 12,
-        "github_cache_seconds": 300,
-        "calendar": "illustrative_local_adapter",
-        "gemini": "pending",
-        "mandatory_gcp": "pending"
-      }
-    },
-    "preflight_effort_range_recovery_verified": true
+    "provider": "Render",
+    "plan": "Free",
+    "actual_version": "0.2.1",
+    "actual_commit": "83552161ec22c7cf44746433425d3b2b99e042c4",
+    "new_0_4_deployed": false,
+    "new_0_4_blocker": "Owner must save free Gemini key in existing service private environment, then execute and verify reviewed cutover."
   },
-  "public_deployment_replaced": false,
-  "cloud": {
-    "provider": "GCP",
-    "status": "deferred_pending_organizer_credit_eligibility_balance_expiration",
-    "model_calls": 0,
-    "real_calendar_writes": 0,
-    "new_resources_provisioned": 0,
+  "inference": {
+    "provider": "gemini_developer",
+    "model": "gemini-3.5-flash-lite",
+    "metadata_version": "3.5-flash-lite-07-2026",
+    "project": "gen-lang-client-0595303951",
+    "real_local_https_verified": true,
+    "hosted_verified": false,
+    "full_acceptance": "pending"
+  },
+  "gcp": {
+    "status": "UNMET_GCP_EXCEPTION_PENDING",
+    "reasoning_engine": null,
+    "free_trial": "closed_prepayment_required_no_visible_credits",
+    "credits_provided_by_organizer": false,
+    "paid_resources_created": false,
     "personal_spending_authorized_usd": 0
   },
-  "enhancements": {
-    "F1": "locally_implemented",
-    "F2": "locally_implemented",
-    "F3": "locally_implemented",
-    "F4": "locally_implemented",
-    "F5": "locally_implemented",
-    "A1": "implemented_local_and_installed_contracts_verified",
-    "A2": "implemented_local_browser_verified",
-    "A3": "implemented_live_public_read_and_signed_local_MCP_verified",
-    "A4": "implemented_cross_device_contracts_verified_unmodified_native_dialog_gate_pending",
-    "D1_D2_D3": "preserved",
-    "real_gemini_acceptance": "pending",
-    "real_calendar_acceptance": "pending"
+  "real_calendar": {
+    "status": "pending_app_consent_runtime_access_and_exact_ui_approval",
+    "external_writes_verified": false
   },
-  "languages": {
-    "operational_ui": [
-      "en",
-      "ru",
-      "kk"
-    ],
-    "viewport_widths": [
-      390,
-      768,
-      1280,
-      1440
-    ],
-    "model_acceptance": "pending"
+  "enhancements": {
+    "F1": "locally_implemented_real_calendar_and_full_gemini_acceptance_pending",
+    "F2": "locally_implemented_real_calendar_and_full_gemini_acceptance_pending",
+    "F3": "locally_implemented_real_calendar_and_full_gemini_acceptance_pending",
+    "F4": "locally_implemented_real_calendar_and_full_gemini_acceptance_pending",
+    "F5": "locally_implemented_real_calendar_and_full_gemini_acceptance_pending"
   },
   "verification": {
-    "version": "0.3.0",
-    "checked_at": "2026-10-19T00:18:52.868140+00:00",
-    "kind": "local_reviewable_candidate_not_published",
+    "checked_at": "2026-10-19T13:18:47.328730+00:00",
+    "version": "0.4.0",
+    "status": "LOCAL_GEMINI_VERIFIED_HOSTED_CALENDAR_GCP_PENDING",
+    "source_commit_at_collection": "c7f13595929d544611e93e6d9cc2149d12369169",
+    "source_has_uncommitted_integration_changes": true,
     "python": {
-      "name": "pytest",
-      "errors": "0",
-      "failures": "0",
-      "skipped": "0",
-      "tests": "111",
-      "time": "9.174",
-      "timestamp": "2026-10-19T05:26:27.644550+05:00",
-      "hostname": "BlackWolf"
+      "tests": 121,
+      "failures": 0,
+      "errors": 0,
+      "seconds": 9.654
     },
     "browser": {
       "passed": 13,
       "skipped": 1,
-      "duration_seconds": 33.1,
-      "log": ".local/logs/four-browser-all.log",
-      "viewport_widths": [
+      "failed": 0,
+      "seconds": 36.04359699999999
+    },
+    "ipc_policy": {
+      "passed": 4,
+      "failed": 0,
+      "seconds": 0.0824866
+    },
+    "installed_desktop": {
+      "desktop-contract": true,
+      "desktop-import-regression": true,
+      "four-desktop": true
+    },
+    "windows_signature": "NotSigned",
+    "real_gemini": {
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "metadata_version": "3.5-flash-lite-07-2026",
+      "project": "gen-lang-client-0595303951",
+      "environment": "local HTTPS gateway plus actual remote Gemini and live public GitHub",
+      "development_certificate_only": true,
+      "managed_agent_engine": false,
+      "frontend_turns": 11,
+      "complete": 10,
+      "partial": 1,
+      "latency_ms": {
+        "n": 11,
+        "min": 13874,
+        "max": 21413,
+        "mean": 17019,
+        "kind": "gateway agent duration; warm local server; no hosted cold-start or percentile claim"
+      },
+      "provider_reported_usage": {
+        "model_responses": 31,
+        "input_tokens": 106088,
+        "output_tokens": 4373,
+        "thinking_tokens": 0,
+        "total_tokens": 110461
+      },
+      "usage_scope": "All provider-reported model responses retained in the isolated local alternative data store, including development smoke/failures. Not a quota balance or final invoice."
+    },
+    "reviewed_defects": [
+      {
+        "issue": "Unnecessary proposal failed in first source-only turn",
+        "finding": "Original tool arguments were deliberately not persisted, so the historical rejected field cannot be reconstructed. Unconditional extraction instruction and unconstrained list[dict] contract were identified.",
+        "fix": "Source-only reads no longer create proposals; finite typed candidate schema and redacted error codes added.",
+        "recheck": "Two affected real turns completed, exact source read and non-applying extraction proposal."
+      },
+      {
+        "issue": "Post-answer Axe scrollable-region-focusable violation",
+        "fix": "Execution events are a named focusable region with EN/RU/KK label.",
+        "recheck": "UI-only existing real-run state, zero additional model calls; no automated AA violations."
+      },
+      {
+        "issue": "Model called a student remaining estimate validated and overstated changed-entry count as moved blocks",
+        "fix": "Explicit instruction/tool metadata distinguish reports, 30-minute units and removed-plus-added diff entries.",
+        "recheck": "Actual follow-up after server restart correctly reports45 logged,95 remaining,120 allocated and no independently verified completion."
+      }
+    ],
+    "accessibility": {
+      "viewports": [
         390,
         768,
         1280,
@@ -140,229 +144,212 @@
         "ru",
         "kk"
       ],
-      "automated_accessibility": "four new panels plus existing primary states; not full certification"
+      "automated_AA_primary_state": true,
+      "all_accessibility_standards_claimed": false
     },
-    "local_public_mode": {
-      "passed": 4,
-      "skipped": 0,
-      "duration_seconds": 21.9,
-      "log": ".local/logs/four-public-mode-browser.log",
-      "backend": "minimal public-venv",
-      "https": false,
-      "hosted": false,
-      "two_tab_reset": true
-    },
-    "desktop_policy": {
-      "passed": 4,
-      "log": ".local/logs/four-policy.log"
-    },
-    "installed": {
-      "version": "0.3.0",
-      "contract": true,
-      "both_import_paths": true,
-      "cross_device": {
-        "instrumented_native_cancel_keeps_workspace": true,
-        "web_to_installed_desktop_native_path": true,
-        "restored_bridge_csrf_and_retry": true,
-        "ipc_allowlist_remains_narrow": true,
-        "installed_save_uses_actual_file_write_on_D": true,
-        "C_drive_save_denied": true,
-        "installed_restart_persistence": true,
-        "installed_to_fresh_web_semantic_identity_citation_time_progress_comparison": true
-      },
-      "asar_matches_source": true,
-      "dialogs_substituted": true,
-      "unmodified_native_human": "pending",
-      "signature": "NotSigned"
-    },
-    "mcp": {
-      "tools": 14,
-      "passed": true,
-      "cloud_agent": false
-    },
-    "live_public_read": {
-      "repo": "pallets/flask",
-      "number": 6168,
-      "url": "https://github.com/pallets/flask/pull/6168",
-      "state": "closed",
-      "merged": true,
-      "merged_at": "2026-10-07T13:56:06Z",
-      "head_sha": "7689f98403e2c0b0bc8d1031e60f8cff2620e86a",
-      "merge_sha": "728c5e440af704a786384159184f695cf04ecbe7",
-      "observed_at": "2026-10-18T23:54:15.955161+00:00",
-      "last_checked_at": "2026-10-18T23:54:15.955161+00:00",
-      "http_status": 200,
-      "provenance": "live_public_github",
-      "response_sha256": "c257e1840e7c397d515ebd47f0853c7ddc659bf0f2407264fed67cd516b60ba5",
-      "cache_age_seconds": 0
-    },
-    "latency": {
-      "environment": {
-        "python": "3.13.2",
-        "platform": "Windows-11-10.0.26200-SP0",
-        "backend": "local SQLite / CP-SAT single worker",
-        "workload": "3 structured tasks, 540 minutes, two cited deadline alternatives, 10 study hours before protected busy subtraction"
-      },
-      "samples": [
-        {
-          "milliseconds": 50.24,
-          "branches": 2,
-          "status": "complete",
-          "cached": false
-        },
-        {
-          "milliseconds": 57.07,
-          "branches": 2,
-          "status": "complete",
-          "cached": false
-        },
-        {
-          "milliseconds": 54.09,
-          "branches": 2,
-          "status": "complete",
-          "cached": false
-        },
-        {
-          "milliseconds": 60.51,
-          "branches": 2,
-          "status": "complete",
-          "cached": false
-        },
-        {
-          "milliseconds": 46.87,
-          "branches": 2,
-          "status": "complete",
-          "cached": false
-        }
+    "additional_browser_fault_regression": {
+      "kind": "deterministic_browser_fault_only",
+      "not_live_model_acceptance": true,
+      "actual_model_calls": 0,
+      "languages": [
+        "en",
+        "ru",
+        "kk"
       ],
-      "n": 5,
-      "median_ms": 54.09,
-      "max_ms": 60.51,
-      "failures": 0,
-      "budget": {
-        "selected_uncertainties": 3,
-        "joint_branches": 8,
-        "per_solve_seconds": 1,
-        "overall_model_build_solve_seconds": 8,
-        "github_connect_read_seconds": 10,
-        "github_stream_elapsed_guard_seconds": 12
+      "checks": {
+        "localized_recovery_message": true,
+        "provider_english_detail_not_shown": true
       },
-      "p95_claim": false,
-      "public_stress_requests": 0
+      "tests_passed": 1,
+      "seconds": 3.9,
+      "app_source_sha256": "ec0df7856fd79248aa05a95d5fd13e5e5a4dbbba8db7385575b1e3865edbaaa6",
+      "log_sha256": "18c3d82218460b8f6ae5ae7ead2028bc4c0284361980724dfbbbbe13828f7eb5",
+      "passed": true
     },
-    "real_model_calls": 0,
-    "real_calendar_writes": 0,
-    "gcp_resources_provisioned": 0,
-    "public_deployment_replaced": false,
-    "github_writes": false,
-    "inherited_gates": "Gemini / Agent Engine / cloud MCP auth / real Calendar / authenticated hosted judge remain pending",
-    "complete_web_bundle": "docs/evidence/four-web-bundle.json",
-    "initial_python_0_3_0": {
-      "name": "pytest",
-      "errors": "0",
-      "failures": "0",
-      "skipped": "0",
-      "tests": "110",
-      "time": "8.769",
-      "timestamp": "2026-10-19T05:13:01.542740+05:00",
-      "hostname": "BlackWolf"
+    "acceptance": {
+      "unseen_cited_sources": "genuinely_live_verified_local_gateway",
+      "conflict_and_clarification": "genuinely_live_verified_local_gateway",
+      "real_github_and_public_pr": "genuinely_live_verified_local_gateway",
+      "planning_and_whatif": "real_agent_server_plan_and_browser_local_adapter_verified",
+      "explicit_progress_and_conversation_restart": "genuinely_live_verified_local_gateway",
+      "injection_and_two_visitor_source_isolation": "genuinely_live_verified_local_gateway",
+      "languages": "real_EN_RU_KK_answers_observed",
+      "passport_authority": "deterministic_browser_and_installed_contracts_verified",
+      "real_calendar": "NOT_RUN_CONSENT_AND_EXACT_UI_APPROVAL_PENDING",
+      "managed_gcp": "UNMET_GCP_EXCEPTION_PENDING",
+      "public_0_4_and_windows_https_model_query": "PENDING_EXISTING_RENDER_SECRET_AND_CUTOVER",
+      "hosted_background": "UNAVAILABLE_FREE_HOST_SLEEP",
+      "unmodified_0_4_native_dialogs_and_notification_click": "HUMAN_OBSERVATION_PENDING"
     },
-    "release_revision": "0.3.0-r1",
-    "health_version_regression": {
-      "passed": true,
-      "actual_running_backend": "0.3.0",
-      "log": ".local/logs/four-python-r1.log",
-      "backend_only_change": true,
-      "windows_binaries_unchanged": true
-    }
+    "enhancements": {
+      "F1": "locally_implemented_real_calendar_and_full_gemini_acceptance_pending",
+      "F2": "locally_implemented_real_calendar_and_full_gemini_acceptance_pending",
+      "F3": "locally_implemented_real_calendar_and_full_gemini_acceptance_pending",
+      "F4": "locally_implemented_real_calendar_and_full_gemini_acceptance_pending",
+      "F5": "locally_implemented_real_calendar_and_full_gemini_acceptance_pending"
+    },
+    "personal_spending_authorized_usd": 0,
+    "evidence": [
+      {
+        "path": "docs/evidence/final-live-local-mvf8h3vr.json",
+        "sha256": "7c70136e86d928e8d051a4604a73746756e9a4b52f662863ab1b466c9d0301c5"
+      },
+      {
+        "path": "docs/evidence/final-focus-local-mvf8uiq4.json",
+        "sha256": "19405d4b410d135041aa16df43ad26cbdcb3f1173147a87c654624112fae0547"
+      },
+      {
+        "path": "docs/evidence/final-features-local-mvf943c1.json",
+        "sha256": "b4edea2ac61e27ccdc42df747ff11f7c5fd14a78f2649d3544d664b458f8ffd8"
+      },
+      {
+        "path": "docs/evidence/final-ui-local-mvf8xcqp.json",
+        "sha256": "d3e7ee871a8f09605c71ebe62f64496a51091b1fb1de595c28852322fb81990e"
+      },
+      {
+        "path": "docs/evidence/final-semantics-local-mvf9aqce.json",
+        "sha256": "62148cb569d357e580fd8dbc2286e2b880efbc8265390f2d1f7a7ea57c0ab6eb"
+      },
+      {
+        "path": "docs/evidence/desktop-contract-0.4.0.json",
+        "sha256": "a1d80a4c00474b9071c20d55f46c6d88948949cb34c945087297836881ff9592"
+      },
+      {
+        "path": "docs/evidence/desktop-import-regression-0.4.0.json",
+        "sha256": "282c9233797266dc0f67f59fc6dfa9c3f674c412d806b314ea9d75e66cf92072"
+      },
+      {
+        "path": "docs/evidence/four-desktop-0.4.0.json",
+        "sha256": "3d65aa1f6ebfb2992ca3dc8f5037e32e29f6bd606c7b798657d3e0e1797db1bf"
+      },
+      {
+        "path": "docs/evidence/final-account-assessment.json",
+        "sha256": "c76ad831e5f7cd0e503bafcedefd57b055820e77f95d44387dbfc07ae03b17c8"
+      }
+    ]
   },
+  "packaged_web_verified_in_minimal_environment": true,
+  "windows": {
+    "installed_version": "0.4.0",
+    "signature": "NotSigned",
+    "default_gateway": "https://campuspulse-relay-demo.onrender.com",
+    "current_public_backend_version": "0.2.1",
+    "local_gateway_override_required_for_all_0_4_features_until_cutover": true,
+    "native_dialogs_substituted_in_automated_contracts": true,
+    "new_actual_dialog_banner_click_acceptance": "pending_human",
+    "preserved_0_3_install": "D:\\projects\\CampusPulseRELAY\\installed\\preserved-0.3.0"
+  },
+  "presentation": {
+    "slides": 12,
+    "editable": true,
+    "pdf": "rendered_pages_all_pixel_compared",
+    "native_powerpoint_opened": false
+  },
+  "deadline": {
+    "reported": "2026-10-20 23:59",
+    "organizer_timezone_confirmed": false,
+    "planning_timezone": "Asia/Qyzylorda UTC+05:00",
+    "internal_freeze_local": "2026-10-20 20:00"
+  },
+  "limitations": [
+    "Free host may sleep and reset uploads/sessions/SQLite/invitations; no always-on hosted Scheduler or durable hosted persistence.",
+    "Private unpaid AI only for invited18+ professional/hackathon evaluators in Kazakhstan with permitted non-sensitive material; attestation is not independent eligibility verification.",
+    "All current Calendar receipts are illustrative. Passport copies contain archived untrusted extracts, never authority/credentials or refreshed external observations.",
+    "No managed Agent Engine resource or amended replacement criterion verified. No contest entry/message sent."
+  ],
   "preserved_releases": [
     {
-      "version": "0.1.0",
-      "directory": "D:\\projects\\CampusPulseRELAY\\release\\versions\\0.1.0",
+      "revision": "0.1.0",
       "artifacts_hash_verified": 7
     },
     {
-      "version": "0.1.1",
-      "directory": "D:\\projects\\CampusPulseRELAY\\release\\versions\\0.1.1",
+      "revision": "0.1.1",
       "artifacts_hash_verified": 7
     },
     {
-      "version": "0.1.1-public-demo",
-      "directory": "D:\\projects\\CampusPulseRELAY\\release\\versions\\0.1.1-public-demo",
+      "revision": "0.1.1-public-demo",
       "artifacts_hash_verified": 9
     },
     {
-      "version": "0.2.0",
-      "directory": "D:\\projects\\CampusPulseRELAY\\release\\versions\\0.2.0",
+      "revision": "0.2.0",
       "artifacts_hash_verified": 6
     },
     {
-      "version": "0.2.1",
-      "directory": "D:\\projects\\CampusPulseRELAY\\release\\versions\\0.2.1",
+      "revision": "0.2.1",
       "artifacts_hash_verified": 6
     },
     {
-      "version": "0.3.0",
-      "directory": "D:\\projects\\CampusPulseRELAY\\release\\versions\\0.3.0",
+      "revision": "0.3.0",
+      "artifacts_hash_verified": 4
+    },
+    {
+      "revision": "0.3.0-r1",
       "artifacts_hash_verified": 4
     }
   ],
   "artifacts": [
     {
       "kind": "windows_installer",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.3.0-x64-setup.exe",
-      "relative_path": "windows/CampusPulse-RELAY-0.3.0-x64-setup.exe",
-      "bytes": 118762479,
-      "sha256": "b363f5f56b8129ef6bc19b37cfca3aa3dc9b9882ef8a9dcc871ec18545c3f933"
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.4.0-x64-setup.exe",
+      "relative_path": "windows/CampusPulse-RELAY-0.4.0-x64-setup.exe",
+      "bytes": 118754799,
+      "sha256": "e6b9d27517d164f7a2b9b39871867efdf17344d0054b6d0d9692d7bfae64e4e2"
     },
     {
       "kind": "windows_portable",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.3.0-x64-portable.exe",
-      "relative_path": "windows/CampusPulse-RELAY-0.3.0-x64-portable.exe",
-      "bytes": 118537274,
-      "sha256": "1e43ae2c581043e1bfeada1c78048f2b3eb12052a5576e41ca904d74f75d8045"
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.4.0-x64-portable.exe",
+      "relative_path": "windows/CampusPulse-RELAY-0.4.0-x64-portable.exe",
+      "bytes": 118539543,
+      "sha256": "6af56ddc3ccbf53ae0c0327be5702ca38db207fe83ab5cd64411325df4646a4c"
     },
     {
       "kind": "complete_web_application",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\web\\CampusPulseRELAY-0.3.0-r1-web-app.zip",
-      "relative_path": "web/CampusPulseRELAY-0.3.0-r1-web-app.zip",
-      "bytes": 1139312,
-      "sha256": "c258173449551686e706c9f73ab18358fc8229f550f7295c44349fac66b62a4a"
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\web\\CampusPulseRELAY-0.4.0-local-integration-r1-web-app.zip",
+      "relative_path": "web/CampusPulseRELAY-0.4.0-local-integration-r1-web-app.zip",
+      "bytes": 1152132,
+      "sha256": "df7a15840b299a9fa5e30d79677c720d177615a3700710593cd5d887774c2561"
     },
     {
       "kind": "source_archive",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\source\\CampusPulseRELAY-0.3.0-r1-source.zip",
-      "relative_path": "source/CampusPulseRELAY-0.3.0-r1-source.zip",
-      "bytes": 43820196,
-      "sha256": "6186a1d295051180963de13350bfe7b71303b2e271b57e21fe895a4a657db8f0"
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\source\\CampusPulseRELAY-0.4.0-local-integration-r1-source.zip",
+      "relative_path": "source/CampusPulseRELAY-0.4.0-local-integration-r1-source.zip",
+      "bytes": 60510299,
+      "sha256": "cf3264a85311aec7dff2208781245d1081c25fb2ca908024a4e997441373518e"
+    },
+    {
+      "kind": "editable_presentation",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.4.0-integration-r2.pptx",
+      "relative_path": "presentation/CampusPulse-RELAY-0.4.0-integration-r2.pptx",
+      "bytes": 61208,
+      "sha256": "a5d6ce01d690718b74fc6c1a220cb6be2235ddec1753fda4e2feb058cf44c0c2"
+    },
+    {
+      "kind": "presentation_pdf",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.4.0-integration-r2.pdf",
+      "relative_path": "presentation/CampusPulse-RELAY-0.4.0-integration-r2.pdf",
+      "bytes": 511909,
+      "sha256": "9be3626dc12eab6eec2a4d4d5ba7c7d246263e3a138d5d2e1f329cc59ccfb5a6"
+    },
+    {
+      "kind": "D_drive_launch_wrapper",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\Launch-Portable-D.cmd",
+      "relative_path": "windows/Launch-Portable-D.cmd",
+      "bytes": 330,
+      "sha256": "3463ba5c8505f0819373a33e6dc69a46c39211a81950ebc25c96bcb642934523"
+    },
+    {
+      "kind": "D_drive_launch_wrapper",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\Install-D.cmd",
+      "relative_path": "windows/Install-D.cmd",
+      "bytes": 387,
+      "sha256": "e9882e3e96e2cd62a454e182e81ee7c7151393d4d523e35063e8a6748066c0a8"
     }
   ],
-  "preserved_presentation": {
-    "version": "0.2.1",
-    "pptx": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.2.1-quality-verified.pptx",
-    "pdf": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.2.1-quality-verified.pdf",
-    "regenerated": false,
-    "scope": "Verified prior public release; not a claim that0.3.0 is public or GCP complete"
-  },
-  "blockers": [
-    "True unmodified Windows passport Open/Save/cancel/restore/restart interaction pending human after supported helper initialization failure.",
-    "Firestore addition transactions fail closed until separately verified.",
-    "Mandatory actual Gemini/Agent Engine/cloud-to-MCP auth/Calendar consent-write-readback/authenticated hosted unseen-document judge acceptance deferred.",
-    "Organizer eligible project/billing/credit balance/expiration unconfirmed; no uncovered personal spend authorized.",
-    "0.3.0 is not published or deployed; public remains the preserved0.2.1 revision."
-  ],
-  "limitations": [
-    "Manual unencrypted portable extracts are archived untrusted copies, not original binary/upstream verification. Calendar busy details, approvals, journals and accepted plans are excluded; re-import/reconnect/recompute.",
-    "Timers/logs/completion are personal reports; positive remaining rounds up to30 minutes. Suggestions require five eligible pre-start frozen samples and remain a heuristic.",
-    "Clarification evaluates a bounded selected set; unknown is not infeasible. Waiting PR gates have no assumed release time; latest safe handoff unknown.",
-    "Unsigned desktop requires a running local gateway. Real new banner/click visibility not claimed. Public storage remains temporary; this candidate has local public-mode tests, not hosted0.3.0 HTTPS acceptance."
-  ],
   "instructions": {
-    "acceptance": "docs/four_additions_acceptance.md",
-    "design_and_demo": "docs/four_additions_design.md",
-    "passport": "docs/workspace_passport.md",
-    "native_human": "docs/native_passport_check.md",
-    "later_cloud": "docs/live_acceptance_batch.md"
+    "judge": "docs/final_judge_guide.md",
+    "cutover": "docs/final_cutover_plan.md",
+    "native": "docs/final_native_check.md",
+    "requirements": "docs/final_integration_ledger.md",
+    "funding": "docs/cloud_setup.md"
   }
 }
