@@ -1,4 +1,15 @@
 import { test, expect } from "@playwright/test";
+import {eventSummary} from '../../src/i18n';
+
+test('public queue operational event summaries are localized in RU and Kazakh',()=>{
+  for(const summary of ['Reserved an actual model call within the shared free project quota.','Question joined the fair shared AI queue; no provider call yet.','Running a real Gemini question from the shared queue.']){
+    expect(eventSummary({type:'run_started',summary},'en')).toBe(summary);
+    for(const lang of ['ru','kk'] as const){
+      expect(eventSummary({type:'run_started',summary},lang)).not.toBe(summary);
+      expect(eventSummary({type:'run_started',summary},lang).trim()).not.toBe('');
+    }
+  }
+});
 
 test("public queue UI resumes after refresh without duplicate submission; localized states and cancellation", async ({
   page,

@@ -1,4 +1,7 @@
 export const finalTranslations: Record<string, readonly [string, string]> = {
+  "Reserved an actual model call within the shared free project quota.": ["Вызов модели зарезервирован в пределах общей бесплатной квоты проекта.", "Модель шақыруы жобаның ортақ тегін квотасы шегінде резервтелді."],
+  "Question joined the fair shared AI queue; no provider call yet.": ["Вопрос добавлен в общую очередь; провайдер ещё не вызван.", "Сұрақ ортақ кезекке қосылды; провайдер әлі шақырылған жоқ."],
+  "Running a real Gemini question from the shared queue.": ["Gemini обрабатывает вопрос из общей очереди.", "Gemini ортақ кезектегі сұрақты өңдеп жатыр."],
   "Public Gemini access · no invitation, account or API key needed": [
     "Публичный Gemini · без приглашений, регистрации и пользовательского API-ключа",
     "Жалпыға ашық Gemini · шақыру, тіркелу және пайдаланушы API кілті қажет емес",
