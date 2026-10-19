@@ -32,3 +32,13 @@ The prepared managed path now keeps the existing public SQLite backend authorita
 - Final report must distinguish A(managed verified inside window), B(public complete after window), actual current availability and exact external blockers. No unsupported all-ready claim.
 
 Official [managed deploy](https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/deploy-an-agent), [custom query](https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/use-a-custom-agent), [budget limits](https://docs.cloud.google.com/billing/docs/how-to/budgets). Actual organizer terms override general lab assumptions. This runbook has not provisioned or scheduled anything.
+
+## Prepared operator commands (no execution claim)
+
+- `scripts/organizer_agent.py prepare --plan <D:actual-plan>` validates the minimal typed SDK package offline. `deploy` is guarded by the actual fresh organizer plan, clean matching source/package hash and owned ledger; it records create operation outcomes rather than blindly retrying unknown results. `retire` requests deletion and records the operation; actual absence still needs verification.
+- `scripts/deploy-organizer-bridge.ps1` defaults to dry preparation. The execution path requires covered pinned image/secret versions, dedicated service identity, min0/max1 and the actual organizer envelope. The bridge authenticates request HMAC/nonce and workspace/run scope; managed runtime uses keyless Google identity to protected MCP/shared state.
+- `scripts/query-organizer.mjs` is offline unless explicitly executed with the actual accepted plan/resource. The real path checks exact managed resource/runtime/provider, unseen documents, two automatic anonymous sessions, same-conversation follow-up and protected routes. It cannot pass before an actual deployment.
+- `scripts/retire-organizer.ps1` defaults to dry preparation. Retire only exact owned ledger resources, verify actual absence, and review remaining covered prerequisites without deleting unrelated resources/project/billing.
+- `scripts/manage_route.py` bootstrapped its DPAPI-protected context through the owner-signed encrypted transport; public key only on Render. No managed route is active. HTTPS server Date guards local clock skew; it does not extend the window.
+
+Exact flags and live operation schemas must be read from each current command help and actual project before execution; these bullets are a prepared sequence, not invented resource IDs or a provisioning success.

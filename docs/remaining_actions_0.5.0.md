@@ -25,7 +25,7 @@ If the public quota does not recover, create a fine-grained token at https://git
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "D:\projects\CampusPulseRELAY\scripts\configure-github-read.ps1"
 ```
 
-The owner has now saved the dedicated credential locally. The secret stays in current-user DPAPI on D: until an authorized direct transfer to the existing Free Render backend. Then verify an actual hosted read and a later server observation with the browser closed, retaining the original immutable fetch time. Creating/configuring a credential is not itself that acceptance.
+The owner has saved the dedicated credential locally and local contents/issues read requests returned200. A Render field mix-up placed or proposed the token under the Calendar encryption variable: restore the protected original with `scripts/copy-render-credential.ps1 -Name TokenEncryptionKey`, paste only into RELAY_TOKEN_ENCRYPTION_KEY and Save only. Then use `-Name GitHubToken` for the separate RELAY_GITHUB_TOKEN field and Save only. `-Name ClearClipboard` overwrites the clipboard with a non-secret placeholder (Windows PowerShell rejects an empty string). Do not deploy until both fields are confirmed. No value is printed. The secret stays in current-user DPAPI on D: until an authorized direct transfer to the existing Free Render backend. Then verify an actual hosted read and a later server observation with the browser closed, retaining the original immutable fetch time. Creating/configuring a credential is not itself that acceptance.
 
 ## Current native observations
 

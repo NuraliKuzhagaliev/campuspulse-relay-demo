@@ -6,9 +6,11 @@ import AxeBuilder from '@axe-core/playwright';
 const base=process.argv[2]||'http://127.0.0.1:8024';
 const expect=baseExpect.configure({timeout:30000});
 const folder=path.resolve(process.argv[3]||'.local/audit-ui/verification');await fs.mkdir(folder,{recursive:true});
+const health=await(await fetch(base+'/api/health')).json();
+if(process.env.RELAY_EXPECTED_DEPLOY_COMMIT)assert.equal(health.deployed_commit,process.env.RELAY_EXPECTED_DEPLOY_COMMIT);
 const browser=await chromium.launch({headless:true});
 const context=await browser.newContext({baseURL:base,viewport:{width:1440,height:1000}});const page=await context.newPage();
-const proof={at:new Date().toISOString(),base,provider_calls:0,checks:{}};
+const proof={at:new Date().toISOString(),base,deployed_commit:health.deployed_commit,provider_calls:0,checks:{}};
 async function step(name,fn){try{proof.checks[name]=(await fn())??true;}catch(e){proof.checks[name]={failed:true,error:String(e)};throw e;}finally{await fs.writeFile(path.join(folder,'results.json'),JSON.stringify(proof,null,2));}}
 const state=async()=> (await page.request.get('/api/state')).json();
 try{

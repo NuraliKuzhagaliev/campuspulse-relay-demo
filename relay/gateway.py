@@ -699,7 +699,9 @@ def list_calendars(svc=Depends(service)):
 
 @app.get('/api/connections/status')
 def connection_status(svc=Depends(service)):
-    configured=all(os.getenv(k) for k in ('RELAY_OAUTH_CLIENT_ID','RELAY_OAUTH_CLIENT_SECRET','RELAY_TOKEN_ENCRYPTION_KEY','RELAY_GATEWAY_URL'))
+    from .oauth import configuration
+    try:configuration();configured=True
+    except RelayError:configured=False
     connected=bool(store.list(svc.tenant,'private_connections'))
     return dict(configured=bool(configured),connected=connected,calendar_live=svc.settings().get('calendar_live',False),
                 acceptance='pending_live_consent_and_read_back',existing_events_delete_on_disconnect=False)

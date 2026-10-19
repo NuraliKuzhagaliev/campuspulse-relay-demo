@@ -1,6 +1,8 @@
-# Actual external gates · audit0.5.0
+# Actual remaining gates · 0.5.0
 
-- Organizer project/window/covered services are not activated or verified yet. No personal spending allowed. Actual managed resource and cloud-to-MCP acceptance remain pending.
-- Calendar app OAuth client/consent/publishing eligibility and real selected-target write/read-back are pending. Technical setup and exact actions: docs/calendar_acceptance_0_5.md. A coding-tool connector is not app consent.
-- New installed native picker/cancel/import/save/notification visibility/click observations require the owner when the corrected new package is ready. API/package checks and prior human observations stay separate.
-- Hosted audit Gemini/own-document acceptance and current GitHub recovery have not yet run on0.5.0. No readiness claim until those checks pass.
+- Calendar Console/client/API/Production setup is completed. Real consent has not completed. Owner copied an authorization link into another browser/window; restart from the ordinary homepage in the working browser. Keep private cookie/state/PKCE binding. Actual selected target/write/read-back/retry/undo/revocation and independent-user acceptance remain unverified.
+- Native Open/Cancel/owner-selected import and both import/refresh200 are recorded. Save/reimport/reopen and notification visibility/click-focus remain human checks. Owner stopped Windows control using Escape; no further control attempted. Windows real Gemini acceptance also remains pending.
+- Hosted GitHub earlier returned shared-quota429. Dedicated fine-grained credential passed local read-only contents/issues requests. Restore the original encryption key if overwritten; GitHub belongs in RELAY_GITHUB_TOKEN. A saved variable is not live read/background acceptance. See the evidence ledger for later actual results.
+- Actual organizer T0, principal/project, coverage/expiry/model/quotas are unknown. Agent Engine, authenticated cloud-to-MCP/shared state, remote multi-turn/Windows and managed-off/expiry acceptance require that real window. No personal payment/trial/billing change is authorized.
+
+Exact steps: `docs/remaining_actions_0.5.0.md`. Machine-readable truth: `docs/evidence/non-gcp-0.5.0.json`. Do not mark NON_GCP_READY or either managed status true while their gates remain.

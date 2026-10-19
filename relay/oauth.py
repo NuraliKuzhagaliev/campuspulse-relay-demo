@@ -34,6 +34,9 @@ def configuration():
     for key in ('RELAY_OAUTH_CLIENT_ID','RELAY_OAUTH_CLIENT_SECRET','RELAY_TOKEN_ENCRYPTION_KEY','RELAY_GATEWAY_URL'):
         if not os.getenv(key):
             raise RelayError('AUTH_REQUIRED',f'Configure {key} on the gateway. Authentication opens in the system browser; never paste tokens in chat.')
+    try:Fernet(os.environ['RELAY_TOKEN_ENCRYPTION_KEY'].encode())
+    except (ValueError,TypeError) as exc:
+        raise RelayError('AUTH_REQUIRED','The gateway Calendar encryption key is invalid. The owner must restore RELAY_TOKEN_ENCRYPTION_KEY; no Google request was started.') from exc
     return {'web':{'client_id':os.environ['RELAY_OAUTH_CLIENT_ID'],'client_secret':os.environ['RELAY_OAUTH_CLIENT_SECRET'],'auth_uri':'https://accounts.google.com/o/oauth2/auth','token_uri':'https://oauth2.googleapis.com/token','redirect_uris':[os.environ['RELAY_GATEWAY_URL']+'/auth/callback']}}
 
 

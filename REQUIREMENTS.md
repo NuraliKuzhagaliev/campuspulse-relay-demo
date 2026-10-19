@@ -1,22 +1,21 @@
-# Requirements and acceptance · 0.5.0 audit candidate
+# Requirements and acceptance · 0.5.0
 
-Topic2 GDG Astana CampusPulse AI. **NON_GCP_READY pending** until current hosted own-document/Gemini/sample/Windows/Calendar gates are actually accepted. No source module or old test total substitutes for acceptance.
+Topic2 GDG Astana CampusPulse AI. **NON_GCP_READY=false**; per-check status is not waived by GCP preparation.
 
-| Requirement | Current result |
+| Requirement | Actual result |
 |---|---|
-| Own academic documents EN/RU/Kazakh | Unicode/structured/prose drafts, grouped cited semantic proposals and explicit atomic review implemented; new local deterministic/UI checks passed; current hosted real-provider batch pending |
-| Evidence/conflicts and identity | Cross-page exact quotes, stable source-local sections and explicit canonical keys; original decisions/history retained; no title-only fuzzy joining |
-| Plan/what-if/packets/Preflight/progress/Passport | Full local own-PDF UI sequence passed, including75source→90allocation,45logged/95remaining and fresh-copy restore; empty/unassessed rubric stays unassessed |
-| F1–F5 enhancements | Locally implemented; real Calendar and full enhancement-level Gemini acceptance pending; no relabeling of illustrative receipts as Google writes |
-| Public independent AI | No invites/registration/Google login/visitor keys; previous0.4.1real acceptance retained;0.5source must pass fresh deployed UI checks |
-| Isolation and fair quotas | Tenant/capability/CSRF/one-outstanding-job/FIFO/quota/backoff preserved; audit100provider-simulated HTTP sessions use zero Gemini calls; actual traffic capacity is bounded and not guaranteed |
-| File boundary |2MiBraw file,3MiBtransport,100PDFpages/250ktext, disposable bounded PDF worker; near/at/over and expansion checks recorded separately |
-| GitHub change radar | Shared singleflight/conditional/immutable cache and awake-server polling implemented; current hosted live recovery/no-browser polling evidence pending |
-| Samples |13synthetic cases plus trilingual guide, expected context and ZIP. Local download/unzip/hash and PDF visual checks passed; current public download/use pending |
-| Real Calendar | Optional per visitor, required product integration. Narrow app-created-calendar consent, encrypted credentials, separate target/preview/approval and recovery boundaries implemented; actual app client/publishing eligibility/consent/write/read-back/native pairing pending |
-| Windows | Original45/95 and sealed packages preserved. New0.5installer/portable/installed/native physical acceptance still to complete |
-| Managed GCP | Pending actual organizer T0/project/coverage/model/quotas/IAM/resource/query.12hours after activation; personal payment/trial/billing upgrades prohibited. Offline SDK/shared-state/owner-routing contracts tested, not deployed |
-| After-window fallback | Prepared no-restart owner-signed route switch and automatic cutoff, existing backend remains authoritative. Actual GCP-off/expiry full-product acceptance pending real window |
-| Presentation/package | Prior0.4.1PDF/PPTX/packages unchanged; new audited0.5versioned package to be sealed from actual results |
+| EN/RU/Kazakh own documents | Five independent prose/PDF full hosted UI workflows and6realGemini/MCP turns passed; frozen inputs and earlier failures retained |
+| Evidence and conflict identity | Cross-page source/version/page citations, explicit per-assignment canonical confirmation, source conflict decisions; missing context remains unknown |
+| Planning and continuity | Hosted plan/what-if/illustrative receipt/Preflight/progress45/95/Passport/reopen passed; exact effort distinct from solver allocation |
+| Five core enhancements | Locally implemented; real Calendar and full enhancement-level Gemini acceptance pending |
+| Public access and isolation | Automatic anonymous workspace, no invitations/registration/Google login/visitor keys; two actual visitors plus100simulated-provider HTTP sessions; zero real model calls in load test |
+| Limits and protection |2MiBraw/3MiBtransport, bounded PDF subprocess, typed errors, CSRF/tenant checks, narrow IPC and protected internal/admin/MCP operations |
+| GitHub change radar | Cache/singleflight/conditional304/backoff tests passed. Real read and browser-independent observation have separately dated evidence; shared upstream429 retained |
+| Samples |13synthetic files, trilingual guide/context/expected results and ZIP. Public hashes and current runtime recorded separately |
+| Calendar | Technical client/API/Production setup done; real consent/target/write/read-back/retry/undo/revocation and independent user acceptance pending |
+| Windows | Installed0.5contracts/source match and original45/95 passed. Actual Open/Cancel/import+refresh passed; Save/reimport/banner/click and real Gemini pending |
+| Managed GCP | Guarded SDK/package/bridge/shared-state/owner-routing preparation only. Actual organizer activation/project/coverage/resources/query still pending |
+| After-window fallback | Existing public state remains authoritative. Actual managed-off/expiry complete-product acceptance pending real window |
+| Package and presentation | Preserve every prior sealed revision; new candidate manifest records exact source/runtime and evidence limitations |
 
-See docs/audit_U1_U16.md for per-defect evidence. Current public storage is temporary and may reset on Free host restart/redeploy; no durable/always-on/SLA claim. Public and managed/historical/current-availability statuses remain separate.
+See `docs/audit_U1_U16.md`, `docs/final_integration_ledger.md` and `docs/evidence/non-gcp-0.5.0.json`. Temporary Free hosting is not durable or always-on. Personal spending remains0.

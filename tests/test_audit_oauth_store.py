@@ -10,6 +10,14 @@ from relay import oauth
 from relay.domain import RelayError,digest
 from relay.store import Store,FirestoreWorkspaceTransaction
 
+@pytest.mark.parametrize('bad_key',['MISPLACED_CREDENTIAL_TEST_ONLY','   '])
+def test_invalid_calendar_encryption_key_stops_before_google_request(monkeypatch,bad_key):
+    for key,value in dict(RELAY_OAUTH_CLIENT_ID='test.apps.googleusercontent.com',RELAY_OAUTH_CLIENT_SECRET='SIMULATED_SECRET',RELAY_TOKEN_ENCRYPTION_KEY=bad_key,RELAY_GATEWAY_URL='https://app.test').items():monkeypatch.setenv(key,value)
+    with pytest.raises(RelayError) as caught:oauth.configuration()
+    assert caught.value.code=='AUTH_REQUIRED'
+    assert 'RELAY_TOKEN_ENCRYPTION_KEY' in str(caught.value)
+    assert bad_key not in str(caught.value)
+
 def test_oauth_binds_same_anonymous_workspace_and_minimum_scopes(tmp_path,monkeypatch):
     store=Store(tmp_path/'oauth.sqlite3');tenant='demo-'+'a'*32
     store.put('_server','workspaces',tenant,{'id':tenant})

@@ -1,12 +1,7 @@
-# Audit release0.5.0 · acceptance in progress
+# Actual acceptance · 0.5.0
 
-# CampusPulse RELAY · 0.5.0 audit candidate
+Public runtime `2f74bdacf4bab56b96dbd2b3350d388634d95142`. **NON_GCP_READY=false**. Latest complete local suite209tests+3subtests; IPC7. Five real document workflows and6realGemini/MCP turns passed at `2f74bdacf4bab56b96dbd2b3350d388634d95142`;100sessions separately use a simulated provider. Current installed contracts and preserved45/95 passed. Actual Open/Cancel/import+refresh passed on the recorded native build.
 
-Public application: **https://campuspulse-relay-demo.onrender.com/**. Source and public synthetic samples are being upgraded from the preserved0.4.1 release. This candidate is **NOT YET NON_GCP_READY**: hosted multilingual Gemini confirmation, current installed/native observations and actual Calendar consent/write/read-back are acceptance gates. Check `docs/audit_U1_U16.md` and current deployment evidence for the exact running commit; a source version is not deployment proof.
+Remaining gates: real Calendar consent/target/write/read-back/retry/undo/revocation and independent consent; native Save/reimport/reopen and visible notification/click-focus; Windows real Gemini acceptance. GitHub background verified: **False**. Public sample downloads verified: **False**. All source/deploy/test distinctions are retained in `docs/evidence/non-gcp-0.5.0.json` and `docs/audit_U1_U16.md`.
 
-Open the ordinary link: no invitation, registration, Google sign-in or visitor API key for AI. Choose **Use my own data** for a clean isolated workspace, or **Open example** for separately labeled illustrative coursework. Switching preserves both temporary workspaces. The owner Gemini key stays on the server. Free-service processing requires the displayed eligibility/non-sensitive data confirmation; no fabricated AI or hidden paid fallback.
-
-
-Actual local UI: multipage import, per-entity confirmation, own/example isolation, planning, what-if, illustrative receipt, Preflight,45/95, Passport download/restore/reopen and12 language/width AA states passed. These are local results, not deployed Gemini or Google Calendar acceptance.
-
-See docs/audit_U1_U16.md; managed GCP pending organizer activation tomorrow.
+Managed GCP and after-window complete public acceptance remain pending actual organizer T0/project/coverage. No personal spending or provisioning. Windows control was stopped with Escape and has not resumed.

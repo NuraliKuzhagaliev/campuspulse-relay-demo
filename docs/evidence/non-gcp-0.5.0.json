@@ -1,0 +1,104 @@
+{
+  "checked_at": "2026-10-19T19:38:54.278704+00:00",
+  "version": "0.5.0",
+  "public_url": "https://campuspulse-relay-demo.onrender.com/",
+  "deployed_commit": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
+  "NON_GCP_READY": false,
+  "tests": {
+    "python_passed": 209,
+    "subtests_passed": 3,
+    "ipc_passed": 7,
+    "full_run_log_sha256": "10d07029c913eec6eb4ddb5b8d5ab306bfab7a6aaa0ae0d0352bd3c10139550f",
+    "simulated_100": "docs/evidence/audit-100-simulated.json",
+    "actual_gemini_calls_in_100": 0
+  },
+  "documents": {
+    "verified_cases": 5,
+    "real_turns": 6,
+    "all_turns_complete": true,
+    "evidence": "docs/evidence/audit-live-mvfmnry1.json",
+    "acceptance_commit": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
+    "cases": [
+      {
+        "file": "holdout-en.txt",
+        "sha256": "7eb6d09e5919d0e961d8f2b376ddaddcf5c12b6522036576880638acc6d1aba0",
+        "passed": true
+      },
+      {
+        "file": "holdout-ru.txt",
+        "sha256": "f65f3d5623e5351c9ec074836c2c1a3e3e13db321b34380e887d1e4c80ae776b",
+        "passed": true
+      },
+      {
+        "file": "holdout-kk.txt",
+        "sha256": "cedbc929b781ada39355bfa897fc5553d43ef82ecde69b60687cf6c2a6a094be",
+        "passed": true
+      },
+      {
+        "file": "11-continued-brief.pdf",
+        "sha256": "dbfbef67958436e01bbd7ec21cf591ca7c58593938adb32a644298095e0572c4",
+        "passed": true
+      },
+      {
+        "file": "12-table-brief.pdf",
+        "sha256": "7e4acb08b756e29152efac0b6204b26cc8e54fecb75dff59d73ff427e920dfce",
+        "passed": true
+      }
+    ],
+    "statistical_reliability_claimed": false
+  },
+  "calendar": {
+    "operations_verified": false,
+    "oauth_client_configured": true,
+    "api_enabled_owner_confirmed": true,
+    "audience_production_owner_confirmed": true,
+    "callback_attempt_rejected": true,
+    "owner_report": "Authorization link copied into another browser/window; source session cookie does not transfer with URL.",
+    "consent_token_exchange_verified": false,
+    "real_write_readback_retry_undo_revocation_verified": false,
+    "owner_action": "Start from ordinary RELAY homepage in the working browser, then connect and finish there without transferring authorization/callback URLs."
+  },
+  "native": {
+    "full_visibility_verified": false,
+    "unmodified_picker_appearance": true,
+    "cancel_observed": true,
+    "owner_selected_import": true,
+    "import_and_refresh_both_http_200": true,
+    "observed_build": "docs/evidence/audit-native-observation-0.5.0.json",
+    "final_installed_contract": "docs/evidence/audit-desktop-0.5.0.json",
+    "original_45_logged_95_remaining_preserved": true,
+    "save_dialog_and_reimport_verified": false,
+    "notification_visibility_click_focus_verified": false,
+    "windows_control_stopped_by_owner_escape": true
+  },
+  "github": {
+    "background_verified": false,
+    "evidence": null,
+    "dedicated_credential_locally_read_validated": true,
+    "server_configuration_verified": false,
+    "prior_upstream_error": "UPSTREAM_RATE_LIMITED",
+    "deployment_guard": "Do not deploy until owner restores RELAY_TOKEN_ENCRYPTION_KEY and stores GitHub token separately in RELAY_GITHUB_TOKEN."
+  },
+  "samples": {
+    "files": 13,
+    "public_downloads_verified": false,
+    "evidence": null,
+    "url": "https://campuspulse-relay-demo.onrender.com/samples/"
+  },
+  "managed": {
+    "MANAGED_GCP_VERIFIED_IN_AUTHORIZED_WINDOW": false,
+    "PUBLIC_RELEASE_READY_AFTER_WINDOW": false,
+    "actual_resource": null,
+    "preparation": "docs/evidence/managed-preparation-0.5.0.json",
+    "organizer_t0_project_coverage_expiry_verified": false,
+    "personal_spending_authorized_usd": 0
+  },
+  "limitations": [
+    "Render Free storage is temporary (up to two hours; earlier restart/redeploy reset). Export Passport.",
+    "Free host can sleep. Polling runs while awake, and cached observations retain original source fetch time.",
+    "Real Gemini Developer API/MCP is alternative hosting, not managed Agent Engine.",
+    "Google Calendar protocol fault simulations and illustrative receipts are not actual Google writes.",
+    "Five-document batch is evidence, not a statistical reliability or latency guarantee. Earlier failed/partial attempts remain recorded.",
+    "Native observations belong to their recorded build; final installed contracts do not prove a Save dialog or notification was visible."
+  ]
+}
