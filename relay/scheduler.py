@@ -2,6 +2,7 @@
 from collections import defaultdict
 from datetime import timedelta
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
+import time as monotonic_clock
 from ortools.sat.python import cp_model
 from .domain import PlanInput, RelayError, instant, digest
 
@@ -25,8 +26,13 @@ def interval_union(windows):
     return out
 
 
-def build_recovery_plan(payload: dict) -> dict:
+def build_recovery_plan(payload: dict, *, time_limit_seconds=5, deadline_monotonic=None, cancel_check=None) -> dict:
     """Allocate validated 30-minute study units before hard deadlines. Never writes externally."""
+    def guard():
+        if cancel_check and cancel_check():raise RelayError('CANCELLED','Comparison cancelled before accepting any result.')
+        if deadline_monotonic is not None and monotonic_clock.monotonic()>=deadline_monotonic:
+            raise RelayError('UPSTREAM_UNAVAILABLE','The bounded solver/model-build budget expired.',{'solver_status':'UNKNOWN'})
+    guard()
     p = PlanInput.model_validate(payload)
     try:
         zone = ZoneInfo(p.timezone)
@@ -54,10 +60,11 @@ def build_recovery_plan(payload: dict) -> dict:
     if missing:
         raise RelayError('SOURCE_CONFLICT', 'A confirmed deadline and effort estimate are required before planning.', missing)
     for t in p.tasks:
-        if t.effort_max is not None and t.effort_max < t.minutes:
+        if t.effort_max is not None and t.minutes is not None and t.effort_max < t.minutes:
             raise RelayError('PARSE_FAILED', 'The effort range maximum is below the estimate.')
     slots = set()
     for w in p.windows:
+        guard()
         start, end = instant(w.start), instant(w.end)
         if end <= start or end - start > timedelta(days=31):
             raise RelayError('PARSE_FAILED', 'Study windows must be positive and at most 31 days.')
@@ -74,8 +81,10 @@ def build_recovery_plan(payload: dict) -> dict:
     x = {}
     required = {t.id: required_minutes(t,p.conservative) // 30 for t in p.tasks}
     for tid, task in tasks.items():
+        guard()
         for j, s in enumerate(slots):
-            if required[tid] and s + UNIT <= instant(task.due):
+            release=getattr(task,'release_not_before',None)
+            if required[tid] and s + UNIT <= instant(task.due) and (not release or s>=instant(release)) and not getattr(task,'external_blocked',False):
                 x[tid, j] = model.new_bool_var(f'{tid}_{j}')
         model.add(sum(v for (t, _), v in x.items() if t == tid) <= required[tid])
     for j in range(len(slots)):
@@ -87,8 +96,10 @@ def build_recovery_plan(payload: dict) -> dict:
         model.add(sum(v for (t, j), v in x.items() if j in js) <= p.daily_cap_minutes // 30)
     for tid, task in tasks.items():
         for dep in task.dependencies:
+            guard()
             for (t, j), var in x.items():
                 if t == tid:
+                    guard()
                     before = sum(v for (d, k), v in x.items() if d == dep and k < j)
                     model.add(before >= required[dep]).only_enforce_if(var)
     def block_units(block):
@@ -115,9 +126,12 @@ def build_recovery_plan(payload: dict) -> dict:
                         (stability_scale if (t, slots[j]) in old else 0) + len(slots)-j) * var
                        for (t, j), var in x.items()))
     solver = cp_model.CpSolver()
-    solver.parameters.max_time_in_seconds = 5
+    guard()
+    remaining=deadline_monotonic-monotonic_clock.monotonic() if deadline_monotonic is not None else 5
+    solver.parameters.max_time_in_seconds = max(.001,min(5,time_limit_seconds,remaining))
     solver.parameters.num_search_workers = 1
     status = solver.solve(model)
+    guard()
     if status not in (cp_model.OPTIMAL, cp_model.FEASIBLE):
         raise RelayError('INFEASIBLE' if status == cp_model.INFEASIBLE else 'UPSTREAM_UNAVAILABLE',
                          'No valid allocation was returned within the bounded solve.', {'solver_status': solver.status_name(status)})
@@ -169,6 +183,9 @@ def validate_plan(plan: dict):
             raise AssertionError('Elapsed time reused')
         if z > instant(tasks[b['task_id']].due):
             raise AssertionError('Hard deadline violated')
+        task=tasks[b['task_id']]
+        if getattr(task,'external_blocked',False) or (getattr(task,'release_not_before',None) and a<instant(task.release_not_before)):
+            raise AssertionError('External prerequisite not satisfied')
         if any(a < instant(v.end) and instant(v.start) < z for v in p.busy):
             raise AssertionError('Busy overlap')
         if any(a < bz and ba < z for ba, bz in used):
@@ -190,7 +207,7 @@ def validate_plan(plan: dict):
             prior = [instant(b['end']) for b in plan['blocks'] if b['task_id'] == dep]
             dep_task = tasks[dep]
             dep_needed = required_minutes(dep_task,p.conservative)
-            if descendants and (minutes[dep] < dep_needed or max(prior) > min(descendants)):
+            if descendants and dep_needed>0 and (minutes[dep] < dep_needed or not prior or max(prior) > min(descendants)):
                 raise AssertionError('Dependency order violated')
     for pin in p.pins:
         covered = sum((min(instant(b['end']),instant(pin.end))-max(instant(b['start']),instant(pin.start))).total_seconds()
@@ -211,6 +228,8 @@ def compare_plan_scenarios(baseline: dict, scenario: dict) -> dict:
     if 'extra_minutes' in scenario:
         for t in data['tasks']:
             if t['id'] == scenario.get('task_id'):
+                if t.get('minutes') is None:
+                    raise RelayError('SOURCE_CONFLICT','State an explicit effort or remaining-work estimate before comparing extra work.')
                 t['minutes'] += scenario['extra_minutes']
                 if t.get('effort_max') is not None:
                     t['effort_max'] += scenario['extra_minutes']

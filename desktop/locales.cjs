@@ -1,5 +1,10 @@
 const native = {
   en: {
+    passportSave: "Save portable workspace on D:",
+    passportDrive: "Choose a .json destination on D:.",
+    passportTitle: "Restore portable workspace",
+    passportFilter: "RELAY portable workspace",
+    choosePassport: "Choose a .relay.json file up to 2 MiB.",
     importTitle: "Import selected academic source",
     filter: "Academic sources",
     chooseFile: "Choose PDF, Markdown, TXT or ICS up to 10 MiB.",
@@ -10,6 +15,11 @@ const native = {
     quit: "Quit",
   },
   ru: {
+    passportSave: "Сохранить переносимое пространство на D:",
+    passportDrive: "Выберите файл .json на диске D:.",
+    passportTitle: "Восстановить переносимое пространство",
+    passportFilter: "Переносимое пространство RELAY",
+    choosePassport: "Выберите файл .relay.json до 2 МиБ.",
     importTitle: "Импорт выбранного учебного источника",
     filter: "Учебные источники",
     chooseFile: "Выберите PDF, Markdown, TXT или ICS до 10 МиБ.",
@@ -21,6 +31,11 @@ const native = {
     quit: "Выйти",
   },
   kk: {
+    passportSave: "Тасымал жұмыс кеңістігін D: дискісіне сақтау",
+    passportDrive: "D: дискісіндегі .json файлын таңдаңыз.",
+    passportTitle: "Тасымал жұмыс кеңістігін қалпына келтіру",
+    passportFilter: "RELAY тасымал жұмыс кеңістігі",
+    choosePassport: "2 МиБ-қа дейінгі .relay.json файлын таңдаңыз.",
     importTitle: "Таңдалған оқу дереккөзін импорттау",
     filter: "Оқу дереккөздері",
     chooseFile: "10 МиБ-қа дейінгі PDF, Markdown, TXT немесе ICS таңдаңыз.",

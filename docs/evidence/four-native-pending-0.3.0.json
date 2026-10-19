@@ -1,0 +1,19 @@
+{
+  "version": "0.3.0",
+  "checked_at": "2026-10-19T00:17:01.745715+00:00",
+  "helper": "supported @oai/sky through node_repl",
+  "helper_initialization": "failed",
+  "diagnostic": "failed to write kernel assets: Системе не удается найти указанный путь. (os error 3)",
+  "actual_unmodified_open_dialog": "pending_human",
+  "actual_unmodified_save_dialog": "pending_human",
+  "actual_cancel": "pending_human",
+  "actual_restore": "pending_human",
+  "actual_restart": "pending_human",
+  "instrumented_contract": "docs/evidence/four-desktop-0.3.0.json",
+  "instructions": "docs/native_passport_check.md",
+  "profile": "D:/projects/CampusPulseRELAY/.local/native-verification/0.3.0-passport/profile",
+  "fixture": "D:/projects/CampusPulseRELAY/.local/native-verification/0.3.0-passport/native-input.relay.json",
+  "prior_real_academic_picker_banner_release": "0.1.1",
+  "new_notification_visibility_checked": false,
+  "notification_click_focus_verified": false
+}

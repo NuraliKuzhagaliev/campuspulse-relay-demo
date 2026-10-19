@@ -1,0 +1,43 @@
+{
+  "checked_at": "2026-10-19T00:05:42.252978+00:00",
+  "transport": "actual Streamable HTTP",
+  "server": "http://127.0.0.1:8015/mcp/",
+  "managed_agent": false,
+  "model_calls": 0,
+  "github_writes": 0,
+  "tools": [
+    "list_course_sources",
+    "read_course_source",
+    "get_assignment_repo_status",
+    "observe_handoff_gate",
+    "get_calendar_window",
+    "read_assignment_repo_file",
+    "get_workspace_plan_inputs",
+    "preview_study_blocks",
+    "apply_approved_study_blocks",
+    "verify_study_blocks",
+    "undo_owned_study_blocks",
+    "build_next_action_packet",
+    "propose_academic_extraction",
+    "save_validated_plan"
+  ],
+  "observation": {
+    "repo": "pallets/flask",
+    "number": 6168,
+    "url": "https://github.com/pallets/flask/pull/6168",
+    "state": "closed",
+    "merged": true,
+    "merged_at": "2026-10-07T13:56:06Z",
+    "head_sha": "7689f98403e2c0b0bc8d1031e60f8cff2620e86a",
+    "merge_sha": "728c5e440af704a786384159184f695cf04ecbe7",
+    "observed_at": "2026-10-19T00:05:43.327173+00:00",
+    "last_checked_at": "2026-10-19T00:05:43.327173+00:00",
+    "http_status": 200,
+    "provenance": "live_public_github",
+    "response_sha256": "c257e1840e7c397d515ebd47f0853c7ddc659bf0f2407264fed67cd516b60ba5",
+    "cache_age_seconds": 0
+  },
+  "schema_excludes_tenant_repository_and_authority": true,
+  "foreign_tenant_denied": true,
+  "passed": true
+}

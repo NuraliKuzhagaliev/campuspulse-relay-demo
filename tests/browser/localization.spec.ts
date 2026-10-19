@@ -222,7 +222,7 @@ for (const lang of ["ru", "kk"] as const) {
         ),
       ).toBe(true);
       await page.screenshot({
-        path: `docs/screenshots/${lang}-${view === copy.evidence ? "evidence" : "connections"}-390.png`,
+        path: `${process.env.RELAY_SCREENSHOT_DIR||"docs/screenshots"}/${lang}-${view === copy.evidence ? "evidence" : "connections"}-390.png`,
         fullPage: true,
       });
       await page.setViewportSize({ width: 1280, height: 720 });
@@ -273,7 +273,7 @@ for (const lang of ["ru", "kk"] as const) {
       "local-illustrative-calendar",
     );
     await page.screenshot({
-      path: `docs/screenshots/${lang}-approval-1280.png`,
+      path: `${process.env.RELAY_SCREENSHOT_DIR||"docs/screenshots"}/${lang}-approval-1280.png`,
       fullPage: true,
     });
     await page.getByRole("button", { name: copy.approve, exact: true }).click();

@@ -1,0 +1,22 @@
+{
+  "environment": "local_gateway_connector",
+  "configured_allowlist": "pallets/flask (verification process only; public demo scope unchanged)",
+  "observation": {
+    "repo": "pallets/flask",
+    "number": 6168,
+    "url": "https://github.com/pallets/flask/pull/6168",
+    "state": "closed",
+    "merged": true,
+    "merged_at": "2026-10-07T13:56:06Z",
+    "head_sha": "7689f98403e2c0b0bc8d1031e60f8cff2620e86a",
+    "merge_sha": "728c5e440af704a786384159184f695cf04ecbe7",
+    "observed_at": "2026-10-18T23:54:15.955161+00:00",
+    "last_checked_at": "2026-10-18T23:54:15.955161+00:00",
+    "http_status": 200,
+    "provenance": "live_public_github",
+    "response_sha256": "c257e1840e7c397d515ebd47f0853c7ddc659bf0f2407264fed67cd516b60ba5",
+    "cache_age_seconds": 0
+  },
+  "github_mutations": 0,
+  "model_calls": 0
+}

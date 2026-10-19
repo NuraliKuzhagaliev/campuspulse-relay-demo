@@ -233,6 +233,34 @@ export function eventSummary(
     : operational(event.summary, language);
 }
 const errorKeys: Record<string, string> = {
+  STALE_REVISION:
+    "This workspace changed elsewhere. Refresh, review the latest values and retry.",
+  IDEMPOTENCY_CONFLICT:
+    "This workspace changed elsewhere. Refresh, review the latest values and retry.",
+  PASSPORT_INVALID:
+    "The portable file is invalid or unsupported. Your current workspace is unchanged.",
+  PASSPORT_VERSION:
+    "The portable file is invalid or unsupported. Your current workspace is unchanged.",
+  PASSPORT_REFERENCES:
+    "The portable file is invalid or unsupported. Your current workspace is unchanged.",
+  PASSPORT_CHECKSUM:
+    "The portable file is invalid or unsupported. Your current workspace is unchanged.",
+  PASSPORT_TOO_LARGE:
+    "The portable file exceeds 2 MiB. Select fewer sources; nothing was truncated.",
+  LEGACY_SNAPSHOT_MISSING_EXTRACTS:
+    "Legacy snapshots omit source pages. Re-import original documents; this file cannot restore cited coursework.",
+  SESSION_ACTIVE:
+    "This timer was changed or stopped elsewhere. Refresh and recover the recorded duration.",
+  SESSION_CLOSED:
+    "This timer was changed or stopped elsewhere. Refresh and recover the recorded duration.",
+  USE_PROGRESS:
+    "This workspace changed elsewhere. Refresh, review the latest values and retry.",
+  PR_NOT_FOUND:
+    "The external service could not be reached. Reconnect and retry; no success is assumed.",
+  BUSY: "A bounded comparison is already running. Cancel it or retry when it settles.",
+  CANCELLED: "Comparison cancelled. The accepted plan is unchanged.",
+  FEATURE_PENDING:
+    "Sign in or reconnect the required service, then retry. Cloud acceptance remains pending.",
   AUTH_REQUIRED:
     "Sign in or reconnect the required service, then retry. Cloud acceptance remains pending.",
   ACCESS_DENIED:

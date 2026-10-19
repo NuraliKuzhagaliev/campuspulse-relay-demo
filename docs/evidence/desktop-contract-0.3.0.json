@@ -1,0 +1,57 @@
+{
+  "version": "0.3.0",
+  "checked_at": "2026-10-19T00:15:27.442Z",
+  "executable": "D:\\projects\\CampusPulseRELAY\\installed\\CampusPulse RELAY\\CampusPulse RELAY.exe",
+  "profile": "D:\\projects\\CampusPulseRELAY\\.local\\desktop-contract\\0.3.0-mvei6jma",
+  "checks": {
+    "secure_installed_package": true,
+    "task_packet_plan_scenario_rescue_approval_verify_undo": true,
+    "source_export_conversation_reset": true,
+    "preflight_json_contract": true,
+    "preflight_missing_work_recovery_validated": true,
+    "locale_and_workspace_persist_after_reopen": true
+  },
+  "packaged_files": [
+    {
+      "file": "desktop\\locales.cjs",
+      "sha256": "9d3a76f3534b5c09669e2f249e7eda8e272432f1e6b02351a030829b5a8c2e74",
+      "matches_current_source": true
+    },
+    {
+      "file": "desktop\\main.cjs",
+      "sha256": "bd4dafb64b70a26142d75c2f38d16d6c91ff0291176046c5ca87c690edd5f4ce",
+      "matches_current_source": true
+    },
+    {
+      "file": "desktop\\preload.cjs",
+      "sha256": "def16c63fa8563bfefa18ddc535cf952da93b8f388413570eb54daaf7e5994d6",
+      "matches_current_source": true
+    },
+    {
+      "file": "desktop\\request-policy.cjs",
+      "sha256": "73902bfef9ca37bc84f34de7f52c253e165b4cae5e6f0d2b241be56ec44b92b3",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\assets\\index-Dtv-0FmQ.css",
+      "sha256": "d28eee08da6d1cc30e77bc272943f907640c05dbe3a71de326efd812aeacca36",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\assets\\index-DwFY3tBk.js",
+      "sha256": "262b0c824bb71be22b28bac17c102e97728ec4e2288cb3d990e5f25a11692026",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\index.html",
+      "sha256": "076d65d8e6b41d117739eb13933bce0232c01eb51b03da37ca4ed046bd6e8806",
+      "matches_current_source": true
+    }
+  ],
+  "native_picker_used": false,
+  "native_picker_substituted": false,
+  "native_visibility_checked": false,
+  "cloud_calls": 0,
+  "calendar": "illustrative",
+  "passed": true
+}

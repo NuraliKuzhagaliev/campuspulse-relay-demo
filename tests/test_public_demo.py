@@ -68,6 +68,35 @@ def test_public_denies_internal_google_and_test_routes(demo):
     assert demo.post('/api/preferences',json={'daily_cap_minutes':240},headers={'X-Relay-CSRF':'bad'}).status_code==403
 
 
+def test_public_passport_fresh_copy_and_additions_scope(demo):
+    import base64,json
+    before=demo.get('/api/state').json();assert demo.get('/api/additions').status_code==200
+    export=demo.post('/api/passport/export',json={});assert export.status_code==200,export.text
+    payload={'name':'transfer.relay.json','content':base64.b64encode(json.dumps(export.json()['file']).encode()).decode()}
+    stage=demo.post('/api/passport/preview',json=payload);assert stage.status_code==200,stage.text
+    with TestClient(gateway.app,base_url='https://demo.test') as other:
+        other.headers['X-Relay-CSRF']=other.get('/api/session').json()['csrf']
+        assert other.post('/api/passport/'+stage.json()['id']+'/restore').status_code==403
+    switched=demo.post('/api/passport/'+stage.json()['id']+'/restore');assert switched.status_code==200,switched.text
+    assert switched.json()['tenant'].startswith('demo-') and switched.json()['tenant']!=before['workspace_id']
+    demo.headers['X-Relay-CSRF']=switched.json()['csrf']
+    after=demo.get('/api/state').json();assert all(s['mode']=='archived_portable_extract' for s in after['sources'])
+    assert after['receipts']==[] and after['plan'] is None
+    # Wrong methods, arbitrary paths, credentials and a public repository expansion remain closed.
+    assert demo.get('/api/passport/export').status_code==403
+    assert demo.post('/api/gates',json=dict(task_id=after['tasks'][0]['id'],repo='pallets/flask',number=6168,request_id='a'*24,expected_revision=1)).status_code==403
+
+
+def test_notification_claim_is_durable_and_scoped(demo):
+    tenant=demo.get('/api/state').json()['workspace_id'];id='a'*24
+    gateway.store.put(tenant,'handoff_notifications',id,dict(id=id,task_id='b'*24))
+    assert demo.post('/api/gates/notifications/'+id+'/claim').json()==dict(claimed=True,visibility_verified=False)
+    assert demo.post('/api/gates/notifications/'+id+'/claim').json()==dict(claimed=False)
+    with TestClient(gateway.app,base_url='https://demo.test') as other:
+        other.headers['X-Relay-CSRF']=other.get('/api/session').json()['csrf']
+        assert other.post('/api/gates/notifications/'+id+'/claim').status_code==403
+
+
 def test_public_body_limits_cover_streamed_uploads(demo):
     assert demo.post('/api/import',files={'file':('huge.md',b'a'*(2*1024*1024+1))}).status_code==409
     def chunked():

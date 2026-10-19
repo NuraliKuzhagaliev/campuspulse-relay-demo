@@ -76,6 +76,10 @@ class RelayService:
         versions['_resolutions']=digest(self.store.list(self.tenant,'resolutions'))
         versions['_settings']=digest(self.settings())
         versions['_task_overrides']=digest(self.store.list(self.tenant,'task_overrides'))
+        versions['_progress']=digest(self.store.list(self.tenant,'progress'))
+        versions['_gates']=digest(self.store.list(self.tenant,'gates'))
+        from .progress import revision
+        versions['_workspace_revision']=revision(self)
         return versions
 
     def import_source(self,name,content,id=None,mode='selected_upload',title=None,remote=None):
@@ -232,7 +236,8 @@ class RelayService:
             if override['id'] in merged:
                 merged[override['id']].update(override['values'])
                 merged[override['id']]['user_overrides']=override['values']
-        return list(merged.values())
+        from .progress import overlay
+        return overlay(list(merged.values()), self.store.list(self.tenant,'progress'))
 
     def resolve(self,conflict_id,fact_id):
         c=next((c for c in self.current_conflicts() if c['id']==conflict_id),None)
@@ -242,13 +247,14 @@ class RelayService:
         self.store.put(self.tenant,'resolutions',conflict_id,resolution)
         return resolution
 
-    def plan(self,scenario=None):
+    def plan(self,scenario=None,proposal=False):
         s=self.settings()
         tasks=self.tasks()
         if any(t.get('identity',{}).get('status')=='unresolved' for t in tasks):
             raise RelayError('SOURCE_CONFLICT','Confirm unresolved course/term/assignment mappings before planning.')
-        start=min(w['start'] for w in s['windows'])
-        end=max(w['end'] for w in s['windows'])
+        start=min((w['start'] for w in s['windows']),default=now())
+        end=max((w['end'] for w in s['windows']),default=now())
+        initial_versions=self.source_versions()
         run=uuid.uuid4().hex
         self.store.event(self.tenant,run,'run_started',summary='Checking evidence and actual configured availability.',mode=s['mode'])
         if any(c['status']=='unresolved' for c in self.current_conflicts()):
@@ -262,13 +268,20 @@ class RelayService:
         own=unchanged_owned_ids(events,self.store.list(self.tenant,'operations'),self.tenant)
         payload=dict(tasks=tasks,windows=s['windows'],busy=busy_intervals(events,s['timezone'],exclude_ids=own),
                      timezone=s['timezone'],daily_cap_minutes=s['daily_cap_minutes'])
-        if s.get('mode')!='illustrative':
+        if s.get('mode')!='illustrative' or self.store.list(self.tenant,'progress') or self.store.list(self.tenant,'gates'):
             payload['not_before']=now()
+            editable={e['id'] for e in events if e['id'] in own and instant(e['start']['dateTime'])>=instant(payload['not_before'])}
+            payload['busy']=busy_intervals(events,s['timezone'],exclude_ids=editable)
+        from .handoff import apply_gates
+        gate_notes=apply_gates(self,payload)
         prior=self.latest_plan()
         if scenario and prior and prior.get('invalidated'):
             raise RelayError('STALE_PLAN','The baseline is outdated. Repair your week before comparing a scenario.')
-        if prior and not prior.get('invalidated'):
-            payload['baseline']=prior['blocks']
+        if prior:
+            payload['baseline']=[b for b in prior['blocks'] if not payload.get('not_before') or instant(b['start'])>=instant(payload['not_before'])]
+            payload['pins']=[b for b in prior.get('input',{}).get('pins',[]) if not payload.get('not_before') or instant(b['start'])>=instant(payload['not_before'])]
+            if payload.get('not_before'):
+                payload['busy'] += [dict(start=b['start'],end=b['end']) for b in prior['blocks'] if instant(b['start'])<instant(payload['not_before'])<instant(b['end'])]
         if scenario:
             baseline=prior or build_recovery_plan(payload)
             result=compare_plan_scenarios(baseline,scenario)
@@ -278,9 +291,16 @@ class RelayService:
             began=clock.perf_counter()
             result=build_recovery_plan(payload)
             self.store.event(self.tenant,run,'tool_finished',tool='build_recovery_plan',duration_ms=round((clock.perf_counter()-began)*1000),summary=result['solver_status'])
-        result.update(sources=self.source_versions(),created_at=now(),run_id=run,mode=s['mode'])
+        if initial_versions!=self.source_versions():
+            raise RelayError('STALE_PLAN','Workspace changed during planning. No proposal was accepted; refresh and retry.')
+        result.update(sources=initial_versions,created_at=now(),run_id=run,mode=s['mode'],gate_notes=gate_notes)
+        result['historical_blocks']=(prior or {}).get('historical_blocks',[])+[b for b in (prior or {}).get('blocks',[]) if payload.get('not_before') and instant(b['start'])<instant(payload['not_before'])]
+        result['change_reason']='Explicit remaining work, current gate observations and eligible future availability.'
+        before={(b['task_id'],b['start'],b['end']) for b in (prior or {}).get('blocks',[])}
+        after={(b['task_id'],b['start'],b['end']) for b in result['blocks']}
+        result['block_diff']=dict(removed=[list(b) for b in sorted(before-after)],added=[list(b) for b in sorted(after-before)])
         result['id']=digest(result)[:24]
-        if not scenario:
+        if not scenario and not proposal:
             self.store.put(self.tenant,'plans',result['id'],result)
             self.store.put(self.tenant,'meta','latest_plan',{'id':result['id']})
         self.store.event(self.tenant,run,'plan_validated',summary='Feasible within every hard constraint.' if result['feasible'] else f"{result['unscheduled_minutes']} minutes remain unscheduled.",solver_status=result['solver_status'])
@@ -312,15 +332,17 @@ class RelayService:
             events=[];calendar_mode='disconnected'
         else:
             calendar=self.calendar()
-            events=calendar.list(min(w['start'] for w in s['windows']),max(w['end'] for w in s['windows']))
+            events=calendar.list(min((w['start'] for w in s['windows']),default=now()),max((w['end'] for w in s['windows']),default=now()))
             calendar_mode=calendar.mode
         display_settings=dict(s,poll_seconds=max(30,int(os.getenv('RELAY_POLL_SECONDS','60' if os.getenv('RELAY_GITHUB_TOKEN') else '300'))))
-        return dict(workspace_id=self.tenant,settings=display_settings,tasks=self.tasks(),sources=[{k:v for k,v in source.items() if k!='pages'} for source in self.sources()],
+        return dict(workspace_id=self.tenant,workspace_fingerprint=digest(self.source_versions()),settings=display_settings,tasks=self.tasks(),sources=[{k:v for k,v in source.items() if k!='pages'} for source in self.sources()],
                     conflicts=self.current_conflicts(),plan=self.latest_plan(),events=self.store.events(self.tenant),
                     calendar_events=events,calendar_mode=calendar_mode,
                     receipts=self.store.list(self.tenant,'receipts'),snapshot_generated_at=now(),
                     last_sync=self.freshness().get('last_successful_sync'),freshness=self.freshness(),
                     identity_migrations=self.store.list(self.tenant,'identity_migrations'),
+                    additions_revision=__import__('relay.progress',fromlist=['revision']).revision(self),
+                    progress=self.store.list(self.tenant,'progress'),gates=__import__('relay.handoff',fromlist=['list_gates']).list_gates(self),
                     agent=availability(self.store,os.getenv('RELAY_AGENT_RESOURCE')))
 
     def freshness(self):

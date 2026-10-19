@@ -1,0 +1,54 @@
+{
+  "environment": {
+    "python": "3.13.2",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "backend": "local SQLite / CP-SAT single worker",
+    "workload": "3 structured tasks, 540 minutes, two cited deadline alternatives, 10 study hours before protected busy subtraction"
+  },
+  "samples": [
+    {
+      "milliseconds": 50.24,
+      "branches": 2,
+      "status": "complete",
+      "cached": false
+    },
+    {
+      "milliseconds": 57.07,
+      "branches": 2,
+      "status": "complete",
+      "cached": false
+    },
+    {
+      "milliseconds": 54.09,
+      "branches": 2,
+      "status": "complete",
+      "cached": false
+    },
+    {
+      "milliseconds": 60.51,
+      "branches": 2,
+      "status": "complete",
+      "cached": false
+    },
+    {
+      "milliseconds": 46.87,
+      "branches": 2,
+      "status": "complete",
+      "cached": false
+    }
+  ],
+  "n": 5,
+  "median_ms": 54.09,
+  "max_ms": 60.51,
+  "failures": 0,
+  "budget": {
+    "selected_uncertainties": 3,
+    "joint_branches": 8,
+    "per_solve_seconds": 1,
+    "overall_model_build_solve_seconds": 8,
+    "github_connect_read_seconds": 10,
+    "github_stream_elapsed_guard_seconds": 12
+  },
+  "p95_claim": false,
+  "public_stress_requests": 0
+}

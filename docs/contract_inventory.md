@@ -21,3 +21,13 @@ All /api writes require the authenticated workspace cookie/capability and CSRF; 
 | Google connections | OAuth + allowlisted calendar routes | Existing external-browser pairing; disabled on public demo; real consent still pending |
 
 The temporary Render demo intentionally has one process/instance and local ephemeral state. It is not a multi-instance persistent deployment. Shared durable Store/Firestore atomic claims and restart/isolation are exercised through local contracts; real multi-instance Firestore/IAM/token renewal remain in the live batch. Polls read events and never consume model allowance. Model requests are deduplicated by authenticated conversation/request IDs; source changes are versioned and GitHub rate limits back off.
+# 0.3.0 additive contracts
+
+- GET`/api/additions`, GET`/api/tasks/{id}/estimate-suggestion`: own revision, logs, sessions, gates and eligible local history.
+- POST`/api/tasks/{id}/progress`: typed start/log/stop/correct/remaining/unknown/complete, expected revision and idempotency body; POST`/api/work-sessions/{id}/heartbeat`: session revision plus monotonic delta, not attention proof.
+- POST`/api/progress/preview`, POST`/api/progress/{id}/adopt`: separate future proposal and fingerprint/revision-checked adoption. No Calendar write authority.
+- POST`/api/clarify`, POST`/api/clarify/{id}/cancel|answer`: bounded copied branches, cited/user-offered alternatives, no hidden canonical changes.
+- POST`/api/gates`, POST`/api/gates/{id}/observe|remove`, POST`/api/gates/conditional-preview`: configured public PR merged gates, retained observations, explicit local removal and conditional ETA. POST`/api/gates/notifications/{id}/claim`: atomic once-only dispatch attempt, never visibility proof.
+- POST`/api/passport/export|preview`, POST`/api/passport/{id}/restore`: selected strict untrusted file, bounded validation, atomic fresh namespace, new session/CSRF; no imported tenant authorization or executable history.
+- Native `importFile('passport')`: JSON-only2MiB selected-file IO; `savePassport(value)`: native Save with D: resolved parent/symlink checks and atomic sibling replacement. Existing academic import and exact route/method policy remain intact; multipart IPC still denied.
+- MCP`observe_handoff_gate(gate_id)` shares the same service. Signed server context selects tenant/repository; no model-supplied identity or external-write tool parameter. Actual local14-tool protocol proof: `docs/evidence/four-mcp.json`. No managed-agent call is claimed.

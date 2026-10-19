@@ -1,5 +1,16 @@
 # Requirement → implementation → evidence ledger
 
+## 0.3.0 local additive continuation (public stays 0.2.1)
+
+| Addition | User behavior / code | Actual evidence | Remaining limit |
+|---|---|---|---|
+| A1 Progress & Remaining Work | `relay/progress.py`, service/scheduler/actions; task details and Progress & continuity | Explicit45 logged/90 remaining, five-minute rounding, deliberate zero/completed prerequisites, three concurrent stop retries, correction history, frozen five-sample threshold, interrupted timer, stale approval and preserved started Calendar blocks; installed/web transfer/restart | Timer is elapsed time, never attention or submission proof; imported/manual-only samples excluded; Firestore transactions unverified |
+| A2 Clarify First | `relay/clarify.py`; leading cited question, offered effort/availability, joint branch inspector | Feasibility-changing deadline outranks unchanged question; two individually harmless bounds jointly overload; bounded UNKNOWN/cancel/stale/cache and I don't know; actual browser question/choice | Three selected binary uncertainties/eight branches, one second per solve/eight-second guarded local analysis; no probabilities/global optimality |
+| A3 Handoff Radar | `relay/handoff.py`; external PR gates, conditional ETA and proposed plan; narrow `observe_handoff_gate` MCP tool | Real public `pallets/flask#6168` merged metadata +response hash, actual signed MCP schema/call and foreign-tenant denial; open/closed-unmerged/stale/404/429/timeout/dedup tests | Demand-driven configured public repositories only; latest safe handoff unknown; new Windows banner/click not observed; cloud agent invocation pending |
+| A4 Workspace Passport | `relay/passport.py`; selection/export, strict preview, atomic new-copy restore, native JSON picker and D: save | Web→installed Windows→fresh web semantic identity/quotes/progress comparison; retries, rollback, checksum reserialization regression, malicious/foreign/reference/size/legacy cases, restart | Portable plaintext private file; extracts are archived/untrusted, originals/Calendar busy data/connections/approvals/operations excluded; true Open/Save/cancel UI observation needs human |
+
+Current local suite:110 Python tests,13 browser flows plus one public-only skip, four exact IPC policy tests; local public-mode browser results and final artifacts are recorded in `docs/evidence/four-evaluation-0.3.0.json` / release manifest. Fourteen real local MCP tools discovered. Existing F1–F5 remain **locally implemented**. This table does not mark Gemini/Calendar or mandatory live GCP acceptance complete; deployment at8355216 remains the older public release.
+
 Statuses distinguish local implementation from actual cloud/external acceptance. **The project is not yet a complete Topic 2 cloud submission.**
 
 | Gate | Code / UI entry | Meaningful verification | Live evidence / current status |

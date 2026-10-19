@@ -125,8 +125,8 @@ def test_source_staleness_rejected_and_invalidation_scoped(svc):
     a=svc.actions();p=svc.plan();preview=a.preview(p)
     s=svc.sources()[0]
     svc.import_source('changed.md',b'Assignment: Network Security lab\nDue: 2026-10-20T18:00:00+05:00\nEffort: 240 minutes',id=s['id'])
-    id=a.authorize(preview['id'],preview['digest'],svc.tenant)
-    with pytest.raises(RelayError,match='Source versions'):
+    with pytest.raises(RelayError,match='changed'):
+        id=a.authorize(preview['id'],preview['digest'],svc.tenant)
         a.apply(id)
     assert svc.latest_plan()['invalidated']
 

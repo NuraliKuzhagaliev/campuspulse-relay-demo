@@ -76,7 +76,7 @@ test("evidence → feasible plan → what-if → approval → verified receipt",
   await page.getByRole("button", { name: "My week", exact: true }).click();
   await expect(page.locator(".study-block").first()).toBeVisible();
   await page.screenshot({
-    path: "docs/screenshots/week-1440.png",
+    path: `${process.env.RELAY_SCREENSHOT_DIR||"docs/screenshots"}/week-1440.png`,
     fullPage: true,
   });
   await page.locator(".study-block").first().click();
@@ -109,7 +109,7 @@ test("evidence → feasible plan → what-if → approval → verified receipt",
     page.getByText("Illustrative local calendar", { exact: true }).first(),
   ).toBeVisible();
   await page.screenshot({
-    path: "docs/screenshots/receipt-1440.png",
+    path: `${process.env.RELAY_SCREENSHOT_DIR||"docs/screenshots"}/receipt-1440.png`,
     fullPage: true,
   });
 });
@@ -173,7 +173,7 @@ test("responsive layouts, keyboard palette, languages and honest disconnected AI
       ),
     ).toBe(true);
     await page.screenshot({
-      path: `docs/screenshots/week-${viewport.width}.png`,
+      path: `${process.env.RELAY_SCREENSHOT_DIR||"docs/screenshots"}/week-${viewport.width}.png`,
       fullPage: true,
     });
   }

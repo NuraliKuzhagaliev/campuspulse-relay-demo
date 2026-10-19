@@ -39,6 +39,8 @@ class Actions:
         if plan.get('sources')!=self.source_versions():
             raise RelayError('STALE_PLAN','Sources or conflict decisions changed; repair the plan again.')
         windows=plan['input']['windows']
+        if not windows:
+            raise RelayError('INFEASIBLE','No available study horizon exists for a Calendar preview. Review availability first.')
         a=min(w['start'] for w in windows)
         z=max(w['end'] for w in windows)
         events=self.calendar.list(a,z)
@@ -67,7 +69,9 @@ class Actions:
             else:
                 actions.append(dict(operation='create',event=event))
         for id in sorted(owned-desired):
-            actions.append(dict(operation='delete',event=existing[id]))
+            cutoff=plan['input'].get('not_before')
+            historical=cutoff and instant(existing[id]['start']['dateTime'])<instant(cutoff)
+            actions.append(dict(operation='keep' if historical else 'delete',event=existing[id],historical=bool(historical)))
         preview=dict(id=secrets.token_hex(16),plan_id=plan['id'],calendar_id=self.calendar.id,mode=self.calendar.mode,
                      sources=self.source_versions(),calendar_fingerprint=calendar_fingerprint(events),window={'start':a,'end':z},
                      actions=actions,created_at=now(),expires_at=(datetime.now(timezone.utc)+timedelta(minutes=10)).isoformat())
@@ -81,6 +85,8 @@ class Actions:
             raise RelayError('STALE_PLAN','The exact preview expired or changed; preview again.')
         if user!=self.tenant:
             raise RelayError('ACCESS_DENIED','Approval identity does not own this workspace.')
+        if preview['sources']!=self.source_versions():
+            raise RelayError('STALE_PLAN','Workspace progress, gates or evidence changed after preview. Generate a fresh exact preview.')
         # Unique key makes double-clicking the same immutable preview return the same durable authorization.
         approval=dict(id=preview_id,preview_id=preview_id,digest=action_digest,user=user,status='approved',expires_at=preview['expires_at'])
         self.store.put(self.tenant,'approvals',preview_id,approval,create=True)

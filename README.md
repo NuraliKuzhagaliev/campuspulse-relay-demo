@@ -4,6 +4,8 @@
 
 ## Actual release status
 
+**Local continuation 0.3.0:** Progress & Remaining Work, Clarify First, Handoff Radar and Workspace Passport are implemented with deterministic Python services and EN/RU/Kazakh controls. This later candidate is built/installed and independently tested locally; it has **not replaced the public 0.2.1 deployment** and is not a published GitHub release. See [four-addition acceptance](docs/four_additions_acceptance.md), [design/demo script](docs/four_additions_design.md), [portable format](docs/workspace_passport.md) and [precise residual unmodified native check](docs/native_passport_check.md). Existing releases and the verified public revision remain preserved. No new Gemini/GCP connection or paid resource is part of this task.
+
 **[Open the public CampusPulse RELAY demo](https://campuspulse-relay-demo.onrender.com)** and choose **Enter public demo**. The React frontend and Python backend run together on a Render free web service. New-file import, evidence/conflict review, planning, what-if, explicitly simulated Calendar approvals/receipts, execution visualization, real backend GitHub reads, EN/RU/Kazakh, mobile layout, refresh and visitor isolation passed on the deployed HTTPS URL.
 
 This public illustrative demo is **separate from the mandatory GCP deployment**, which remains pending. No actual Vertex AI Agent Engine resource, successful Gemini call or real Calendar consent/write/read-back has been verified. Organizer credit eligibility/balance/expiration, GCP account/project/billing and OAuth setup remain external gates. No uncovered personal spending is authorized. Read [REQUIREMENTS.md](REQUIREMENTS.md), [BLOCKERS.md](BLOCKERS.md) and [deployment proof](docs/deployment_proof.md) before presenting it.

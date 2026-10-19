@@ -40,6 +40,8 @@ import {
 import { api, setCsrf } from "./api";
 import { importSelectedSource } from "./imports";
 import { Workshop } from "./Workshop";
+import { Continuity } from "./Continuity";
+import { version as releaseVersion } from "../package.json";
 import {
   useLocale,
   operational,
@@ -737,23 +739,34 @@ export default function App() {
     };
   }, []);
   useEffect(() => {
-    let polling=false,retired=false;
+    let polling = false,
+      retired = false;
     const timer = setInterval(
       async () => {
-        if (!ready.current || document.hidden || offline || polling || retired) return;
-        polling=true;
-        const requestedTenant=tenantRef.current;
+        if (!ready.current || document.hidden || offline || polling || retired)
+          return;
+        polling = true;
+        const requestedTenant = tenantRef.current;
         try {
-          const events = await api<{ workspace_id?:string; events: RunEvent[] }>(
-            "/events?after=" + eventCursor.current,
-          );
-          if(retired || requestedTenant!==tenantRef.current)return;
-          if(events.workspace_id && events.workspace_id!==tenantRef.current){
-            const session=await api<{csrf:string}>('/session');setCsrf(session.csrf);
-            await refresh();return;
+          const events = await api<{
+            workspace_id?: string;
+            events: RunEvent[];
+          }>("/events?after=" + eventCursor.current);
+          if (retired || requestedTenant !== tenantRef.current) return;
+          if (
+            events.workspace_id &&
+            events.workspace_id !== tenantRef.current
+          ) {
+            const session = await api<{ csrf: string }>("/session");
+            setCsrf(session.csrf);
+            await refresh();
+            return;
           }
           if (events.events.length) {
-            eventCursor.current = Math.max(eventCursor.current,events.events.at(-1)!.sequence);
+            eventCursor.current = Math.max(
+              eventCursor.current,
+              events.events.at(-1)!.sequence,
+            );
             setData((d) =>
               d
                 ? {
@@ -772,12 +785,19 @@ export default function App() {
                 : d,
             );
           }
-        } catch {if(!retired && requestedTenant===tenantRef.current)setOffline(true);}
-        finally{polling=false;}
+        } catch {
+          if (!retired && requestedTenant === tenantRef.current)
+            setOffline(true);
+        } finally {
+          polling = false;
+        }
       },
       busy ? 1000 : 3000,
     );
-    return () => {retired=true;clearInterval(timer);};
+    return () => {
+      retired = true;
+      clearInterval(timer);
+    };
   }, [offline, busy]);
   useEffect(() => {
     function key(e: KeyboardEvent) {
@@ -1014,7 +1034,7 @@ export default function App() {
           <span>⌘ / Ctrl K</span>
         </button>
         <div className="nav-foot">
-          RELAY<span>0.2</span>
+          RELAY<span>{releaseVersion}</span>
         </div>
       </nav>
       <div className="workspace">
@@ -2163,6 +2183,15 @@ export default function App() {
                 {tr("Compare permitted remedies")}
               </button>
             ) : null}
+            {(view === "week" ||
+              view === "evidence" ||
+              view === "connections") && (
+              <Continuity
+                key={data.workspace_id}
+                data={data}
+                refresh={refresh}
+              />
+            )}
             <p className="fine-print local-acceptance">
               {tr(
                 "Five enhancements locally implemented · real Calendar and Gemini acceptance pending.",
@@ -2437,42 +2466,17 @@ export default function App() {
               {tr("Save explicit inputs")}
             </button>
           </form>
-          <div className="row">
-            <button
-              className="text-button"
-              onClick={() =>
-                void work("Recording progress", async () => {
-                  setPacket(
-                    await api<Packet>(
-                      "/tasks/" + packet.task.id + "/settings",
-                      "POST",
-                      { completion: "worked_on" },
-                    ),
-                  );
-                  await refresh();
-                })
+          {data && (
+            <Continuity
+              key={data.workspace_id + packet.task.id}
+              data={data}
+              refresh={refresh}
+              task={
+                data.tasks.find((t) => t.id === packet.task.id) || packet.task
               }
-            >
-              {tr("Mark worked on")}
-            </button>
-            <button
-              className="text-button"
-              onClick={() =>
-                void work("Recording self-reported completion", async () => {
-                  setPacket(
-                    await api<Packet>(
-                      "/tasks/" + packet.task.id + "/settings",
-                      "POST",
-                      { completion: "self_reported" },
-                    ),
-                  );
-                  await refresh();
-                })
-              }
-            >
-              {tr("I completed this · self-report")}
-            </button>
-          </div>
+              compact
+            />
+          )}
           <h3>{tr("Follow the evidence")}</h3>
           <div className="evidence-chain">
             <button

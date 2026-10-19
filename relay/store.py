@@ -53,6 +53,12 @@ class Store:
             db.execute('UPDATE records SET data=? WHERE tenant=? AND kind=? AND id=?',(json.dumps(data),tenant,kind,id))
         return True
 
+    def atomic(self, tenant, fn):
+        """One tenant, one SQLite transaction. Exceptions roll back the entire slice."""
+        with self.connect() as db:
+            db.execute('BEGIN IMMEDIATE')
+            return fn(WorkspaceTransaction(db, tenant))
+
     def delete_workspace(self, tenant):
         with self.connect() as db:
             db.execute('DELETE FROM records WHERE tenant=?',(tenant,))
@@ -74,6 +80,9 @@ class FirestoreStore:
     def __init__(self):
         from google.cloud import firestore
         self.client = firestore.Client(project=os.environ['GOOGLE_CLOUD_PROJECT'], database=os.getenv('RELAY_FIRESTORE_DATABASE','(default)'))
+
+    def atomic(self, tenant, fn):
+        raise RelayError('FEATURE_PENDING', 'Portable/progress transactions require the verified local SQLite store; Firestore acceptance is pending.')
 
     def collection(self, tenant, kind):
         if '/' in tenant or '/' in kind:
@@ -135,3 +144,33 @@ class FirestoreStore:
 
 def make_store():
     return FirestoreStore() if os.getenv('RELAY_MODE') == 'cloud' else Store()
+
+
+class WorkspaceTransaction:
+    def __init__(self, db, tenant):
+        self.db, self.tenant = db, tenant
+
+    def get(self, kind, id, default=None):
+        row = self.db.execute('SELECT data FROM records WHERE tenant=? AND kind=? AND id=?', (self.tenant, kind, id)).fetchone()
+        return json.loads(row[0]) if row else default
+
+    def list(self, kind):
+        return [json.loads(r[0]) for r in self.db.execute('SELECT data FROM records WHERE tenant=? AND kind=? ORDER BY id', (self.tenant, kind))]
+
+    def put(self, kind, id, data):
+        self.db.execute('INSERT OR REPLACE INTO records VALUES(?,?,?,?)', (self.tenant, kind, id, json.dumps(data)))
+
+    def delete(self, kind, id):
+        self.db.execute('DELETE FROM records WHERE tenant=? AND kind=? AND id=?',(self.tenant,kind,id))
+
+    def revision(self):
+        return self.get('meta', 'additions', {'revision': 0})['revision']
+
+    def advance(self):
+        revision = self.revision() + 1
+        self.put('meta', 'additions', {'revision': revision, 'schema': 1, 'updated_at': now()})
+        for plan in self.list('plans'):
+            if not plan.get('invalidated'):
+                self.put('plan_history', plan['id'], plan)
+                self.put('plans', plan['id'], dict(plan, invalidated=True))
+        return revision

@@ -1,7 +1,7 @@
 import {test,expect} from '@playwright/test';
 
 test('public reset clears another open tab and renews its CSRF context',async({page,context,baseURL})=>{
-  test.skip(!baseURL?.startsWith('https:'),'Public two-tab cookie/reset contract; local public mode is covered by HTTP tests.');
+  test.skip(!baseURL?.startsWith('https:') && process.env.RELAY_PUBLIC_MODE_TEST!=='1','Public two-tab cookie/reset contract; local public mode is covered by HTTP tests.');
   await page.goto('/');await page.getByRole('button',{name:'Enter public demo',exact:true}).click();
   const name='two-tab-'+Date.now()+'.md';
   await page.locator('input[type=file]').setInputFiles({name,mimeType:'text/markdown',buffer:Buffer.from('Assignment: Two-tab draft\nCourse: Isolation\nTerm: Test 2026\nAssignment ID: tabs\nDue: 2026-11-20T18:00:00+05:00\nEffort: 60 minutes')});

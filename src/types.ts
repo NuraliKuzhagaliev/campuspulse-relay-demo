@@ -26,6 +26,8 @@ export type Source = {
   remote?: { url: string; commit: string };
 };
 export type Task = {
+  remaining_minutes?: number | null;
+  progress?: { remaining_minutes: number | null; completion: string };
   id: string;
   title: string;
   course: string;
@@ -108,6 +110,8 @@ export type Receipt = {
   }[];
 };
 export type Snapshot = {
+  workspace_fingerprint?: string;
+  additions_revision?: number;
   workspace_id?: string;
   calendar_events?: {
     id: string;
@@ -119,6 +123,7 @@ export type Snapshot = {
   }[];
   calendar_mode?: string;
   settings: {
+    portable_origin?: string;
     mode: string;
     timezone: string;
     anchor: string;
@@ -192,10 +197,13 @@ declare global {
         body?: unknown,
       ) => Promise<unknown>;
       connectGoogle: () => Promise<void>;
-      importFile: () => Promise<{ name: string; content: string } | null>;
+      importFile: (
+        kind?: "passport",
+      ) => Promise<{ name: string; content: string } | null>;
       notify: (title: string, body: string) => Promise<void>;
       openExternal: (url: string) => Promise<void>;
       saveSnapshot: (data: unknown) => Promise<void>;
+      savePassport: (data: unknown) => Promise<{ saved: boolean }>;
       loadSnapshot: (tenant?: string | null) => Promise<Snapshot | null>;
       version: () => Promise<string>;
       setLanguage: (language: "en" | "ru" | "kk") => Promise<void>;

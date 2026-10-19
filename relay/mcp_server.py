@@ -56,6 +56,13 @@ def get_assignment_repo_status() -> dict:
 
 
 @mcp.tool()
+def observe_handoff_gate(gate_id:str) -> dict:
+    """Read an already student-linked public PR-merged gate. Server context selects tenant/repository; no GitHub writes or approval authority."""
+    from .handoff import observe
+    return result(observe,svc(),gate_id)
+
+
+@mcp.tool()
 def get_calendar_window() -> dict:
     """Read the configured approved calendar over this workspace's study horizon. Identity and calendar are server-selected."""
     s=svc()

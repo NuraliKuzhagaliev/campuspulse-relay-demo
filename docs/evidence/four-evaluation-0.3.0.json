@@ -1,0 +1,148 @@
+{
+  "version": "0.3.0",
+  "checked_at": "2026-10-19T00:18:52.868140+00:00",
+  "kind": "local_reviewable_candidate_not_published",
+  "python": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "110",
+    "time": "8.769",
+    "timestamp": "2026-10-19T05:13:01.542740+05:00",
+    "hostname": "BlackWolf"
+  },
+  "browser": {
+    "passed": 13,
+    "skipped": 1,
+    "duration_seconds": 33.1,
+    "log": ".local/logs/four-browser-all.log",
+    "viewport_widths": [
+      390,
+      768,
+      1280,
+      1440
+    ],
+    "languages": [
+      "en",
+      "ru",
+      "kk"
+    ],
+    "automated_accessibility": "four new panels plus existing primary states; not full certification"
+  },
+  "local_public_mode": {
+    "passed": 4,
+    "skipped": 0,
+    "duration_seconds": 21.9,
+    "log": ".local/logs/four-public-mode-browser.log",
+    "backend": "minimal public-venv",
+    "https": false,
+    "hosted": false,
+    "two_tab_reset": true
+  },
+  "desktop_policy": {
+    "passed": 4,
+    "log": ".local/logs/four-policy.log"
+  },
+  "installed": {
+    "version": "0.3.0",
+    "contract": true,
+    "both_import_paths": true,
+    "cross_device": {
+      "instrumented_native_cancel_keeps_workspace": true,
+      "web_to_installed_desktop_native_path": true,
+      "restored_bridge_csrf_and_retry": true,
+      "ipc_allowlist_remains_narrow": true,
+      "installed_save_uses_actual_file_write_on_D": true,
+      "C_drive_save_denied": true,
+      "installed_restart_persistence": true,
+      "installed_to_fresh_web_semantic_identity_citation_time_progress_comparison": true
+    },
+    "asar_matches_source": true,
+    "dialogs_substituted": true,
+    "unmodified_native_human": "pending",
+    "signature": "NotSigned"
+  },
+  "mcp": {
+    "tools": 14,
+    "passed": true,
+    "cloud_agent": false
+  },
+  "live_public_read": {
+    "repo": "pallets/flask",
+    "number": 6168,
+    "url": "https://github.com/pallets/flask/pull/6168",
+    "state": "closed",
+    "merged": true,
+    "merged_at": "2026-10-07T13:56:06Z",
+    "head_sha": "7689f98403e2c0b0bc8d1031e60f8cff2620e86a",
+    "merge_sha": "728c5e440af704a786384159184f695cf04ecbe7",
+    "observed_at": "2026-10-18T23:54:15.955161+00:00",
+    "last_checked_at": "2026-10-18T23:54:15.955161+00:00",
+    "http_status": 200,
+    "provenance": "live_public_github",
+    "response_sha256": "c257e1840e7c397d515ebd47f0853c7ddc659bf0f2407264fed67cd516b60ba5",
+    "cache_age_seconds": 0
+  },
+  "latency": {
+    "environment": {
+      "python": "3.13.2",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "backend": "local SQLite / CP-SAT single worker",
+      "workload": "3 structured tasks, 540 minutes, two cited deadline alternatives, 10 study hours before protected busy subtraction"
+    },
+    "samples": [
+      {
+        "milliseconds": 50.24,
+        "branches": 2,
+        "status": "complete",
+        "cached": false
+      },
+      {
+        "milliseconds": 57.07,
+        "branches": 2,
+        "status": "complete",
+        "cached": false
+      },
+      {
+        "milliseconds": 54.09,
+        "branches": 2,
+        "status": "complete",
+        "cached": false
+      },
+      {
+        "milliseconds": 60.51,
+        "branches": 2,
+        "status": "complete",
+        "cached": false
+      },
+      {
+        "milliseconds": 46.87,
+        "branches": 2,
+        "status": "complete",
+        "cached": false
+      }
+    ],
+    "n": 5,
+    "median_ms": 54.09,
+    "max_ms": 60.51,
+    "failures": 0,
+    "budget": {
+      "selected_uncertainties": 3,
+      "joint_branches": 8,
+      "per_solve_seconds": 1,
+      "overall_model_build_solve_seconds": 8,
+      "github_connect_read_seconds": 10,
+      "github_stream_elapsed_guard_seconds": 12
+    },
+    "p95_claim": false,
+    "public_stress_requests": 0
+  },
+  "real_model_calls": 0,
+  "real_calendar_writes": 0,
+  "gcp_resources_provisioned": 0,
+  "public_deployment_replaced": false,
+  "github_writes": false,
+  "inherited_gates": "Gemini / Agent Engine / cloud MCP auth / real Calendar / authenticated hosted judge remain pending",
+  "complete_web_bundle": "docs/evidence/four-web-bundle.json"
+}

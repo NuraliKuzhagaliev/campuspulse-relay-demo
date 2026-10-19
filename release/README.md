@@ -1,34 +1,27 @@
-# CampusPulse RELAY 0.2.1
+# CampusPulse RELAY0.3.0 — reviewable local candidate
 
-Public illustrative web: https://campuspulse-relay-demo.onrender.com . Mandatory GCP/Gemini/real Calendar acceptance remains pending organizer credits and access. No uncovered personal spending is authorized. Everything project-controlled is under D:\projects\CampusPulseRELAY.
+The four additions are implemented and independently verified locally/installed: Progress & Remaining Work, Clarify First, Handoff Radar and Workspace Passport. Real unmodified native passport Open/Save/cancel interaction remains a human gate; see `docs/native_passport_check.md`. Installed automated dialogs were explicitly substituted. This is not a published GitHub release or a complete live GCP submission.
 
-## Current deliverables
+## Artifacts on D:
 
-Exact SHA-256 values, source archive commit, deployed runtime commit and limitations are in manifest.json and SHA256SUMS.txt.
+- `windows/CampusPulse-RELAY-0.3.0-x64-setup.exe`: unsigned NSIS x64 installer; install only under D:.
+- `windows/CampusPulse-RELAY-0.3.0-x64-portable.exe`: unsigned portable app. Set `RELAY_DESKTOP_DATA` to a D: profile. Connected functionality needs the actual local backend on localhost8000; Python is not embedded.
+- `web/CampusPulseRELAY-0.3.0-web-app.zip`: complete built React client **and actual Python backend**, minimal requirements, sample fixtures and D: launcher. Extract under D: and run `scripts/run-web-bundle.ps1` using existing Python3.13. Dependencies/temp/cache/data are created under that D: directory. It is a local illustrative web package, not an independently hosted URL.
+- `source/CampusPulseRELAY-0.3.0-source.zip`: committed local source, locks, tests, evidence, docs and full future deployment infrastructure. Source revision/branch recorded in manifest and archive metadata. Not pushed/published.
+- `manifest.json`, `SHA256SUMS.txt`: actual artifact hashes and verification/pending boundaries. Sealed copies under `versions/0.3.0/` cannot be overwritten by the recorder.
 
-- windows/CampusPulse-RELAY-0.2.1-x64-setup.exe
-- windows/CampusPulse-RELAY-0.2.1-x64-portable.exe
-- source/CampusPulseRELAY-0.2.1-source.zip
-- web/CampusPulseRELAY-0.2.1-web-build.zip
-- presentation/CampusPulse-RELAY-0.2.1-quality-verified.pptx
-- presentation/CampusPulse-RELAY-0.2.1-quality-verified.pdf
+Prior0.1.0, corrected0.1.1, public0.1.1, superseded0.2.0 and public0.2.1 artifacts are preserved with original hashes under `versions/`. The installed0.2.1 directory is separately retained as `D:\projects\CampusPulseRELAY\installed\preserved-0.2.1`.
 
-The frontend ZIP needs the FastAPI backend; complete Python sources, exact dependencies and Docker configuration are in the source ZIP. The PPTX has ten native editable slides; its PDF uses rendered slide pages. Prior presentation and recording artifacts are retained, not relabeled as this release.
+## Public deployment and presentation
 
-## Run / install
+https://campuspulse-relay-demo.onrender.com still serves verified0.2.1 at83552161ec22c7cf44746433425d3b2b99e042c4. Render remains free with automatic deployment disabled. No replacement deployment was performed for0.3.0. Public sessions/storage remain temporary, maximum two hours and potentially earlier reset.
 
-From a fresh checkout, run scripts/bootstrap.ps1, then scripts/dev.ps1 (existing Python3.13, Node22+ and Git required). Controlled environments, caches and temporary outputs use D: through scripts/env.ps1. Open http://127.0.0.1:8000 or the installed Windows app. The desktop does not bundle Python and needs the running local gateway for connected operations. Its offline snapshot mode does not perform writes. RELAY_GATEWAY_URL may select a configured HTTPS gateway.
+The preserved ten-slide prior-release presentation remains at `presentation/CampusPulse-RELAY-0.2.1-quality-verified.pptx` and `.pdf`. It was not regenerated or relabeled as0.3.0/live GCP acceptance. Its hashes remain in the preserved0.2.1 manifest. The new combined demonstration is documented in `docs/four_additions_design.md`.
 
-The NSIS default is D:\projects\CampusPulseRELAY\installed\CampusPulse RELAY. The installed 0.2.1 package is verified against current built main/preload/policy/locales/renderer files. Both import paths, task edits, source/export/conversation, recovery/preflight/approval/read-back/undo and locale/reopen/resized-window checks pass. The package is unsigned. No publisher verification or OS-security bypass is claimed.
+## Verified and pending
 
-To uninstall, close the app via its tray menu and run its D: uninstaller or Windows Installed apps. User data on D: is retained. Review/export it before cleanup; scripts/cleanup.ps1 defaults to dry run and named project-owned targets.
+110 Python tests;13 local browser workflows plus one public-only skip;4 local public-mode workflows including two-tab reset;4 desktop route-policy tests; installed both-import-path and feature/approval/language/persistence gates; bidirectional web/installed passport semantic comparison;14 actual signed local MCP tools and real read-only public PR metadata. Three operational languages and four viewport widths checked. Detailed evidence: `docs/four_additions_acceptance.md` and `docs/evidence/four-evaluation-0.3.0.json`.
 
-## Preserved releases and native observation
+Passport files are unencrypted untrusted archived extracts/personal claims. They exclude original binaries, Calendar busy details/connections, approvals/journals and accepted plans. Re-import/reconnect/recompute before operational use. They are manual transfer, not automatic sync or durable hosting. No credentials belong in the file.
 
-versions/0.1.0, versions/0.1.1 and versions/0.1.1-public-demo retain original artifact hashes/manifests. A separate complete 0.1.1 installed copy is preserved on D:. The old 125.48-second recording is a 0.1.0 local illustrative backup. The real unmodified native picker and actual bottom-right banner were human-verified on corrected 0.1.1. New 0.2.1 automation is recorded separately; no new native appearance/banner/click/focus observation is inferred. Notification click/focus remains unverified. See docs/native_windows_check.md.
-
-Generate this version's metadata with scripts/package_continuation.py after its gates pass. Historical 0.1.1 recorders refuse the new version. Already preserved releases cannot be overwritten by that recorder. No credentials, private uploads, environments or caches belong in source bundles.
-
-## After credits
-
-Verify organizer activation instructions, eligible project, billing account, balance and expiration before funding selection or billable provisioning. See docs/cloud_setup.md and docs/live_acceptance_batch.md. Any uncovered cost needs separate approval. The free public demo and local test counts do not satisfy the mandatory managed-agent requirement.
+Gemini/Agent Engine, cloud-to-MCP identity, real Calendar consent/write/readback and hosted authenticated unseen-document judge acceptance remain deferred. Organizer credit eligible project/billing/balance/expiration are unconfirmed; no uncovered personal spending is authorized. No new model request, Calendar write, GCP provisioning, PR/issue/comment or GitHub release was performed.

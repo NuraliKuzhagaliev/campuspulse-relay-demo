@@ -145,7 +145,11 @@ async function request(apiPath, method = "GET", body) {
       status: response.status,
     });
   }
-  if (apiPath === "/api/session") csrf = value.csrf;
+  if (
+    apiPath === "/api/session" ||
+    /^\/api\/passport\/[a-f0-9]+\/restore$/.test(apiPath)
+  )
+    csrf = value.csrf;
   return value;
 }
 function validFile(name, size) {
@@ -153,11 +157,22 @@ function validFile(name, size) {
     /\.(pdf|md|txt|ics)$/i.test(name) && size > 0 && size <= 10 * 1024 * 1024
   );
 }
-async function selectedFile(file, importId) {
+async function selectedFile(file, importId, kind) {
   if (importId) await audit("file-read-started", { id: importId });
   try {
     const stat = await fs.stat(file);
-    if (!validFile(file, stat.size)) throw new Error(words().chooseFile);
+    if (
+      kind === "passport"
+        ? !(
+            /\.json$/i.test(file) &&
+            stat.size > 0 &&
+            stat.size <= 2 * 1024 * 1024
+          )
+        : !validFile(file, stat.size)
+    )
+      throw new Error(
+        kind === "passport" ? words().choosePassport : words().chooseFile,
+      );
     const value = {
       name: path.basename(file),
       content: (await fs.readFile(file)).toString("base64"),
@@ -170,6 +185,49 @@ async function selectedFile(file, importId) {
   }
 }
 function installBridge() {
+  ipcMain.handle("relay:passport-save", async (e, value) => {
+    sender(e);
+    const text = JSON.stringify(value);
+    if (
+      !value ||
+      value.format !== "campuspulse-relay-workspace" ||
+      value.version !== 1 ||
+      Buffer.byteLength(text) > 2 * 1024 * 1024
+    )
+      throw new Error(words().choosePassport);
+    const folder = path.join(dataRoot, "downloads");
+    await fs.mkdir(folder, { recursive: true });
+    const result = await dialog.showSaveDialog(window, {
+      title: words().passportSave,
+      defaultPath: path.join(folder, "CampusPulse-RELAY.relay.json"),
+      filters: [{ name: words().passportFilter, extensions: ["json"] }],
+    });
+    if (result.canceled) return { saved: false };
+    if (
+      !/^[dD]:[\\/]/.test(path.resolve(result.filePath)) ||
+      !result.filePath.toLowerCase().endsWith(".json")
+    )
+      throw new Error(words().passportDrive);
+    const actualParent = await fs.realpath(path.dirname(result.filePath));
+    if (!/^[dD]:[\\/]/.test(actualParent))
+      throw new Error(words().passportDrive);
+    const existing = await fs.lstat(result.filePath).catch((error) => {
+      if (error.code === "ENOENT") return null;
+      throw error;
+    });
+    if (existing?.isSymbolicLink()) throw new Error(words().passportDrive);
+    const temporary = path.join(
+      actualParent,
+      ".relay-" + crypto.randomBytes(12).toString("hex") + ".tmp",
+    );
+    try {
+      await fs.writeFile(temporary, text, { encoding: "utf8", flag: "wx" });
+      await fs.rename(temporary, result.filePath);
+    } finally {
+      await fs.unlink(temporary).catch(() => undefined);
+    }
+    return { saved: true };
+  });
   ipcMain.handle("relay:request", async (e, p, m, b) => {
     sender(e);
     return request(p, m, b);
@@ -210,8 +268,10 @@ function installBridge() {
     }
     throw new Error("Pairing timed out. Start again.");
   });
-  ipcMain.handle("relay:import", async (e) => {
+  ipcMain.handle("relay:import", async (e, kind) => {
     sender(e);
+    if (kind !== undefined && kind !== "passport")
+      throw new Error("Unsupported picker purpose.");
     const pickerId = crypto.randomBytes(8).toString("hex");
     pendingImportId = null;
     const logPicker = async (event) => {
@@ -229,10 +289,14 @@ function installBridge() {
     await logPicker("opened");
     await audit("picker-opened", { id: pickerId });
     const result = await dialog.showOpenDialog(window, {
-      title: words().importTitle,
+      title: kind === "passport" ? words().passportTitle : words().importTitle,
       properties: ["openFile"],
       filters: [
-        { name: words().filter, extensions: ["pdf", "md", "txt", "ics"] },
+        {
+          name: kind === "passport" ? words().passportFilter : words().filter,
+          extensions:
+            kind === "passport" ? ["json"] : ["pdf", "md", "txt", "ics"],
+        },
       ],
     });
     await logPicker(result.canceled ? "canceled" : "selected");
@@ -240,7 +304,7 @@ function installBridge() {
       id: pickerId,
     });
     if (result.canceled) return null;
-    const selected = await selectedFile(result.filePaths[0], pickerId);
+    const selected = await selectedFile(result.filePaths[0], pickerId, kind);
     pendingImportId = pickerId;
     return selected;
   });

@@ -53,7 +53,7 @@ async def lifespan(app):
     task.cancel()
 
 
-app=FastAPI(title='CampusPulse RELAY',version='0.2.1',lifespan=lifespan,
+app=FastAPI(title='CampusPulse RELAY',version='0.3.0',lifespan=lifespan,
             docs_url=None if PUBLIC_DEMO else '/docs',redoc_url=None if PUBLIC_DEMO else '/redoc',
             openapi_url=None if PUBLIC_DEMO else '/openapi.json')
 expensive_requests=asyncio.Semaphore(2)
@@ -79,7 +79,7 @@ async def protect(request,call_next):
             public_demo.limit('_global','requests',1200)
         except RelayError as exc:
             return JSONResponse({'error':exc.as_dict()},status_code=429)
-        if request.method=='POST' and request.url.path.startswith('/api/import'):
+        if request.method=='POST' and (request.url.path.startswith('/api/import') or request.url.path.startswith('/api/passport/')):
             # Count streamed bytes as well as Content-Length: chunked bodies cannot bypass the limit.
             total=0;chunks=[]
             async for chunk in request.stream():
@@ -381,6 +381,10 @@ def edit_task(id:str,body:TaskEdit,svc=Depends(service)):
     if not task:
         raise RelayError('ACCESS_DENIED','Task unavailable.')
     values=body.model_dump(exclude_none=True)
+    if body.remaining_minutes==0 and body.completion!='self_reported':
+        raise RelayError('PARSE_FAILED','Zero remaining requires deliberate student-confirmed completion.')
+    if store.list(svc.tenant,'progress') and any(p['id']==id for p in store.list(svc.tenant,'progress')) and (body.remaining_minutes is not None or body.completion is not None):
+        raise RelayError('USE_PROGRESS','Use Progress & Remaining Work to record completion or remaining effort with revision history.')
     if body.minutes is not None and body.effort_max is None:
         values['effort_max']=body.minutes # Explicit point re-estimate; original source range remains in evidence.
     maximum=values.get('effort_max',task.get('effort_max'))
@@ -397,6 +401,198 @@ def edit_task(id:str,body:TaskEdit,svc=Depends(service)):
         if any(t['id']==id for t in plan['input']['tasks']):
             plan['invalidated']=True;store.put(svc.tenant,'plans',plan['id'],plan)
     return svc.packet(id)
+
+
+class StrictBody(BaseModel):
+    model_config={'extra':'forbid'}
+
+
+class RevisionBody(StrictBody):
+    request_id:str=Field(pattern='^[a-f0-9]{24,64}$')
+    expected_revision:int=Field(ge=0)
+
+
+class ProgressBody(RevisionBody):
+    action:str=Field(pattern='^(start|log|stop|correct|remaining|unknown|complete)$')
+    duration_minutes:float|None=Field(default=None,gt=0,le=1440)
+    remaining_minutes:float|None=Field(default=None,gt=0,le=10080)
+    session_id:str|None=Field(default=None,pattern='^[a-f0-9]{24}$')
+    log_id:str|None=Field(default=None,pattern='^[a-f0-9]{24}$')
+    log_revision:int|None=Field(default=None,ge=1)
+    interruptions:str=Field(default='',max_length=500)
+    reason:str=Field(default='',max_length=500)
+    checklist:list[str]=Field(default_factory=list,max_length=30)
+    evidence_id:str|None=Field(default=None,pattern='^[a-f0-9]{24}$')
+    category:str=Field(default='',max_length=80)
+
+
+@app.get('/api/additions')
+def additions(svc=Depends(service)):
+    from .progress import view
+    from .handoff import list_gates
+    return dict(**view(svc),gates=list_gates(svc),notifications=store.list(svc.tenant,'handoff_notifications'))
+
+
+@app.post('/api/tasks/{id}/progress')
+def task_progress(id:str,body:ProgressBody,svc=Depends(service)):
+    from .progress import mutate
+    return mutate(svc,id,body.model_dump())
+
+
+class Heartbeat(StrictBody):
+    delta_ms:float=Field(ge=0,le=86400000)
+    session_revision:int=Field(ge=1)
+
+
+@app.post('/api/work-sessions/{id}/heartbeat')
+def work_heartbeat(id:str,body:Heartbeat,svc=Depends(service)):
+    from .progress import heartbeat
+    return heartbeat(svc,id,body.delta_ms,body.session_revision)
+
+
+@app.get('/api/tasks/{id}/estimate-suggestion')
+def estimate_suggestion(id:str,svc=Depends(service)):
+    from .progress import suggestion
+    return suggestion(svc,id)
+
+
+@app.post('/api/progress/preview')
+def progress_preview(svc=Depends(service)):
+    proposal=svc.plan(proposal=True)
+    store.put(svc.tenant,'progress_proposals',proposal['id'],proposal)
+    return proposal
+
+
+class AdoptBody(StrictBody):
+    expected_revision:int=Field(ge=0)
+
+
+@app.post('/api/progress/{id}/adopt')
+def progress_adopt(id:str,body:AdoptBody,svc=Depends(service)):
+    from .progress import check_revision
+    proposal=store.get(svc.tenant,'progress_proposals',id)
+    if proposal['sources']!=svc.source_versions():raise RelayError('STALE_PLAN','Workspace changed after the future-plan preview. Recompute it.')
+    def update(tx):
+        check_revision(tx,body.expected_revision)
+        if proposal['sources']!=svc.source_versions():raise RelayError('STALE_PLAN','The proposal is outdated.')
+        tx.put('plans',id,proposal);tx.put('meta','latest_plan',{'id':id})
+        return proposal
+    return store.atomic(svc.tenant,update)
+
+
+class EffortBound(StrictBody):
+    task_id:str=Field(pattern='^[a-f0-9]{24}$')
+    values:list[int]=Field(min_length=2,max_length=2)
+
+
+class ClarifyBody(StrictBody):
+    request_id:str=Field(pattern='^[a-f0-9]{24,64}$')
+    candidate_ids:list[str]=Field(default_factory=list,max_length=3)
+    bounds:list[EffortBound]=Field(default_factory=list,max_length=3)
+    offered_windows:list[dict]=Field(default_factory=list,max_length=3)
+
+
+@app.post('/api/clarify')
+def clarify(body:ClarifyBody,svc=Depends(service)):
+    from .clarify import analyze
+    return analyze(svc,body.model_dump())
+
+
+@app.post('/api/clarify/{id}/cancel')
+def cancel_clarify(id:str,svc=Depends(service)):
+    from .clarify import cancel
+    return cancel(svc,id)
+
+
+class ClarifyAnswer(RevisionBody):
+    candidate_id:str=Field(pattern='^[a-f0-9]{24}$')
+    choice:int|None=Field(default=None,ge=0,le=1)
+
+
+@app.post('/api/clarify/{id}/answer')
+def answer_clarify(id:str,body:ClarifyAnswer,svc=Depends(service)):
+    from .clarify import answer
+    return answer(svc,id,body.model_dump())
+
+
+class GateBody(RevisionBody):
+    task_id:str=Field(pattern='^[a-f0-9]{24}$')
+    repo:str=Field(min_length=3,max_length=201)
+    number:int=Field(ge=1,le=100000000)
+    eta:str|None=None
+
+
+@app.post('/api/gates')
+def link_gate(body:GateBody,svc=Depends(service)):
+    from .handoff import link
+    return link(svc,body.model_dump())
+
+
+@app.post('/api/gates/{id}/observe')
+def observe_gate(id:str,svc=Depends(service)):
+    from .handoff import observe
+    return observe(svc,id)
+
+
+@app.post('/api/gates/{id}/remove')
+def remove_gate(id:str,body:RevisionBody,svc=Depends(service)):
+    from .handoff import remove
+    return remove(svc,id,body.model_dump())
+
+
+@app.post('/api/gates/notifications/{id}/claim')
+def claim_gate_notification(id:str,svc=Depends(service)):
+    def update(tx):
+        notification=tx.get('handoff_notifications',id)
+        if not notification:raise RelayError('ACCESS_DENIED','Notification unavailable in this workspace.')
+        if notification.get('dispatch_claimed_at'):return dict(claimed=False)
+        tx.put('handoff_notifications',id,dict(notification,dispatch_claimed_at=now()))
+        return dict(claimed=True,visibility_verified=False)
+    return store.atomic(svc.tenant,update)
+
+
+@app.post('/api/gates/conditional-preview')
+def conditional_gate_preview(svc=Depends(service)):
+    from .clarify import payload
+    from .handoff import apply_gates
+    from .scheduler import build_recovery_plan
+    value=payload(svc)
+    for task in value['tasks']:task.pop('external_blocked',None);task.pop('release_not_before',None)
+    notes=apply_gates(svc,value,conditional=True)
+    return dict(build_recovery_plan(value),conditional=True,gate_notes=notes,canonical_workspace_unchanged=True)
+
+
+class ExportPassport(StrictBody):
+    source_ids:list[str]|None=Field(default=None,max_length=12)
+
+
+@app.post('/api/passport/export')
+def export_passport(body:ExportPassport,svc=Depends(service)):
+    from .passport import export
+    return export(svc,body.source_ids)
+
+
+@app.post('/api/passport/preview')
+def preview_passport(body:NativeFile,svc=Depends(service)):
+    import base64
+    from .passport import stage
+    if not body.name.endswith('.json') or '/' in body.name or '\\' in body.name:raise RelayError('PASSPORT_INVALID','Select a .relay.json portable file or legacy .json snapshot.')
+    try:content=base64.b64decode(body.content,validate=True)
+    except Exception:raise RelayError('PASSPORT_INVALID','Portable file could not be decoded.')
+    return stage(svc,content)
+
+
+@app.post('/api/passport/{id}/restore')
+def restore_passport(id:str,record=Depends(identity)):
+    from .passport import commit
+    svc=RelayService(store,record['tenant'])
+    try:result=store.get(svc.tenant,'passport_copies',id)
+    except RelayError:
+        if PUBLIC_DEMO:
+            public_demo.cleanup(store)
+            if len(store.list('_server','workspaces'))>=100:raise RelayError('UPSTREAM_RATE_LIMITED','Public demo workspace capacity is full; the original remains unchanged.')
+        result=commit(svc,id)
+    return new_session(result['tenant'],expires=record['expires'])
 
 
 @app.get('/api/connections/calendar-list')

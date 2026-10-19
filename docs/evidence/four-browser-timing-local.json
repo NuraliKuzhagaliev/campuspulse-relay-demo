@@ -1,0 +1,23 @@
+{
+  "environment": "http://127.0.0.1:8013",
+  "kind": "local_deterministic",
+  "samples": [
+    {
+      "route": "/api/clarify",
+      "ms": 46
+    },
+    {
+      "route": "/api/progress/preview",
+      "ms": 35
+    },
+    {
+      "route": "/api/passport/export",
+      "ms": 19
+    },
+    {
+      "route": "/api/passport/preview",
+      "ms": 10
+    }
+  ],
+  "no_p95_claim": true
+}

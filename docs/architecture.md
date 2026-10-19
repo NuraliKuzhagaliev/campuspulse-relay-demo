@@ -1,5 +1,11 @@
 # Architecture and data flow
 
+0.3.0 adds focused domain services `progress.py`, `clarify.py`, `handoff.py` and `passport.py`, used by the same FastAPI/web/Electron boundaries. The PR observation service is also the genuine authenticated MCP tool implementation. `Continuity.tsx` contains focused feature panels rather than expanding the main week's intertwined branches. There is no new stack or paid service.
+
+`Store.atomic` uses `BEGIN IMMEDIATE` and a tenant-scoped transaction interface for multi-record progress commands, history, invalidation and portable copy commit. A bound additions revision plus source/settings/decision/progress/gate fingerprints protects comparisons, plan previews and approvals. Idempotency keys compare command bodies before optimistic revision checks; old IDs cannot change payload. Portable commit generates a fresh server namespace and source/fact references, never trusts imported tenant authority. Source identity migrations/history from0.2.1 remain intact. New Firestore transactions fail closed until a real integration test.
+
+Clarification runs bounded pure branches off the API event loop with one job/workspace and two global jobs; model-build guards and solver deadlines/cancellation keep unknown outcomes explicit. PR observations use a bounded shared immutable cache/ETag/backoff and no arbitrary fetch URL. Native restore/save adds exact purpose/routes, keeps sandbox/context isolation and the corrected academic import allowlist, and verifies D: resolved save destinations. No restoration or progress operation can authorize Calendar; that remains a fresh independent preview/approval/journal boundary.
+
 ```mermaid
 flowchart LR
   UI[React web / packaged Electron renderer] --> GW[Authenticated FastAPI gateway]

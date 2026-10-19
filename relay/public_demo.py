@@ -38,8 +38,8 @@ def limit(scope, operation, count, seconds=60):
         _buckets.move_to_end(key)
 
 
-GET = re.compile(r'^/api/(session|health|state|events|conversation|challenge|sources/[A-Za-z0-9_-]+|packets/[a-f0-9]+|export)$')
-POST = re.compile(r'^/api/(import|import-native|plan|scenario|preferences|sync|chat|conversation/new|runs/[a-f0-9]+/cancel|rescue|rescues/[a-f0-9]+/choose|preflight|preflights/[a-f0-9]+/recovery|demo/reset|sources/[A-Za-z0-9_-]+/mapping|tasks/[a-f0-9]+/settings|conflicts/[a-f0-9]+/resolve|plans/[a-f0-9]+/preview|previews/[a-f0-9]+/approve|receipts/[a-f0-9]+/(verify|undo))$')
+GET = re.compile(r'^/api/(session|health|state|events|conversation|challenge|additions|tasks/[a-f0-9]+/estimate-suggestion|sources/[A-Za-z0-9_-]+|packets/[a-f0-9]+|export)$')
+POST = re.compile(r'^/api/(import|import-native|tasks/[a-f0-9]+/progress|work-sessions/[a-f0-9]+/heartbeat|progress/preview|progress/[a-f0-9]+/adopt|clarify|clarify/[a-f0-9]+/(cancel|answer)|gates|gates/notifications/[a-f0-9]+/claim|gates/conditional-preview|gates/[a-f0-9]+/(observe|remove)|passport/(export|preview)|passport/[a-f0-9]+/restore|plan|scenario|preferences|sync|chat|conversation/new|runs/[a-f0-9]+/cancel|rescue|rescues/[a-f0-9]+/choose|preflight|preflights/[a-f0-9]+/recovery|demo/reset|sources/[A-Za-z0-9_-]+/mapping|tasks/[a-f0-9]+/settings|conflicts/[a-f0-9]+/resolve|plans/[a-f0-9]+/preview|previews/[a-f0-9]+/approve|receipts/[a-f0-9]+/(verify|undo))$')
 
 
 def route_allowed(path, method):

@@ -41,3 +41,6 @@ if (!$env:RELAY_CONTEXT_SECRET -and $env:RELAY_MODE -ne 'cloud') {
     }
     $env:RELAY_CONTEXT_SECRET = Get-Content -LiteralPath $RelaySecretFile -Raw
 }
+foreach ($RelayControlledPath in @($RelayRoot,$env:TEMP,$env:TMP,$env:TMPDIR,$env:PIP_CACHE_DIR,$env:npm_config_cache,$env:UV_CACHE_DIR,$env:ELECTRON_CACHE,$env:ELECTRON_BUILDER_CACHE,$env:PLAYWRIGHT_BROWSERS_PATH,$env:CLOUDSDK_CONFIG,$env:PYTHONPYCACHEPREFIX,$env:RELAY_DATA_DIR,$env:RELAY_DESKTOP_DATA,$env:HF_HOME,$env:XDG_CACHE_HOME)) {
+    if ($RelayControlledPath -notmatch '^[dD]:[\\/]') { throw "Project-controlled path must resolve to D:: $RelayControlledPath" }
+}

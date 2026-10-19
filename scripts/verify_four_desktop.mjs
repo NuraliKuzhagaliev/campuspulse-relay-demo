@@ -1,0 +1,75 @@
+/** Installed cross-device contracts. Dialog substitutions are explicit, not native visibility proof. */
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import crypto from 'node:crypto';
+import asar from '@electron/asar';
+import {_electron as electron,chromium,expect} from '@playwright/test';
+const root=process.cwd(),version=JSON.parse(await fs.readFile('package.json','utf8')).version;
+const profile=path.join(root,'.local/four-additions/desktop-'+Date.now().toString(36));
+const executable=path.join(root,'installed/CampusPulse RELAY/CampusPulse RELAY.exe');
+const incoming=path.join(root,'.local/four-additions/browser-workspace.relay.json');
+const outgoing=path.join(root,'.local/four-additions/desktop-workspace.relay.json');
+const environment={...process.env,RELAY_DESKTOP_DATA:profile};delete environment.ELECTRON_RUN_AS_NODE;
+const proof={version,checked_at:new Date().toISOString(),profile,executable,checks:{},dialogs_substituted:true,native_picker_visibility_verified:false,native_save_dialog_visibility_verified:false,model_calls:0,calendar_external_writes:0,packaged_files:[]};
+const archive=path.join(path.dirname(executable),'resources/app.asar');
+for(const filename of asar.listPackage(archive).map(n=>n.slice(1)).filter(n=>/^(desktop[\\/].*\.cjs|dist[\\/].*\.(js|html|css))$/.test(n))){const bytes=asar.extractFile(archive,filename);assert(bytes.equals(await fs.readFile(filename)),filename);proof.packaged_files.push({file:filename,sha256:crypto.createHash('sha256').update(bytes).digest('hex'),matches_source:true});}
+let app,browser;
+try{
+  const original=JSON.parse(await fs.readFile(incoming,'utf8'));
+  app=await electron.launch({executablePath:executable,cwd:root,env:environment});let page=await app.firstWindow();
+  await page.getByRole('button',{name:'Explore illustrative workspace'}).click();
+  const call=(route,method='GET',body)=>page.evaluate(({route,method,body})=>window.relay.request('/api'+route,method,body),{route,method,body});
+  const initial=await call('/state');
+  await page.getByRole('button',{name:'Progress & continuity',exact:false}).click();await page.getByRole('button',{name:'Workspace Passport',exact:true}).click();
+  await app.evaluate(({dialog})=>{dialog.showOpenDialog=async()=>({canceled:true,filePaths:[]});});
+  await page.getByRole('button',{name:'Choose portable workspace',exact:true}).click();
+  await expect(page.locator('.continuity').getByRole('heading',{name:'Review restore preview'})).toHaveCount(0);
+  assert.equal((await call('/state')).workspace_id,initial.workspace_id);proof.checks.instrumented_native_cancel_keeps_workspace=true;
+  await app.evaluate(({dialog},file)=>{globalThis.passportPickerOptions=[];dialog.showOpenDialog=async(_,options)=>{globalThis.passportPickerOptions.push(options);return {canceled:false,filePaths:[file]};};},incoming);
+  await page.getByRole('button',{name:'Choose portable workspace',exact:true}).click();
+  await expect(page.getByRole('heading',{name:'Review restore preview'})).toBeVisible();
+  const options=await app.evaluate(()=>globalThis.passportPickerOptions[0]);assert.deepEqual(options.filters[0].extensions,['json']);
+  await page.getByRole('button',{name:'Import as fresh copy and switch',exact:true}).click();
+  await expect.poll(async()=> (await call('/state')).workspace_id).not.toBe(initial.workspace_id);
+  let state=await call('/state');assert.notEqual(state.workspace_id,initial.workspace_id);const restoredTenant=state.workspace_id;
+  const additions=await call('/additions');assert.equal(additions.logs[0].duration_minutes,45);
+  const task=state.tasks.find(t=>t.title==='Web project');assert.equal(task.remaining_minutes,90);assert.equal(state.tasks.filter(t=>t.title==='Lab 1').length,2);
+  assert.equal(state.plan,null);assert.deepEqual(state.receipts,[]);assert.equal(state.settings.calendar_live,false);
+  proof.checks.web_to_installed_desktop_native_path=true;
+  // A post-restore mutation proves the MAIN process adopted the new session CSRF.
+  const request={action:'remaining',remaining_minutes:95,request_id:crypto.randomBytes(16).toString('hex'),expected_revision:additions.revision};
+  await call('/tasks/'+task.id+'/progress','POST',request);const retry=await call('/tasks/'+task.id+'/progress','POST',request);assert.equal(retry.duplicate,true);
+  proof.checks.restored_bridge_csrf_and_retry=true;
+  const negative=await page.evaluate(async()=>{try{await window.relay.request('/api/passport/write','POST',{});return false;}catch(e){return String(e).includes('Unsupported application request');}});assert(negative);proof.checks.ipc_allowlist_remains_narrow=true;
+  const result=await call('/passport/export','POST',{});
+  await app.evaluate(({dialog},file)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath:file});},outgoing);
+  assert.equal((await page.evaluate(value=>window.relay.savePassport(value),result.file)).saved,true);
+  const saved=JSON.parse(await fs.readFile(outgoing,'utf8'));assert.equal(saved.format,'campuspulse-relay-workspace');
+  proof.checks.installed_save_uses_actual_file_write_on_D=true;
+  // Prove a malicious C: target is rejected BEFORE fs.writeFile, never write there.
+  await app.evaluate(({dialog})=>{dialog.showSaveDialog=async()=>({canceled:false,filePath:'C:\\relay-forbidden.json'});});
+  assert(await page.evaluate(async value=>{try{await window.relay.savePassport(value);return false;}catch{return true;}},result.file));proof.checks.C_drive_save_denied=true;
+  await app.close();app=null;
+  app=await electron.launch({executablePath:executable,cwd:root,env:environment});page=await app.firstWindow();
+  await expect(page.getByRole('heading',{name:'Your week. Back in balance.'})).toBeVisible();
+  state=await page.evaluate(()=>window.relay.request('/api/state'));assert.equal(state.workspace_id,restoredTenant);assert.equal(state.tasks.find(t=>t.id===task.id).progress.remaining_minutes,95);
+  proof.checks.installed_restart_persistence=true;
+  browser=await chromium.launch();const context=await browser.newContext();const web=await context.newPage();
+  await web.goto('http://127.0.0.1:8013/');await web.getByRole('button',{name:'Explore illustrative workspace'}).click();
+  await web.getByRole('button',{name:'Progress & continuity',exact:false}).click();await web.getByRole('button',{name:'Workspace Passport',exact:true}).click();
+  const firstWebTenant=await web.evaluate(async()=> (await (await fetch('/api/state')).json()).workspace_id);
+  await web.getByLabel('Portable workspace file').setInputFiles(outgoing);await web.getByRole('button',{name:'Import as fresh copy and switch',exact:true}).click();
+  await expect.poll(async()=>web.evaluate(async()=> (await (await fetch('/api/state')).json()).workspace_id)).not.toBe(firstWebTenant);
+  await web.reload();await web.getByRole('button',{name:'Progress & continuity',exact:false}).click();
+  const webState=await web.evaluate(async()=>{const r=await fetch('/api/state');return r.json();});
+  assert.equal(webState.tasks.find(t=>t.id===task.id).progress.remaining_minutes,95);
+  const expectedIdentities=original.payload.assignments.map(t=>[t.course,t.term,t.key]).sort();
+  const actualIdentities=webState.tasks.map(t=>[t.identity.course,t.identity.term,t.identity.assignment_key]).sort();assert.deepEqual(actualIdentities,expectedIdentities);
+  const expectedQuotes=original.payload.citations.map(f=>[f.task_id,f.quote,f.page]).sort();const actualQuotes=webState.sources.flatMap(s=>s.facts).map(f=>[f.task_id,f.quote,f.page]).sort();assert.deepEqual(actualQuotes,expectedQuotes);
+  assert.equal(webState.plan,null);assert.deepEqual(webState.receipts,[]);assert(webState.gates.every(g=>g.status==='unknown'&&g.archived));
+  proof.checks.installed_to_fresh_web_semantic_identity_citation_time_progress_comparison=true;
+  proof.files={incoming,outgoing};proof.passed=true;
+  await web.screenshot({path:'docs/screenshots/0.3.0/restored-from-installed-1440.png',fullPage:true});
+}finally{if(browser)await browser.close();if(app)await app.close();await fs.writeFile('docs/evidence/four-desktop-0.3.0.json',JSON.stringify(proof,null,2));}
+console.log(JSON.stringify(proof,null,2));

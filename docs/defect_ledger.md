@@ -20,3 +20,13 @@ Supported scope: bounded structured text PDFs/Markdown/TXT, ICS snapshots, expli
 Migration: current legacy sources are backed up in identity_history, alias decisions recorded in identity_migrations, historical plans saved in plan_history and marked stale. Source-version archives, approvals and receipts retain their exact historical payloads. A unique alias carries its override; a collision retains the old override for explicit review instead of copying it to multiple courses. Existing fixture PDF/repo mappings are explicitly owned fixture mappings. Other documents never join coursework just because titles look similar. Existing previews become stale through identity-version fingerprints. A mapping change invalidates plans and requires a new preview/approval. There is no automatic rewriting of an approved Calendar action.
 
 No known P0/P1 remains in the locally supported paths covered by the recorded checks. This is not a claim of zero defects. Mandatory GCP, Gemini, cloud-to-MCP auth renewal, real Calendar consent/write/read-back/revocation and an isolated live judge are blocked by unconfirmed organizer credits/access, not declared passed by these tests.
+# 0.3.0 additive continuation findings
+
+| Finding | How established | Correction / actual regression |
+|---|---|---|
+| Portable checksum changed after browser reserialization of45.0→45 | Actual new browser export/download/restore failed PASSPORT_CHECKSUM; initial failure log retained `.local/logs/four-browser-slice-2.log` | Canonical integral-number normalization; dedicated regression plus actual browser and installed round trips pass |
+| Desktop session CSRF would remain on the old workspace after passport restore | Code inspection: main only renewed on GET/session while restore returns a new capability | Exact restore-route response renews bridge CSRF; installed post-restore95-minute mutation plus duplicate retry passes |
+| Future recovery could delete started owned Calendar blocks | Code inspection: owned-minus-desired deletion ignored current cutoff | Started events kept, crossing intervals remain busy, history retained; actual local-adapter apply regression proves old event unchanged |
+| Gate notification dedup was initially only per component instance | Code review before release | Durable tenant-scoped dispatch claim; double claim returnsfalse and foreign claim denied. Dispatch/visibility remain separate |
+
+Foundation cross-course identity/migration and adjacent interval-union corrections are inherited from0.2.1 and rechecked, not counted as four additions. No new live Gemini/Calendar acceptance is inferred.

@@ -3,10 +3,11 @@ contextBridge.exposeInMainWorld("relay", {
   connectGoogle: () => ipcRenderer.invoke("relay:connect"),
   request: (path, method = "GET", body) =>
     ipcRenderer.invoke("relay:request", path, method, body),
-  importFile: () => ipcRenderer.invoke("relay:import"),
+  importFile: (kind) => ipcRenderer.invoke("relay:import", kind),
   notify: (title, body) => ipcRenderer.invoke("relay:notify", title, body),
   openExternal: (url) => ipcRenderer.invoke("relay:external", url),
   saveSnapshot: (data) => ipcRenderer.invoke("relay:cache-save", data),
+  savePassport: (data) => ipcRenderer.invoke("relay:passport-save", data),
   loadSnapshot: (tenant) => ipcRenderer.invoke("relay:cache-load", tenant),
   version: () => ipcRenderer.invoke("relay:version"),
   setLanguage: (language) => ipcRenderer.invoke("relay:locale", language),

@@ -1,5 +1,9 @@
 # Privacy and boundaries
 
+0.3.0 progress adds student-entered/confirmed durations, optional notes/evidence references, remaining/completion choices and correction history. The timer never monitors applications, files, attention or learning. Estimate suggestions use only explicitly eligible same-workspace history; imported history is excluded and no cross-student profiling occurs.
+
+Workspace Passport is an explicit plaintext file containing selected normalized extracts, exact quotes, personal estimates/progress/decisions and gate definitions. Keep it private and save it on D:. It excludes credentials, tenant authority, machine paths, conversation/session tokens, Calendar connections/events, approvals and executable journals. Original bytes and third-party busy-event details are absent; re-import/revalidate them before meaningful scheduling. Restored observations are archived/untrusted and cannot authorize external actions. The old workspace remains until a successful deliberate switch; a failed transaction rolls back. See `workspace_passport.md` for format/limits/legacy behavior. Temporary hosted lifetime/reset rules still apply to each copied public workspace.
+
 Only selected files and the explicitly chosen repository/calendar are used. No arbitrary disk indexing, repo execution, invitations, outgoing messages or coursework submission occurs. The selected-folder watcher is opt-in, bounded and non-recursive; it announces changes and requires explicit file import rather than silently uploading them.
 
 Cloud identity is derived from verified Google subject, never model-supplied IDs. MCP context is short-lived and audience-bound; machine identity is distinct from user Calendar consent. OAuth uses state/PKCE and an external browser. Refresh credentials are encrypted server-side; secrets belong in Secret Manager/.env, excluded from Git and release bundles. Cloud IAM, real OAuth revocation and isolated judge access still need live validation.

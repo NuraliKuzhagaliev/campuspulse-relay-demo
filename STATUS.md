@@ -1,5 +1,7 @@
 # CampusPulse RELAY - public illustrative demo verified; mandatory GCP pending
 
+**Current continuation: local0.3.0 candidate.** Four requested additions are integrated: durable work/remaining loop, bounded schedule-impact clarification, observed public PR gates and validated portable workspace restoration. Current fresh Python suite110 passed; browser/installed/public-mode/evidence gates are listed in `docs/four_additions_acceptance.md`. True unmodified native passport Open/Save/cancel observation remains a precise human gate after the supported Windows helper initialization failure. The prior public0.2.1 URL/revision and all release history are preserved. No replacement deployment, GitHub release/PR/issue/comment, model request, Calendar write or paid cloud resource was performed for this continuation. Source is a local reviewable continuation until publication is separately authorized.
+
 All three attachments were read completely. Topic 2 is selected. The isolated project root is D:\projects\CampusPulseRELAY. Controlled environments, caches, downloads, temporary files, builds, installers, recordings and deliverables are on D:.
 
 Implemented: evidence/conflicts, CP-SAT and independent validation, what-if, durable change radar, immutable approval/journal/receipts/guarded compensation, rubric packets, React web interface, actual Electron/NSIS/portable app, MCP, identity/OAuth pairing, deployment scripts and an editable presentation/PDF.
