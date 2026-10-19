@@ -1,0 +1,21 @@
+# Public Gemini/MCP access · 0.4.1
+
+This release replaces personal AI invitations with automatic anonymous capability workspaces. Open the normal HTTPS URL, upload a permitted non-sensitive document, confirm the free-service processing conditions, and ask RELAY. There is no account, Google login, visitor API key, judge count, access code or scheduled judging window. The server key stays on the host. Personal Calendar consent is separate and does not follow from AI access.
+
+Each Secure, HttpOnly, SameSite=Strict random session cookie authorizes only its workspace; mutations also require CSRF. Browser input cannot select a tenant. The internal MCP route requires both server transport identity and a bounded signed workspace context. Administrative, invitation, test and Google connection routes stay closed on the public host. The model sees only the read/planning tools allowed for this route; it cannot approve or perform external Calendar writes.
+
+## Queue and quotas
+
+One outstanding question per workspace, FIFO admission, two workers, and fair tickets before **every actual model call**. The account's observed selected-model limits are 15 requests/minute, 250,000 tokens/minute, 500 requests/day; these are limits, not a claim of remaining project quota. Conservative request-byte reservations include schema/output headroom. A question can require multiple calls. Daily accounting resets at midnight America/Los_Angeles, including daylight saving changes. Google's project-wide 429/retry metadata is authoritative and establishes shared backoff. Other clients or a host storage reset can make local counters differ from the provider. No paid fallback or silent retry of a failed turn is enabled.
+
+The bounded queue accepts up to 256 pending workspaces; normal abuse protection also bounds new sessions and HTTP requests. Creating many cookies is not proof of distinct people and no anonymous mechanism can guarantee resistance to every distributed attacker. No quota is reserved for a named judge or invitation. Jobs survive browser refresh with the same idempotent run identifier and server conversation lease. Cancelling before execution prevents dispatch; stopping an active request does not claim remote computation has stopped. A restarted active job becomes unknown and is not replayed automatically.
+
+Temporary sessions last up to two hours; the Free host may sleep or lose SQLite, uploads, queue and history sooner on restart/redeployment. No durable storage or always-on service is claimed. Expiry/reset erases the tenant's documents, conversation and global queued text/results; a late result cannot recreate the deleted workspace. Export a Workspace Passport for portable non-secret data.
+
+## Free-service conditions and acceptance
+
+The short processing confirmation is not registration. It confirms an adult evaluator in an eligible region outside EEA/UK/Switzerland, using permitted non-sensitive material. It is self-attestation, not independent age/geolocation verification. Unpaid inputs may be used for improvement and human review. See [Gemini API terms](https://ai.google.dev/gemini-api/terms) and [project rate limits](https://ai.google.dev/gemini-api/docs/rate-limits). Do not send personal or confidential coursework.
+
+`tests/test_public_ai_queue.py` exercises 100 actual HTTP workspaces/uploads/history/queue paths with **only the provider simulated**, and records `docs/evidence/public-ai-100-simulated.json`. It spends zero Gemini calls. The browser queue test explicitly simulates UI outcomes. Real public Gemini/MCP acceptance is recorded separately after deployment; none of those simulations establish mandatory managed Agent Engine or real Calendar acceptance.
+
+Deploy on the existing authorized Free Render service only: retain its server secrets, merge `RELAY_PUBLIC_AI_ENABLED=true`, `RELAY_JUDGE_ENABLED=false`, and the observed quota values. Do not create another service, activate billing or change compute plan. Historical sealed 0.4.0 artifacts and evidence remain unchanged.

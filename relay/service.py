@@ -24,6 +24,8 @@ class RelayService:
         except RelayError:
             if os.getenv('RELAY_MODE')=='cloud':
                 raise RelayError('AUTH_REQUIRED','Create or connect an isolated workspace first.')
+            from .public_ai import enabled as public_access
+            if public_access():self.store.get('_server','workspaces',self.tenant)
             self.seed()
             return self.store.get(self.tenant,'meta','settings')
         if value.get('mode') in ('judge','judge_ai') and value.get('judge_expires',0)<clock.time():

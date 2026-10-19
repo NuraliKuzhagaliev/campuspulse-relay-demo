@@ -1,6 +1,6 @@
 // Keep the native bridge limited to application-relative routes and GET/POST.
 const read =
-  /^\/api\/(session|state|health|auth\/start|connections\/calendar-list|events(?:\?after=\d+)?|conversation|challenge|additions|tasks\/[a-f0-9]+\/estimate-suggestion|export|sources\/[a-zA-Z0-9_-]+|packets\/[a-f0-9]+)$/;
+  /^\/api\/(session|state|health|auth\/start|connections\/calendar-list|events(?:\?after=\d+)?|conversation|runs\/[a-f0-9]{32}|challenge|additions|tasks\/[a-f0-9]+\/estimate-suggestion|export|sources\/[a-zA-Z0-9_-]+|packets\/[a-f0-9]+)$/;
 const write =
   /^\/api\/(demo\/reset|judge\/claim|connections\/calendar|tasks\/[a-f0-9]+\/settings|import-native|tasks\/[a-f0-9]+\/progress|work-sessions\/[a-f0-9]+\/heartbeat|progress\/preview|progress\/[a-f0-9]+\/adopt|clarify|clarify\/[a-f0-9]+\/(cancel|answer)|gates|gates\/notifications\/[a-f0-9]+\/claim|gates\/conditional-preview|gates\/[a-f0-9]+\/(observe|remove)|passport\/(export|preview)|passport\/[a-f0-9]+\/restore|plan|scenario|chat|conversation\/new|runs\/[a-f0-9]+\/cancel|rescue|rescues\/[a-f0-9]+\/choose|preflight|preflights\/[a-f0-9]+\/recovery|sources\/[a-zA-Z0-9_-]+\/mapping|preferences|sync|conflicts\/[a-f0-9]+\/resolve|plans\/[a-f0-9]+\/preview|previews\/[a-f0-9]+\/approve|receipts\/[a-f0-9]+\/(verify|undo))$/;
 function permits(apiPath, method) {

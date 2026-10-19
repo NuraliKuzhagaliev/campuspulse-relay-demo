@@ -2,6 +2,13 @@ const { test } = require("node:test");
 const assert = require("node:assert/strict");
 const { permits, metadata } = require("../desktop/request-policy.cjs");
 
+test("public AI polling allows only exact tenant-owned run read shape", () => {
+  const route = "/api/runs/" + "a".repeat(32);
+  assert(permits(route, "GET"));
+  for (const [p,m] of [[route,"POST"],[route+"?tenant=other","GET"],[route+"/result","GET"],["/api/runs/arbitrary","GET"],[route.slice(0,-1),"GET"]])
+    assert(!permits(p,m));
+});
+
 test("native import and state refresh remain allowed; multipart and invalid IPC remain closed", () => {
   assert(permits("/api/import-native", "POST"));
   assert(permits("/api/state", "GET"));

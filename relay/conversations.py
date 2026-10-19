@@ -20,10 +20,10 @@ def conversation(store, tenant, id=None):
     return record
 
 
-def begin_run(store,tenant,conversation_id,request_id,message):
+def begin_run(store,tenant,conversation_id,request_id,message,queued_until=None):
     c=conversation(store,tenant,conversation_id)
     key=digest([conversation_id,request_id])[:32]
-    record=dict(id=key,conversation_id=c['id'],request_id=request_id,input_digest=digest(message),status='running',began=time.time())
+    record=dict(id=key,conversation_id=c['id'],request_id=request_id,input_digest=digest(message),status='queued' if queued_until else 'running',began=time.time())
     if not store.put(tenant,'agent_runs',key,record,create=True):
         previous=store.get(tenant,'agent_runs',key)
         if previous['input_digest']!=record['input_digest']:
@@ -32,7 +32,7 @@ def begin_run(store,tenant,conversation_id,request_id,message):
     # Atomic durable conversation lease works across gateway instances.
     store.put(tenant,'conversation_leases',c['id'],dict(owner=None,until=0),create=True)
     lease=store.get(tenant,'conversation_leases',c['id'])
-    if lease['until']>time.time() or not store.claim(tenant,'conversation_leases',c['id'],lease,dict(owner=key,until=time.time()+RUN_SECONDS+30)):
+    if lease['until']>time.time() or not store.claim(tenant,'conversation_leases',c['id'],lease,dict(owner=key,until=queued_until or time.time()+RUN_SECONDS+30)):
         store.put(tenant,'agent_runs',key,dict(record,status='failed',result=dict(status='failed',text='',reason='Another turn is still running. Retry with a new request after it finishes.')))
         raise RelayError('RUN_IN_PROGRESS','A turn is already running in this conversation.')
     return record,True

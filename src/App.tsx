@@ -140,6 +140,17 @@ type View =
   | "challenge";
 type Lang = keyof typeof langs;
 const CONTACTING_AGENT = "Contacting remote agent";
+type ChatReply = {
+  text: string;
+  status: string;
+  reason?: string;
+  code?: string;
+  run_id?: string;
+  conversation_id?: string;
+  position?: number;
+  poll_after_ms?: number;
+  quota?: { wait_seconds: number; reason?: string; reset_at?: number };
+};
 const icons = {
   week: CalendarDays,
   evidence: BookOpen,
@@ -567,7 +578,13 @@ function RunRail({
             ? tr("Managed resource configured")
             : tr("Agent Engine not connected")}
       </div>
-      <div className="run-events" role="region" aria-label={tr("Execution events")} tabIndex={0} aria-live="polite">
+      <div
+        className="run-events"
+        role="region"
+        aria-label={tr("Execution events")}
+        tabIndex={0}
+        aria-live="polite"
+      >
         {recent.map((e) => (
           <div className="run-event" key={e.sequence}>
             <span
@@ -637,6 +654,7 @@ export default function App() {
   const [processingWorkspace, setProcessingWorkspace] = useState<string | null>(
     null,
   );
+  const [queuedQuestion, setQueuedQuestion] = useState<ChatReply | null>(null);
   const processingConsent =
     !!data?.workspace_id && processingWorkspace === data.workspace_id;
   const ready = useRef(false);
@@ -660,6 +678,8 @@ export default function App() {
       setPreview(null);
       setScenario(null);
       setAnswer("");
+      setQueuedQuestion(null);
+      chatGeneration.current++;
       setPrompt("");
       setNotice("");
       setCalendars([]);
@@ -706,6 +726,32 @@ export default function App() {
       }
     }
   }
+  async function followQuestion(initial: ChatReply, generation: number) {
+    let result = initial;
+    while (
+      ["queued", "running", "quota_wait", "cancel_requested"].includes(
+        result.status,
+      )
+    ) {
+      if (generation !== chatGeneration.current) return;
+      setQueuedQuestion(result);
+      await new Promise((resolve) =>
+        setTimeout(resolve, result.poll_after_ms || 3000),
+      );
+      if (generation !== chatGeneration.current) return;
+      result = await api<ChatReply>("/runs/" + result.run_id);
+    }
+    if (generation !== chatGeneration.current) return;
+    setQueuedQuestion(null);
+    setAnswer(
+      result.text ||
+        (result.code
+          ? errorMessage(result.code, lang)
+          : tr("No usable final answer. Review the outcome before retrying.")),
+    );
+    setNotice(tr("Agent outcome") + ": " + label(result.status, lang));
+    await refresh();
+  }
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -718,9 +764,25 @@ export default function App() {
         ready.current = true;
         if (
           initial.settings.mode === "illustrative" &&
-          !sessionStorage.getItem("relay.entered")
+          !sessionStorage.getItem("relay.entered") &&
+          !initial.agent.public_access
         )
           setEntry(true);
+        if (initial.agent.public_access) {
+          const c = await api<{
+            id: string;
+            active_run?: string;
+            turns: { assistant: string }[];
+          }>("/conversation");
+          if (cancelled) return;
+          conversationId.current = c.id;
+          if (c.active_run) {
+            const run = await api<ChatReply>("/runs/" + c.active_run);
+            const generation = ++chatGeneration.current;
+            void work(CONTACTING_AGENT, () => followQuestion(run, generation));
+          } else if (c.turns.at(-1)?.assistant)
+            setAnswer(c.turns.at(-1)!.assistant);
+        }
       } catch (e) {
         const authFailed =
           (e as { status?: number }).status === 401 ||
@@ -744,6 +806,7 @@ export default function App() {
     })();
     return () => {
       cancelled = true;
+      chatGeneration.current++;
     };
   }, []);
   useEffect(() => {
@@ -890,28 +953,22 @@ export default function App() {
         conversationId.current = (
           await api<{ id: string }>("/conversation")
         ).id;
-      const r = await api<{ text: string; status: string; reason?: string; code?: string }>(
-        "/chat",
-        "POST",
-        {
-          message: prompt,
-          language: lang,
-          conversation_id: conversationId.current,
-          request_id: crypto.randomUUID().replaceAll("-", ""),
-          adult_confirmed: processingConsent,
-          permitted_processing: processingConsent,
-          processing_region: processingConsent ? "KZ" : null,
-        },
-      );
+      const r = await api<ChatReply>("/chat", "POST", {
+        message: prompt,
+        language: lang,
+        conversation_id: conversationId.current,
+        request_id: crypto.randomUUID().replaceAll("-", ""),
+        adult_confirmed: processingConsent,
+        permitted_processing: processingConsent,
+        processing_region: processingConsent
+          ? data?.agent.public_access
+            ? "supported_non_eea"
+            : "KZ"
+          : null,
+      });
       if (generation !== chatGeneration.current) return;
-      setAnswer(
-        r.text || (r.code
-          ? errorMessage(r.code, lang)
-          : tr("No usable final answer. Review the outcome before retrying.")),
-      );
-      setNotice(tr("Agent outcome") + ": " + label(r.status, lang));
       setPrompt("");
-      await refresh();
+      await followQuestion(r, generation);
     });
   }
   if (!data)
@@ -2287,6 +2344,54 @@ export default function App() {
                   <Send size={18} />
                 </button>
               </form>
+              {queuedQuestion ? (
+                <div
+                  className="queue-status"
+                  role="status"
+                  aria-live="polite"
+                  data-testid="ai-queue"
+                >
+                  <strong>
+                    {tr(
+                      queuedQuestion.status === "queued"
+                        ? "Question queued"
+                        : queuedQuestion.status === "quota_wait"
+                          ? "Waiting for API quota"
+                          : "Gemini is working",
+                    )}
+                  </strong>
+                  {queuedQuestion.position ? (
+                    <p>
+                      {tr("Queue position")} {queuedQuestion.position}
+                    </p>
+                  ) : null}
+                  {queuedQuestion.quota?.wait_seconds ? (
+                    <p>
+                      {tr(
+                        "Shared API quota is temporarily full. Your question stays queued; no paid fallback is used.",
+                      )}
+                    </p>
+                  ) : null}
+                  <p className="fine-print">
+                    {tr(
+                      "One question per workspace at a time. Refresh resumes this question without sending it again.",
+                    )}
+                  </p>
+                  {!busy ? (
+                    <button
+                      className="secondary"
+                      onClick={() => {
+                        const generation = ++chatGeneration.current;
+                        void work(CONTACTING_AGENT, () =>
+                          followQuestion(queuedQuestion, generation),
+                        );
+                      }}
+                    >
+                      {tr("Resume queued question")}
+                    </button>
+                  ) : null}
+                </div>
+              ) : null}
               {answer ? (
                 <div className="answer">
                   <button
@@ -2353,6 +2458,7 @@ export default function App() {
                   workGeneration.current++;
                   workLock.current = false;
                   setBusy("");
+                  setQueuedQuestion(null);
                   setNotice(
                     tr(
                       "Stopped waiting. Remote compute may continue; inspect events and receipts before retrying.",

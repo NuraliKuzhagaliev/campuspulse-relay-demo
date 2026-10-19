@@ -6,4 +6,4 @@ if not exist "%RELAY_LAUNCH_TEMP%" mkdir "%RELAY_LAUNCH_TEMP%"
 set "TEMP=%RELAY_LAUNCH_TEMP%"
 set "TMP=%RELAY_LAUNCH_TEMP%"
 set "TMPDIR=%RELAY_LAUNCH_TEMP%"
-start "" "%~dp0CampusPulse-RELAY-0.4.0-x64-setup.exe" /D=D:\projects\CampusPulseRELAY\installed\CampusPulse RELAY
+start "" "%~dp0CampusPulse-RELAY-0.4.1-x64-setup.exe" /D=D:\projects\CampusPulseRELAY\installed\CampusPulse RELAY

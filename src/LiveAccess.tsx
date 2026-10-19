@@ -28,7 +28,16 @@ export function LiveAccess({
           "Free Gemini: use permitted non-sensitive documents only. Inputs may be used for product improvement and human review.",
         )}
       </p>
-      {data.settings.ai_access || data.settings.mode === "judge" ? (
+      {data.agent.public_access ? (
+        <p>
+          {tr(
+            "Public Gemini access · no invitation, account or API key needed",
+          )}
+        </p>
+      ) : null}
+      {data.agent.public_access ||
+      data.settings.ai_access ||
+      data.settings.mode === "judge" ? (
         <label className="processing-consent">
           <input
             type="checkbox"
@@ -36,7 +45,9 @@ export function LiveAccess({
             onChange={(e) => onConsent(e.target.checked)}
           />
           {tr(
-            "I am an evaluator aged 18 or older, currently in Kazakhstan, and will send only permitted, non-sensitive material.",
+            data.agent.public_access
+              ? "I am 18 or older, evaluating this hackathon application in a supported region outside the EEA, UK and Switzerland, and will send only permitted non-sensitive material."
+              : "I am an evaluator aged 18 or older, currently in Kazakhstan, and will send only permitted, non-sensitive material.",
           )}
         </label>
       ) : (
@@ -87,7 +98,7 @@ export function LiveAccess({
       )}
       <p className="fine-print">
         {tr(
-          "Private AI access grants no Google Calendar permission. Export a Workspace Passport before this temporary session resets.",
+          "AI access grants no Google Calendar permission. Export a Workspace Passport before this temporary session resets.",
         )}
       </p>
     </aside>

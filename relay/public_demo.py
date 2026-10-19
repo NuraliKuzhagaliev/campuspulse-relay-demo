@@ -69,6 +69,13 @@ def metadata():
                 calendar='illustrative_local_adapter', gemini='pending', mandatory_gcp='pending')
 
 
+def _forget_ai_jobs(db,tenant):
+    # Same SQLite transaction as the workspace deletion. Retain no uploaded
+    # excerpts or model answers in the global queue after a reset/expiry.
+    db.execute("DELETE FROM records WHERE tenant='_server' AND kind IN ('public_ai_jobs','public_ai_waiters') AND json_extract(data,'$.tenant')=?",(tenant,))
+    db.execute("DELETE FROM records WHERE tenant='_server' AND kind='public_ai_owners' AND id=?",(tenant,))
+
+
 def cleanup(store, at=None):
     """Delete expired public documents and their capability sessions together."""
     at = at or time.time()
@@ -79,6 +86,7 @@ def cleanup(store, at=None):
             session = json.loads(raw)
             tenant = session.get('tenant', '')
             if tenant.startswith('demo-') and session['expires'] < at:
+                _forget_ai_jobs(db,tenant)
                 db.execute('DELETE FROM records WHERE tenant=?', (tenant,))
                 db.execute('DELETE FROM events WHERE tenant=?', (tenant,))
                 db.execute("DELETE FROM records WHERE tenant='_server' AND kind='sessions' AND id=?", (session_id,))
@@ -88,6 +96,7 @@ def cleanup(store, at=None):
 def forget(store, tenant):
     import json
     with store.connect() as db:
+        _forget_ai_jobs(db,tenant)
         for session_id, raw in db.execute("SELECT id,data FROM records WHERE tenant='_server' AND kind='sessions'").fetchall():
             if json.loads(raw).get('tenant') == tenant:
                 db.execute("DELETE FROM records WHERE tenant='_server' AND kind='sessions' AND id=?", (session_id,))

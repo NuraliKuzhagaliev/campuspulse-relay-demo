@@ -16,6 +16,7 @@ from .auth import sign_context
 from . import public_demo
 from . import alternative_live
 from .providers import selected, current_availability
+from .public_ai import enabled as public_ai_enabled,PublicQueue
 
 store=make_store()
 CLOUD=os.getenv('RELAY_MODE')=='cloud'
@@ -60,13 +61,20 @@ async def lifespan(app):
             from .mcp_server import mcp
             await stack.enter_async_context(mcp.session_manager.run())
         task=asyncio.create_task(poll())
+        workers=[]
+        if public_ai_enabled():
+            from .public_ai import worker
+            PublicQueue(store).recover()
+            workers=[asyncio.create_task(worker(store,invoke_alternative_query,record_agent_outcome)) for _ in range(2)]
         try:
             yield
         finally:
             task.cancel()
+            for worker_task in workers:worker_task.cancel()
+            await asyncio.gather(*workers,return_exceptions=True)
 
 
-app=FastAPI(title='CampusPulse RELAY',version='0.4.0',lifespan=lifespan,
+app=FastAPI(title='CampusPulse RELAY',version='0.4.1',lifespan=lifespan,
             docs_url=None if TEMPORARY_WEB else '/docs',redoc_url=None if TEMPORARY_WEB else '/redoc',
             openapi_url=None if TEMPORARY_WEB else '/openapi.json')
 expensive_requests=asyncio.Semaphore(2)
@@ -177,8 +185,8 @@ def session(request:Request):
         raise RelayError('AUTH_REQUIRED','Sign in through Google in the system browser, or use an owner-issued one-use judge invitation.')
     if TEMPORARY_WEB:
         public_demo.cleanup(store)
-        public_demo.limit('_global','new-sessions',60,3600)
-        if len(store.list('_server','workspaces'))>=100:
+        public_demo.limit('_global','new-sessions',300 if public_ai_enabled() else 60,3600)
+        if len(store.list('_server','workspaces'))>=(256 if public_ai_enabled() else 100):
             raise RelayError('UPSTREAM_RATE_LIMITED','Public demo capacity is full. Retry after temporary sessions expire.')
         return new_session('demo-'+secrets.token_hex(16))
     return new_session('local-'+secrets.token_hex(16))
@@ -188,7 +196,8 @@ def session(request:Request):
 def reset_demo(record=Depends(identity)):
     if not TEMPORARY_WEB:
         raise RelayError('ACCESS_DENIED','Public demo reset is unavailable in this mode.')
-    public_demo.limit('_global','new-sessions',60,3600)
+    public_demo.limit('_global','new-sessions',300 if public_ai_enabled() else 60,3600)
+    if public_ai_enabled():PublicQueue(store).cancel_tenant(record['tenant'])
     public_demo.forget(store,record['tenant'])
     return new_session('demo-'+secrets.token_hex(16))
 
@@ -233,7 +242,7 @@ def health():
     agent=current_availability(store)
     return dict(ok=True,version=app.version,mode='alternative_live' if ALTERNATIVE else 'public_demo' if PUBLIC_DEMO else 'cloud' if CLOUD else 'local',agent_configured=agent['configured'],agent_verified=agent['verified'],agent=agent,time=now(),
                 deployed_commit=os.getenv('RELAY_DEPLOYED_COMMIT') or os.getenv('RENDER_GIT_COMMIT'),
-                demo=dict(public_demo.metadata(),gemini='private_invitation_required',mandatory_gcp='exception_pending') if ALTERNATIVE else public_demo.metadata() if PUBLIC_DEMO else None)
+                demo=dict(public_demo.metadata(),gemini='public_queued' if public_ai_enabled() else 'private_invitation_required',mandatory_gcp='exception_pending') if ALTERNATIVE else public_demo.metadata() if PUBLIC_DEMO else None)
 
 
 @app.get('/api/state')
@@ -376,6 +385,7 @@ def export(svc=Depends(service)):
 
 @app.delete('/api/workspace')
 def delete_workspace(svc=Depends(service)):
+    if public_ai_enabled():PublicQueue(store).cancel_tenant(svc.tenant)
     public_demo.forget(store,svc.tenant) if TEMPORARY_WEB else store.delete_workspace(svc.tenant)
     return {'deleted':True,'external_resources_deleted':False}
 
@@ -671,9 +681,16 @@ def new_conversation(svc=Depends(service)):
 
 @app.post('/api/runs/{id}/cancel')
 def cancel_run(id:str,svc=Depends(service)):
+    if public_ai_enabled():return PublicQueue(store).cancel(svc.tenant,id)
     record=store.get(svc.tenant,'agent_runs',id)
     store.claim(svc.tenant,'agent_runs',id,{'status':'running'},{'status':'cancel_requested'})
     return dict(status='cancel_requested',remote_compute_stopped=False,message='Stopped waiting is not proof that remote compute stopped. Inspect events and receipts before retrying.')
+
+
+@app.get('/api/runs/{id}')
+def get_run(id:str,svc=Depends(service)):
+    if not public_ai_enabled():raise RelayError('ACCESS_DENIED','Queued public AI is not enabled in this mode.')
+    return PublicQueue(store).status(svc.tenant,id)
 
 
 @app.post('/api/chat')
@@ -684,6 +701,13 @@ async def chat(body:Chat,svc=Depends(service)):
         raise RelayError('AUTH_REQUIRED','The real Gemini Agent Engine is not connected. Local planning and evidence tools remain available.')
     if config['provider']=='gemini_developer':
         alternative_live.authorize_query(svc.settings(),body.adult_confirmed,body.permitted_processing,body.processing_region)
+    if public_ai_enabled():
+        body.conversation_id=body.conversation_id or get_conversation(svc)['id']
+        body.request_id=body.request_id or secrets.token_hex(16)
+        sessions=[r for r in store.list('_server','sessions') if r['tenant']==svc.tenant and r['expires']>time.time()]
+        if not sessions:raise RelayError('AUTH_REQUIRED','The originating browser session expired.')
+        result=PublicQueue(store).submit(svc.tenant,body.model_dump(),max(r['expires'] for r in sessions))
+        return JSONResponse(result,status_code=200 if result['status'] in ('complete','partial','failed','unknown','cancelled') else 202)
     from .conversations import begin_run, finish_run, conversation, RUN_SECONDS
     body.conversation_id=body.conversation_id or get_conversation(svc)['id']
     body.request_id=body.request_id or secrets.token_hex(16)
@@ -708,13 +732,21 @@ async def chat(body:Chat,svc=Depends(service)):
         result=dict(status='failed',text='',code='UPSTREAM_RATE_LIMITED' if limited else 'UPSTREAM_UNAVAILABLE',reason='Gemini rate limit reached. Retry after the allowance resets.' if limited else 'The selected Gemini route could not complete this request. Check account access and service configuration.')
     result['gateway_revision']=os.getenv('RELAY_DEPLOYED_COMMIT') or os.getenv('RENDER_GIT_COMMIT') or os.getenv('RELAY_BUILD_REVISION')
     result=finish_run(store,svc.tenant,record,body.message,result)
+    record_agent_outcome(svc.tenant,run,result)
+    return result
+
+
+def record_agent_outcome(tenant,run,result):
+    if public_ai_enabled():
+        try:store.get('_server','workspaces',tenant)
+        except RelayError:return
+    config=selected();resource=config['resource']
     kind={'complete':'run_completed','partial':'run_partial','failed':'run_failed','unknown':'run_unknown','cancelled':'run_cancelled'}.get(result['status'],'run_unknown')
-    store.event(svc.tenant,run,kind,summary='Agent outcome',resource=resource,provider=config['provider'],deployment_mode=config['deployment_mode'])
+    store.event(tenant,run,kind,summary='Agent outcome',resource=resource,provider=config['provider'],deployment_mode=config['deployment_mode'])
     if result['status']=='complete':
         store.put('_server','agent_evidence',digest(resource),dict(resource=resource,run_id=run,revision=config['revision'] or 'unreported',observed_at=now(),expires=time.time()+300,provider=config['provider'],deployment_mode=config['deployment_mode'],model=config['model']))
     else:
         store.put('_server','agent_failures',digest(resource),dict(failed_at=now(),run_id=run,status=result['status'],code=result.get('code')))
-    return result
 
 
 def invoke_managed_query(resource,**kwargs):

@@ -35,6 +35,8 @@ def current_availability(store):
     result = availability(store, config['resource'] if config['configured'] else None)
     result.update({k: config[k] for k in ('provider', 'deployment_mode', 'model', 'managed_agent_engine', 'mode')})
     result['configured'] = config['configured']
+    from .public_ai import enabled as public_access
+    result['public_access'] = public_access()
     if config.get('revision') and result.get('evidence', {}).get('revision') != config['revision']:
         result['verified'] = False
     if config['configured']:

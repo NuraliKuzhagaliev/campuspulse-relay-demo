@@ -1,4 +1,39 @@
 export const finalTranslations: Record<string, readonly [string, string]> = {
+  "Public Gemini access · no invitation, account or API key needed": [
+    "Публичный Gemini · без приглашений, регистрации и пользовательского API-ключа",
+    "Жалпыға ашық Gemini · шақыру, тіркелу және пайдаланушы API кілті қажет емес",
+  ],
+  "I am 18 or older, evaluating this hackathon application in a supported region outside the EEA, UK and Switzerland, and will send only permitted non-sensitive material.":
+    [
+      "Мне 18 лет или больше; я проверяю это хакатон-приложение в разрешённом регионе вне ЕЭЗ, Великобритании и Швейцарии и отправлю только разрешённые неконфиденциальные материалы.",
+      "Мен 18 жасқа толдым; бұл хакатон қолданбасын ЕЭА, Ұлыбритания және Швейцариядан тыс рұқсат етілген өңірде тексеремін және тек рұқсат етілген, құпия емес материалдарды жіберемін.",
+    ],
+  "AI access grants no Google Calendar permission. Export a Workspace Passport before this temporary session resets.":
+    [
+      "Доступ к ИИ не даёт разрешений Google Calendar. Сохраните паспорт рабочего пространства до сброса временного сеанса.",
+      "ЖИ қолжетімділігі Google Calendar рұқсатын бермейді. Уақытша сеанс қалпына келтірілгенге дейін жұмыс кеңістігінің паспортын сақтаңыз.",
+    ],
+  "Question queued": ["Вопрос в очереди", "Сұрақ кезекте"],
+  "Waiting for API quota": ["Ожидание квоты API", "API квотасын күту"],
+  "Gemini is working": [
+    "Gemini обрабатывает вопрос",
+    "Gemini сұрақты өңдеп жатыр",
+  ],
+  "Queue position": ["Место в очереди:", "Кезектегі орын:"],
+  "Shared API quota is temporarily full. Your question stays queued; no paid fallback is used.":
+    [
+      "Общая квота API временно исчерпана. Вопрос остаётся в очереди; платный резервный режим не используется.",
+      "Ортақ API квотасы уақытша таусылды. Сұрақ кезекте қалады; ақылы қосалқы режим қолданылмайды.",
+    ],
+  "One question per workspace at a time. Refresh resumes this question without sending it again.":
+    [
+      "Один вопрос от пространства за раз. После обновления страницы продолжится ожидание этого же вопроса без повторной отправки.",
+      "Әр жұмыс кеңістігінен бір уақытта бір сұрақ. Бет жаңартылғанда сол сұрақ қайта жіберілмей, оны күту жалғасады.",
+    ],
+  "Resume queued question": [
+    "Продолжить ожидание вопроса",
+    "Сұрақты күтуді жалғастыру",
+  ],
   "Execution events": ["События выполнения", "Орындау оқиғалары"],
   "Gemini access and privacy": [
     "Доступ к Gemini и конфиденциальность",

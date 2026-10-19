@@ -1,4 +1,4 @@
-"""Explicit temporary free-host mode; public visitors do not inherit AI access."""
+"""Explicit temporary free-host mode with opt-in anonymous queued AI access."""
 import os
 from urllib.parse import urlparse
 from .domain import RelayError
@@ -26,16 +26,21 @@ def configuration():
 
 
 def route_allowed(path, method):
+    from .public_ai import enabled as public_access
+    if public_access() and path in ('/internal/ai-invitations','/api/judge/claim'):
+        return False
     from .public_demo import route_allowed as illustrative_route
     if path.startswith('/_relay/'):
         return path.rstrip('/') == '/_relay/mcp' and method in ('POST', 'GET', 'DELETE')
     if path == '/internal/ai-invitations':
         return method == 'POST'
-    return illustrative_route(path, method) or (path == '/api/judge/claim' and method == 'POST')
+    import re
+    return illustrative_route(path, method) or (path == '/api/judge/claim' and method == 'POST') or (public_access() and method=='GET' and bool(re.fullmatch(r'/api/runs/[a-f0-9]{32}',path)))
 
 
 def authorize_query(settings, adult_confirmed, permitted_processing, region='KZ'):
-    if not settings.get('ai_access') and settings.get('mode') != 'judge':
+    from .public_ai import enabled as public_access
+    if not public_access() and not settings.get('ai_access') and settings.get('mode') != 'judge':
         raise RelayError('AUTH_REQUIRED', 'A private owner-issued AI invitation is required. Public illustrative tools remain available.')
-    if not adult_confirmed or not permitted_processing or region!='KZ':
+    if not adult_confirmed or not permitted_processing or region not in ('KZ','supported_non_eea'):
         raise RelayError('PROCESSING_CONSENT_REQUIRED', 'Free Gemini requires an adult user and permitted non-sensitive documents. Unpaid inputs may be used for product improvement and human review. Do not send personal or confidential coursework.')

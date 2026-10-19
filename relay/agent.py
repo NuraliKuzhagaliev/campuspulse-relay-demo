@@ -79,7 +79,8 @@ INSTRUCTION+=''' For questions about what a source states, read and answer with 
 class RelayRuntime:
     def query(self,user_id:str,message:str,context_token:str,language:str='en',run_id:str='',conversation_id:str='',history:list|None=None) -> dict:
         """Verified gateway entry point hosted as a managed reasoningEngine."""
-        return asyncio.run(asyncio.wait_for(self._query(user_id,message,context_token,language,run_id,conversation_id,history),timeout=85))
+        from .public_ai import enabled as public_access
+        return asyncio.run(asyncio.wait_for(self._query(user_id,message,context_token,language,run_id,conversation_id,history),timeout=600 if public_access() else 85))
 
     async def _query(self,user_id,message,context_token,language,run_id,conversation_id='',history=None):
         from google.adk.agents import Agent
@@ -101,7 +102,8 @@ class RelayRuntime:
         parsed=urlsplit(url)
         origin=os.getenv('RELAY_MCP_AUDIENCE') or f'{parsed.scheme}://{parsed.netloc}'
         # Initial authorization is verified before any renewal. Renewal is bounded to this run.
-        authorization=RunAuthorization(context_token,url,os.environ['RELAY_CONTEXT_SECRET'])
+        from .public_ai import enabled as public_access
+        authorization=RunAuthorization(context_token,url,os.environ['RELAY_CONTEXT_SECRET'],seconds=600 if public_access() else 85)
         async def headers(*args,**kwargs):
             # Called for fresh MCP sessions; Google helper refreshes machine identity. Workspace context is bounded to this run.
             value={'X-Relay-Context':authorization.context()}
@@ -115,8 +117,13 @@ class RelayRuntime:
         from .service import RelayService
         settings=RelayService(store,tenant).settings()
         async def before_model(callback_context,llm_request):
+            from .public_ai import enabled as public_access,reserve_public_call
+            request_bytes=len(llm_request.model_dump_json(exclude={'tools_dict'},exclude_none=True).encode('utf-8'))
+            if public_access():
+                await reserve_public_call(store,tenant,run_id,request_bytes)
+                return
             from .model_usage import reserve_call
-            reserve_call(store,tenant,run_id,len(llm_request.model_dump_json(exclude={'tools_dict'},exclude_none=True).encode('utf-8')),judge=settings.get('mode') in ('judge','judge_ai'))
+            reserve_call(store,tenant,run_id,request_bytes,judge=settings.get('mode') in ('judge','judge_ai'))
         async def after_model(callback_context,llm_response):
             from .model_usage import record_usage
             record_usage(store,tenant,run_id,getattr(llm_response,'usage_metadata',None))

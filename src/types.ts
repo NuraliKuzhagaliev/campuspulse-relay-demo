@@ -156,6 +156,7 @@ export type Snapshot = {
     deployment_mode?: string;
     model?: string;
     managed_agent_engine?: boolean;
+    public_access?: boolean;
   };
   demo?: {
     public: boolean;
