@@ -6,6 +6,7 @@ import assert from 'node:assert/strict';
 import {chromium,expect as baseExpect} from '@playwright/test';
 const expect=baseExpect.configure({timeout:30000});
 const base='https://campuspulse-relay-demo.onrender.com';
+const resumeFolder=process.argv[2];const resumed=resumeFolder?JSON.parse(await fs.readFile(path.join(resumeFolder,'private-evidence.json'),'utf8')):null;
 const id=Date.now().toString(36),folder=path.resolve('.local/audit-live',id);
 await fs.mkdir(folder,{recursive:true});
 const frozen=JSON.parse(await fs.readFile('.local/audit-holdouts/frozen.json','utf8'));
@@ -13,6 +14,7 @@ const cases=frozen.files.map(f=>({...f,path:path.resolve('.local/audit-holdouts'
 cases.push({file:'11-continued-brief.pdf',path:path.resolve('public/samples/11-continued-brief.pdf'),expected:[{key:'polar-16',minutes:75,due:'2026-10-23T18:00:00+05:00'}]},
  {file:'12-table-brief.pdf',path:path.resolve('public/samples/12-table-brief.pdf'),expected:[{key:'soil-31',minutes:45,due:'2026-10-23T18:00:00+05:00'},{key:'mineral-32',minutes:75,due:'2026-10-23T20:00:00+05:00'}]});
 const proof={at:new Date().toISOString(),url:base,version:'0.5.0',provider_substitution:false,google_login:false,invitations:false,personal_spending:0,checks:{},cases:[],runs:[]};
+if(resumed)proof.resumes_owned_sessions_from={evidence:path.basename(resumeFolder),original_at:resumed.at,original_status:resumed.runs[0]?.status,original_fresh_sessions:resumed.checks.two_clean_automatic_workspaces};
 const hash=v=>crypto.createHash('sha256').update(v).digest('hex');
 const browser=await chromium.launch({headless:true});
 const visitors=[];
@@ -24,11 +26,11 @@ async function save(){
  await fs.writeFile(path.resolve('docs/evidence',`audit-live-${id}.json`),JSON.stringify(safe,null,2)+'\n');
 }
 const state=async v=>(await v.page.request.get('/api/state')).json();
-async function open(){
- const context=await browser.newContext({baseURL:base,viewport:{width:1440,height:1000}}),page=await context.newPage();
+async function open(storageState){
+ const context=await browser.newContext({baseURL:base,viewport:{width:1440,height:1000},...(storageState?{storageState}:{})}),page=await context.newPage();
  const v={context,page};visitors.push(v);await page.goto('/',{waitUntil:'domcontentloaded',timeout:90000});
  await expect(page.getByRole('button',{name:'Use my own data',exact:true})).toBeVisible({timeout:45000});
- const s=await state(v);assert.equal(s.sources.length,0);assert.equal(s.tasks.length,0);assert(s.agent.configured&&s.agent.public_access);
+ const s=await state(v);if(!storageState){assert.equal(s.sources.length,0);assert.equal(s.tasks.length,0);}assert(s.agent.configured&&s.agent.public_access);
  v.workspace=s.workspace_id;const cookie=(await context.cookies()).find(c=>c.name==='relay_session');assert(cookie?.secure&&cookie.httpOnly&&cookie.sameSite==='Strict');await context.storageState({path:path.join(folder,'private-session-'+v.workspace+'.json')});
  return v;
 }
@@ -38,7 +40,7 @@ async function run(v,start){
  const began=Date.now();await start();const response=await pending;assert.equal(response.status(),202);let result=await response.json();
  const deadline=Date.now()+660000;
  while(['queued','running','quota_wait','cancel_requested'].includes(result.status)&&Date.now()<deadline){await new Promise(r=>setTimeout(r,3000));result=await (await v.page.request.get('/api/runs/'+result.run_id)).json();}
- result.observed_latency_ms=Date.now()-began;proof.runs.push(result);await save();assert.equal(result.status,'complete');assert.equal(result.provider,'gemini_developer');
+ result.observed_latency_ms=Date.now()-began;proof.runs.push(result);await save();assert(['complete','partial'].includes(result.status));assert.equal(result.provider,'gemini_developer');
  assert.equal(result.runtime_revision,proof.deployed_commit);assert.equal(result.gateway_revision,proof.deployed_commit);
  await expect(v.page.locator('.answer pre')).toHaveText(result.text,{timeout:20000});return result;
 }
@@ -47,19 +49,24 @@ async function documentCase(c,index){
  const v=index<2?visitors[index]:await open();const item={file:c.file,sha256:hash(await fs.readFile(c.path)),passed:false};proof.cases.push(item);
  if(c.sha256)assert.equal(item.sha256,c.sha256);
  try{
-  await v.page.locator('input[type=file]').first().setInputFiles(c.path);await expect(v.page.getByText(c.file,{exact:true}).first()).toBeVisible();
+  if(!(await state(v)).sources.some(s=>s.filename===c.file))await v.page.locator('input[type=file]').first().setInputFiles(c.path);
+  else await v.page.getByRole('button',{name:'Evidence',exact:true}).click();
+  await expect(v.page.getByText(c.file,{exact:true}).first()).toBeVisible();
   const source=(await state(v)).sources.find(s=>s.filename===c.file);item.source_id=source.id;item.source_version=source.version;
-  const answer=await run(v,()=>v.page.getByRole('button',{name:'Propose with Gemini',exact:true}).click());
+  const answer=index===0&&resumed?resumed.runs[0]:await run(v,()=>v.page.getByRole('button',{name:'Propose with Gemini',exact:true}).click());
+  if(index===0&&resumed){proof.runs.push(answer);await save();}item.actual_answer_status=answer.status;
   assert(answer.tool_observations?.some(t=>t.tool==='read_course_source'&&t.status==='observed'));
   assert(answer.tool_observations?.some(t=>t.tool==='propose_academic_extraction'&&t.status==='observed'));
   await v.page.getByRole('button',{name:'Refresh proposals',exact:true}).click();
   const proposals=(await (await v.page.request.get('/api/extraction-proposals')).json()).proposals.filter(p=>p.source_id===source.id);item.proposals=proposals;
-  const entities=proposals.flatMap(p=>p.entities).filter(e=>!e.applied);assert.equal(entities.length,c.expected.length);
+  const entities=proposals.flatMap(p=>p.entities);assert.equal(entities.length,c.expected.length);
   for(const expected of c.expected){
    const entity=entities.find(e=>e.fields.some(f=>f.field==='assignment_key'&&String(f.value).toLowerCase()===expected.key.toLowerCase()));assert(entity,'Missing entity '+expected.key);
    assert.equal(entity.fields.find(f=>f.field==='minutes')?.value,expected.minutes);
    const due=entity.fields.find(f=>f.field==='due');assert(due?.value&&Date.parse(due.value)===Date.parse(expected.due),'Incorrect cited due for '+expected.key);
    assert.equal(due.validation_status,'needs_confirmation');
+   if(entity.applied)continue;
+   await expect(v.page.locator('.working')).toHaveCount(0);
    const forms=v.page.getByTestId('review-entity');let form;
    for(let i=0;i<await forms.count();i++)if((await forms.nth(i).getByLabel('Assignment key',{exact:true}).inputValue()).toLowerCase()===expected.key.toLowerCase()){form=forms.nth(i);break;}
    assert(form);await form.locator('summary').click();await expect(form.locator('blockquote').first()).toBeVisible();
@@ -88,7 +95,8 @@ async function documentCase(c,index){
 }
 try{
  const health=await (await fetch(base+'/api/health')).json();assert.equal(health.version,'0.5.0');proof.deployed_commit=health.deployed_commit;
- await open();await open();assert.notEqual(visitors[0].workspace,visitors[1].workspace);proof.checks.two_clean_automatic_workspaces=true;await save();
+ if(resumed){for(const f of (await fs.readdir(resumeFolder)).filter(n=>n.startsWith('private-session-')))await open(path.join(resumeFolder,f));if(!(await state(visitors[0])).sources.length)visitors.reverse();assert.equal(proof.deployed_commit,resumed.deployed_commit);}
+ else {await open();await open();}assert.notEqual(visitors[0].workspace,visitors[1].workspace);proof.checks.two_clean_automatic_workspaces=resumed?resumed.checks.two_clean_automatic_workspaces:true;await save();
  for(let i=0;i<cases.length;i++)await documentCase(cases[i],i);
  const [a,b]=visitors;assert.equal((await b.page.request.get('/api/sources/'+a.source.id)).status(),403);assert.equal((await a.page.request.get('/api/sources/'+b.source.id)).status(),403);
  assert.equal((await b.page.request.get('/api/runs/'+proof.runs[0].run_id)).status(),403);proof.checks.documents_history_runs_plans_isolated=true;

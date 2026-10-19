@@ -146,7 +146,7 @@ class RelayRuntime:
         started={}
         began=time.perf_counter()
         try:
-            async for event in runner.run_async(user_id=tenant,session_id=session.id,new_message=types.Content(role='user',parts=[types.Part(text=message)]),run_config=RunConfig(max_llm_calls=8)):
+            async for event in runner.run_async(user_id=tenant,session_id=session.id,new_message=types.Content(role='user',parts=[types.Part(text=message)]),run_config=RunConfig(max_llm_calls=12)):
                 content=getattr(event,'content',None)
                 for part in getattr(content,'parts',[]) or []:
                     if getattr(part,'thought',False):
@@ -172,5 +172,10 @@ class RelayRuntime:
                         output.append(part.text)
             text='\n'.join(output).strip()
             return dict(text=text,status=('partial' if tool_failed else 'complete') if text else 'failed',required_tool_failed=tool_failed,tool_observations=observations,run_id=run_id,conversation_id=conversation_id,mode=config['mode'],provider=config['provider'],model=config['model'],deployment_mode=config['deployment_mode'],runtime_revision=config.get('revision'),duration_ms=round((time.perf_counter()-began)*1000))
+        except Exception as exc:
+            if type(exc).__name__!='LlmCallsLimitExceededError':raise
+            # Retain actual observed work when the bounded reasoning budget ends.
+            # This is an operational error, never an invented model answer.
+            return dict(text='',status='partial',code='AGENT_STEP_LIMIT',reason='This turn reached its bounded tool-step limit. No final model answer was produced. Review any saved proposals in Document review before retrying.',required_tool_failed=True,tool_observations=observations,run_id=run_id,conversation_id=conversation_id,mode=config['mode'],provider=config['provider'],model=config['model'],deployment_mode=config['deployment_mode'],runtime_revision=config.get('revision'),duration_ms=round((time.perf_counter()-began)*1000))
         finally:
             await toolset.close()

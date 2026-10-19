@@ -982,6 +982,7 @@ export default function App() {
                 data={data}
                 refresh={refresh}
                 work={work}
+                busy={!!busy}
                 onExtract={(id) =>
                   void ask(
                     `Read source ${id} completely, including continuation chunks/pages. Extract its academic assignments using propose_academic_extraction. Group each assignment under a distinct entity_id (use existing section_key if it matches). Cite exact page quotes for title, course, term, assignment_key, due, minutes, rubric and normalized submission_requirement where present. Keep missing or ambiguous fields unknown. Do not save a plan or apply facts. Tell me which fields need clarification; I will review each proposal in Document review.`,

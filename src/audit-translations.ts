@@ -1,4 +1,5 @@
 export const auditTranslations: Record<string, [string, string]> = {
+ 'The tool-step limit was reached. No final AI answer was produced. Review saved document proposals before retrying.':['Достигнут предел шагов инструментов. Итоговый ответ ИИ не получен. Перед повтором проверьте сохранённые предложения в разделе проверки документа.','Құрал қадамдарының шегіне жетті. ЖИ-дің қорытынды жауабы алынбады. Қайта сұрамас бұрын құжатты тексеру бөліміндегі сақталған ұсыныстарды қарап шығыңыз.'],
  'Connections':['Подключения','Қосылымдар'],
  'Public temporary workspace':['Публичная временная рабочая область','Жалпыға ашық уақытша жұмыс кеңістігі'],
  'Calendar needs reconnection':['Calendar нужно переподключить','Calendar-ды қайта қосу керек'],

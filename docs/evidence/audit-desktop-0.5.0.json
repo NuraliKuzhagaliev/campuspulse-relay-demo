@@ -1,0 +1,69 @@
+{
+  "checked_at": "2026-10-19T17:46:45.972Z",
+  "version": "0.5.0",
+  "model_calls": 0,
+  "real_calendar_writes": 0,
+  "native_dialog_visibility_checked": false,
+  "notification_visibility_checked": false,
+  "checks": {
+    "package_matches_source_and_sandboxed_D_profile": true,
+    "native_import_request_readback_and_refresh": true,
+    "poll_route_reaches_tenant_authorization_not_IPC_rejection": true,
+    "reopen_keeps_own_workspace": true,
+    "reset_rotates_workspace_and_native_CSRF_without_entry_gate": true
+  },
+  "packaged_files": [
+    {
+      "file": "desktop\\locales.cjs",
+      "sha256": "be219f1d7ed568462d68b666aacd03d4a638027b777a8aed9423f2bac0660d9a",
+      "matches_current_source": true
+    },
+    {
+      "file": "desktop\\main.cjs",
+      "sha256": "348bcaed09014126e44fda3aae969daec88b7774b928dafd98b382c77f83b7ba",
+      "matches_current_source": true
+    },
+    {
+      "file": "desktop\\preload.cjs",
+      "sha256": "def16c63fa8563bfefa18ddc535cf952da93b8f388413570eb54daaf7e5994d6",
+      "matches_current_source": true
+    },
+    {
+      "file": "desktop\\request-policy.cjs",
+      "sha256": "dc8a1befe4cf249aaad3aa5ba0c342a4abcd2a084cc52383df6110b58aa41720",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\assets\\index-B-lRwg8k.css",
+      "sha256": "83c45ba95223b8810de19b5ac5a5cc85cff3618962b76d36e2e4a33758a9d71e",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\assets\\index-BDqhXpPO.js",
+      "sha256": "c18177377545a45a944ee0e9f0b693f2da4630c65cd3d8588c37e5186c454a9c",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\assets\\relay-pair.js",
+      "sha256": "516eea0fbdd7bea908e088a5b02e80c1c3896d51a48e2ce61cb87ef293c3b7a7",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\index.html",
+      "sha256": "7ba0e83e47abcd99d634f94254bbd59430fc8d01fcfb0cb64d2f453ba955ffec",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\samples\\index.html",
+      "sha256": "491637dca7978eebc66d7817ea3aadb4d4ac9f2259d811d725311e652a278c23",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\samples\\privacy.html",
+      "sha256": "adc7f70004ff6751b2fbcd0baf224dfdf528691c0f664411a7be4e89ceabbd5d",
+      "matches_current_source": true
+    }
+  ],
+  "deployed_commit": "3797e12209230c5692bb8a214d26242ca60e9638",
+  "passed": true
+}

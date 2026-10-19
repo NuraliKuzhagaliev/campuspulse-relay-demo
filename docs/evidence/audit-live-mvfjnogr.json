@@ -1,0 +1,30 @@
+{
+  "at": "2026-10-19T17:44:32.668Z",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "version": "0.5.0",
+  "provider_substitution": false,
+  "google_login": false,
+  "invitations": false,
+  "personal_spending": 0,
+  "checks": {
+    "two_clean_automatic_workspaces": true
+  },
+  "cases": [
+    {
+      "file": "holdout-en.txt",
+      "sha256": "7eb6d09e5919d0e961d8f2b376ddaddcf5c12b6522036576880638acc6d1aba0",
+      "passed": false,
+      "error": "Assertion failed; private diagnostics retained on D:."
+    }
+  ],
+  "runs": [],
+  "resumes_owned_sessions_from": {
+    "evidence": "mvfjj0e7",
+    "original_at": "2026-10-19T17:40:54.852Z",
+    "original_status": "partial",
+    "original_fresh_sessions": true
+  },
+  "deployed_commit": "3797e12209230c5692bb8a214d26242ca60e9638",
+  "passed": false,
+  "error": "Acceptance assertion failed; private diagnostics retained on D:."
+}

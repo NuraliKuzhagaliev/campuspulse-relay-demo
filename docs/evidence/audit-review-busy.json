@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-19T18:04:01.585Z",
+  "base": "http://127.0.0.1:8028",
+  "provider_calls": 0,
+  "passed": true,
+  "confirm_disabled_during_pending_refresh": true,
+  "confirmation_saved_after_refresh": true
+}

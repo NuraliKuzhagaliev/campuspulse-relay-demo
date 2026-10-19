@@ -56,7 +56,8 @@ try{
  await step('passport_download_restore_reopen',async()=>{
    await page.getByRole('button',{name:'Workspace Passport',exact:true}).click();await page.getByRole('button',{name:'Preview portable workspace',exact:true}).click();await expect(page.getByRole('button',{name:'Download .relay.json',exact:true})).toBeVisible();
    const pending=page.waitForEvent('download');await page.getByRole('button',{name:'Download .relay.json',exact:true}).click();const downloaded=await pending;const target=path.join(folder,'own-audit.relay.json');await downloaded.saveAs(target);
-   await page.getByLabel('Portable workspace file',{exact:true}).setInputFiles(target);await expect(page.getByRole('button',{name:'Import as fresh copy and switch',exact:true})).toBeVisible();
+   const choose=page.getByRole('button',{name:'Choose portable workspace',exact:true});await expect(choose).toBeEnabled();
+   const selecting=page.waitForEvent('filechooser');await choose.click();await (await selecting).setFiles(target);await expect(page.getByRole('button',{name:'Import as fresh copy and switch',exact:true})).toBeVisible();
    await page.getByRole('button',{name:'Import as fresh copy and switch',exact:true}).click();await expect.poll(async()=>(await state()).settings.portable_origin).toBe('untrusted_manual_copy');
    await page.reload();await expect(page.getByRole('button',{name:'Use my own data',exact:true})).toBeVisible();const s=await state();assert.equal(s.tasks[0].progress.remaining_minutes,95);assert.equal(s.tasks[0].minutes,75);assert.equal(s.receipts.length,0);
  });

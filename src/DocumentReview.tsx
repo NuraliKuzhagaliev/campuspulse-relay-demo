@@ -41,12 +41,14 @@ function ReviewEntity({
   entity,
   data,
   work,
+  busy,
   done,
 }: {
   proposal: Proposal;
   entity: Entity;
   data: Snapshot;
   work: Work;
+  busy: boolean;
   done: () => Promise<void>;
 }) {
   const { tr } = useLocale();
@@ -174,7 +176,7 @@ function ReviewEntity({
         />
         {tr("I reviewed this assignment and confirm only these fields.")}
       </label>
-      <button className="primary" disabled={!checked || entity.applied}>
+      <button className="primary" disabled={busy || !checked || entity.applied}>
         {entity.applied ? tr("Confirmed") : tr("Confirm this assignment")}
       </button>
     </form>
@@ -183,11 +185,13 @@ function ReviewEntity({
 export function DocumentReview({
   data,
   work,
+  busy,
   refresh,
   onExtract,
 }: {
   data: Snapshot;
   work: Work;
+  busy: boolean;
   refresh: () => Promise<unknown>;
   onExtract: (id: string) => void;
 }) {
@@ -225,6 +229,7 @@ export function DocumentReview({
           )}
           <button
             className="secondary"
+            disabled={busy}
             onClick={() =>
               void work(tr("Review extracted fields"), async () => {
                 await api(`/sources/${s.id}/review`, "POST");
@@ -234,7 +239,7 @@ export function DocumentReview({
           >
             {tr("Review extracted fields")}
           </button>
-          <button className="secondary" onClick={() => onExtract(s.id)}>
+          <button className="secondary" disabled={busy} onClick={() => onExtract(s.id)}>
             {tr("Propose with Gemini")}
           </button>
         </div>
@@ -246,6 +251,7 @@ export function DocumentReview({
       </p>
       <button
         className="text-button"
+        disabled={busy}
         onClick={() => void work(tr("Refresh proposals"), load)}
       >
         {tr("Refresh proposals")}
@@ -260,6 +266,7 @@ export function DocumentReview({
               entity={e}
               data={data}
               work={work}
+              busy={busy}
               done={done}
             />
           )),

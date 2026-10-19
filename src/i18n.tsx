@@ -283,6 +283,8 @@ const errorKeys: Record<string, string> = {
     "The service request allowance is exhausted. Wait for its reset before retrying.",
   UPSTREAM_UNAVAILABLE:
     "The external service could not be reached. Reconnect and retry; no success is assumed.",
+  AGENT_STEP_LIMIT:
+    "The tool-step limit was reached. No final AI answer was produced. Review saved document proposals before retrying.",
   PARSE_FAILED:
     "The source or structured input could not be read. Check its format, dates and required fields.",
   UNSUPPORTED_INPUT:
