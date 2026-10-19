@@ -2,15 +2,16 @@
   "schema_version": 4,
   "product": "CampusPulse RELAY",
   "version": "0.3.0",
-  "created_at": "2026-10-19T00:23:40.084914+00:00",
+  "release_revision": "0.3.0-r1",
+  "created_at": "2026-10-19T00:28:01.411759+00:00",
   "status": "local_reviewable_candidate_native_human_gate_pending_not_published",
   "project_root": "D:\\projects\\CampusPulseRELAY",
-  "source_commit": "2644622d13922866421ba9d8e9d51f37df494c96",
+  "source_commit": "660211d3bf570b89bca9d45033fc2224cd1a0ba4",
   "source_commit_semantics": "Local committed source, verification and docs are archived. Final generated manifest is distributed separately. No public/cloud deployment of0.3.0.",
   "repository": {
     "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo",
     "branch": "local/four-additions-0.3.0",
-    "source_commit": "2644622d13922866421ba9d8e9d51f37df494c96",
+    "source_commit": "660211d3bf570b89bca9d45033fc2224cd1a0ba4",
     "published": false
   },
   "urls": {
@@ -118,9 +119,9 @@
       "errors": "0",
       "failures": "0",
       "skipped": "0",
-      "tests": "110",
-      "time": "8.769",
-      "timestamp": "2026-10-19T05:13:01.542740+05:00",
+      "tests": "111",
+      "time": "9.174",
+      "timestamp": "2026-10-19T05:26:27.644550+05:00",
       "hostname": "BlackWolf"
     },
     "browser": {
@@ -255,7 +256,25 @@
     "public_deployment_replaced": false,
     "github_writes": false,
     "inherited_gates": "Gemini / Agent Engine / cloud MCP auth / real Calendar / authenticated hosted judge remain pending",
-    "complete_web_bundle": "docs/evidence/four-web-bundle.json"
+    "complete_web_bundle": "docs/evidence/four-web-bundle.json",
+    "initial_python_0_3_0": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "110",
+      "time": "8.769",
+      "timestamp": "2026-10-19T05:13:01.542740+05:00",
+      "hostname": "BlackWolf"
+    },
+    "release_revision": "0.3.0-r1",
+    "health_version_regression": {
+      "passed": true,
+      "actual_running_backend": "0.3.0",
+      "log": ".local/logs/four-python-r1.log",
+      "backend_only_change": true,
+      "windows_binaries_unchanged": true
+    }
   },
   "preserved_releases": [
     {
@@ -282,6 +301,11 @@
       "version": "0.2.1",
       "directory": "D:\\projects\\CampusPulseRELAY\\release\\versions\\0.2.1",
       "artifacts_hash_verified": 6
+    },
+    {
+      "version": "0.3.0",
+      "directory": "D:\\projects\\CampusPulseRELAY\\release\\versions\\0.3.0",
+      "artifacts_hash_verified": 4
     }
   ],
   "artifacts": [
@@ -301,17 +325,17 @@
     },
     {
       "kind": "complete_web_application",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\web\\CampusPulseRELAY-0.3.0-web-app.zip",
-      "relative_path": "web/CampusPulseRELAY-0.3.0-web-app.zip",
-      "bytes": 1138994,
-      "sha256": "311849f7791616e4789ecc625d51a61e55b869570667bc7a8f7c299310c730af"
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\web\\CampusPulseRELAY-0.3.0-r1-web-app.zip",
+      "relative_path": "web/CampusPulseRELAY-0.3.0-r1-web-app.zip",
+      "bytes": 1139312,
+      "sha256": "c258173449551686e706c9f73ab18358fc8229f550f7295c44349fac66b62a4a"
     },
     {
       "kind": "source_archive",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\source\\CampusPulseRELAY-0.3.0-source.zip",
-      "relative_path": "source/CampusPulseRELAY-0.3.0-source.zip",
-      "bytes": 43818555,
-      "sha256": "206716f14b50ac0d6203dea3976e30475a4b291518aecb280dacec372d715fdb"
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\source\\CampusPulseRELAY-0.3.0-r1-source.zip",
+      "relative_path": "source/CampusPulseRELAY-0.3.0-r1-source.zip",
+      "bytes": 43820196,
+      "sha256": "6186a1d295051180963de13350bfe7b71303b2e271b57e21fe895a4a657db8f0"
     }
   ],
   "preserved_presentation": {

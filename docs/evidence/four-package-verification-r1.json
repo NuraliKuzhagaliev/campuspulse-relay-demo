@@ -1,0 +1,38 @@
+{
+  "version": "0.3.0",
+  "release_revision": "0.3.0-r1",
+  "source_commit": "660211d3bf570b89bca9d45033fc2224cd1a0ba4",
+  "artifacts": [
+    {
+      "kind": "windows_installer",
+      "bytes": 118762479,
+      "sha256": "b363f5f56b8129ef6bc19b37cfca3aa3dc9b9882ef8a9dcc871ec18545c3f933",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.3.0-x64-setup.exe"
+    },
+    {
+      "kind": "windows_portable",
+      "bytes": 118537274,
+      "sha256": "1e43ae2c581043e1bfeada1c78048f2b3eb12052a5576e41ca904d74f75d8045",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.3.0-x64-portable.exe"
+    },
+    {
+      "kind": "complete_web_application",
+      "bytes": 1139312,
+      "sha256": "c258173449551686e706c9f73ab18358fc8229f550f7295c44349fac66b62a4a",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\web\\CampusPulseRELAY-0.3.0-r1-web-app.zip"
+    },
+    {
+      "kind": "source_archive",
+      "bytes": 43820196,
+      "sha256": "6186a1d295051180963de13350bfe7b71303b2e271b57e21fe895a4a657db8f0",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\source\\CampusPulseRELAY-0.3.0-r1-source.zip"
+    }
+  ],
+  "prior_artifact_hashes_verified": 39,
+  "all_artifacts_including_current": 43,
+  "windows_binaries_unchanged": true,
+  "source_and_web_health_version": "0.3.0",
+  "published": false,
+  "native_human_pending": true,
+  "passed": true
+}
