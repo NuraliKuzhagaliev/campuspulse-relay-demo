@@ -74,6 +74,7 @@ async function ask(s,text,refresh){
 }
 try{
  const health=await (await fetch(url+'/api/health')).json();assert.equal(health.version,'0.4.1');assert.equal(health.demo.gemini,'public_queued');
+ if(process.env.RELAY_EXPECTED_DEPLOY_COMMIT)assert.equal(health.deployed_commit,process.env.RELAY_EXPECTED_DEPLOY_COMMIT);
  proof.deployed_commit=health.deployed_commit;
  let a,b,sa,sb;const markerA='photon-'+crypto.randomBytes(5).toString('hex'),markerB='ethics-'+crypto.randomBytes(5).toString('hex');
  await step('two_clean_automatic_isolated_workspaces',async()=>{

@@ -1,0 +1,21 @@
+{
+  "python_tests_passed": 132,
+  "python_subtests_passed": 3,
+  "ipc_policy_tests_passed": 6,
+  "public_queue_tests_passed": 9,
+  "simulated_load_real_gemini_calls": 0,
+  "public_browser_ui_regressions": [
+    "localized provider quota outcome EN/RU/KK",
+    "queued request refresh without duplicate submission",
+    "queue EN/RU/KK mobile",
+    "cancel queued request",
+    "public reset without entry gate"
+  ],
+  "logs": {
+    "full_python": ".local/logs/public-ai-pytest-final.txt",
+    "queue_with_100_plan_isolation": ".local/logs/public-ai-queue-final.txt",
+    "ipc": ".local/logs/public-ai-ipc-final.txt",
+    "browser": ".local/logs/public-ai-ui-tests.txt"
+  },
+  "passed": true
+}

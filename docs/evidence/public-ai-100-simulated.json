@@ -18,5 +18,8 @@
     "rolling_rpm_limit_15_respected": true,
     "no_real_calendar_writes": true
   },
-  "passed": true
+  "passed": true,
+  "simulated_boundary": "invoke_alternative_query",
+  "actual_mcp_protocol_in_100_session_test": false,
+  "signed_workspace_context_validated": true
 }

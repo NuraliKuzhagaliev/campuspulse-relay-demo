@@ -1,5 +1,5 @@
 """Record only actual 0.4.1 public results; preserve the previous release docs."""
-import json,shutil
+import json,shutil,os
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]
 read=lambda name:json.loads((root/name).read_text(encoding='utf-8'))
@@ -7,8 +7,9 @@ live=read('docs/evidence/public-ai-acceptance-0.4.1.json')
 load=read('docs/evidence/public-ai-100-simulated.json')
 desktop=read('docs/evidence/public-ai-desktop-0.4.1.json')
 workflow=read('docs/evidence/public-demo-browser-0.4.1.json')
+github_unavailable=workflow['checks'].get('hosted_github_unavailable')
 assert live['verified'] and live['actual_complete_real_gemini_turns']==2 and load['passed'] and desktop['passed'] and workflow['passed']
-commit=live['deployed_commit'];url=live['url'];deploy='dep-dbb348mi0phs73bb6u50'
+commit=live['deployed_commit'];url=live['url'];deploy=os.environ['RELAY_VERIFIED_DEPLOY_ID']
 paths=['README.md','STATUS.md','BLOCKERS.md','REQUIREMENTS.md','docs/final_integration_ledger.md','docs/final_judge_guide.md','docs/final_free_path.md','docs/final_cutover_plan.md','docs/cost_estimate.md','docs/final_native_check.md','release/README.md']
 history=root/'docs/history/0.4.0-before-public-ai'
 history.mkdir(parents=True,exist_ok=True)
@@ -17,13 +18,15 @@ for name in paths:
     if not target.exists():shutil.copy2(root/name,target)
 def write(name,text):(root/name).write_text(text.strip()+'\n',encoding='utf-8')
 summary=f'''Public HTTPS **{url}** runs **0.4.1**, existing Render **Free** service `srv-dbajs73bc2fs73bm9mfg`, deploy `{deploy}`, runtime commit `{commit}`. No new infrastructure, paid upgrade, billing activation or personal payment was used.'''
-verification='''Two originally clean automatic anonymous workspaces uploaded separate unseen synthetic documents and each completed a real Gemini/ADK/signed-MCP answer. No invitation, registration, Google login or visitor API key was used. Refresh resumed the same run. A later non-model test stage initially attempted planning before resolving the fixture conflict; its precondition was corrected and the remaining checks passed in the same two owned workspaces with zero additional model calls. This reuse is recorded explicitly, not counted as another pair of fresh visitors.
+verification='''Two clean automatic anonymous workspaces uploaded separate unseen synthetic documents and each completed a real Gemini/ADK/signed-MCP answer on the current deployment. No invitation, registration, Google login or visitor API key was used. Refresh resumed the same run. The full current acceptance includes planning after explicit conflict resolution. Earlier non-model validation had attempted planning before resolving a fixture conflict; its original protocol and explicitly reused-session follow-up remain preserved in the r1 history.
 
-Actual first batch: one complete answer and one Google `504 DEADLINE_EXCEEDED`; that failure remains recorded. The next pair completed both questions. No hidden model retry, paid fallback, statistical success rate or latency guarantee is claimed. Published evidence contains metadata/hashes only; full answers, document citations, cookies and content screenshots remain in ignored private D: folders.
+Actual first batch: one complete answer and one Google `504 DEADLINE_EXCEEDED`; that failure remains recorded. The latest clean pair completed both questions. No hidden model retry, paid fallback, statistical success rate or latency guarantee is claimed. Published evidence contains metadata/hashes only; full answers, document citations, cookies and content screenshots remain in ignored private D: folders.
 
 Separately, 100 real HTTP capability sessions/uploads/queue/history paths ran with the provider simulated: unique workspaces, foreign source/run/history/plan authorization, one outstanding turn per workspace, two workers, FIFO/fair quota tickets and 15-RPM rolling accounting passed. Plan objects in this load test are explicitly seeded isolation fixtures, not 100 solver or real-model acceptances. Zero actual Gemini calls. Final local suite:132 Python tests and3 subtests passed;6 IPC policy tests; queue refresh/cancel/reset and localized quota UI regressions passed.
 
-The full hosted illustrative workflow passed: import, original evidence, explicit assignment mapping/conflict resolution, validated plan, what-if, illustrative approval/read-back receipt, execution events, real backend GitHub read, EN/RU/Kazakh, mobile, refresh and reset/isolation. Nine additional language/width states and automated AA checks passed in the real-AI workspaces. Installed0.4.1 main/preload/policy/renderer match source; anonymous public import/read-back/refresh, polling route authorization, reopen and CSRF reset passed with zero model calls. The original native profile still reads45 logged/95 explicitly remaining.'''
+The full hosted illustrative workflow passed: import, original evidence, explicit assignment mapping/conflict resolution, validated plan, what-if, illustrative approval/read-back receipt, execution events, EN/RU/Kazakh, mobile, refresh and reset/isolation. Nine additional language/width states and automated AA checks passed in the real-AI workspaces. Six targeted browser regressions include the three queue-event summaries previously missing RU/Kazakh translations. Installed0.4.1 main/preload/policy/renderer match source; anonymous public import/read-back/refresh, polling route authorization, reopen and CSRF reset passed with zero model calls. An initial r2 test queried the retired cookie during reset; waiting for rotation before checking passed. Import itself had already passed. The original native profile still reads45 logged/95 explicitly remaining.'''
+if github_unavailable:
+    verification+='\n\nCurrent GitHub read returned429 UPSTREAM_RATE_LIMITED from the shared anonymous upstream quota. The UI displays a useful error and no fresh read is claimed. The previous actually successful hosted GitHub read/commit/fetch time is preserved in docs/history/0.4.1-public-ai-r1-evidence/public-demo-browser-0.4.1.json. Respect provider backoff; no paid upgrade or copied broad account token was used.'
 limits='''One outstanding question per workspace; FIFO queue with two workers and fair tickets before each actual model call. The account's observed limits are15RPM/250,000TPM/500RPD, not a remaining balance. Conservative context reservations, Pacific-midnight daily reset and authoritative provider429/backoff protect shared free capacity. No judge-specific reserve, number of codes or visit schedule. Normal anti-abuse and bounded queue/session capacity still apply. Anonymous cookie creation cannot independently identify people or defeat every distributed attacker.
 
 Automatic sessions last up to two hours; Render Free can sleep and lose temporary SQLite/uploads/history/queue earlier on restart/redeploy. No durability or always-on Scheduler guarantee. Export a Workspace Passport for portable non-secret data. Reset/expiry removes documents, history and globally queued text/results; late results cannot recreate a deleted workspace. Active remote work is not claimed stopped merely because the browser stops waiting.'''
@@ -33,7 +36,7 @@ Real Calendar remains separate and optional. The dedicated secondary target exis
 
 New0.4.1 unmodified native Open/Cancel/Save visibility, real import through that picker, notification banner and click/focus remain human observations. Automated import/API/policy contracts and historical0.1.1 picker/banner plus0.3 human45/95 restart evidence are separate. Current installed original-profile45/95 read-back is verified, not a new human picker claim.'''
 evidence='''- `docs/evidence/public-ai-acceptance-0.4.1.json`: combined real public acceptance, with original clean-session evidence and explicit zero-model follow-up.
-- `docs/evidence/public-ai-live-mvfe1dk2.json`: two actual complete Gemini/MCP outcomes, response hashes and retained later harness precondition failure.
+- The clean-session evidence named by the combined acceptance: two actual complete current Gemini/MCP outcomes and response hashes. The earlier `public-ai-live-mvfe1dk2.json` retains the r1 outcomes and later harness precondition failure.
 - `docs/evidence/public-ai-first-provider-failure.json`: actual first Google504, retained separately.
 - `docs/evidence/public-ai-100-simulated.json`:100-session simulated-provider queue/isolation.
 - `docs/evidence/public-demo-browser-0.4.1.json`: hosted operational workflow and actual GitHub commit/read.
@@ -61,7 +64,7 @@ RELAY retains source/page/version quotations and disagreements, validates CP-SAT
 
 All controlled local dependencies, caches, profiles, temp and outputs stay under `D:\\projects\\CampusPulseRELAY`. Read/use `scripts/env.ps1`. Illustrative local development: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File D:\\projects\\CampusPulseRELAY\\scripts\\dev.ps1`. No Google account is required. Server-only alternative Gemini: `scripts/run-alternative.ps1`, private DPAPI key configuration and HTTPS staging; never put keys in the frontend or desktop app. No permanent execution-policy or trust-root change is required.
 
-Versioned installer/portable, full local frontend+Python illustrative bundle, exact source archive, editable presentation/PDF and checksums are indexed in `release/manifest.json` and `submission/0.4.1-public-ai-r1`. The manifest distinguishes archived source from the deployed runtime commit. Earlier sealed releases and installed0.4.0 backup remain unchanged. Binaries are unsigned. Read `release/README.md`.
+Versioned installer/portable, full local frontend+Python illustrative bundle, exact source archive, editable presentation/PDF and checksums are indexed in `release/manifest.json` and `submission/0.4.1-public-ai-r2`. The manifest distinguishes archived source from the deployed runtime commit. Earlier sealed releases and installed0.4.0 backup remain unchanged. Binaries are unsigned. Read `release/README.md`.
 
 ## Remaining gates
 
@@ -93,7 +96,7 @@ ledger=f'''# Requirement and evidence ledger · 0.4.1
 | Public real Gemini/MCP | Two clean automatic anonymous sessions, independent unseen uploads and actual source-grounded answers. No codes, registration, Google login or visitor keys | public-ai-acceptance-0.4.1.json; actual alternative Gemini, not managed GCP |
 | Isolation / authorization | Own documents, conversations, runs and plans; foreign access denied; internal/admin/test/invitation routes protected | Two actual workspaces plus100 simulated-provider HTTP workspaces |
 | Shared fair queue | One outstanding turn per workspace, FIFO,2 workers, fair tickets per model call, observed quota ceilings, Pacific daily reset, provider backoff | test_public_ai_queue.py; zero actual Gemini in100-session load |
-| Supported web operations | Import/evidence/conflict, plan/what-if, illustrative approved receipts, events, actual hosted GitHub read | public-demo-browser-0.4.1.json |
+| Supported web operations | Import/evidence/conflict, plan/what-if, illustrative approved receipts, events. GitHub previously read live; current429 is reported honestly | public-demo-browser-0.4.1.json and r1 read evidence |
 | EN/RU/Kazakh and mobile | Operational translations,9 extra language-width states, refresh, automated AA | Actual hosted browser evidence; no manual universal accessibility guarantee |
 | Windows0.4.1 | Installed main/preload/policy/renderer match source; HTTPS anonymous import/read-back/refresh, poll authorization, reopen/reset/CSRF | public-ai-desktop-0.4.1.json;0 model calls; original45/95 remains |
 | F1–F5 | **Locally implemented** | Real Calendar and full enhancement-level Gemini acceptance pending |
@@ -223,7 +226,7 @@ write('release/README.md',f'''# CampusPulse RELAY0.4.1 · public AI release
 
 {summary}
 
-Manifest/checksums name exact archived source, separately deployed runtime, unsigned Windows installer/portable, complete local React+Python illustrative bundle and editable12-slide PPTX/PDF. New revision: `0.4.1-public-ai-r1`. Earlier sealed releases and installed0.4.0-hosted backup retain verified hashes.
+Manifest/checksums name exact archived source, separately deployed runtime, unsigned Windows installer/portable, complete local React+Python illustrative bundle and editable12-slide PPTX/PDF. New revision: `0.4.1-public-ai-r2`, including the three missing queue-event RU/Kazakh translations. The already reviewed0.4.1 presentation content remains unchanged and is reused. Earlier sealed releases and installed0.4.0-hosted backup retain verified hashes.
 
 Use adjacent `windows/Install-D.cmd` / `windows/Launch-Portable-D.cmd`: installer/portable extraction TEMP/TMP/TMPDIR and user profile stay on D:. Installer destination is fixed to `D:\\projects\\CampusPulseRELAY\\installed\\CampusPulse RELAY`; shortcuts on C: are disabled. For local illustrative use override only the launch process with `RELAY_GATEWAY_URL=http://127.0.0.1:8000` and keep its backend running. Full live server dependencies/configuration are in the source archive; never put the key in Electron.
 
@@ -235,6 +238,7 @@ The web ZIP includes frontend assets and actual Python backend, uses `scripts/ru
 
 PPTX retains editable text/shapes; PDF uses reviewed slide renders. Native PowerPoint opening is not claimed. New public evidence excludes complete model answers, uploaded documents/citations, cookies and content screenshots; these remain privately on D:. No credentials or generated grants are packaged. Read the manifest and `docs/remaining_actions_0.4.1.md`.
 ''')
-proof=dict(version='0.4.1',public_url=url,provider='Render',plan='Free',service_id='srv-dbajs73bc2fs73bm9mfg',deploy_id=deploy,deployed_commit=commit,live_finished_at='2026-10-19T15:08:14.089958Z',verified=True,real_gemini_verified=True,public_access='automatic_anonymous_isolated_queue',personal_spending_authorized_usd=0,new_resources_created=False,paid_upgrade=False,mandatory_managed_gcp='UNMET_GCP_EXCEPTION_PENDING',real_calendar='pending_optional_separate_consent',new_native_dialog_banner_click='pending_human',evidence=dict(real_public='docs/evidence/public-ai-acceptance-0.4.1.json',simulated_100='docs/evidence/public-ai-100-simulated.json',workflow='docs/evidence/public-demo-browser-0.4.1.json',installed='docs/evidence/public-ai-desktop-0.4.1.json',preserved_native='docs/evidence/preserved-native-0.4.1.json'),previous_failures_retained=True,complete_answers_or_documents_published=False)
+proof=dict(version='0.4.1',public_url=url,provider='Render',plan='Free',service_id='srv-dbajs73bc2fs73bm9mfg',deploy_id=deploy,deployed_commit=commit,live_finished_at=os.environ['RELAY_VERIFIED_DEPLOY_FINISHED'],verified=True,real_gemini_verified=True,public_access='automatic_anonymous_isolated_queue',personal_spending_authorized_usd=0,new_resources_created=False,paid_upgrade=False,mandatory_managed_gcp='UNMET_GCP_EXCEPTION_PENDING',real_calendar='pending_optional_separate_consent',new_native_dialog_banner_click='pending_human',evidence=dict(real_public='docs/evidence/public-ai-acceptance-0.4.1.json',simulated_100='docs/evidence/public-ai-100-simulated.json',workflow='docs/evidence/public-demo-browser-0.4.1.json',installed='docs/evidence/public-ai-desktop-0.4.1.json',preserved_native='docs/evidence/preserved-native-0.4.1.json'),previous_failures_retained=True,complete_answers_or_documents_published=False)
+proof['github_current']=github_unavailable or workflow['checks'].get('hosted_github_read')
 write('docs/evidence/public-deployment-0.4.1.json',json.dumps(proof,indent=2))
 print(json.dumps(dict(updated_docs=len(paths)+2,deployed_commit=commit,public_real_turns=2,simulated_sessions=100)))

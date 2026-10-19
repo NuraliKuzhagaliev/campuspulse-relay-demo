@@ -1,0 +1,54 @@
+{
+  "checked_at": "2026-10-19T15:07:59.366Z",
+  "version": "0.4.1",
+  "model_calls": 0,
+  "real_calendar_writes": 0,
+  "native_dialog_visibility_checked": false,
+  "notification_visibility_checked": false,
+  "checks": {
+    "package_matches_source_and_sandboxed_D_profile": true,
+    "native_import_request_readback_and_refresh": true,
+    "poll_route_reaches_tenant_authorization_not_IPC_rejection": true,
+    "reopen_keeps_own_workspace": true,
+    "reset_rotates_workspace_and_native_CSRF_without_entry_gate": true
+  },
+  "packaged_files": [
+    {
+      "file": "desktop\\locales.cjs",
+      "sha256": "9d3a76f3534b5c09669e2f249e7eda8e272432f1e6b02351a030829b5a8c2e74",
+      "matches_current_source": true
+    },
+    {
+      "file": "desktop\\main.cjs",
+      "sha256": "aa912247f099335efb8afff413d964b0a6092240eec633f604a4af7b53a3db84",
+      "matches_current_source": true
+    },
+    {
+      "file": "desktop\\preload.cjs",
+      "sha256": "def16c63fa8563bfefa18ddc535cf952da93b8f388413570eb54daaf7e5994d6",
+      "matches_current_source": true
+    },
+    {
+      "file": "desktop\\request-policy.cjs",
+      "sha256": "c4b56beab8e3833d9e87643e4bd80992d307f276e1c5895617ddc943471287a1",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\assets\\index-2LNT99oO.css",
+      "sha256": "2457cfa96ed06b21a51cef0c4ff8c56866bbe28d17f603e2a584f08d864cfe2d",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\assets\\index-t3lxKzra.js",
+      "sha256": "afaceb4de968238d07ab8a980363a9d9ba16a4a4d03c7eb42c147575655369f4",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\index.html",
+      "sha256": "e423effab29e197629b33a7e322f4dd834a825c71bbdbb2dd273a94290161813",
+      "matches_current_source": true
+    }
+  ],
+  "deployed_commit": "d7cef3d008f831a35a3b3b4e46d880e0477bf0e6",
+  "passed": true
+}

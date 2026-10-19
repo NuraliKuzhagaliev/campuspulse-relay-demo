@@ -141,7 +141,7 @@ async def test_provider_failure_is_redacted_and_next_queued_workspace_completes(
 
 @pytest.mark.asyncio
 async def test_100_http_sessions_simulated_provider_only(tmp_path,monkeypatch):
-    """Actual HTTP session/upload/queue/history paths. Provider alone is simulated."""
+    """Actual HTTP tenant paths; AI execution adapter simulated, MCP checked separately live."""
     from relay import public_ai,public_demo
     for k,v in dict(RELAY_MODE='alternative_live',RELAY_PUBLIC_AI_ENABLED='true',RELAY_INFERENCE_PROVIDER='gemini_developer',
                     RELAY_DEPLOYMENT_MODE='alternative_hosted',RELAY_GEMINI_API_KEY='inert-test-only',RELAY_GEMINI_FREE_ONLY='true',
@@ -222,6 +222,7 @@ async def test_100_http_sessions_simulated_provider_only(tmp_path,monkeypatch):
             assert all(sum(t-60<x<=t for x in times)<=15 for t in times)
             assert len({c['tenant'] for c in calls})==100
             evidence=dict(checked_at=datetime.now(timezone.utc).isoformat(),sessions=100,provider='simulated_test_only',actual_gemini_calls=0,
+                simulated_boundary='invoke_alternative_query',actual_mcp_protocol_in_100_session_test=False,signed_workspace_context_validated=True,
                 actual_http_session_upload_queue_history_paths=True,checks=dict(unique_workspaces=True,foreign_source_denied_100=True,foreign_run_denied_100=True,
                 history_isolation_100=True,plan_isolation_100=True,plans_seeded_as_isolation_fixtures_not_solver_acceptance=True,one_outstanding_per_workspace=True,bounded_worker_pool=2,at_least_98_queued_at_barrier=True,served_all_100=True,
                 rolling_rpm_limit_15_respected=True,no_real_calendar_writes=True),passed=True)

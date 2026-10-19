@@ -1,0 +1,28 @@
+{
+  "version": "0.4.1",
+  "public_url": "https://campuspulse-relay-demo.onrender.com",
+  "provider": "Render",
+  "plan": "Free",
+  "service_id": "srv-dbajs73bc2fs73bm9mfg",
+  "deploy_id": "dep-dbb348mi0phs73bb6u50",
+  "deployed_commit": "d7cef3d008f831a35a3b3b4e46d880e0477bf0e6",
+  "live_finished_at": "2026-10-19T15:08:14.089958Z",
+  "verified": true,
+  "real_gemini_verified": true,
+  "public_access": "automatic_anonymous_isolated_queue",
+  "personal_spending_authorized_usd": 0,
+  "new_resources_created": false,
+  "paid_upgrade": false,
+  "mandatory_managed_gcp": "UNMET_GCP_EXCEPTION_PENDING",
+  "real_calendar": "pending_optional_separate_consent",
+  "new_native_dialog_banner_click": "pending_human",
+  "evidence": {
+    "real_public": "docs/evidence/public-ai-acceptance-0.4.1.json",
+    "simulated_100": "docs/evidence/public-ai-100-simulated.json",
+    "workflow": "docs/evidence/public-demo-browser-0.4.1.json",
+    "installed": "docs/evidence/public-ai-desktop-0.4.1.json",
+    "preserved_native": "docs/evidence/preserved-native-0.4.1.json"
+  },
+  "previous_failures_retained": true,
+  "complete_answers_or_documents_published": false
+}

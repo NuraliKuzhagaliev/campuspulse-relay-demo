@@ -2,7 +2,7 @@
 
 Personal spending authorization: **USD0**. No paid GCP resource, upgrade, card/prepayment or billing activation was used. No organizer credits are expected. Existing GCP trial is closed/prepayment-required and shows no usable credits; this is a blocker, not permission to pay. No account invoice or remaining balance is inferred from test tokens.
 
-Public HTTPS **https://campuspulse-relay-demo.onrender.com** runs **0.4.1**, existing Render **Free** service `srv-dbajs73bc2fs73bm9mfg`, deploy `dep-dbb348mi0phs73bb6u50`, runtime commit `d7cef3d008f831a35a3b3b4e46d880e0477bf0e6`. No new infrastructure, paid upgrade, billing activation or personal payment was used.
+Public HTTPS **https://campuspulse-relay-demo.onrender.com** runs **0.4.1**, existing Render **Free** service `srv-dbajs73bc2fs73bm9mfg`, deploy `dep-dbb3d649v7es73ai35ag`, runtime commit `cf04a29bf6fb2bbbcddc8e259094b8ddebed2d64`. No new infrastructure, paid upgrade, billing activation or personal payment was used.
 
 Observed selected-model Free limits:15RPM,250,000TPM,500RPD. These are shared project limits, not a guaranteed remaining allowance; other clients consume the same project quota. Every actual model call reserves conservative context/output headroom. Max8 model calls/turn,3,000 output tokens/call, bounded600-second running phase; waiting jobs retain their two-hour temporary session deadline. SDK automatic retry attempts1. Provider429/backoff is authoritative; failures are visible and no paid fallback or silent replay occurs. [Rate limits](https://ai.google.dev/gemini-api/docs/rate-limits).
 

@@ -1,6 +1,6 @@
 # Remaining acceptance gates · 0.4.1
 
-Public access is complete for the supported scope: **no invitation, registration, Google login or visitor API key**. Public HTTPS **https://campuspulse-relay-demo.onrender.com** runs **0.4.1**, existing Render **Free** service `srv-dbajs73bc2fs73bm9mfg`, deploy `dep-dbb348mi0phs73bb6u50`, runtime commit `d7cef3d008f831a35a3b3b4e46d880e0477bf0e6`. No new infrastructure, paid upgrade, billing activation or personal payment was used.
+Public access is complete for the supported scope: **no invitation, registration, Google login or visitor API key**. Public HTTPS **https://campuspulse-relay-demo.onrender.com** runs **0.4.1**, existing Render **Free** service `srv-dbajs73bc2fs73bm9mfg`, deploy `dep-dbb3d649v7es73ai35ag`, runtime commit `cf04a29bf6fb2bbbcddc8e259094b8ddebed2d64`. No new infrastructure, paid upgrade, billing activation or personal payment was used.
 
 Original managed GCP Agent Engine criterion remains **UNMET / GCP_EXCEPTION_PENDING**. The existing trial is closed, prepayment is required, no usable credits were established, and D: CLI/ADC authentication is absent. Alternative Gemini hosting does not satisfy a deployed `projects/.../reasoningEngines/...` requirement. Organizer credits will not arrive; no personal spending or paid billing attachment is authorized.
 

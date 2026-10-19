@@ -40,8 +40,11 @@ try{
  state=await page.evaluate(()=>window.relay.request('/api/state'));assert.equal(state.workspace_id,tenant);assert(state.sources.some(s=>s.id===source.id));
  proof.checks.reopen_keeps_own_workspace=true;
  await page.getByRole('button',{name:'Start a fresh demo',exact:true}).click();
- await expect.poll(()=>page.evaluate(()=>window.relay.request('/api/state').then(s=>s.workspace_id))).not.toBe(tenant);
  await expect(page.locator('.working')).toHaveCount(0);
+ await expect.poll(async()=>{
+   try{return await page.evaluate(()=>window.relay.request('/api/state').then(s=>s.workspace_id));}
+   catch(e){if(String(e).includes('AUTH_REQUIRED'))return tenant;throw e;}
+ }).not.toBe(tenant);
  await expect(page.getByRole('button',{name:'Enter public demo',exact:true})).toHaveCount(0);
  await page.evaluate(()=>window.relay.request('/api/preferences','POST',{timezone:'Asia/Almaty'}));
  proof.checks.reset_rotates_workspace_and_native_CSRF_without_entry_gate=true;

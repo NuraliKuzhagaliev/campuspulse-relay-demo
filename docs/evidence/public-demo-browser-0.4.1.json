@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-19T15:07:25.815Z",
+  "checked_at": "2026-10-19T15:29:42.911Z",
   "url": "https://campuspulse-relay-demo.onrender.com",
   "version": "0.4.1",
   "fresh_browser_context": true,
@@ -15,13 +15,13 @@
     "conflict_resolved": true,
     "plan_and_isolated_what_if": true,
     "illustrative_approval_receipt_and_execution": true,
-    "hosted_github_read": {
-      "repository": "NuraliKuzhagaliev/campuspulse-relay-demo",
-      "commit": "d7cef3d008f831a35a3b3b4e46d880e0477bf0e6",
-      "blob": "f08157273402f59aec8289366aef4b0d7623d66c",
-      "fetched_at": "2026-10-19T15:09:06.794647+00:00",
-      "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/blob/d7cef3d008f831a35a3b3b4e46d880e0477bf0e6/coursework.md",
-      "cache_age_seconds": null
+    "hosted_github_unavailable": {
+      "status": 429,
+      "code": "UPSTREAM_RATE_LIMITED",
+      "retry_at_epoch": 1792425435,
+      "live_read_claimed": false,
+      "useful_UI_error": true,
+      "last_verified_evidence": "docs/history/0.4.1-public-ai-r1-evidence/public-demo-browser-0.4.1.json"
     },
     "translations_mobile_automated_aa_and_refresh": true,
     "visitor_isolation_csrf_internal_and_unavailable_integrations": true,
@@ -32,7 +32,7 @@
     "Temporary storage: two-hour sessions, with earlier resets possible on inactivity/restarts/redeploys.",
     "GitHub public observations may be reused for five minutes while retaining their original commit/fetch time."
   ],
-  "deployed_commit": "d7cef3d008f831a35a3b3b4e46d880e0477bf0e6",
+  "deployed_commit": "cf04a29bf6fb2bbbcddc8e259094b8ddebed2d64",
   "browser_origins": [
     "https://campuspulse-relay-demo.onrender.com"
   ],

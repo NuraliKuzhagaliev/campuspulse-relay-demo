@@ -15,7 +15,9 @@
     "full_python": ".local/logs/public-ai-pytest-final.txt",
     "queue_with_100_plan_isolation": ".local/logs/public-ai-queue-final.txt",
     "ipc": ".local/logs/public-ai-ipc-final.txt",
-    "browser": ".local/logs/public-ai-ui-tests.txt"
+    "browser": ".local/logs/public-ai-r2-ui.txt"
   },
-  "passed": true
+  "passed": true,
+  "targeted_browser_tests_passed": 6,
+  "queue_event_summaries_RU_KK_regression": true
 }

@@ -4,9 +4,9 @@
   "provider": "Render",
   "plan": "Free",
   "service_id": "srv-dbajs73bc2fs73bm9mfg",
-  "deploy_id": "dep-dbb348mi0phs73bb6u50",
-  "deployed_commit": "d7cef3d008f831a35a3b3b4e46d880e0477bf0e6",
-  "live_finished_at": "2026-10-19T15:08:14.089958Z",
+  "deploy_id": "dep-dbb3d649v7es73ai35ag",
+  "deployed_commit": "cf04a29bf6fb2bbbcddc8e259094b8ddebed2d64",
+  "live_finished_at": "2026-10-19T15:27:25.119073Z",
   "verified": true,
   "real_gemini_verified": true,
   "public_access": "automatic_anonymous_isolated_queue",
@@ -24,5 +24,13 @@
     "preserved_native": "docs/evidence/preserved-native-0.4.1.json"
   },
   "previous_failures_retained": true,
-  "complete_answers_or_documents_published": false
+  "complete_answers_or_documents_published": false,
+  "github_current": {
+    "status": 429,
+    "code": "UPSTREAM_RATE_LIMITED",
+    "retry_at_epoch": 1792425435,
+    "live_read_claimed": false,
+    "useful_UI_error": true,
+    "last_verified_evidence": "docs/history/0.4.1-public-ai-r1-evidence/public-demo-browser-0.4.1.json"
+  }
 }

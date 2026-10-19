@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-19T15:07:59.366Z",
+  "checked_at": "2026-10-19T15:29:33.555Z",
   "version": "0.4.1",
   "model_calls": 0,
   "real_calendar_writes": 0,
@@ -39,16 +39,16 @@
       "matches_current_source": true
     },
     {
-      "file": "dist\\assets\\index-t3lxKzra.js",
-      "sha256": "afaceb4de968238d07ab8a980363a9d9ba16a4a4d03c7eb42c147575655369f4",
+      "file": "dist\\assets\\index-DR1qoxSb.js",
+      "sha256": "7826de00d82598917cab19cb5eb72bb83d724ec17c031b122102d779c5072e2e",
       "matches_current_source": true
     },
     {
       "file": "dist\\index.html",
-      "sha256": "e423effab29e197629b33a7e322f4dd834a825c71bbdbb2dd273a94290161813",
+      "sha256": "95b1bc9d8e49b771dd89ecf448b6c84c4cf679aca62b971b432abe7b39b2adb0",
       "matches_current_source": true
     }
   ],
-  "deployed_commit": "d7cef3d008f831a35a3b3b4e46d880e0477bf0e6",
+  "deployed_commit": "cf04a29bf6fb2bbbcddc8e259094b8ddebed2d64",
   "passed": true
 }

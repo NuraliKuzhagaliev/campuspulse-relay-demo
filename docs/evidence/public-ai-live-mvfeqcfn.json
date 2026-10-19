@@ -1,0 +1,98 @@
+{
+  "checked_at": "2026-10-19T15:26:38.968Z",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "version": "0.4.1",
+  "fresh_browser_sessions": 2,
+  "personal_invitations": 0,
+  "user_logins": 0,
+  "user_api_keys": 0,
+  "provider_substitution": false,
+  "mandatory_agent_engine": false,
+  "real_calendar_writes": 0,
+  "checks": {
+    "two_clean_automatic_isolated_workspaces": {
+      "secure_http_only_strict_cookies": true,
+      "no_registration_or_codes": true
+    },
+    "two_unseen_document_uploads_and_foreign_denial": true,
+    "consent_and_csrf_checked_before_inference": true,
+    "refresh_resumes_same_run": true,
+    "two_real_gemini_signed_mcp_answers": {
+      "independent_conversations": true,
+      "actual_model_turns": 2,
+      "actual_mcp_read_observed": true
+    },
+    "history_run_and_plan_isolation": true,
+    "protected_internal_mcp_admin_and_calendar": true,
+    "translations_mobile_and_automated_AA": true
+  },
+  "runs": [
+    {
+      "status": "complete",
+      "required_tool_failed": false,
+      "tool_observations": [
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "78c0f50eec1a1c2383b028bf8043a4d8e9e63161c04c18e9f685ac670be32806",
+          "provenance": [
+            {
+              "source_id": "9d84ae3521de7bc97a1536e5",
+              "page": 1,
+              "version": "695fee85bf4fb3ef1fac4cfe",
+              "fetched_at": "2026-10-19T15:28:16.391865+00:00",
+              "mode": "selected_upload"
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "4a00370b5cc065b50d4077735d94487d",
+      "conversation_id": "ee6fce6041a436888757b43c7fd6e91f",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "cf04a29bf6fb2bbbcddc8e259094b8ddebed2d64",
+      "duration_ms": 16803,
+      "gateway_revision": "cf04a29bf6fb2bbbcddc8e259094b8ddebed2d64",
+      "answer_sha256": "254df38f8dde85ee852d3ff6b2529841cfc41decef49d728f5eb90e90de542b1",
+      "answer_characters": 605
+    },
+    {
+      "status": "complete",
+      "required_tool_failed": false,
+      "tool_observations": [
+        {
+          "tool": "read_course_source",
+          "status": "observed",
+          "response_sha256": "b5c78ee2d90bcb053564150cdf7f1431740acb915cf4d0a52bb9654da405afcd",
+          "provenance": [
+            {
+              "source_id": "8befc530cf4ec3878db1981a",
+              "page": 1,
+              "version": "d3cb13102761d971e4d5beba",
+              "fetched_at": "2026-10-19T15:28:13.545815+00:00",
+              "mode": "selected_upload"
+            }
+          ],
+          "error_codes": []
+        }
+      ],
+      "run_id": "f84d81f86c32c782ad268b91dd591712",
+      "conversation_id": "a475fd8c7fd5f2644a0f885c7d79178b",
+      "mode": "live_gemini_alternative",
+      "provider": "gemini_developer",
+      "model": "gemini-3.5-flash-lite",
+      "deployment_mode": "alternative_hosted",
+      "runtime_revision": "cf04a29bf6fb2bbbcddc8e259094b8ddebed2d64",
+      "duration_ms": 16301,
+      "gateway_revision": "cf04a29bf6fb2bbbcddc8e259094b8ddebed2d64",
+      "answer_sha256": "0ffe1e3677309ee8e51543bde8bf5d196de70fd3b394e5ec848eab08699f4907",
+      "answer_characters": 448
+    }
+  ],
+  "deployed_commit": "cf04a29bf6fb2bbbcddc8e259094b8ddebed2d64",
+  "axe_violations": [],
+  "passed": true
+}

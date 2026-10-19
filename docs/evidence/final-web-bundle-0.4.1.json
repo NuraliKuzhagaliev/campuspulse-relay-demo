@@ -1,8 +1,8 @@
 {
-  "checked_at": "2026-10-19T15:15:02.236815+00:00",
+  "checked_at": "2026-10-19T15:31:23.371776+00:00",
   "version": "0.4.1",
   "environment": "D:\\projects\\CampusPulseRELAY\\.local\\public-venv\\Scripts\\python.exe",
-  "extracted_root": "D:\\projects\\CampusPulseRELAY\\.local\\final-integration\\web-bundle-0.4.1-public-ai-r1",
+  "extracted_root": "D:\\projects\\CampusPulseRELAY\\.local\\final-integration\\web-bundle-0.4.1-public-ai-r2",
   "checks": {
     "plan_whatif_illustrative_approval_readback": true,
     "new_file_exact_readback_no_google": true,
@@ -13,7 +13,7 @@
   "real_calendar_writes": 0,
   "runtime_files": {
     "dist/assets/index-2LNT99oO.css": "2457cfa96ed06b21a51cef0c4ff8c56866bbe28d17f603e2a584f08d864cfe2d",
-    "dist/assets/index-t3lxKzra.js": "afaceb4de968238d07ab8a980363a9d9ba16a4a4d03c7eb42c147575655369f4",
+    "dist/assets/index-DR1qoxSb.js": "7826de00d82598917cab19cb5eb72bb83d724ec17c031b122102d779c5072e2e",
     "dist/assets/inter-cyrillic-400-normal-HOLc17fK.woff": "6e441a6c94788318fa02b6d0a633aa29eebe27b69c6567eb1e59b4edc68ed70e",
     "dist/assets/inter-cyrillic-400-normal-obahsSVq.woff2": "f0bb586459ce8f09b238285040f17e3e9e9538b2c5a7aae0775194e33c36c3c3",
     "dist/assets/inter-cyrillic-500-normal-BasfLYem.woff2": "b77a86ec16aadc157f4a99e8898d71cd75ea264753d9bdf13f962f8c3988cbb0",
@@ -75,8 +75,8 @@
     "dist/assets/licenses/Lucide-license.txt": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc",
     "dist/assets/licenses/React-MIT.txt": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
     "dist/assets/licenses/ReactDOM-MIT.txt": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
-    "dist/index.html": "e423effab29e197629b33a7e322f4dd834a825c71bbdbb2dd273a94290161813",
-    "docs/final_judge_guide.md": "86d2d86452eab7a8783639496a0ae94dbfa8b3120f523fa054b5146b4fa782ad",
+    "dist/index.html": "95b1bc9d8e49b771dd89ecf448b6c84c4cf679aca62b971b432abe7b39b2adb0",
+    "docs/final_judge_guide.md": "95ad22322b0dcdd09adc7b098e40c70dbfba41249da1e11e2023cb3f4ae23ef4",
     "docs/workspace_passport.md": "ca193f4f84d5fb06422aa0ee2502dbf174d0f8ae6f49ee23d24bf863fd1f593d",
     "fixtures/network-security-original.pdf": "11a2d57b1ddf16764e8cf24d99d1f37ee2320d2f06d7667f31ef1deb89beeba5",
     "fixtures/workspace-passport-example.relay.json": "972eb4172574e32ffd4f8b014ab0158be909cab4f1521dbc5b11a229802e7af0",

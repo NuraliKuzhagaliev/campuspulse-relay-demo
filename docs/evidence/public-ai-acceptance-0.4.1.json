@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-10-19T15:09:58.622Z",
+  "checked_at": "2026-10-19T15:26:38.968Z",
   "version": "0.4.1",
   "url": "https://campuspulse-relay-demo.onrender.com",
-  "deployed_commit": "d7cef3d008f831a35a3b3b4e46d880e0477bf0e6",
-  "initial_clean_session_evidence": "docs/evidence/public-ai-live-mvfe1dk2.json",
+  "deployed_commit": "cf04a29bf6fb2bbbcddc8e259094b8ddebed2d64",
+  "initial_clean_session_evidence": "docs/evidence/public-ai-live-mvfeqcfn.json",
   "original_clean_sessions": 2,
-  "followup_reuses_only_these_two_workspaces": true,
+  "followup_reuses_only_these_two_workspaces": false,
   "actual_complete_real_gemini_turns": 2,
   "additional_model_calls": 0,
   "personal_invitations": 0,
@@ -14,49 +14,21 @@
   "complete_answers_and_uploaded_documents_published": false,
   "prior_failure_retained": "docs/evidence/public-ai-first-provider-failure.json",
   "checks": {
-    "independent_documents_histories_and_run_authorization": true,
-    "actual_plan_and_foreign_preview_denial": true,
-    "internal_admin_invitation_calendar_test_routes_protected": true,
-    "nine_language_width_states": [
-      {
-        "lang": "en",
-        "width": 390
-      },
-      {
-        "lang": "en",
-        "width": 768
-      },
-      {
-        "lang": "en",
-        "width": 1440
-      },
-      {
-        "lang": "ru",
-        "width": 390
-      },
-      {
-        "lang": "ru",
-        "width": 768
-      },
-      {
-        "lang": "ru",
-        "width": 1440
-      },
-      {
-        "lang": "kk",
-        "width": 390
-      },
-      {
-        "lang": "kk",
-        "width": 768
-      },
-      {
-        "lang": "kk",
-        "width": 1440
-      }
-    ],
-    "automated_AA_violations": [],
-    "refresh_preserves_history_requires_new_processing_confirmation": true
+    "two_clean_automatic_isolated_workspaces": {
+      "secure_http_only_strict_cookies": true,
+      "no_registration_or_codes": true
+    },
+    "two_unseen_document_uploads_and_foreign_denial": true,
+    "consent_and_csrf_checked_before_inference": true,
+    "refresh_resumes_same_run": true,
+    "two_real_gemini_signed_mcp_answers": {
+      "independent_conversations": true,
+      "actual_model_turns": 2,
+      "actual_mcp_read_observed": true
+    },
+    "history_run_and_plan_isolation": true,
+    "protected_internal_mcp_admin_and_calendar": true,
+    "translations_mobile_and_automated_AA": true
   },
   "verified": true,
   "real_gemini_verified": true,

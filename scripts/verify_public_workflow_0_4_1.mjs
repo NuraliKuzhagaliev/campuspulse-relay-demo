@@ -84,12 +84,18 @@ try{
   const githubResponse=page.waitForResponse(r=>new URL(r.url()).pathname==="/api/sync"&&r.request().method()==="POST");
   await page.getByRole("button",{name:"Fetch live course source",exact:true}).click();
   const github=await githubResponse;
+  if(github.status()===429){
+    const failure=await github.json();assert.equal(failure.error.code,'UPSTREAM_RATE_LIMITED');
+    await expect(page.getByRole('alert')).toBeVisible();
+    proof.checks.hosted_github_unavailable={status:429,code:'UPSTREAM_RATE_LIMITED',retry_at_epoch:failure.error.details?.retry_at_epoch,live_read_claimed:false,useful_UI_error:true,last_verified_evidence:'docs/history/0.4.1-public-ai-r1-evidence/public-demo-browser-0.4.1.json'};
+  } else {
   assert.equal(github.status(),200,await github.text());
   await expect(page.getByRole("status").filter({hasText:/Live source version imported|No meaningful source change/})).toBeVisible();
   state=await (await page.request.get("/api/state")).json();
   const remote=state.sources.find(s=>s.id==="github-coursework")?.remote;
   assert.match(remote?.commit||"",/^[a-f0-9]{40}$/);assert.equal(remote.mode,"live");
   proof.checks.hosted_github_read={repository:state.settings.github_repo,commit:remote.commit,blob:remote.blob,fetched_at:remote.fetched_at,url:remote.url,cache_age_seconds:remote.cache_age_seconds??null};
+  }
   for(const [language,heading] of [["en","Public illustrative demo"],["ru","Публичный учебный пример"],["kk","Жалпыға ашық оқу үлгісі"]]){
     await page.getByTestId("language").selectOption(language);
     await expect(page.locator("html")).toHaveAttribute("lang",language);
