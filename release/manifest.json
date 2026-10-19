@@ -2,33 +2,35 @@
   "schema_version": 5,
   "product": "CampusPulse RELAY",
   "version": "0.4.0",
-  "release_revision": "0.4.0-local-integration-r1",
-  "status": "LOCAL_GEMINI_VERIFIED_HOSTED_CALENDAR_GCP_PENDING",
-  "created_at": "2026-10-19T13:19:34.977441+00:00",
+  "release_revision": "0.4.0-hosted-r1",
+  "status": "HOSTED_ALTERNATIVE_GEMINI_VERIFIED_GCP_CALENDAR_NATIVE_PENDING",
+  "created_at": "2026-10-19T14:16:22.456768+00:00",
   "project_root": "D:\\projects\\CampusPulseRELAY",
-  "source_commit": "1d843bc85ece697aaf6e2314d7d91abab08700f5",
-  "source_commit_semantics": "Exact clean pushed source archived; generated manifest/checksums added separately. A subsequent metadata-only commit may contain this manifest.",
+  "source_commit": "dfd7a0a438ef1d1795282ccdf6a8150a462a5525",
+  "source_commit_semantics": "Exact clean pushed source archive. Deployed web runtime commit is separate and web runtime files are unchanged. New desktop reset/CSRF and owner-clock fixes plus docs/tests are included. Manifest metadata may be committed subsequently.",
   "repository": {
     "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo",
     "branch": "local/final-integration-0.4.0",
-    "source_commit": "1d843bc85ece697aaf6e2314d7d91abab08700f5",
+    "source_commit": "dfd7a0a438ef1d1795282ccdf6a8150a462a5525",
     "published": true
   },
   "urls": {
     "public_web": "https://campuspulse-relay-demo.onrender.com",
-    "public_version": "0.2.1",
+    "public_version": "0.4.0",
     "local_web": "http://127.0.0.1:8000",
-    "local_https_staging": "https://localhost:8017",
     "managed_agent_api": null
   },
   "public_deployment": {
-    "service_id": "srv-dbajs73bc2fs73bm9mfg",
     "provider": "Render",
     "plan": "Free",
-    "actual_version": "0.2.1",
-    "actual_commit": "83552161ec22c7cf44746433425d3b2b99e042c4",
-    "new_0_4_deployed": false,
-    "new_0_4_blocker": "Owner must save free Gemini key in existing service private environment, then execute and verify reviewed cutover."
+    "service_id": "srv-dbajs73bc2fs73bm9mfg",
+    "deploy_id": "dep-dbb21oe1egvs73cj1et0",
+    "actual_version": "0.4.0",
+    "actual_commit": "6915d2e855dff33ded3b2fda15f82928056d1d3a",
+    "new_0_4_deployed": true,
+    "verified": true,
+    "real_gemini_verified": true,
+    "web_runtime_identical_to_archived_source": true
   },
   "inference": {
     "provider": "gemini_developer",
@@ -36,8 +38,8 @@
     "metadata_version": "3.5-flash-lite-07-2026",
     "project": "gen-lang-client-0595303951",
     "real_local_https_verified": true,
-    "hosted_verified": false,
-    "full_acceptance": "pending"
+    "hosted_verified": true,
+    "full_acceptance": "pending_original_managed_and_real_calendar_gates"
   },
   "gcp": {
     "status": "UNMET_GCP_EXCEPTION_PENDING",
@@ -58,7 +60,139 @@
     "F4": "locally_implemented_real_calendar_and_full_gemini_acceptance_pending",
     "F5": "locally_implemented_real_calendar_and_full_gemini_acceptance_pending"
   },
-  "verification": {
+  "packaged_web_verified_in_minimal_environment": true,
+  "windows": {
+    "installed_version": "0.4.0",
+    "signature": "NotSigned",
+    "default_gateway": "https://campuspulse-relay-demo.onrender.com",
+    "current_public_backend_version": "0.4.0",
+    "local_gateway_override_required_for_all_0_4_features_until_cutover": false,
+    "native_dialogs_substituted_in_automated_contracts": true,
+    "new_actual_dialog_banner_click_acceptance": "pending_human",
+    "preserved_0_3_install": "D:\\projects\\CampusPulseRELAY\\installed\\preserved-0.3.0",
+    "actual_public_gemini_query_verified": true,
+    "reset_exact_route_csrf_fixed": true,
+    "pre_hosted_install_backup": "D:\\projects\\CampusPulseRELAY\\installed\\preserved-0.4.0-local-integration-r1"
+  },
+  "presentation": {
+    "slides": 12,
+    "editable": true,
+    "pdf": "all12_pages_pixel_match_verified_renders",
+    "native_powerpoint_opened": false
+  },
+  "deadline": {
+    "reported": "2026-10-20 23:59",
+    "organizer_timezone_confirmed": false,
+    "planning_timezone": "Asia/Qyzylorda UTC+05:00",
+    "internal_freeze_local": "2026-10-20 20:00"
+  },
+  "limitations": [
+    "Free host may sleep and reset uploads/sessions/SQLite/invitations; no always-on hosted Scheduler or durable hosted persistence.",
+    "Private unpaid AI only for invited18+ professional/hackathon evaluators in Kazakhstan with permitted non-sensitive material; attestation is not independent eligibility verification.",
+    "All current Calendar receipts are illustrative. Passport copies contain archived untrusted extracts, never authority/credentials or refreshed external observations.",
+    "No managed Agent Engine resource or amended replacement criterion verified. No contest entry/message sent.",
+    "One first hosted Gemini request timed out; a bounded repeat completed. Initial installed reset failed after successful import/chat and was repaired/reinstalled/rechecked. Original failure evidence retained; no statistical success/SLA claim."
+  ],
+  "preserved_releases": [
+    {
+      "revision": "0.1.0",
+      "artifacts_hash_verified": 7
+    },
+    {
+      "revision": "0.1.1",
+      "artifacts_hash_verified": 7
+    },
+    {
+      "revision": "0.1.1-public-demo",
+      "artifacts_hash_verified": 9
+    },
+    {
+      "revision": "0.2.0",
+      "artifacts_hash_verified": 6
+    },
+    {
+      "revision": "0.2.1",
+      "artifacts_hash_verified": 6
+    },
+    {
+      "revision": "0.3.0",
+      "artifacts_hash_verified": 4
+    },
+    {
+      "revision": "0.3.0-r1",
+      "artifacts_hash_verified": 4
+    },
+    {
+      "revision": "0.4.0-local-integration-r1",
+      "artifacts_hash_verified": 8
+    }
+  ],
+  "artifacts": [
+    {
+      "kind": "windows_installer",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.4.0-x64-setup.exe",
+      "relative_path": "windows/CampusPulse-RELAY-0.4.0-x64-setup.exe",
+      "bytes": 118754932,
+      "sha256": "a38d6524d768f009c4646f401f999f869e24fb64551efbbb294c25e52cd0d7e6"
+    },
+    {
+      "kind": "windows_portable",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.4.0-x64-portable.exe",
+      "relative_path": "windows/CampusPulse-RELAY-0.4.0-x64-portable.exe",
+      "bytes": 118539572,
+      "sha256": "6867db291042f11950a222c17858c20fc38cf08ffa4e2b1a0ad87c676efb4aef"
+    },
+    {
+      "kind": "complete_web_application",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\web\\CampusPulseRELAY-0.4.0-hosted-r1-web-app.zip",
+      "relative_path": "web/CampusPulseRELAY-0.4.0-hosted-r1-web-app.zip",
+      "bytes": 1152132,
+      "sha256": "df7a15840b299a9fa5e30d79677c720d177615a3700710593cd5d887774c2561"
+    },
+    {
+      "kind": "source_archive",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\source\\CampusPulseRELAY-0.4.0-hosted-r1-source.zip",
+      "relative_path": "source/CampusPulseRELAY-0.4.0-hosted-r1-source.zip",
+      "bytes": 61860453,
+      "sha256": "b40dd1ce51b7a8656ed8f1ce884ad0f908d33947c7c41a3fe62a291dce439476"
+    },
+    {
+      "kind": "editable_presentation",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.4.0-hosted-r1.pptx",
+      "relative_path": "presentation/CampusPulse-RELAY-0.4.0-hosted-r1.pptx",
+      "bytes": 61407,
+      "sha256": "c4dc77e698ad64800ceb7e7259968633f0813800a31be17fb68fd5c66cbc2a61"
+    },
+    {
+      "kind": "presentation_pdf",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.4.0-hosted-r1.pdf",
+      "relative_path": "presentation/CampusPulse-RELAY-0.4.0-hosted-r1.pdf",
+      "bytes": 511321,
+      "sha256": "7d2e055e7ce53b98cd1e672de8df5d24c035b4f6313738d21ec8b99107cc214d"
+    },
+    {
+      "kind": "D_drive_launch_wrapper",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\Install-D.cmd",
+      "relative_path": "windows/Install-D.cmd",
+      "bytes": 387,
+      "sha256": "e9882e3e96e2cd62a454e182e81ee7c7151393d4d523e35063e8a6748066c0a8"
+    },
+    {
+      "kind": "D_drive_launch_wrapper",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\Launch-Portable-D.cmd",
+      "relative_path": "windows/Launch-Portable-D.cmd",
+      "bytes": 330,
+      "sha256": "3463ba5c8505f0819373a33e6dc69a46c39211a81950ebc25c96bcb642934523"
+    }
+  ],
+  "instructions": {
+    "judge": "docs/final_judge_guide.md",
+    "cutover": "docs/final_cutover_plan.md",
+    "native": "docs/final_native_check.md",
+    "requirements": "docs/final_integration_ledger.md",
+    "funding": "docs/cloud_setup.md"
+  },
+  "preserved_local_verification": {
     "checked_at": "2026-10-19T13:18:47.328730+00:00",
     "version": "0.4.0",
     "status": "LOCAL_GEMINI_VERIFIED_HOSTED_CALENDAR_GCP_PENDING",
@@ -228,128 +362,198 @@
       }
     ]
   },
-  "packaged_web_verified_in_minimal_environment": true,
-  "windows": {
-    "installed_version": "0.4.0",
-    "signature": "NotSigned",
-    "default_gateway": "https://campuspulse-relay-demo.onrender.com",
-    "current_public_backend_version": "0.2.1",
-    "local_gateway_override_required_for_all_0_4_features_until_cutover": true,
-    "native_dialogs_substituted_in_automated_contracts": true,
-    "new_actual_dialog_banner_click_acceptance": "pending_human",
-    "preserved_0_3_install": "D:\\projects\\CampusPulseRELAY\\installed\\preserved-0.3.0"
+  "verification": {
+    "hosted_evidence": "docs/evidence/public-deployment-0.4.0.json",
+    "regressions": {
+      "checked_date": "2026-10-19",
+      "scope": "Actual additional checks after hosted cutover; unchanged local baseline retained separately",
+      "owner_clock": {
+        "command": ".venv/Scripts/python.exe -m unittest tests.test_owner_clock -v",
+        "passed": 2,
+        "failed": 0,
+        "seconds": 0.0,
+        "server_signature_window_widened": false
+      },
+      "ipc_policy": {
+        "command": "node --test tests/desktop_policy.test.cjs",
+        "passed": 5,
+        "failed": 0,
+        "seconds": 0.0612977
+      },
+      "production_windows_build": {
+        "command": "npm run package:win",
+        "typescript_vite": "passed",
+        "nsis": "passed",
+        "portable": "passed",
+        "unsigned": true
+      },
+      "reinstall": {
+        "installer_exit_code": 0,
+        "product_version": "0.4.0.0",
+        "previous_install_backup_hash_verified_files": 75,
+        "previous_install_backup": "D:/projects/CampusPulseRELAY/installed/preserved-0.4.0-local-integration-r1"
+      },
+      "installed_hosted": "docs/evidence/final-desktop-hosted-mvfbz5y0.json",
+      "both_import_paths": "docs/evidence/desktop-import-regression-0.4.0-hosted-r1.json",
+      "original_45_95_preserved": "docs/evidence/final-preserved-native-after-hosted.json",
+      "defects": [
+        {
+          "issue": "Owner signature rejected because actual local clock lagged server by83.247seconds",
+          "fix": "Use normal-TLS HTTPS health timestamp with RTT<=10s and skew<=300s; server signature freshness remains60s",
+          "recheck": "Two deterministic cases and actual explicitly authorized bounded invitation issuance passed"
+        },
+        {
+          "issue": "Installed Start a fresh demo rejected POST /api/demo/reset after successful import, state refresh, Gemini query and reopening",
+          "fix": "Add only exact POST route and update native CSRF from reset response; narrow allowlist preserved",
+          "recheck": "Rebuilt/reinstalled package, actual hosted query/reopen/reset/subsequent mutation and both local import paths passed"
+        }
+      ],
+      "new_native_picker_banner_click_verified": false,
+      "passed": true
+    },
+    "actual_current_installed_package_source_match": true,
+    "preserved_local_baseline": "preserved_local_verification",
+    "managed_gcp": "UNMET_GCP_EXCEPTION_PENDING",
+    "real_calendar": "pending",
+    "new_native_visibility_click": "pending_human"
   },
-  "presentation": {
-    "slides": 12,
-    "editable": true,
-    "pdf": "rendered_pages_all_pixel_compared",
-    "native_powerpoint_opened": false
+  "hosted_verification": {
+    "checked_at": "2026-10-19T14:10:27.477959+00:00",
+    "verified": true,
+    "real_gemini_verified": true,
+    "provider": "Render",
+    "plan": "Free",
+    "service_id": "srv-dbajs73bc2fs73bm9mfg",
+    "workspace_id": "tea-d3pt0sbipnbc73a5v810",
+    "public_url": "https://campuspulse-relay-demo.onrender.com",
+    "version": "0.4.0",
+    "deployed_commit": "6915d2e855dff33ded3b2fda15f82928056d1d3a",
+    "deploy_id": "dep-dbb21oe1egvs73cj1et0",
+    "deploy_finished_at": "2026-10-19T13:55:04.481921Z",
+    "inference_provider": "gemini_developer",
+    "model": "gemini-3.5-flash-lite",
+    "model_metadata_version": "3.5-flash-lite-07-2026",
+    "managed_agent_engine": false,
+    "mandatory_gcp": "UNMET_GCP_EXCEPTION_PENDING",
+    "real_calendar": "pending_illustrative_receipts_only",
+    "evidence": {
+      "public": "docs/evidence/public-demo-browser-0.4.0.json",
+      "live": "docs/evidence/final-live-hosted-mvfbojtp.json",
+      "features": "docs/evidence/final-features-hosted-mvfbrp3z.json",
+      "installed_windows": "docs/evidence/final-desktop-hosted-mvfbz5y0.json",
+      "deploy": "docs/evidence/render-cutover-0.4.0.json"
+    },
+    "actual_complete_browser_turns": 8,
+    "actual_complete_installed_turns": 2,
+    "retained_failed_attempts": [
+      {
+        "evidence": "docs/evidence/final-live-hosted-mvfbl84y.json",
+        "runs": [
+          {
+            "status": "unknown",
+            "reason": "The gateway wait timed out. Remote compute may still be running. Review events and receipts before retrying."
+          }
+        ]
+      }
+    ],
+    "retained_desktop_failures": [
+      {
+        "evidence": "docs/evidence/final-desktop-hosted-mvfbvr3q.json",
+        "import_succeeded": true,
+        "gemini_succeeded": true,
+        "failure": "Native POST /api/demo/reset rejected by exact IPC allowlist; repaired route and CSRF rotation, then reinstalled and reran."
+      }
+    ],
+    "latency_ms": {
+      "sample_browser_turns": 8,
+      "min": 13836,
+      "max": 51226,
+      "cold_start_included": false,
+      "statistical_sla": false
+    },
+    "checks": {
+      "fresh_public_illustrative_workflow": {
+        "demo_entry": true,
+        "capability_cookie": {
+          "secure": true,
+          "httpOnly": true,
+          "sameSite": "Strict"
+        },
+        "new_upload_exact_evidence": true,
+        "explicit_assignment_mapping": true,
+        "conflict_resolved": true,
+        "plan_and_isolated_what_if": true,
+        "illustrative_approval_receipt_and_execution": true,
+        "hosted_github_read": {
+          "repository": "NuraliKuzhagaliev/campuspulse-relay-demo",
+          "commit": "66fd068bc1cf142f8152e717f662e11c20f96a97",
+          "blob": "f08157273402f59aec8289366aef4b0d7623d66c",
+          "fetched_at": "2026-10-19T13:56:40.776080+00:00",
+          "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/blob/66fd068bc1cf142f8152e717f662e11c20f96a97/coursework.md",
+          "cache_age_seconds": null
+        },
+        "translations_mobile_automated_aa_and_refresh": true,
+        "visitor_isolation_csrf_internal_and_unavailable_integrations": true,
+        "fresh_demo_reset": true
+      },
+      "private_web": {
+        "two_fresh_private_sessions": {
+          "separate_workspaces": true,
+          "calendar_permission": false,
+          "reused_after_recorded_timeout": true
+        },
+        "unseen_document_and_cross_workspace_denial": {
+          "independent_uploads": true,
+          "foreign_reads_denied": true
+        },
+        "consent_denial_before_any_inference": true,
+        "real_gemini_source_quotes_and_injection_boundary": true,
+        "russian_followup_same_conversation": true,
+        "kazakh_followup_same_conversation": true,
+        "independent_gemini_preserves_ambiguous_deadline": true,
+        "responsive_languages_keyboard_and_automated_AA": {
+          "layout_states": 12,
+          "automated_AA_primary_state": true
+        },
+        "refresh_keeps_conversation_but_requires_fresh_processing_confirmation": true,
+        "protected_operator_and_internal_mcp": true
+      },
+      "private_features": {
+        "real_conflict_and_bounded_clarification": true,
+        "real_agent_saves_server_validated_feasible_plan": true,
+        "browser_infeasible_whatif_and_illustrative_receipt": true,
+        "real_progress_followup_keeps_explicit_remaining": true,
+        "real_github_and_handoff_mcp_observations": true
+      },
+      "installed_windows": {
+        "installed_package_and_D_profile": true,
+        "real_import_request_and_exact_readback": true,
+        "actual_installed_UI_to_public_gemini_MCP": true,
+        "reopen_keeps_hosted_workspace_and_conversation": true,
+        "native_reset_rotates_workspace_and_csrf": true
+      }
+    },
+    "native_dialog_visibility_verified": false,
+    "notification_visibility_verified": false,
+    "funding": {
+      "personal_spending_authorized_usd": 0,
+      "paid_resources_provisioned": false,
+      "new_hosting_resources_created": false,
+      "invoice_or_remaining_credit_balance_inferred": false
+    },
+    "limitations": [
+      "One first hosted model turn timed out; a bounded retry in the same two test workspaces completed. No automatic paid/canned fallback.",
+      "Temporary storage and two-hour sessions may reset earlier on sleep/restart/redeploy; invitations also reset. No durable or always-on background service.",
+      "Private AI access only for invited adult Kazakhstan evaluators with permitted non-sensitive material. Self-attestation is not independent eligibility proof.",
+      "Tests use four authorized private invitations for agent-owned sessions only; no invitations distributed to other people.",
+      "Original managed Agent Engine, Google cloud-to-MCP service identity, real Calendar consent/writes/read-back and new native picker/banner/click acceptance remain pending."
+    ]
   },
-  "deadline": {
-    "reported": "2026-10-20 23:59",
-    "organizer_timezone_confirmed": false,
-    "planning_timezone": "Asia/Qyzylorda UTC+05:00",
-    "internal_freeze_local": "2026-10-20 20:00"
-  },
-  "limitations": [
-    "Free host may sleep and reset uploads/sessions/SQLite/invitations; no always-on hosted Scheduler or durable hosted persistence.",
-    "Private unpaid AI only for invited18+ professional/hackathon evaluators in Kazakhstan with permitted non-sensitive material; attestation is not independent eligibility verification.",
-    "All current Calendar receipts are illustrative. Passport copies contain archived untrusted extracts, never authority/credentials or refreshed external observations.",
-    "No managed Agent Engine resource or amended replacement criterion verified. No contest entry/message sent."
-  ],
-  "preserved_releases": [
-    {
-      "revision": "0.1.0",
-      "artifacts_hash_verified": 7
-    },
-    {
-      "revision": "0.1.1",
-      "artifacts_hash_verified": 7
-    },
-    {
-      "revision": "0.1.1-public-demo",
-      "artifacts_hash_verified": 9
-    },
-    {
-      "revision": "0.2.0",
-      "artifacts_hash_verified": 6
-    },
-    {
-      "revision": "0.2.1",
-      "artifacts_hash_verified": 6
-    },
-    {
-      "revision": "0.3.0",
-      "artifacts_hash_verified": 4
-    },
-    {
-      "revision": "0.3.0-r1",
-      "artifacts_hash_verified": 4
-    }
-  ],
-  "artifacts": [
-    {
-      "kind": "windows_installer",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.4.0-x64-setup.exe",
-      "relative_path": "windows/CampusPulse-RELAY-0.4.0-x64-setup.exe",
-      "bytes": 118754799,
-      "sha256": "e6b9d27517d164f7a2b9b39871867efdf17344d0054b6d0d9692d7bfae64e4e2"
-    },
-    {
-      "kind": "windows_portable",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.4.0-x64-portable.exe",
-      "relative_path": "windows/CampusPulse-RELAY-0.4.0-x64-portable.exe",
-      "bytes": 118539543,
-      "sha256": "6af56ddc3ccbf53ae0c0327be5702ca38db207fe83ab5cd64411325df4646a4c"
-    },
-    {
-      "kind": "complete_web_application",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\web\\CampusPulseRELAY-0.4.0-local-integration-r1-web-app.zip",
-      "relative_path": "web/CampusPulseRELAY-0.4.0-local-integration-r1-web-app.zip",
-      "bytes": 1152132,
-      "sha256": "df7a15840b299a9fa5e30d79677c720d177615a3700710593cd5d887774c2561"
-    },
-    {
-      "kind": "source_archive",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\source\\CampusPulseRELAY-0.4.0-local-integration-r1-source.zip",
-      "relative_path": "source/CampusPulseRELAY-0.4.0-local-integration-r1-source.zip",
-      "bytes": 60510299,
-      "sha256": "cf3264a85311aec7dff2208781245d1081c25fb2ca908024a4e997441373518e"
-    },
-    {
-      "kind": "editable_presentation",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.4.0-integration-r2.pptx",
-      "relative_path": "presentation/CampusPulse-RELAY-0.4.0-integration-r2.pptx",
-      "bytes": 61208,
-      "sha256": "a5d6ce01d690718b74fc6c1a220cb6be2235ddec1753fda4e2feb058cf44c0c2"
-    },
-    {
-      "kind": "presentation_pdf",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.4.0-integration-r2.pdf",
-      "relative_path": "presentation/CampusPulse-RELAY-0.4.0-integration-r2.pdf",
-      "bytes": 511909,
-      "sha256": "9be3626dc12eab6eec2a4d4d5ba7c7d246263e3a138d5d2e1f329cc59ccfb5a6"
-    },
-    {
-      "kind": "D_drive_launch_wrapper",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\Launch-Portable-D.cmd",
-      "relative_path": "windows/Launch-Portable-D.cmd",
-      "bytes": 330,
-      "sha256": "3463ba5c8505f0819373a33e6dc69a46c39211a81950ebc25c96bcb642934523"
-    },
-    {
-      "kind": "D_drive_launch_wrapper",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\Install-D.cmd",
-      "relative_path": "windows/Install-D.cmd",
-      "bytes": 387,
-      "sha256": "e9882e3e96e2cd62a454e182e81ee7c7151393d4d523e35063e8a6748066c0a8"
-    }
-  ],
-  "instructions": {
-    "judge": "docs/final_judge_guide.md",
-    "cutover": "docs/final_cutover_plan.md",
-    "native": "docs/final_native_check.md",
-    "requirements": "docs/final_integration_ledger.md",
-    "funding": "docs/cloud_setup.md"
+  "additional_regressions": {
+    "owner_clock_tests_passed": 2,
+    "ipc_policy_tests_passed": 5,
+    "installed_reset_rotation": true,
+    "import_both_paths": true,
+    "preserved_native_45_95": true
   }
 }
