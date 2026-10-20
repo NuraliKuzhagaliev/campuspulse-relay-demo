@@ -1,0 +1,57 @@
+{
+  "version": "0.5.2",
+  "revision": "design-r2",
+  "slides": 14,
+  "language": "Russian",
+  "pptx": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.5.2-design-r2.pptx",
+  "pdf": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.5.2-design-r2.pdf",
+  "pdf_kind": "High-resolution actual slide render pages; editable text and native tables are in PPTX",
+  "renders": "D:\\projects\\CampusPulseRELAY\\.local\\presentation-final\\0.5.2-design-r2",
+  "editable_text": true,
+  "native_tables": [
+    6,
+    11,
+    13
+  ],
+  "original_logo_preserved": true,
+  "native_powerpoint_opened": false,
+  "source_runtime_commit": "0cb787885df570b4083d0b041e828e14394ed0f0",
+  "public_capture_evidence": "docs/evidence/presentation-captures-0.5.2.json",
+  "model_calls_for_presentation": 0,
+  "google_writes_for_presentation": 0,
+  "NON_GCP_READY": false,
+  "visual_review_pending": false,
+  "individually_reviewed_final_slides": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "PDF_all_14_embedded_images_pixel_equal_to_reviewed_PPTX_renders": true,
+  "PDF_working_link_annotations": 2,
+  "original_logo_byte_identical": true,
+  "layout_findings": 0,
+  "layout_warnings": 0,
+  "files": [
+    {
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.5.2-design-r2.pptx",
+      "bytes": 1319886,
+      "sha256": "7629cb3d301975d9540a7898e023da8a13640babe1ab7848a4b0b10ab7319a89"
+    },
+    {
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.5.2-design-r2.pdf",
+      "bytes": 2673972,
+      "sha256": "9421ccfb6729266958ffbbd60e694baef9d7f2285fd1a56894d116bdd5ca85bb"
+    }
+  ]
+}

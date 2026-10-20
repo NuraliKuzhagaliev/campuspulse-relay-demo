@@ -10,6 +10,14 @@ Built for **GDG Astana — Topic 2: CampusPulse AI**. Current application versio
 
 > The public app uses real **Gemini Developer API and protected MCP tools on Render Free**. Visitors need no invitation, RELAY account, Google login or personal API key for documents and questions. Google Calendar is a separate voluntary connection. **Managed Vertex AI Agent Engine has not been deployed**: the original managed-GCP criterion remains unmet, and an official waiver for this alternative architecture has not been established. `NON_GCP_READY=false` while the remaining Calendar and physical Windows acceptance gates are open.
 
+## Presentation 0.5.2
+
+[Editable PowerPoint, 14 slides](https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/download/v0.5.2/CampusPulse-RELAY-0.5.2-design-r2.pptx) · [PDF for presenting](https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/download/v0.5.2/CampusPulse-RELAY-0.5.2-design-r2.pdf)
+
+The Russian deck uses the original product logo, actual 0.5.2 interface captures, the five core enhancements and current architecture. It labels historical real AI results, illustrative Calendar screenshots and remaining acceptance gates separately. Text and three tables remain editable in PowerPoint. The PDF contains high-resolution slide renders. Previous decks remain available as dated snapshots.
+
+<img src="docs/images/presentation-0.5.2/cover.png" width="700" alt="CampusPulse RELAY 0.5.2 presentation cover with the owner logo">
+
 ## Start in the browser
 
 1. Open the [public HTTPS site](https://campuspulse-relay-demo.onrender.com/) and choose **Use my own data**. A private temporary visitor workspace is created automatically. **Open example** uses a separate, explicitly illustrative workspace.

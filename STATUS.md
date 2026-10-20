@@ -13,3 +13,6 @@ Evidence: docs/evidence/locale-release-0.5.2.json, public-deployment-0.5.2.json,
 NON_GCP_READY=false pending real Calendar event acceptance and current-version physical Windows checks. Historical real Gemini/MCP, Calendar consent/target recovery, installed 0.5.0 native import and original45/95 remain dated evidence, not new acceptance. Windows GUI control after Escape remains stopped. All prior releases are preserved on D:.
 
 Remaining steps: docs/remaining_actions_0.5.2.md. Exact source/runtime/artifact hashes: release/manifest.json.
+
+
+Presentation update: current Russian 0.5.2 deck has 14 redesigned slides with the original logo and actual UI captures. All final slides were visually reviewed; PDF page images match the final-PPTX renders. Text and three tables remain editable. No native PowerPoint session was opened, no additional model/Google writes were made, and no acceptance gate changed. See docs/evidence/presentation-0.5.2.json and presentation-distribution-0.5.2.json. Prior application binaries/runtime remain unchanged.

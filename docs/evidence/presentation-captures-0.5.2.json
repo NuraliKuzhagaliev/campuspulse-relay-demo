@@ -1,0 +1,35 @@
+{
+  "version": "0.5.2",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "synthetic": true,
+  "model_calls": 0,
+  "google_writes": 0,
+  "screenshots": [
+    "conflict.png",
+    "week.png",
+    "plan-summary.png",
+    "what-if.png",
+    "calendar-preview.png",
+    "illustrative-receipt.png",
+    "progress.png",
+    "progress-numbers.png",
+    "passport.png",
+    "assignment-review.png",
+    "date-en.png",
+    "date-ru.png",
+    "date-kk.png",
+    "calendar-single-preview.png"
+  ],
+  "passed": true,
+  "deployed_commit": "0cb787885df570b4083d0b041e828e14394ed0f0",
+  "plan": {
+    "required": 540,
+    "capacity": 540
+  },
+  "single_event_preview": {
+    "mode": "illustrative",
+    "events": 1,
+    "approved": false,
+    "real_google_writes": 0
+  }
+}

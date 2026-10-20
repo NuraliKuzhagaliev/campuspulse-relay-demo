@@ -1,0 +1,33 @@
+{
+  "checked_at": "2026-10-20T17:00:44.488091+00:00",
+  "release_url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/tag/v0.5.2",
+  "latest_tag": "v0.5.2",
+  "prior_assets_unchanged": 13,
+  "new_assets": [
+    {
+      "name": "CampusPulse-RELAY-0.5.2-design-r2.pptx",
+      "bytes": 1319886,
+      "sha256": "7629cb3d301975d9540a7898e023da8a13640babe1ab7848a4b0b10ab7319a89",
+      "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/download/v0.5.2/CampusPulse-RELAY-0.5.2-design-r2.pptx",
+      "local_path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.5.2-design-r2.pptx"
+    },
+    {
+      "name": "CampusPulse-RELAY-0.5.2-design-r2.pdf",
+      "bytes": 2673972,
+      "sha256": "9421ccfb6729266958ffbbd60e694baef9d7f2285fd1a56894d116bdd5ca85bb",
+      "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/download/v0.5.2/CampusPulse-RELAY-0.5.2-design-r2.pdf",
+      "local_path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.5.2-design-r2.pdf"
+    },
+    {
+      "name": "CampusPulse-RELAY-0.5.2-Presentation-SHA256SUMS.txt",
+      "bytes": 211,
+      "sha256": "cda5e0de1db761ac6180b8dbd688b941a72d61eac8ab80ee98e39d9ba5e8e305",
+      "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/download/v0.5.2/CampusPulse-RELAY-0.5.2-Presentation-SHA256SUMS.txt",
+      "local_path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.5.2-Presentation-SHA256SUMS.txt"
+    }
+  ],
+  "total_assets": 16,
+  "runtime_unchanged": true,
+  "passed": true,
+  "anonymous_HTTPS_full_download_hashes_verified": true
+}
