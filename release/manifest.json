@@ -1,18 +1,18 @@
 {
-  "schema_version": 7,
+  "schema_version": 8,
   "product": "CampusPulse RELAY",
-  "version": "0.5.0",
-  "release_revision": "0.5.0-audit-r1",
-  "status": "AUDIT_CANDIDATE_REAL_PUBLIC_GEMINI_VERIFIED_CALENDAR_NATIVE_GCP_GATES_PENDING",
-  "created_at": "2026-10-19T19:54:24.747676+00:00",
+  "version": "0.5.1",
+  "release_revision": "0.5.1-final-r1",
+  "status": "PUBLIC_PRIMARY_ROUTE_VERIFIED_OWNER_CALENDAR_NATIVE_GATES_PENDING",
+  "created_at": "2026-10-20T14:35:40.297637+00:00",
+  "source_commit": "d8c61dc3d432841085ef1b9dc38888e426920e88",
+  "deployed_commit": "7e4098dae61775b5062b2f613192a6abaa3185dc",
+  "source_commit_semantics": "Exact clean pushed archived source; manifest may be committed later. Web/Electron runtime unchanged since deployed commit; Windows NSIS installer and owner launch helpers corrected separately.",
   "project_root": "D:\\projects\\CampusPulseRELAY",
-  "source_commit": "128fb12b17c6efaf257111ecd85e79345c4f9623",
-  "source_commit_semantics": "Exact clean pushed archived source; manifest metadata may be published subsequently. Runtime commit is separate and runtime source matches.",
   "repository": {
     "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo",
     "branch": "local/final-integration-0.4.0",
     "default_branch": "main",
-    "source_commit": "128fb12b17c6efaf257111ecd85e79345c4f9623",
     "published": true
   },
   "urls": {
@@ -21,1686 +21,346 @@
     "managed_agent_api": null
   },
   "public_deployment": {
-    "public_url": "https://campuspulse-relay-demo.onrender.com/",
-    "version": "0.5.0",
-    "provider": "Render",
-    "plan": "Free",
-    "workspace_id": "tea-d3pt0sbipnbc73a5v810",
-    "service_id": "srv-dbajs73bc2fs73bm9mfg",
-    "deployment_id": "dep-dbb758bbc2fs73daph80",
-    "deployed_commit": "1718ff340bdb2b40c5d3e796907000bd6720b80f",
-    "deployment_finished_at": "2026-10-19T19:43:26.554759Z",
     "verified": true,
-    "real_gemini_verified": true,
-    "current_real_turns": 3,
-    "current_complete_real_turns": 2,
-    "current_partial_real_turns": 1,
-    "current_clean_visitors": 2,
-    "current_workflows_passed": 2,
-    "inference_provider": "gemini_developer",
-    "model": "gemini-3.5-flash-lite",
-    "deployment_mode": "alternative_hosted",
-    "mandatory_agent_engine_verified": false,
-    "personal_spending": 0,
-    "storage": "Temporary up to2hours; earlier restart/redeploy reset. Free host may sleep.",
-    "evidence": {
-      "current_real_public": "docs/evidence/audit-live-mvfnvite.json",
-      "five_document_batch": "docs/evidence/audit-live-mvfmnry1.json",
-      "workflow": "docs/evidence/audit-hosted-ui.json",
-      "simulated_100": "docs/evidence/audit-100-simulated.json",
-      "installed": "docs/evidence/audit-desktop-0.5.0.json",
-      "preserved_native": "docs/evidence/preserved-native-0.5.0.json",
-      "samples": "docs/evidence/audit-public-samples.json",
-      "oauth_boundary": "docs/evidence/audit-hosted-oauth-boundary.json",
-      "github": "docs/evidence/audit-hosted-github.json"
-    }
-  },
-  "acceptance": {
-    "checked_at": "2026-10-19T19:51:42.660713+00:00",
-    "version": "0.5.0",
-    "public_url": "https://campuspulse-relay-demo.onrender.com/",
-    "deployed_commit": "1718ff340bdb2b40c5d3e796907000bd6720b80f",
-    "NON_GCP_READY": false,
-    "tests": {
-      "python_passed": 209,
-      "subtests_passed": 3,
-      "ipc_passed": 7,
-      "full_run_log_sha256": "10d07029c913eec6eb4ddb5b8d5ab306bfab7a6aaa0ae0d0352bd3c10139550f",
-      "simulated_100": "docs/evidence/audit-100-simulated.json",
-      "actual_gemini_calls_in_100": 0
-    },
-    "documents": {
-      "verified_cases": 5,
-      "real_turns": 6,
-      "all_turns_complete": true,
-      "evidence": "docs/evidence/audit-live-mvfmnry1.json",
-      "acceptance_commit": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
-      "cases": [
-        {
-          "file": "holdout-en.txt",
-          "sha256": "7eb6d09e5919d0e961d8f2b376ddaddcf5c12b6522036576880638acc6d1aba0",
-          "passed": true
+    "provider": "Render",
+    "service_id": "srv-dbajs73bc2fs73bm9mfg",
+    "workspace_id": "tea-d3pt0sbipnbc73a5v810",
+    "plan": "Free",
+    "url": "https://campuspulse-relay-demo.onrender.com/",
+    "deploy_id": "dep-dbbmv949v7es73fov1kg",
+    "deploy_status": "live",
+    "finished_at": "2026-10-20T13:43:06.002002Z",
+    "deployed_commit": "7e4098dae61775b5062b2f613192a6abaa3185dc",
+    "observed_health": {
+      "ok": true,
+      "version": "0.5.1",
+      "mode": "alternative_live",
+      "agent_configured": true,
+      "agent_verified": false,
+      "agent": {
+        "configured": true,
+        "resource": "gemini-developer:gemini-3.5-flash-lite",
+        "verified": false,
+        "evidence": {
+          "resource": "gemini-developer:gemini-3.5-flash-lite",
+          "run_id": "84ff425ef7d32a5c4251c2beff4dd3da",
+          "revision": "7e4098dae61775b5062b2f613192a6abaa3185dc",
+          "observed_at": "2026-10-20T13:50:19.654901+00:00",
+          "expires": 1792504519.654925,
+          "provider": "gemini_developer",
+          "deployment_mode": "alternative_hosted",
+          "model": "gemini-3.5-flash-lite"
         },
-        {
-          "file": "holdout-ru.txt",
-          "sha256": "f65f3d5623e5351c9ec074836c2c1a3e3e13db321b34380e887d1e4c80ae776b",
-          "passed": true
-        },
-        {
-          "file": "holdout-kk.txt",
-          "sha256": "cedbc929b781ada39355bfa897fc5553d43ef82ecde69b60687cf6c2a6a094be",
-          "passed": true
-        },
-        {
-          "file": "11-continued-brief.pdf",
-          "sha256": "dbfbef67958436e01bbd7ec21cf591ca7c58593938adb32a644298095e0572c4",
-          "passed": true
-        },
-        {
-          "file": "12-table-brief.pdf",
-          "sha256": "7e4acb08b756e29152efac0b6204b26cc8e54fecb75dff59d73ff427e920dfce",
-          "passed": true
+        "provider": "gemini_developer",
+        "deployment_mode": "alternative_hosted",
+        "model": "gemini-3.5-flash-lite",
+        "managed_agent_engine": false,
+        "mode": "live_gemini_alternative",
+        "public_access": true,
+        "last_failure": {
+          "failed_at": "2026-10-20T13:46:19.563200+00:00",
+          "run_id": "e1d9e99202a4a7bcf7cb3e388f1365fa",
+          "status": "partial",
+          "code": null
         }
-      ],
-      "statistical_reliability_claimed": false,
-      "current_two_clean_visitors": {
-        "evidence": "docs/evidence/audit-live-mvfnvite.json",
-        "deployed_commit": "1718ff340bdb2b40c5d3e796907000bd6720b80f",
-        "cases": 2,
-        "real_turns": 3,
-        "complete_turns": 2,
-        "partial_turns": 1,
-        "all_complete": false
+      },
+      "time": "2026-10-20T14:08:31.639894+00:00",
+      "deployed_commit": "7e4098dae61775b5062b2f613192a6abaa3185dc",
+      "demo": {
+        "public": true,
+        "storage": "temporary",
+        "session_seconds": 7200,
+        "max_upload_mib": 2,
+        "max_sources": 12,
+        "github_cache_seconds": 300,
+        "calendar": "illustrative_local_adapter",
+        "gemini": "public_queued",
+        "mandatory_gcp": "unmet_optional_integration_disabled"
       }
     },
-    "calendar": {
-      "operations_verified": false,
-      "oauth_client_configured": true,
-      "api_enabled_owner_confirmed": true,
-      "audience_production_owner_confirmed": true,
-      "callback_attempt_rejected": true,
-      "owner_report": "Authorization link copied into another browser/window; source session cookie does not transfer with URL.",
-      "consent_token_exchange_verified": true,
-      "real_write_readback_retry_undo_revocation_verified": false,
-      "owner_action": "Record selected target ID and live status, then exact real preview/approval/read-back. Do not reconnect or switch workspaces.",
-      "server_configuration_boundary_verified": true,
-      "boundary_evidence": "docs/evidence/audit-hosted-oauth-boundary.json",
-      "owner_observed_connected": true,
-      "real_consent_completed_owner_observation": true,
-      "owner_connection_evidence": "docs/evidence/audit-calendar-owner-connected.json",
-      "owner_reported_target_selected": true,
-      "actual_target_id_verified": false,
-      "owner_reported_calendar_live": true,
-      "target_id_pending": true,
-      "connection_verification_method": "Actual status screenshot and subsequent owner-provided JSON; actual Google event operations still unverified."
-    },
-    "native": {
-      "full_visibility_verified": false,
-      "unmodified_picker_appearance": true,
-      "cancel_observed": true,
-      "owner_selected_import": true,
-      "import_and_refresh_both_http_200": true,
-      "observed_build": "docs/evidence/audit-native-observation-0.5.0.json",
-      "final_installed_contract": "docs/evidence/audit-desktop-0.5.0.json",
-      "original_45_logged_95_remaining_preserved": true,
-      "save_dialog_and_reimport_verified": false,
-      "notification_visibility_click_focus_verified": false,
-      "windows_control_stopped_by_owner_escape": true
-    },
-    "github": {
-      "background_verified": true,
-      "evidence": "docs/evidence/audit-hosted-github.json",
-      "dedicated_credential_locally_read_validated": true,
-      "server_configuration_verified": true,
-      "prior_upstream_error": "UPSTREAM_RATE_LIMITED",
-      "deployment_guard": null
-    },
-    "samples": {
-      "files": 13,
-      "public_downloads_verified": true,
-      "evidence": "docs/evidence/audit-public-samples.json",
-      "url": "https://campuspulse-relay-demo.onrender.com/samples/"
-    },
-    "managed": {
-      "MANAGED_GCP_VERIFIED_IN_AUTHORIZED_WINDOW": false,
-      "PUBLIC_RELEASE_READY_AFTER_WINDOW": false,
-      "actual_resource": null,
-      "preparation": "docs/evidence/managed-preparation-0.5.0.json",
-      "organizer_t0_project_coverage_expiry_verified": false,
-      "personal_spending_authorized_usd": 0
-    },
-    "limitations": [
-      "Render Free storage is temporary (up to two hours; earlier restart/redeploy reset). Export Passport.",
-      "Free host can sleep. Polling runs while awake, and cached observations retain original source fetch time.",
-      "Real Gemini Developer API/MCP is alternative hosting, not managed Agent Engine.",
-      "Google Calendar protocol fault simulations and illustrative receipts are not actual Google writes.",
-      "Five-document batch is evidence, not a statistical reliability or latency guarantee. Earlier failed/partial attempts remain recorded.",
-      "Native observations belong to their recorded build; final installed contracts do not prove a Save dialog or notification was visible."
-    ]
+    "verified_at": "2026-10-20T14:07:08.122695+00:00",
+    "no_paid_upgrade": true
   },
-  "verification": {
-    "real_document_batch": {
-      "at": "2026-10-19T19:08:36.032Z",
-      "url": "https://campuspulse-relay-demo.onrender.com",
-      "version": "0.5.0",
-      "provider_substitution": false,
-      "google_login": false,
-      "invitations": false,
-      "personal_spending": 0,
-      "checks": {
-        "two_clean_automatic_workspaces": true,
-        "documents_history_runs_plans_isolated": true,
-        "followup_same_real_conversation_and_canonical_progress": true,
-        "internal_routes_protected": true
-      },
-      "cases": [
-        {
-          "file": "holdout-en.txt",
-          "sha256": "7eb6d09e5919d0e961d8f2b376ddaddcf5c12b6522036576880638acc6d1aba0",
-          "passed": true,
-          "source_id": "6fe1cd44d333ee878c1415eb",
-          "source_version": "11955a66e83265359ac5eef7",
-          "actual_answer_status": "complete",
-          "plan": {
-            "id": "95a3299fff371ba85f4a82ae",
-            "required_minutes": 150,
-            "feasible": true,
-            "scope_complete": true
-          },
-          "receipt": {
-            "id": "fac5c07120b3e91fd6c4ff9371fe864d",
-            "status": "verified",
-            "mode": "illustrative"
-          },
-          "confirmation_plan_whatif_illustrative_receipt_progress_passport_refresh": true
-        },
-        {
-          "file": "holdout-ru.txt",
-          "sha256": "f65f3d5623e5351c9ec074836c2c1a3e3e13db321b34380e887d1e4c80ae776b",
-          "passed": true,
-          "source_id": "1cfb7b5881d172b7d0aa07c2",
-          "source_version": "a356fd80c445cb3eadb5907f",
-          "actual_answer_status": "complete",
-          "plan": {
-            "id": "cb98aaca2b81cdda8101c7a5",
-            "required_minutes": 90,
-            "feasible": true,
-            "scope_complete": true
-          },
-          "receipt": {
-            "id": "aaafb9f688297bd49fb19a8d0ea5aa7a",
-            "status": "verified",
-            "mode": "illustrative"
-          },
-          "confirmation_plan_whatif_illustrative_receipt_progress_passport_refresh": true
-        },
-        {
-          "file": "holdout-kk.txt",
-          "sha256": "cedbc929b781ada39355bfa897fc5553d43ef82ecde69b60687cf6c2a6a094be",
-          "passed": true,
-          "source_id": "b751fc2f01f756df94e66b4d",
-          "source_version": "52bb68a558b54fb807a8cf5a",
-          "actual_answer_status": "complete",
-          "plan": {
-            "id": "a8f9df35745608ec6c59fcac",
-            "required_minutes": 60,
-            "feasible": true,
-            "scope_complete": true
-          },
-          "receipt": {
-            "id": "a0cdf039894d30e92be5063b8bb4e27f",
-            "status": "verified",
-            "mode": "illustrative"
-          },
-          "confirmation_plan_whatif_illustrative_receipt_progress_passport_refresh": true
-        },
-        {
-          "file": "11-continued-brief.pdf",
-          "sha256": "dbfbef67958436e01bbd7ec21cf591ca7c58593938adb32a644298095e0572c4",
-          "passed": true,
-          "source_id": "9e042d60ceff1bb997ff8f2b",
-          "source_version": "e102692699fd951f659baa41",
-          "actual_answer_status": "complete",
-          "plan": {
-            "id": "e043aa8e57589a921806d85b",
-            "required_minutes": 90,
-            "feasible": true,
-            "scope_complete": true
-          },
-          "receipt": {
-            "id": "5e6be7b0d628a2c1e74cd03133c56de6",
-            "status": "verified",
-            "mode": "illustrative"
-          },
-          "confirmation_plan_whatif_illustrative_receipt_progress_passport_refresh": true
-        },
-        {
-          "file": "12-table-brief.pdf",
-          "sha256": "7e4acb08b756e29152efac0b6204b26cc8e54fecb75dff59d73ff427e920dfce",
-          "passed": true,
-          "source_id": "df5968730625fcbf788ae4c2",
-          "source_version": "2079d0166d1890c478cb34fa",
-          "actual_answer_status": "complete",
-          "plan": {
-            "id": "13d47559771bf56c2cf665f6",
-            "required_minutes": 150,
-            "feasible": true,
-            "scope_complete": true
-          },
-          "receipt": {
-            "id": "a2a8ca77975232ddf26eec417e544e88",
-            "status": "verified",
-            "mode": "illustrative"
-          },
-          "confirmation_plan_whatif_illustrative_receipt_progress_passport_refresh": true
-        }
-      ],
-      "runs": [
-        {
-          "status": "complete",
-          "required_tool_failed": false,
-          "tool_observations": [
-            {
-              "tool": "read_course_source",
-              "status": "observed",
-              "response_sha256": "08967c1fa2abedb4fb8c78b6e23dcbd4518869baa71fd32ff8aaf3055d6250e2",
-              "provenance": [
-                {
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "page": 1,
-                  "version": "11955a66e83265359ac5eef7",
-                  "fetched_at": "2026-10-19T19:10:05.284936+00:00",
-                  "mode": "selected_upload"
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                }
-              ],
-              "error_codes": []
-            },
-            {
-              "tool": "propose_academic_extraction",
-              "status": "observed",
-              "response_sha256": "629f5aa9419ca55897361e5ee2510bd5607da440fca2e6a257c2f4dc9072a675",
-              "provenance": [
-                {
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                },
-                {
-                  "page": 1,
-                  "source_id": "6fe1cd44d333ee878c1415eb",
-                  "source_version": "11955a66e83265359ac5eef7"
-                }
-              ],
-              "error_codes": []
-            }
-          ],
-          "run_id": "5b73bf3368e86b693efa339912201445",
-          "conversation_id": "b1a4489a769d0e673688e26246a5fb83",
-          "mode": "live_gemini_alternative",
-          "provider": "gemini_developer",
-          "model": "gemini-3.5-flash-lite",
-          "deployment_mode": "alternative_hosted",
-          "runtime_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
-          "duration_ms": 20242,
-          "gateway_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
-          "observed_latency_ms": 37391,
-          "answer_sha256": "9f62a75d044ffb88b546b5c11ef7a5ad0c442dd428fd1177a0f2d7f5eabf6c96",
-          "answer_characters": 1248
-        },
-        {
-          "status": "complete",
-          "required_tool_failed": false,
-          "tool_observations": [
-            {
-              "tool": "read_course_source",
-              "status": "observed",
-              "response_sha256": "ec330eeaf577b813b780852ccdca19b40f7f5046e436ec365aeda82183b13363",
-              "provenance": [
-                {
-                  "source_id": "1cfb7b5881d172b7d0aa07c2",
-                  "page": 1,
-                  "version": "a356fd80c445cb3eadb5907f",
-                  "fetched_at": "2026-10-19T19:10:54.673813+00:00",
-                  "mode": "selected_upload"
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                }
-              ],
-              "error_codes": []
-            },
-            {
-              "tool": "propose_academic_extraction",
-              "status": "observed",
-              "response_sha256": "6029119c15e2d999797934e30622c0258ede87f4234e6eaf4ab80ff5f13d13b0",
-              "provenance": [
-                {
-                  "source_id": "1cfb7b5881d172b7d0aa07c2",
-                  "source_version": "a356fd80c445cb3eadb5907f"
-                },
-                {
-                  "page": 1,
-                  "source_id": "1cfb7b5881d172b7d0aa07c2",
-                  "source_version": "a356fd80c445cb3eadb5907f"
-                },
-                {
-                  "page": 1,
-                  "source_id": "1cfb7b5881d172b7d0aa07c2",
-                  "source_version": "a356fd80c445cb3eadb5907f"
-                },
-                {
-                  "page": 1,
-                  "source_id": "1cfb7b5881d172b7d0aa07c2",
-                  "source_version": "a356fd80c445cb3eadb5907f"
-                },
-                {
-                  "page": 1,
-                  "source_id": "1cfb7b5881d172b7d0aa07c2",
-                  "source_version": "a356fd80c445cb3eadb5907f"
-                },
-                {
-                  "page": 1,
-                  "source_id": "1cfb7b5881d172b7d0aa07c2",
-                  "source_version": "a356fd80c445cb3eadb5907f"
-                },
-                {
-                  "page": 1,
-                  "source_id": "1cfb7b5881d172b7d0aa07c2",
-                  "source_version": "a356fd80c445cb3eadb5907f"
-                },
-                {
-                  "page": 1,
-                  "source_id": "1cfb7b5881d172b7d0aa07c2",
-                  "source_version": "a356fd80c445cb3eadb5907f"
-                },
-                {
-                  "page": 1,
-                  "source_id": "1cfb7b5881d172b7d0aa07c2",
-                  "source_version": "a356fd80c445cb3eadb5907f"
-                },
-                {
-                  "page": 1,
-                  "source_id": "1cfb7b5881d172b7d0aa07c2",
-                  "source_version": "a356fd80c445cb3eadb5907f"
-                },
-                {
-                  "page": 1,
-                  "source_id": "1cfb7b5881d172b7d0aa07c2",
-                  "source_version": "a356fd80c445cb3eadb5907f"
-                },
-                {
-                  "page": 1,
-                  "source_id": "1cfb7b5881d172b7d0aa07c2",
-                  "source_version": "a356fd80c445cb3eadb5907f"
-                },
-                {
-                  "page": 1,
-                  "source_id": "1cfb7b5881d172b7d0aa07c2",
-                  "source_version": "a356fd80c445cb3eadb5907f"
-                },
-                {
-                  "page": 1,
-                  "source_id": "1cfb7b5881d172b7d0aa07c2",
-                  "source_version": "a356fd80c445cb3eadb5907f"
-                },
-                {
-                  "page": 1,
-                  "source_id": "1cfb7b5881d172b7d0aa07c2",
-                  "source_version": "a356fd80c445cb3eadb5907f"
-                },
-                {
-                  "page": 1,
-                  "source_id": "1cfb7b5881d172b7d0aa07c2",
-                  "source_version": "a356fd80c445cb3eadb5907f"
-                },
-                {
-                  "page": 1,
-                  "source_id": "1cfb7b5881d172b7d0aa07c2",
-                  "source_version": "a356fd80c445cb3eadb5907f"
-                }
-              ],
-              "error_codes": []
-            }
-          ],
-          "run_id": "6d3d49a1418cfd22cbc31909e2303b71",
-          "conversation_id": "a64cdd3d7e29a3e8a5f66e35f9766ee1",
-          "mode": "live_gemini_alternative",
-          "provider": "gemini_developer",
-          "model": "gemini-3.5-flash-lite",
-          "deployment_mode": "alternative_hosted",
-          "runtime_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
-          "duration_ms": 18226,
-          "gateway_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
-          "observed_latency_ms": 19303,
-          "answer_sha256": "2b99780e8bc7aabb893fec45481a3c76ad410423b48f359718985db63c6d5c68",
-          "answer_characters": 1080
-        },
-        {
-          "status": "complete",
-          "required_tool_failed": false,
-          "tool_observations": [
-            {
-              "tool": "list_course_sources",
-              "status": "observed",
-              "response_sha256": "dc58bcbc0cb8a6503a8dfe156e18b66225b6119efc9731053ef879b5651b128b",
-              "provenance": [
-                {
-                  "version": "52bb68a558b54fb807a8cf5a",
-                  "fetched_at": "2026-10-19T19:11:26.659312+00:00",
-                  "mode": "selected_upload"
-                }
-              ],
-              "error_codes": []
-            },
-            {
-              "tool": "read_course_source",
-              "status": "observed",
-              "response_sha256": "fa67e633309f219e74c6244e11cb6e4e14b703e6d37f4a3d6c7a029bab952382",
-              "provenance": [
-                {
-                  "source_id": "b751fc2f01f756df94e66b4d",
-                  "page": 1,
-                  "version": "52bb68a558b54fb807a8cf5a",
-                  "fetched_at": "2026-10-19T19:11:26.659312+00:00",
-                  "mode": "selected_upload"
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                }
-              ],
-              "error_codes": []
-            },
-            {
-              "tool": "propose_academic_extraction",
-              "status": "observed",
-              "response_sha256": "02b6f8b3914f5ff72684e13151d47e32b8ca8d2288195ffc1766e44060a4c480",
-              "provenance": [
-                {
-                  "source_id": "b751fc2f01f756df94e66b4d",
-                  "source_version": "52bb68a558b54fb807a8cf5a"
-                },
-                {
-                  "page": 1,
-                  "source_id": "b751fc2f01f756df94e66b4d",
-                  "source_version": "52bb68a558b54fb807a8cf5a"
-                },
-                {
-                  "page": 1,
-                  "source_id": "b751fc2f01f756df94e66b4d",
-                  "source_version": "52bb68a558b54fb807a8cf5a"
-                },
-                {
-                  "page": 1,
-                  "source_id": "b751fc2f01f756df94e66b4d",
-                  "source_version": "52bb68a558b54fb807a8cf5a"
-                },
-                {
-                  "page": 1,
-                  "source_id": "b751fc2f01f756df94e66b4d",
-                  "source_version": "52bb68a558b54fb807a8cf5a"
-                },
-                {
-                  "page": 1,
-                  "source_id": "b751fc2f01f756df94e66b4d",
-                  "source_version": "52bb68a558b54fb807a8cf5a"
-                },
-                {
-                  "page": 1,
-                  "source_id": "b751fc2f01f756df94e66b4d",
-                  "source_version": "52bb68a558b54fb807a8cf5a"
-                },
-                {
-                  "page": 1,
-                  "source_id": "b751fc2f01f756df94e66b4d",
-                  "source_version": "52bb68a558b54fb807a8cf5a"
-                },
-                {
-                  "page": 1,
-                  "source_id": "b751fc2f01f756df94e66b4d",
-                  "source_version": "52bb68a558b54fb807a8cf5a"
-                },
-                {
-                  "page": 1,
-                  "source_id": "b751fc2f01f756df94e66b4d",
-                  "source_version": "52bb68a558b54fb807a8cf5a"
-                },
-                {
-                  "page": 1,
-                  "source_id": "b751fc2f01f756df94e66b4d",
-                  "source_version": "52bb68a558b54fb807a8cf5a"
-                },
-                {
-                  "page": 1,
-                  "source_id": "b751fc2f01f756df94e66b4d",
-                  "source_version": "52bb68a558b54fb807a8cf5a"
-                },
-                {
-                  "page": 1,
-                  "source_id": "b751fc2f01f756df94e66b4d",
-                  "source_version": "52bb68a558b54fb807a8cf5a"
-                },
-                {
-                  "page": 1,
-                  "source_id": "b751fc2f01f756df94e66b4d",
-                  "source_version": "52bb68a558b54fb807a8cf5a"
-                },
-                {
-                  "page": 1,
-                  "source_id": "b751fc2f01f756df94e66b4d",
-                  "source_version": "52bb68a558b54fb807a8cf5a"
-                },
-                {
-                  "page": 1,
-                  "source_id": "b751fc2f01f756df94e66b4d",
-                  "source_version": "52bb68a558b54fb807a8cf5a"
-                },
-                {
-                  "page": 1,
-                  "source_id": "b751fc2f01f756df94e66b4d",
-                  "source_version": "52bb68a558b54fb807a8cf5a"
-                }
-              ],
-              "error_codes": []
-            }
-          ],
-          "run_id": "8dee675be2c395a0caa32f1f62ea61e2",
-          "conversation_id": "841a3cd51ebf4f098446616446ea70f2",
-          "mode": "live_gemini_alternative",
-          "provider": "gemini_developer",
-          "model": "gemini-3.5-flash-lite",
-          "deployment_mode": "alternative_hosted",
-          "runtime_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
-          "duration_ms": 18607,
-          "gateway_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
-          "observed_latency_ms": 19435,
-          "answer_sha256": "a3920edf27675ed2ba652bc70b033c01f941ebfc5f7ae8e4be8d6bfb3aef8d28",
-          "answer_characters": 887
-        },
-        {
-          "status": "complete",
-          "required_tool_failed": false,
-          "tool_observations": [
-            {
-              "tool": "read_course_source",
-              "status": "observed",
-              "response_sha256": "a407f0bec72c92149abaf76670d6d7d995b77245e61184b1687c3d8bc5ebf656",
-              "provenance": [
-                {
-                  "source_id": "9e042d60ceff1bb997ff8f2b",
-                  "page": 1,
-                  "version": "e102692699fd951f659baa41",
-                  "fetched_at": "2026-10-19T19:12:02.522210+00:00",
-                  "mode": "selected_upload"
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                }
-              ],
-              "error_codes": []
-            },
-            {
-              "tool": "read_course_source",
-              "status": "observed",
-              "response_sha256": "a0e81bc42d04a2a178952c44f1c0f6322c0fca2de171f9a8ce40ab41f7acf94e",
-              "provenance": [
-                {
-                  "source_id": "9e042d60ceff1bb997ff8f2b",
-                  "page": 2,
-                  "version": "e102692699fd951f659baa41",
-                  "fetched_at": "2026-10-19T19:12:02.522210+00:00",
-                  "mode": "selected_upload"
-                },
-                {
-                  "page": 2
-                },
-                {
-                  "page": 2
-                },
-                {
-                  "page": 2
-                },
-                {
-                  "page": 2
-                },
-                {
-                  "page": 2
-                },
-                {
-                  "page": 2
-                },
-                {
-                  "page": 2
-                },
-                {
-                  "page": 2
-                }
-              ],
-              "error_codes": []
-            },
-            {
-              "tool": "propose_academic_extraction",
-              "status": "observed",
-              "response_sha256": "90f260442edd0dc6751ae04aa8a9f1cef6a67c59ae10b7d69e5533a34ae66f2f",
-              "provenance": [
-                {
-                  "source_id": "9e042d60ceff1bb997ff8f2b",
-                  "source_version": "e102692699fd951f659baa41"
-                },
-                {
-                  "page": 1,
-                  "source_id": "9e042d60ceff1bb997ff8f2b",
-                  "source_version": "e102692699fd951f659baa41"
-                },
-                {
-                  "page": 1,
-                  "source_id": "9e042d60ceff1bb997ff8f2b",
-                  "source_version": "e102692699fd951f659baa41"
-                },
-                {
-                  "page": 1,
-                  "source_id": "9e042d60ceff1bb997ff8f2b",
-                  "source_version": "e102692699fd951f659baa41"
-                },
-                {
-                  "page": 1,
-                  "source_id": "9e042d60ceff1bb997ff8f2b",
-                  "source_version": "e102692699fd951f659baa41"
-                },
-                {
-                  "page": 2,
-                  "source_id": "9e042d60ceff1bb997ff8f2b",
-                  "source_version": "e102692699fd951f659baa41"
-                },
-                {
-                  "page": 2,
-                  "source_id": "9e042d60ceff1bb997ff8f2b",
-                  "source_version": "e102692699fd951f659baa41"
-                },
-                {
-                  "page": 2,
-                  "source_id": "9e042d60ceff1bb997ff8f2b",
-                  "source_version": "e102692699fd951f659baa41"
-                },
-                {
-                  "page": 2,
-                  "source_id": "9e042d60ceff1bb997ff8f2b",
-                  "source_version": "e102692699fd951f659baa41"
-                },
-                {
-                  "page": 1,
-                  "source_id": "9e042d60ceff1bb997ff8f2b",
-                  "source_version": "e102692699fd951f659baa41"
-                },
-                {
-                  "page": 1,
-                  "source_id": "9e042d60ceff1bb997ff8f2b",
-                  "source_version": "e102692699fd951f659baa41"
-                },
-                {
-                  "page": 1,
-                  "source_id": "9e042d60ceff1bb997ff8f2b",
-                  "source_version": "e102692699fd951f659baa41"
-                },
-                {
-                  "page": 1,
-                  "source_id": "9e042d60ceff1bb997ff8f2b",
-                  "source_version": "e102692699fd951f659baa41"
-                },
-                {
-                  "page": 2,
-                  "source_id": "9e042d60ceff1bb997ff8f2b",
-                  "source_version": "e102692699fd951f659baa41"
-                },
-                {
-                  "page": 2,
-                  "source_id": "9e042d60ceff1bb997ff8f2b",
-                  "source_version": "e102692699fd951f659baa41"
-                },
-                {
-                  "page": 2,
-                  "source_id": "9e042d60ceff1bb997ff8f2b",
-                  "source_version": "e102692699fd951f659baa41"
-                },
-                {
-                  "page": 2,
-                  "source_id": "9e042d60ceff1bb997ff8f2b",
-                  "source_version": "e102692699fd951f659baa41"
-                }
-              ],
-              "error_codes": []
-            }
-          ],
-          "run_id": "0bed8978bb7261930b67dc083190f6d5",
-          "conversation_id": "84be3d697787a263f15186dbef8b9fea",
-          "mode": "live_gemini_alternative",
-          "provider": "gemini_developer",
-          "model": "gemini-3.5-flash-lite",
-          "deployment_mode": "alternative_hosted",
-          "runtime_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
-          "duration_ms": 18549,
-          "gateway_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
-          "observed_latency_ms": 22431,
-          "answer_sha256": "4c7754d4e54a521f7e216b7a95e677484cf4dd432e8cf397fe1ef501c9ada6a1",
-          "answer_characters": 971
-        },
-        {
-          "status": "complete",
-          "required_tool_failed": false,
-          "tool_observations": [
-            {
-              "tool": "read_course_source",
-              "status": "observed",
-              "response_sha256": "9e8bf07e3ef333a0d0165ea7005fc344fcb8ef5a8632e7813eede89abc02742c",
-              "provenance": [
-                {
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "page": 1,
-                  "version": "2079d0166d1890c478cb34fa",
-                  "fetched_at": "2026-10-19T19:12:41.420359+00:00",
-                  "mode": "selected_upload"
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                },
-                {
-                  "page": 1
-                }
-              ],
-              "error_codes": []
-            },
-            {
-              "tool": "propose_academic_extraction",
-              "status": "observed",
-              "response_sha256": "61220bf33345b1e0ddc67cde82732f07e2c6dd950c98b9b9daafc665976d299c",
-              "provenance": [
-                {
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                },
-                {
-                  "page": 1,
-                  "source_id": "df5968730625fcbf788ae4c2",
-                  "source_version": "2079d0166d1890c478cb34fa"
-                }
-              ],
-              "error_codes": []
-            }
-          ],
-          "run_id": "2e50bda89cf066343bf940142f193eae",
-          "conversation_id": "38dcb96becde5d7c3eefb8a3ae1516c9",
-          "mode": "live_gemini_alternative",
-          "provider": "gemini_developer",
-          "model": "gemini-3.5-flash-lite",
-          "deployment_mode": "alternative_hosted",
-          "runtime_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
-          "duration_ms": 20330,
-          "gateway_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
-          "observed_latency_ms": 22345,
-          "answer_sha256": "f2d52d641817dd6dc73d962ec2f12fb6d8b6a9c6b1aa2b02a1429ab25f2ac5ec",
-          "answer_characters": 1848
-        },
-        {
-          "status": "complete",
-          "required_tool_failed": false,
-          "tool_observations": [
-            {
-              "tool": "get_progress_summary",
-              "status": "observed",
-              "response_sha256": "c5c41d0ad51290e9408f0c209ed2fc795609c0b49a9f75e8970708687a8dbcbf",
-              "provenance": [],
-              "error_codes": []
-            }
-          ],
-          "run_id": "411bfaf3b2415257b3d202afa7dad6ce",
-          "conversation_id": "b1a4489a769d0e673688e26246a5fb83",
-          "mode": "live_gemini_alternative",
-          "provider": "gemini_developer",
-          "model": "gemini-3.5-flash-lite",
-          "deployment_mode": "alternative_hosted",
-          "runtime_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
-          "duration_ms": 14988,
-          "gateway_revision": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
-          "observed_latency_ms": 15990,
-          "answer_sha256": "d5caaa73c0641fc831cf4c115aa98a232f88242a8eb6afcdede57e8a09dc4924",
-          "answer_characters": 606
-        }
-      ],
-      "deployed_commit": "2f74bdacf4bab56b96dbd2b3350d388634d95142",
-      "passed": true
+  "acceptance": {
+    "version": "0.5.1",
+    "checked_at": "2026-10-20T14:07:08.122695+00:00",
+    "NON_GCP_READY": false,
+    "public_url": "https://campuspulse-relay-demo.onrender.com/",
+    "deployed_commit": "7e4098dae61775b5062b2f613192a6abaa3185dc",
+    "primary_architecture": "Render Free / server-side Gemini Developer API / actual protected MCP / isolated real workspace and allowlisted GitHub data",
+    "public_no_invitation_registration_or_user_key": true,
+    "documents": {
+      "evidence": "docs/evidence/audit-live-mvgqi7ei.json",
+      "verified_cases": 5,
+      "real_turns": 6,
+      "complete_turns": 5,
+      "partial_turns": 1,
+      "failed_turns": 0,
+      "provider_substituted": false,
+      "two_clean_visitors_and_multi_turn_verified": true,
+      "missing_conflict_evidence": [
+        "docs/evidence/final-0.5.1-uncertainty-ui-first.json",
+        "docs/evidence/final-0.5.1-uncertainty-ui.json"
+      ]
     },
-    "provider_simulated_100": {
-      "checked_at": "2026-10-19T19:38:24.570013+00:00",
+    "local_tests": {
+      "python_passed": 219,
+      "subtests_passed": 3,
+      "ipc_passed": 8,
+      "full_run_seconds": 33.98,
+      "warnings": 3,
+      "prior_failed_run_preserved": ".local/logs/final-0.5.1-unit-r2.log",
+      "prior_failure": "Quota test crossed real minute boundary; test clock fixed, full rerun passed",
+      "log_hashes": [
+        {
+          "file": ".local/logs/final-0.5.1-unit-r3.log",
+          "sha256": "c6db1e65963e060113905ce088efbcd4e96c2563c99a95d97001b3c981ebdb49"
+        },
+        {
+          "file": ".local/logs/final-0.5.1-ipc.log",
+          "sha256": "2a11d3eb3cc3ef39ffd120fa824f5f9f2b85f0c7b5f906b6c0e5f5007351a04f"
+        },
+        {
+          "file": ".local/logs/final-0.5.1-windows-build-r2.log",
+          "sha256": "4fd98ad213c4269b7665c3e6c6828a51b0637b46248ff86abf33c24068371ad1"
+        }
+      ],
+      "additional_structural_packaging_tests_passed": 3,
+      "calendar_replay_helper_mock_checks_passed": 5
+    },
+    "queue": {
+      "evidence": "docs/evidence/final-0.5.1-100-simulated-r3.json",
       "sessions": 100,
       "provider": "simulated_test_only",
       "actual_gemini_calls": 0,
-      "simulated_boundary": "invoke_alternative_query",
-      "actual_mcp_protocol_in_100_session_test": false,
-      "signed_workspace_context_validated": true,
-      "actual_http_session_upload_queue_history_paths": true,
-      "checks": {
-        "unique_workspaces": true,
-        "foreign_source_denied_100": true,
-        "foreign_run_denied_100": true,
-        "history_isolation_100": true,
-        "plan_isolation_100": true,
-        "plans_seeded_as_isolation_fixtures_not_solver_acceptance": true,
-        "one_outstanding_per_workspace": true,
-        "bounded_worker_pool": 2,
-        "at_least_98_queued_at_barrier": true,
-        "served_all_100": true,
-        "rolling_rpm_limit_15_respected": true,
-        "no_real_calendar_writes": true
-      },
-      "passed": true
+      "actual_mcp_protocol_in_load_test": false
     },
-    "installed": {
-      "checked_at": "2026-10-19T18:59:37.405Z",
-      "version": "0.5.0",
-      "model_calls": 0,
-      "real_calendar_writes": 0,
-      "native_dialog_visibility_checked": false,
-      "notification_visibility_checked": false,
-      "checks": {
-        "package_matches_source_and_sandboxed_D_profile": true,
-        "native_import_request_readback_and_refresh": true,
-        "poll_route_reaches_tenant_authorization_not_IPC_rejection": true,
-        "reopen_keeps_own_workspace": true,
-        "reset_rotates_workspace_and_native_CSRF_without_entry_gate": true
-      },
-      "packaged_files": [
-        {
-          "file": "desktop\\locales.cjs",
-          "sha256": "be219f1d7ed568462d68b666aacd03d4a638027b777a8aed9423f2bac0660d9a",
-          "matches_current_source": true
-        },
-        {
-          "file": "desktop\\main.cjs",
-          "sha256": "f4bf805ccce67cd04a226d9fecf8317592e82c7ae58480a2166227a57639f0ab",
-          "matches_current_source": true
-        },
-        {
-          "file": "desktop\\preload.cjs",
-          "sha256": "def16c63fa8563bfefa18ddc535cf952da93b8f388413570eb54daaf7e5994d6",
-          "matches_current_source": true
-        },
-        {
-          "file": "desktop\\request-policy.cjs",
-          "sha256": "dc8a1befe4cf249aaad3aa5ba0c342a4abcd2a084cc52383df6110b58aa41720",
-          "matches_current_source": true
-        },
-        {
-          "file": "dist\\assets\\index-B-lRwg8k.css",
-          "sha256": "83c45ba95223b8810de19b5ac5a5cc85cff3618962b76d36e2e4a33758a9d71e",
-          "matches_current_source": true
-        },
-        {
-          "file": "dist\\assets\\index-CUiVfiL5.js",
-          "sha256": "688aaeb5f1380cd9ed118511bc3cb321775e8c791fd06e98bdde2b30244e6da6",
-          "matches_current_source": true
-        },
-        {
-          "file": "dist\\assets\\relay-oauth.css",
-          "sha256": "08ecaab876ad057a8f60261b0da26a505c31bfa190fb1d5f8ad863d2257d1369",
-          "matches_current_source": true
-        },
-        {
-          "file": "dist\\assets\\relay-pair.js",
-          "sha256": "516eea0fbdd7bea908e088a5b02e80c1c3896d51a48e2ce61cb87ef293c3b7a7",
-          "matches_current_source": true
-        },
-        {
-          "file": "dist\\index.html",
-          "sha256": "539249fc8ee705e9e40eae8e8c062645e873b64ec22f07be144cef1f4f3e7742",
-          "matches_current_source": true
-        },
-        {
-          "file": "dist\\samples\\index.html",
-          "sha256": "491637dca7978eebc66d7817ea3aadb4d4ac9f2259d811d725311e652a278c23",
-          "matches_current_source": true
-        },
-        {
-          "file": "dist\\samples\\privacy.html",
-          "sha256": "adc7f70004ff6751b2fbcd0baf224dfdf528691c0f664411a7be4e89ceabbd5d",
-          "matches_current_source": true
-        }
+    "protocol": {
+      "evidence": "docs/evidence/final-0.5.1-mcp.json",
+      "actual_mcp": true,
+      "model_calls": 0
+    },
+    "browser": {
+      "evidence": "docs/evidence/final-0.5.1-hosted-ui.json",
+      "responsive_language_states": 12,
+      "connections_mobile_extra_states": 3,
+      "connections_evidence": "docs/evidence/final-0.5.1-connections-mobile.json",
+      "AA_violations": 0
+    },
+    "recovery": {
+      "expiry_network": "docs/evidence/final-0.5.1-recovery.json",
+      "actual_local_process_restart": "docs/evidence/final-0.5.1-restart.json",
+      "public_render_forced_restart": false,
+      "reason": "Preserve owner connection and public visitors; local empty-store replacement tested separately"
+    },
+    "github": {
+      "evidence": "docs/evidence/final-0.5.1-hosted-github.json",
+      "actual_hosted_read": true,
+      "browser_independent_observation": true
+    },
+    "samples": {
+      "evidence": "docs/evidence/final-0.5.1-public-samples.json",
+      "files": 13,
+      "url": "https://campuspulse-relay-demo.onrender.com/samples/",
+      "synthetic_uncertainty_addendum": "fixtures/acceptance-0.5.1"
+    },
+    "calendar": {
+      "configured": true,
+      "owner_reconsent_observed": true,
+      "existing_calendar_recovery_observed": true,
+      "target_selected_currently_verified": false,
+      "operations_verified": false,
+      "read_back_verified": false,
+      "idempotent_replay_verified": false,
+      "undo_verified": false,
+      "revocation_verified": false,
+      "evidence": [
+        "docs/evidence/final-0.5.1-calendar-owner-reconnected.json",
+        "docs/evidence/final-0.5.1-calendar-recovered.json"
       ],
-      "deployed_commit": "22d848033ebdf04be333d04d9c9a9a061132cf58",
-      "passed": true
+      "note": "Prior404 was followed by successful recovery without code change. Owner preparing target selection and exact preview. No new calendar or event was created by the agent."
     },
-    "web_bundle": {
-      "checked_at": "2026-10-19T19:53:24.831434+00:00",
-      "version": "0.5.0",
-      "environment": "D:\\projects\\CampusPulseRELAY\\.local\\public-venv\\Scripts\\python.exe",
-      "extracted_root": "D:\\projects\\CampusPulseRELAY\\.local\\final-integration\\web-bundle-audit-0.5.0-r3",
-      "checks": {
-        "plan_whatif_illustrative_approval_readback": true,
-        "new_file_exact_readback_no_google": true,
-        "portable_export_without_authority": true,
-        "unavailable_ai_is_not_canned": true
-      },
-      "model_calls": 0,
-      "real_calendar_writes": 0,
-      "runtime_files": {
-        "dist/assets/index-B-lRwg8k.css": "83c45ba95223b8810de19b5ac5a5cc85cff3618962b76d36e2e4a33758a9d71e",
-        "dist/assets/index-CUiVfiL5.js": "688aaeb5f1380cd9ed118511bc3cb321775e8c791fd06e98bdde2b30244e6da6",
-        "dist/assets/inter-cyrillic-400-normal-HOLc17fK.woff": "6e441a6c94788318fa02b6d0a633aa29eebe27b69c6567eb1e59b4edc68ed70e",
-        "dist/assets/inter-cyrillic-400-normal-obahsSVq.woff2": "f0bb586459ce8f09b238285040f17e3e9e9538b2c5a7aae0775194e33c36c3c3",
-        "dist/assets/inter-cyrillic-500-normal-BasfLYem.woff2": "b77a86ec16aadc157f4a99e8898d71cd75ea264753d9bdf13f962f8c3988cbb0",
-        "dist/assets/inter-cyrillic-500-normal-CxZf_p3X.woff": "5be18e0345781cb882a267798518553c0e915174fc70731ab5f085ca64ba1ebc",
-        "dist/assets/inter-cyrillic-600-normal-4D_pXhcN.woff": "cc190ed1b64eb650a4ad7e97c7a668cb8b34acd9c4c7f7bf4372c0cbacd35795",
-        "dist/assets/inter-cyrillic-600-normal-CWCymEST.woff2": "6c2a37f82a676bcd441b735e4e2cda4edb8873a059ab9c362a84f0711f257041",
-        "dist/assets/inter-cyrillic-700-normal-CjBOestx.woff2": "5917871d3cc970d8ce195101cbf65c1f68ec948022eb6070030342bb7edfb3bb",
-        "dist/assets/inter-cyrillic-700-normal-DrXBdSj3.woff": "72b6daa49173e531027d8a260ef128e142a165811cab6a2875eefe0c3c58fa0e",
-        "dist/assets/inter-cyrillic-ext-400-normal-BQZuk6qB.woff2": "ef572f9187a8be018d9d9c2c6b77c1f6cb2af4199f02fc16c292ea10ab25a2cc",
-        "dist/assets/inter-cyrillic-ext-400-normal-DQukG94-.woff": "5cb2f1cc0936f89a42ceae34f5a5720248dc5b8114c12b1c33a7d2ef01a9b6b9",
-        "dist/assets/inter-cyrillic-ext-500-normal-B0yAr1jD.woff2": "1c2db92d3cd9b237ca7c9c07af556d542f28ded1db54cd4382cf776501c5291f",
-        "dist/assets/inter-cyrillic-ext-500-normal-BmqWE9Dz.woff": "e250c05aebcf49971e0b25f476992dd463c28c0292ebb204d9db542fb5066ca7",
-        "dist/assets/inter-cyrillic-ext-600-normal-Bcila6Z-.woff": "a5073285409443f4653c858de58c5dc0bfc2fd33e60d8747388345e7c5ab1ab3",
-        "dist/assets/inter-cyrillic-ext-600-normal-Dfes3d0z.woff2": "509fca9c59564f9a846fa69bc647f9b050fc11abf1c9f6f3da71fb2d5ed425bd",
-        "dist/assets/inter-cyrillic-ext-700-normal-BjwYoWNd.woff2": "a46b99781170971e2c99a87ff7ee9f5cf90a9dfcd18175e1be6300201d030123",
-        "dist/assets/inter-cyrillic-ext-700-normal-LO58E6JB.woff": "0f3d4be2bd7018f78fa3484a5f6e9d8ce567689426643b84a47e8cabb91e5f16",
-        "dist/assets/inter-greek-400-normal-B4URO6DV.woff2": "c15ddd00a9927b56f5c655a41f976f79bd848a20cce91fc14227751872a1cc27",
-        "dist/assets/inter-greek-400-normal-q2sYcFCs.woff": "bdae9d28729e8c68587d5d54e216d771a40d7a6800e824586a6e2f570c2f10df",
-        "dist/assets/inter-greek-500-normal-BIZE56-Y.woff2": "cc197d79d33a3615a047baae85f4d1957f6f98b8898313658e160b1d519b1b6f",
-        "dist/assets/inter-greek-500-normal-Xzm54t5V.woff": "86d55a4b1b9cbced7e61e76d5d44cf49d0bd1c814d3df2de67b7136ab4fdcece",
-        "dist/assets/inter-greek-600-normal-BZpKdvQh.woff": "090b24e22fc4ddf41450d13bdec81c8a74808b9fc7edaf8df06c909b177a8992",
-        "dist/assets/inter-greek-600-normal-plRanbMR.woff2": "9c5a897f9d9fcfe60d90631d766ae62b4bf1edd76633fa7a4b2f8c87e036789b",
-        "dist/assets/inter-greek-700-normal-BUv2fZ6O.woff": "53368f53d5fc43381dcc45c8533ba2476f80337136313525f96dcbdc736616a5",
-        "dist/assets/inter-greek-700-normal-C3JjAnD8.woff2": "737c6c91cd60372d30e6540096ada83c89c9b4613cd7472e3366bf2e07ad99f1",
-        "dist/assets/inter-greek-ext-400-normal-DGGRlc-M.woff2": "eadedd9e13c2582430a9fb1519eb86152fdabb483a6f66d90f8d8a52e977a1b7",
-        "dist/assets/inter-greek-ext-400-normal-KugGGMne.woff": "4f2b6f92ddfece8812e79774d446218aa6e0773ff8c2d31130fe2bdc23bd22d0",
-        "dist/assets/inter-greek-ext-500-normal-2j5mBUwD.woff": "c85d11bde719108cc9a4f6f5b008087f6c36493b47395580d4f5336182b0f0c7",
-        "dist/assets/inter-greek-ext-500-normal-C4iEst2y.woff2": "75a9ec9383a3b7a7bf7cfb94f64edf38d9cfdc5f7ffa0cbed2733627a6e4426d",
-        "dist/assets/inter-greek-ext-600-normal-B8X0CLgF.woff": "efc7aa9cce5c505dd8cc4c4daf00247fa805f37bcda96079239ba3358ab27dfb",
-        "dist/assets/inter-greek-ext-600-normal-DRtmH8MT.woff2": "399f94d75aa73403e40e2353e8c0cc75c38f7362a6ca263b3b02d9723157ffe5",
-        "dist/assets/inter-greek-ext-700-normal-BoQ6DsYi.woff": "b26ed64c9135a750ad580b92152bedeef90771e74e18f6f7759a6d7adb0f1b5d",
-        "dist/assets/inter-greek-ext-700-normal-qfdV9bQt.woff2": "b7b2732ebc981b30a5463ffc850407649dba41e625aee124cc63293da4547629",
-        "dist/assets/inter-latin-400-normal-C38fXH4l.woff2": "8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc",
-        "dist/assets/inter-latin-400-normal-CyCys3Eg.woff": "e20fa0b4fd2dd26e4d14b3ac3cc922509c3a63fa5e910e90c614544aa042dd45",
-        "dist/assets/inter-latin-500-normal-BL9OpVg8.woff": "9b42c108da48b5ed55a3072e815ffee2d271562e6c0dd6998910e8f9c09e0a3d",
-        "dist/assets/inter-latin-500-normal-Cerq10X2.woff2": "f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f",
-        "dist/assets/inter-latin-600-normal-CiBQ2DWP.woff": "6a9cb3a509b4eeaf12b7dda6c4aacac3e85d07f4201bf4dd716e332e692b87bd",
-        "dist/assets/inter-latin-600-normal-LgqL8muc.woff2": "f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a",
-        "dist/assets/inter-latin-700-normal-BLAVimhd.woff": "7c5ed5655730de337704d3fc94628515cd7e3d8d32368871709bf56ac0397e7a",
-        "dist/assets/inter-latin-700-normal-Yt3aPRUw.woff2": "6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491",
-        "dist/assets/inter-latin-ext-400-normal-77YHD8bZ.woff": "22ae8360fbad24d2af7c6c9898a346c881774dc87f7cf94bd262c48ad58d7116",
-        "dist/assets/inter-latin-ext-400-normal-C1nco2VV.woff2": "6744a7f509ebc6ab220a6cd4ea77e898adf014f03d88dcda5d45d8a9feefb4e9",
-        "dist/assets/inter-latin-ext-500-normal-BxGbmqWO.woff": "30d2903ce97f8a89ea0e9c083b42cb8bf97e7bbb5607e7f00352815f19cb0d5b",
-        "dist/assets/inter-latin-ext-500-normal-CV4jyFjo.woff2": "2c6fbc42d315528beb06c1096df45487bf4186c4b78b8111d12c9c951f8acca2",
-        "dist/assets/inter-latin-ext-600-normal-CIVaiw4L.woff": "22ff20a6170674fb9637c2a072227be86303bb6ec52b829b9d7077405f7196a6",
-        "dist/assets/inter-latin-ext-600-normal-D2bJ5OIk.woff2": "e4bdf67b0cd15ca9e184509275be95db942195d3cc2b17f6a0452f2adf75d0bf",
-        "dist/assets/inter-latin-ext-700-normal-Ca8adRJv.woff2": "143f9504f1377012aa3e39c90c4354ef429cb0494b9ac0e1437f1a81e5412236",
-        "dist/assets/inter-latin-ext-700-normal-TidjK2hL.woff": "1761edba32014180deab3dbbe3f7156c64ef6f34bc76313ba31ce227fc9ff391",
-        "dist/assets/inter-vietnamese-400-normal-Bbgyi5SW.woff": "54aa42d325bcdfd623ecb9eac4a5e3c6420c63d7b86e9d8545fb479f653beb57",
-        "dist/assets/inter-vietnamese-400-normal-DMkecbls.woff2": "547ad9fdaeb0ae43487f4b8a02e47c36553c0c0cb73c8aa98f93b7b615f6b55d",
-        "dist/assets/inter-vietnamese-500-normal-DOriooB6.woff2": "44e36aa5a8f12130029a29bb0e6695d0262b67446ce321e878b1fb56162b5de6",
-        "dist/assets/inter-vietnamese-500-normal-mJboJaSs.woff": "18a4a09f751671cd8929d7c66e8fe7d820b511c36e51cf6047ffceab88eec4a4",
-        "dist/assets/inter-vietnamese-600-normal-BuLX-rYi.woff": "24a01e7bd947aeef91ae8f7b8edeb23fadaf5ceda34a610ce62d2bbdaea57e83",
-        "dist/assets/inter-vietnamese-600-normal-Cc8MFFhd.woff2": "1aeb94ae9db052a4a2fe6f3046f928cff1fdbd7abdf870a9a01c13cae6faeba5",
-        "dist/assets/inter-vietnamese-700-normal-BZaoP0fm.woff": "412023ab2f41333b373e2c6eb2a3ebab806fddd610015d2ae8cd4f4314c7ba92",
-        "dist/assets/inter-vietnamese-700-normal-DlLaEgI2.woff2": "5fafa3829a16d9ea5ac3a67c51e54186353122790b604a3e361f96cab188da8b",
-        "dist/assets/licenses/CampusPulse-MIT.txt": "4e24272a7ec570eb943ff7e36b5ab69d55a2e1bfdf558948d9e514f30fd25ddc",
-        "dist/assets/licenses/Inter-OFL.txt": "3b0a5fca3d17942cde889069889dedbbbd075e9b599968c82a95f4d944e9b345",
-        "dist/assets/licenses/Lucide-license.txt": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc",
-        "dist/assets/licenses/React-MIT.txt": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
-        "dist/assets/licenses/ReactDOM-MIT.txt": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
-        "dist/assets/relay-oauth.css": "08ecaab876ad057a8f60261b0da26a505c31bfa190fb1d5f8ad863d2257d1369",
-        "dist/assets/relay-pair.js": "516eea0fbdd7bea908e088a5b02e80c1c3896d51a48e2ce61cb87ef293c3b7a7",
-        "dist/index.html": "539249fc8ee705e9e40eae8e8c062645e873b64ec22f07be144cef1f4f3e7742",
-        "dist/samples/01-original.md": "9c78fc8c97a40017cba7403435dbeed9e1ed0a26d765e6b1140814ba5dde9da8",
-        "dist/samples/02-revision.md": "b100ce1150798012af92274c94d9cae6bc1a9a2cf7e3c7c6fd513067785c2ef1",
-        "dist/samples/03-prose-en.txt": "c001facb3d55b347c825200a281a9564229231e63f326fac90f1bfdd48c2f329",
-        "dist/samples/04-prose-ru.txt": "2c81865ab91d7bfc54636f12c85d17cc47cd0c3470957b28482f8cce67dc2556",
-        "dist/samples/05-prose-kk.txt": "1be7f50be6a9fc469a5583cdcade25aa84fa2009ed67f665a1a888de3db777b8",
-        "dist/samples/06-missing-and-ambiguous.md": "9a60c4b8c41e0e70d4209b9454257eb6c811388a2aceeefd15d960c82c1a83f8",
-        "dist/samples/07-same-title.md": "d484c1bb4e9b602769258bbf4630a15d2e22bbf34591a841cd6e112cab57a7af",
-        "dist/samples/08-busy.ics": "a3e8fb5662d93550a78fdc629240fcf6884f76dcf3b632dbe4902408fff2bdbd",
-        "dist/samples/09-workspace.relay.json": "972eb4172574e32ffd4f8b014ab0158be909cab4f1521dbc5b11a229802e7af0",
-        "dist/samples/10-prism-draft.md": "fe8eb0512952d1f6f09558955999d554e9438fb0ff83f8166c05ddb2fc75728f",
-        "dist/samples/11-continued-brief.pdf": "dbfbef67958436e01bbd7ec21cf591ca7c58593938adb32a644298095e0572c4",
-        "dist/samples/12-table-brief.pdf": "7e4acb08b756e29152efac0b6204b26cc8e54fecb75dff59d73ff427e920dfce",
-        "dist/samples/13-original-brief.pdf": "11a2d57b1ddf16764e8cf24d99d1f37ee2320d2f06d7667f31ef1deb89beeba5",
-        "dist/samples/expected-results.json": "44938b3a23f59269e763fc4c8b5e16e2dffa92ea61b9965e2320dc226b7333d2",
-        "dist/samples/index.html": "491637dca7978eebc66d7817ea3aadb4d4ac9f2259d811d725311e652a278c23",
-        "dist/samples/judge_sample_pack.zip": "015b41274953e709f6d29fe4ce4cd5648823659168857570c4c6e21dd2a9905b",
-        "dist/samples/privacy.html": "adc7f70004ff6751b2fbcd0baf224dfdf528691c0f664411a7be4e89ceabbd5d",
-        "dist/samples/README.md": "660569b97c8d7155c0f8e7a336ec2ad025208276a8d8b04a93f4a5a246873fe9",
-        "docs/final_judge_guide.md": "6a62c9a48cd576170f4bd0a064ecf6a8f6dce11a78f2c97bdc749f9099737d02",
-        "docs/workspace_passport.md": "ca193f4f84d5fb06422aa0ee2502dbf174d0f8ae6f49ee23d24bf863fd1f593d",
-        "fixtures/network-security-original.pdf": "11a2d57b1ddf16764e8cf24d99d1f37ee2320d2f06d7667f31ef1deb89beeba5",
-        "fixtures/workspace-passport-example.relay.json": "972eb4172574e32ffd4f8b014ab0158be909cab4f1521dbc5b11a229802e7af0",
-        "LICENSE": "4e24272a7ec570eb943ff7e36b5ab69d55a2e1bfdf558948d9e514f30fd25ddc",
-        "README.txt": "02861aca1827139d42222028b82ade1c010c58307b1feb21f7703999c9586ab6",
-        "relay/__init__.py": "988441d8aec049936eecda1e74869eb327fc66bade0d1a8352630189e9920b4d",
-        "relay/academic.py": "04fbf1e7a59c66050ef032a8449e4c3490219d5c3d3bc76c3675b34e5eb16474",
-        "relay/actions.py": "932e6cd384a3923c550b097e3498fe9a86f1509df7f22c044ab75e1c181a3984",
-        "relay/agent.py": "a305cf59d9c9f17001dc6834d5b0d552e2bb5ec41a7b09d8c8d0179acaba702b",
-        "relay/agent_sessions.py": "7c24d785412e75efd62e06a816cfacd07a2239c38c5969719c7939aa7b7ee753",
-        "relay/ai_invitations.py": "44df16d6288daa4467f30dee50b1790e4956e7a224db500271542a39bb096d60",
-        "relay/alternative_live.py": "ce492f0db71ce1074f0a255f8621b02903274df84c739ec09cf732368d373e97",
-        "relay/auth.py": "3565a7223e8772a3106a2ad0babf493c0ec5fb2e4663d0f4dbdd35fc2decbabd",
-        "relay/bridge_server.py": "047a1f0887f84e6820fe12764d75d0b6741b4f97880370010f254d22ec24cb2a",
-        "relay/clarify.py": "2a83d8eb1d4372d882072de387996de9d9bd739f4568cc4099beb89721130c0d",
-        "relay/connectors.py": "326c0ce4d46a3151e55df71e5c5c6b047480d5b5ea4f167dc2b2f1072749aada",
-        "relay/conversations.py": "3640ffd6963bbbcb10e0159c91c1f75ee67e00de1c1fb3b997a6c1c88b6f3a1b",
-        "relay/domain.py": "dd60db6c79570c22c79793214b33c4678543142a5ec81e6966c9b546b764d610",
-        "relay/evidence.py": "7dccc0e4bf13f0339b11a99da40244dbbc9bd8ccbbd8406bdf6209acafe67a98",
-        "relay/extraction.py": "47a4afffa0b45f647f711898ae7ba466c39aca47a9aae0d94909954bd12c808c",
-        "relay/funding.py": "c60c6bf1390705cebb6ab88250743b1df51b2b457b71bf6edf811db268bdb65b",
-        "relay/gateway.py": "6c95acfba32560a78f0212bad2444af5966a9ae67aa82ec607016623ff26c335",
-        "relay/handoff.py": "09692cbeb0cad14e6707bd82299cc0d213dd46798d3a87ef86db88b3d01e7a3e",
-        "relay/identity.py": "b7a980c3d363c7840e45acb1c19553cfd9307daa2fffeedfcceb13481cdceccb",
-        "relay/judge.py": "190f2db2b5952f392770145f695a74b2d377a7f0fafd044043ae49ac8e2c2e18",
-        "relay/limits.py": "c6249b504fd27cf74ef8ff171e2501eaf5d35412556da2afc20b15f4740174e1",
-        "relay/managed_bridge.py": "4b798f0db134edea355da67488a67396d94950c1ca23a5ce26b1e014946280a8",
-        "relay/managed_operator.py": "1fc05ce7b8c6fb08de8f9607172ce5d192bb28d5625e3bec4ef69cb4ea802893",
-        "relay/managed_state.py": "3300dec9d8ce30de0fe09e485742fd2982fc33e3edf98b5aeed1e21c9467de25",
-        "relay/mcp_server.py": "1dfd5996979e8977a15ec31bef8b16d52ef085a810303e63222bbdfa75f479ff",
-        "relay/model_usage.py": "0fa3014fb0750546d02fc59eff646bd2874b0b620074ef8df83fca5d85263c41",
-        "relay/oauth.py": "f17d425640291fca191e67e33a8569b46ac5b32f2a4509971da5987d9afa2c91",
-        "relay/passport.py": "14a85896ee8462578f4b851d5bbebba75904fdfe575882e80fddeccd70c5e40c",
-        "relay/pdf_worker.py": "a898ad9fc1f471905ea2ea63069cfc0802c3d0e46766e1d95599788c3822c0f9",
-        "relay/planning_context.py": "75463a190f4b8956c777ad83b79dd8eefa06d516d174ff565948d6d2b95869f9",
-        "relay/preflight.py": "cde874c614557671619394d89360421815b10eff06f7a9d7c00637982c8cb6b3",
-        "relay/progress.py": "9701aa70c9d9975c98405febbf1d107e1c288e042541ad13dc01f8678f40df61",
-        "relay/providers.py": "0618f1d3f1a93397e5cf67c025f592ff7209af7ca80732b1c75e2cc3264f1da5",
-        "relay/public_ai.py": "0363fe72c514cc2c8a58ad50d5dd0679bc1b10aeae125b94ec8d479ed2087044",
-        "relay/public_demo.py": "1b145e9670449c1cd28d0383f61513d0eaefda363374c23b7d6e8fde7e872a16",
-        "relay/rescue.py": "4e8048366857b6039477ee125a269737ea7bc1a28a2af9ef95f5cd3ef79b5b0e",
-        "relay/scheduler.py": "7c582e4aeef8a557db04a8baab1c598d41d05f01b5b61157dad45123acdb7171",
-        "relay/service.py": "216e308a2d3243b596c7643af4a01c813b1d08ba42e1521e539d4a5c74957593",
-        "relay/store.py": "b519fd6f2d1808176c8a6709a33acc10ed58eb08c03b5b369195583a187a86d5",
-        "requirements.public.lock.txt": "e6eed14797441ade6c6f0353d7403f2fd913017119b657c434f8b3884f789166",
-        "requirements.public.txt": "869077694e5aa98a19868a1ffdf54c6b0139d6b1602f742e3ad4735977dbf3cf",
-        "scripts/run-web-bundle.ps1": "cd8d2e0ede253863c15e35b91a1f5e825a757f40e309f0cc7fb12ce7f4207848"
-      },
-      "passed": true
+    "windows": {
+      "package_version": "0.5.1",
+      "package_static_equality_verified": true,
+      "evidence": "docs/evidence/final-0.5.1-windows-package.json",
+      "installed_version_last_read": "0.5.0",
+      "new_installation_verified": false,
+      "full_native_acceptance": false,
+      "windows_control_resumed": false,
+      "previous_open_cancel_import_refresh_0_5_0_verified": true,
+      "original_45_95_preserved": true,
+      "native_save_import_reopen": false,
+      "notification_visibility_click_focus": false,
+      "installed_version_last_read_D": "0.5.0.0",
+      "installed_version_last_read_C": "0.5.1.0",
+      "incorrect_C_install_observed": true,
+      "corrected_D_installer_compiled": true,
+      "corrected_D_installation_owner_verified": false,
+      "D_fix_evidence": "docs/evidence/final-0.5.1-windows-D-install-fix.json"
+    },
+    "managed_gcp": {
+      "enabled": false,
+      "original_mandatory_criterion": "unmet",
+      "organizer_gcp_will_be_provided": false,
+      "official_alternative_waiver_established": false,
+      "prepared_scripts_preserved": true,
+      "main_route_blocked": false,
+      "resources_provisioned": false
+    },
+    "funding": {
+      "personal_spending_authorized_usd": 0,
+      "paid_upgrade_performed": false,
+      "personal_billing_activated": false,
+      "paid_fallback_enabled": false
     },
     "presentation": {
+      "metadata": "docs/evidence/presentation-0.5.1.json",
+      "visual": "docs/evidence/presentation-0.5.1-visual.json",
       "slides": 12,
-      "individually_visually_reviewed": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12
-      ],
-      "pdf_pages": [
-        {
-          "page": 1,
-          "pixel_match_to_individually_reviewed_render": true
-        },
-        {
-          "page": 2,
-          "pixel_match_to_individually_reviewed_render": true
-        },
-        {
-          "page": 3,
-          "pixel_match_to_individually_reviewed_render": true
-        },
-        {
-          "page": 4,
-          "pixel_match_to_individually_reviewed_render": true
-        },
-        {
-          "page": 5,
-          "pixel_match_to_individually_reviewed_render": true
-        },
-        {
-          "page": 6,
-          "pixel_match_to_individually_reviewed_render": true
-        },
-        {
-          "page": 7,
-          "pixel_match_to_individually_reviewed_render": true
-        },
-        {
-          "page": 8,
-          "pixel_match_to_individually_reviewed_render": true
-        },
-        {
-          "page": 9,
-          "pixel_match_to_individually_reviewed_render": true
-        },
-        {
-          "page": 10,
-          "pixel_match_to_individually_reviewed_render": true
-        },
-        {
-          "page": 11,
-          "pixel_match_to_individually_reviewed_render": true
-        },
-        {
-          "page": 12,
-          "pixel_match_to_individually_reviewed_render": true
-        }
-      ],
-      "source_pptx_imported_and_existing_shapes_edited": true,
-      "retained_font": "Arial",
-      "retained_geometry": true,
-      "layout_findings": 0,
-      "layout_warning_review": {
-        "slide": 12,
-        "kind": "dense_bold_paragraphs_without_spacing",
-        "accepted": true,
-        "reason": "Four short pending-gate lines remain readable in the existing bold source layout, with no clipping or overlap; preserved the established design."
-      },
-      "native_powerpoint_opened": false,
-      "all_12_slides_verified": true,
-      "final_revision": "audit-r3",
-      "unchanged_slides_pixel_identical_to_individually_reviewed_r1": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11
-      ],
-      "final_slide_12_individually_reviewed": true
-    }
+      "editable": true,
+      "native_powerpoint_opened": false
+    },
+    "limitations": [
+      "Temporary storage up to2hours and possibly less on sleep/restart/deploy; export Passport without credentials/approvals.",
+      "Free quotas/backoff are shared and finite; no unlimited or latency guarantee.",
+      "Text PDFs only; no OCR. Original source estimates and solver allocation differ.",
+      "Real Calendar write/read-back/replay/undo/revocation and new installed Windows physical acceptance remain owner gates.",
+      "Original managed-GCP criterion unmet; no official substitution waiver established."
+    ],
+    "independent_test_plan": "docs/independent_website_test_ru.txt"
   },
-  "core_enhancements": "F1-F5 locally implemented; real Calendar and full enhancement-level Gemini acceptance pending",
+  "core_enhancements": "F1-F5 locally implemented; real Calendar and full enhancement-level Gemini acceptance remain separate",
   "windows": {
-    "version": "0.5.0",
-    "unsigned": true,
+    "package_version": "0.5.1",
+    "package_static_equality_verified": true,
+    "evidence": "docs/evidence/final-0.5.1-windows-package.json",
+    "installed_version_last_read": "0.5.0",
+    "new_installation_verified": false,
+    "full_native_acceptance": false,
+    "windows_control_resumed": false,
+    "previous_open_cancel_import_refresh_0_5_0_verified": true,
     "original_45_95_preserved": true,
-    "native_observed_build_evidence": "docs/evidence/audit-native-observation-0.5.0.json",
-    "full_native_acceptance": false
+    "native_save_import_reopen": false,
+    "notification_visibility_click_focus": false,
+    "installed_version_last_read_D": "0.5.0.0",
+    "installed_version_last_read_C": "0.5.1.0",
+    "incorrect_C_install_observed": true,
+    "corrected_D_installer_compiled": true,
+    "corrected_D_installation_owner_verified": false,
+    "D_fix_evidence": "docs/evidence/final-0.5.1-windows-D-install-fix.json"
+  },
+  "managed_gcp": {
+    "enabled": false,
+    "original_mandatory_criterion": "unmet",
+    "organizer_gcp_will_be_provided": false,
+    "official_alternative_waiver_established": false,
+    "prepared_scripts_preserved": true,
+    "main_route_blocked": false,
+    "resources_provisioned": false
   },
   "funding": {
     "personal_spending_authorized_usd": 0,
-    "paid_upgrade": false,
-    "managed_resources_created": false,
-    "organizer_activation_project_coverage_pending": true
-  },
-  "presentation": {
-    "slides": 12,
-    "editable": true,
-    "pdf_all_pages_pixel_match": true,
-    "native_powerpoint_opened": false
+    "paid_upgrade_performed": false,
+    "personal_billing_activated": false,
+    "paid_fallback_enabled": false
   },
   "limitations": [
-    "Render Free storage is temporary (up to two hours; earlier restart/redeploy reset). Export Passport.",
-    "Free host can sleep. Polling runs while awake, and cached observations retain original source fetch time.",
-    "Real Gemini Developer API/MCP is alternative hosting, not managed Agent Engine.",
-    "Google Calendar protocol fault simulations and illustrative receipts are not actual Google writes.",
-    "Five-document batch is evidence, not a statistical reliability or latency guarantee. Earlier failed/partial attempts remain recorded.",
-    "Native observations belong to their recorded build; final installed contracts do not prove a Save dialog or notification was visible."
+    "Temporary storage up to2hours and possibly less on sleep/restart/deploy; export Passport without credentials/approvals.",
+    "Free quotas/backoff are shared and finite; no unlimited or latency guarantee.",
+    "Text PDFs only; no OCR. Original source estimates and solver allocation differ.",
+    "Real Calendar write/read-back/replay/undo/revocation and new installed Windows physical acceptance remain owner gates.",
+    "Original managed-GCP criterion unmet; no official substitution waiver established."
   ],
   "artifacts": [
     {
       "kind": "windows_installer",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.5.0-x64-setup.exe",
-      "relative_path": "windows/CampusPulse-RELAY-0.5.0-x64-setup.exe",
-      "bytes": 118795828,
-      "sha256": "7c234add37b13af6cd7a4238d04dbcdbb416b276f97d33fe99c50a999868f9a6"
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.5.1-x64-setup.exe",
+      "relative_path": "windows/CampusPulse-RELAY-0.5.1-x64-setup.exe",
+      "bytes": 166897461,
+      "sha256": "08bc75a18f5b9d84f11b9dd64f923af205cbc6219ed48f718fa899062b426c62"
     },
     {
       "kind": "windows_portable",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.5.0-x64-portable.exe",
-      "relative_path": "windows/CampusPulse-RELAY-0.5.0-x64-portable.exe",
-      "bytes": 118580473,
-      "sha256": "fa7b608d8f14e3c47b88de3377e62d90fc21e6c8f475975a87b872f01eba3479"
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.5.1-x64-portable.exe",
+      "relative_path": "windows/CampusPulse-RELAY-0.5.1-x64-portable.exe",
+      "bytes": 118582815,
+      "sha256": "5dc57df034a73ca2a7ca6cf5215ef3450248ef2b03eb7e6d61b7e12425a8b263"
     },
     {
-      "kind": "complete_local_illustrative_web_application",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\web\\CampusPulseRELAY-0.5.0-audit-r1-web-app.zip",
-      "relative_path": "web/CampusPulseRELAY-0.5.0-audit-r1-web-app.zip",
-      "bytes": 1239729,
-      "sha256": "d9462f792968495df1c7c828f3eace307785196b9e909def36a8c98172040fd4"
+      "kind": "complete_local_illustrative_web",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\web\\CampusPulseRELAY-0.5.1-final-r1-web-app.zip",
+      "relative_path": "web/CampusPulseRELAY-0.5.1-final-r1-web-app.zip",
+      "bytes": 1247278,
+      "sha256": "3c14258a4377a1210211eed0019764ca743c89d2bb593ad0702ef25aee03b91f"
     },
     {
       "kind": "source_archive",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\source\\CampusPulseRELAY-0.5.0-audit-r1-source.zip",
-      "relative_path": "source/CampusPulseRELAY-0.5.0-audit-r1-source.zip",
-      "bytes": 62252894,
-      "sha256": "b973e18839acd0c5a34a9556f9ce16a9fe8a3247c139a3b0c2e323b59962f4aa"
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\source\\CampusPulseRELAY-0.5.1-final-r1-source.zip",
+      "relative_path": "source/CampusPulseRELAY-0.5.1-final-r1-source.zip",
+      "bytes": 62372479,
+      "sha256": "0742da46eed8ed8f9d6d4a95fe0efb469a629d60c65b146c84430a4aaf4ea933"
     },
     {
       "kind": "editable_presentation",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.5.0-audit-r3.pptx",
-      "relative_path": "presentation/CampusPulse-RELAY-0.5.0-audit-r3.pptx",
-      "bytes": 66279,
-      "sha256": "f5901c3ba65c3f78136664c5f6c94a4eadb6cbf3e5a542c9ce734a6dc951ca4b"
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.5.1-final-r4.pptx",
+      "relative_path": "presentation/CampusPulse-RELAY-0.5.1-final-r4.pptx",
+      "bytes": 69856,
+      "sha256": "c3d3b24264a6f84337a463226ba92b97aba202af8fac2d2249beb691ee533d5b"
     },
     {
       "kind": "presentation_pdf",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.5.0-audit-r3-verified.pdf",
-      "relative_path": "presentation/CampusPulse-RELAY-0.5.0-audit-r3-verified.pdf",
-      "bytes": 510046,
-      "sha256": "dfb2cde7d235556cccd226abfcabb3f3f34e110f2224bb22bf744b7e1d81581a"
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.5.1-final-r4-verified.pdf",
+      "relative_path": "presentation/CampusPulse-RELAY-0.5.1-final-r4-verified.pdf",
+      "bytes": 508239,
+      "sha256": "1246e3968472f5044ca0d9e73e76cc09bb411e772d54e349e8ed3c6e1257375a"
     },
     {
-      "kind": "D_drive_launch_wrapper",
+      "kind": "acceptance_evidence",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\evidence\\CampusPulseRELAY-0.5.1-final-r1-evidence.zip",
+      "relative_path": "evidence/CampusPulseRELAY-0.5.1-final-r1-evidence.zip",
+      "bytes": 55440,
+      "sha256": "7d4f762826178f33160331af21cb28a6902dbcdf0e8fb67c9383d5d0b1866dd5"
+    },
+    {
+      "kind": "synthetic_uncertainty_addendum",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\samples\\CampusPulseRELAY-0.5.1-uncertainty-addendum.zip",
+      "relative_path": "samples/CampusPulseRELAY-0.5.1-uncertainty-addendum.zip",
+      "bytes": 3328,
+      "sha256": "a27a086d7f3144f49ec484f58d6993c058727bf3c63a6b8d7cc6826883e31777"
+    },
+    {
+      "kind": "D_drive_wrapper",
       "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\Install-D.cmd",
       "relative_path": "windows/Install-D.cmd",
-      "bytes": 387,
-      "sha256": "d8ca61845e4089768ca6f2fcb26f2081101f7f621f45fb91a801dfe01fd6c0a6"
+      "bytes": 396,
+      "sha256": "04d480fef3377a6ae8727fdf098c599a1139675f81cc1b07d061d84bb748ead5"
     },
     {
-      "kind": "D_drive_launch_wrapper",
+      "kind": "D_drive_wrapper",
       "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\Launch-Portable-D.cmd",
       "relative_path": "windows/Launch-Portable-D.cmd",
-      "bytes": 330,
-      "sha256": "e5bc466917add47ebc9104aa79a9edde9d120204d1127ebfca68ab9b09a83f6a"
+      "bytes": 339,
+      "sha256": "45dfc2aec6f131b04c4da3f367a773060e23e0f4f4a28d8a589e3ef6175b0bd4"
     },
     {
-      "kind": "public_sample_package",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\samples\\judge_sample_pack.zip",
-      "relative_path": "samples/judge_sample_pack.zip",
+      "kind": "public_13_file_sample_package",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\samples\\0.5.1\\judge_sample_pack.zip",
+      "relative_path": "samples/0.5.1/judge_sample_pack.zip",
       "bytes": 21018,
       "sha256": "015b41274953e709f6d29fe4ce4cd5648823659168857570c4c6e21dd2a9905b"
     },
     {
-      "kind": "public_sample_package",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\samples\\README.md",
-      "relative_path": "samples/README.md",
+      "kind": "public_13_file_sample_package",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\samples\\0.5.1\\README.md",
+      "relative_path": "samples/0.5.1/README.md",
       "bytes": 6611,
       "sha256": "660569b97c8d7155c0f8e7a336ec2ad025208276a8d8b04a93f4a5a246873fe9"
     },
     {
-      "kind": "public_sample_package",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\samples\\expected-results.json",
-      "relative_path": "samples/expected-results.json",
+      "kind": "public_13_file_sample_package",
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\samples\\0.5.1\\expected-results.json",
+      "relative_path": "samples/0.5.1/expected-results.json",
       "bytes": 4188,
       "sha256": "44938b3a23f59269e763fc4c8b5e16e2dffa92ea61b9965e2320dc226b7333d2"
     }
@@ -1708,47 +368,51 @@
   "preserved_releases": [
     {
       "revision": "0.1.0",
-      "artifacts_hash_verified": 7
+      "verified_artifacts": 7
     },
     {
       "revision": "0.1.1",
-      "artifacts_hash_verified": 7
+      "verified_artifacts": 7
     },
     {
       "revision": "0.1.1-public-demo",
-      "artifacts_hash_verified": 9
+      "verified_artifacts": 9
     },
     {
       "revision": "0.2.0",
-      "artifacts_hash_verified": 6
+      "verified_artifacts": 6
     },
     {
       "revision": "0.2.1",
-      "artifacts_hash_verified": 6
+      "verified_artifacts": 6
     },
     {
       "revision": "0.3.0",
-      "artifacts_hash_verified": 4
+      "verified_artifacts": 4
     },
     {
       "revision": "0.3.0-r1",
-      "artifacts_hash_verified": 4
+      "verified_artifacts": 4
     },
     {
       "revision": "0.4.0-hosted-r1",
-      "artifacts_hash_verified": 8
+      "verified_artifacts": 8
     },
     {
       "revision": "0.4.0-local-integration-r1",
-      "artifacts_hash_verified": 8
+      "verified_artifacts": 8
     },
     {
       "revision": "0.4.1-public-ai-r1",
-      "artifacts_hash_verified": 8
+      "verified_artifacts": 8
     },
     {
       "revision": "0.4.1-public-ai-r2",
-      "artifacts_hash_verified": 8
+      "verified_artifacts": 8
+    },
+    {
+      "revision": "0.5.0-audit-r1",
+      "verified_artifacts": 11
     }
   ]
 }
