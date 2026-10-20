@@ -1,0 +1,116 @@
+{
+  "version": "0.5.2",
+  "checked_at": "2026-10-20T16:35:03.668136+00:00",
+  "release": {
+    "release_id": 418616762,
+    "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/tag/v0.5.2",
+    "tag": "v0.5.2",
+    "source_commit": "0cb787885df570b4083d0b041e828e14394ed0f0",
+    "published": true,
+    "latest_verified": true,
+    "assets": [
+      {
+        "name": "BUILD-MANIFEST.json",
+        "bytes": 2678,
+        "sha256": "5bc6fa12708b6a9674394b0d63c2ea87f2d6d7b25db01cd825e5faffb4e892ed",
+        "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/download/untagged-b5c39366fd52641b1609/BUILD-MANIFEST.json"
+      },
+      {
+        "name": "CampusPulse-RELAY-0.5.1-final-r4-verified.pdf",
+        "bytes": 508239,
+        "sha256": "1246e3968472f5044ca0d9e73e76cc09bb411e772d54e349e8ed3c6e1257375a",
+        "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/download/untagged-b5c39366fd52641b1609/CampusPulse-RELAY-0.5.1-final-r4-verified.pdf"
+      },
+      {
+        "name": "CampusPulse-RELAY-0.5.1-final-r4.pptx",
+        "bytes": 69856,
+        "sha256": "c3d3b24264a6f84337a463226ba92b97aba202af8fac2d2249beb691ee533d5b",
+        "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/download/untagged-b5c39366fd52641b1609/CampusPulse-RELAY-0.5.1-final-r4.pptx"
+      },
+      {
+        "name": "CampusPulse-RELAY-Evidence-0.5.2.zip",
+        "bytes": 126849,
+        "sha256": "e3f156d27a68137197e775cdbd5cd9a16ce2e3d710cda6dea72beaae02820819",
+        "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/download/untagged-b5c39366fd52641b1609/CampusPulse-RELAY-Evidence-0.5.2.zip"
+      },
+      {
+        "name": "CampusPulse-RELAY-Samples.zip",
+        "bytes": 21018,
+        "sha256": "015b41274953e709f6d29fe4ce4cd5648823659168857570c4c6e21dd2a9905b",
+        "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/download/untagged-b5c39366fd52641b1609/CampusPulse-RELAY-Samples.zip"
+      },
+      {
+        "name": "CampusPulse-RELAY-Source-0.5.2.zip",
+        "bytes": 63698246,
+        "sha256": "1c39b8445a1343e6fd8532b87136e94fab941892e1c9d859f680af472fedc07f",
+        "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/download/untagged-b5c39366fd52641b1609/CampusPulse-RELAY-Source-0.5.2.zip"
+      },
+      {
+        "name": "CampusPulse-RELAY-Web-0.5.2.zip",
+        "bytes": 1360265,
+        "sha256": "933100d7546a46ab3ca27f7c669a66604a5eaa577a54c3c6eccb51539ad7dd5d",
+        "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/download/untagged-b5c39366fd52641b1609/CampusPulse-RELAY-Web-0.5.2.zip"
+      },
+      {
+        "name": "CampusPulse-RELAY-Windows-Portable.exe",
+        "bytes": 118864596,
+        "sha256": "c50d931f1f2d2c32f8e512d21ad1d3798a6ab87e905ac925ea610a9d07f9c40c",
+        "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/download/untagged-b5c39366fd52641b1609/CampusPulse-RELAY-Windows-Portable.exe"
+      },
+      {
+        "name": "CampusPulse-RELAY-Windows-Setup.exe",
+        "bytes": 167289413,
+        "sha256": "ec9a7adccd8e988d86b9db13d13d76cec17210c464fe3fea34d77d14d986f4b2",
+        "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/download/untagged-b5c39366fd52641b1609/CampusPulse-RELAY-Windows-Setup.exe"
+      },
+      {
+        "name": "Install-D.cmd",
+        "bytes": 394,
+        "sha256": "1880ea2c67858326d558b85840ed2841e8e770a8a1bcd5d336a9aaa0068969fd",
+        "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/download/untagged-b5c39366fd52641b1609/Install-D.cmd"
+      },
+      {
+        "name": "Launch-Portable-D.cmd",
+        "bytes": 337,
+        "sha256": "896f05422fc67b655d481b1aa20b261539d99ae865fdc3edaf706ddf27a48d9a",
+        "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/download/untagged-b5c39366fd52641b1609/Launch-Portable-D.cmd"
+      },
+      {
+        "name": "README-Windows.txt",
+        "bytes": 1352,
+        "sha256": "813ff34a246021d421b1f58230e7199d69cdc413b770c34b108370ba53fc2907",
+        "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/download/untagged-b5c39366fd52641b1609/README-Windows.txt"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "bytes": 1172,
+        "sha256": "ba99bb48fbf30c8e930fda40fc13f4f1e054a642d1d66fd5112d58b7da819b22",
+        "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/download/untagged-b5c39366fd52641b1609/SHA256SUMS.txt"
+      }
+    ]
+  },
+  "https_certificate_verification": true,
+  "latest_downloads": [
+    {
+      "name": "CampusPulse-RELAY-Windows-Setup.exe",
+      "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/latest/download/CampusPulse-RELAY-Windows-Setup.exe",
+      "redirects_to": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/download/v0.5.2/CampusPulse-RELAY-Windows-Setup.exe",
+      "http_status": 206,
+      "range_bytes": 64,
+      "total_bytes": 167289413,
+      "first_bytes_match": true,
+      "github_full_sha256_verified": true
+    },
+    {
+      "name": "CampusPulse-RELAY-Windows-Portable.exe",
+      "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/latest/download/CampusPulse-RELAY-Windows-Portable.exe",
+      "redirects_to": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/download/v0.5.2/CampusPulse-RELAY-Windows-Portable.exe",
+      "http_status": 206,
+      "range_bytes": 64,
+      "total_bytes": 118864596,
+      "first_bytes_match": true,
+      "github_full_sha256_verified": true
+    }
+  ],
+  "passed": true
+}

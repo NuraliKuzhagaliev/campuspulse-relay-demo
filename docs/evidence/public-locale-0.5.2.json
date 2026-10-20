@@ -1,0 +1,177 @@
+{
+  "version": "0.5.2",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "browser_locale": "ru-RU",
+  "model_calls": 0,
+  "calendar_writes": 0,
+  "states": [
+    {
+      "lang": "en",
+      "visible_language_label": "EN",
+      "width": 1440,
+      "heading": "October 2026",
+      "geometry": {
+        "columns": 7,
+        "rows": 6,
+        "no_internal_overflow": true,
+        "all_cells_fit": true,
+        "height": 506
+      },
+      "AA_violations": 0,
+      "no_overflow": true
+    },
+    {
+      "lang": "en",
+      "visible_language_label": "EN",
+      "width": 768,
+      "heading": "October 2026",
+      "geometry": {
+        "columns": 7,
+        "rows": 6,
+        "no_internal_overflow": true,
+        "all_cells_fit": true,
+        "height": 506
+      },
+      "AA_violations": 0,
+      "no_overflow": true
+    },
+    {
+      "lang": "en",
+      "visible_language_label": "EN",
+      "width": 390,
+      "heading": "October 2026",
+      "geometry": {
+        "columns": 7,
+        "rows": 6,
+        "no_internal_overflow": true,
+        "all_cells_fit": true,
+        "height": 506
+      },
+      "AA_violations": 0,
+      "no_overflow": true
+    },
+    {
+      "lang": "ru",
+      "visible_language_label": "RU",
+      "width": 1440,
+      "heading": "октябрь 2026",
+      "geometry": {
+        "columns": 7,
+        "rows": 6,
+        "no_internal_overflow": true,
+        "all_cells_fit": true,
+        "height": 506
+      },
+      "AA_violations": 0,
+      "no_overflow": true
+    },
+    {
+      "lang": "ru",
+      "visible_language_label": "RU",
+      "width": 768,
+      "heading": "октябрь 2026",
+      "geometry": {
+        "columns": 7,
+        "rows": 6,
+        "no_internal_overflow": true,
+        "all_cells_fit": true,
+        "height": 506
+      },
+      "AA_violations": 0,
+      "no_overflow": true
+    },
+    {
+      "lang": "ru",
+      "visible_language_label": "RU",
+      "width": 390,
+      "heading": "октябрь 2026",
+      "geometry": {
+        "columns": 7,
+        "rows": 6,
+        "no_internal_overflow": true,
+        "all_cells_fit": true,
+        "height": 506
+      },
+      "AA_violations": 0,
+      "no_overflow": true
+    },
+    {
+      "lang": "kk",
+      "visible_language_label": "KZ",
+      "width": 1440,
+      "heading": "қазан 2026",
+      "geometry": {
+        "columns": 7,
+        "rows": 6,
+        "no_internal_overflow": true,
+        "all_cells_fit": true,
+        "height": 506
+      },
+      "AA_violations": 0,
+      "no_overflow": true
+    },
+    {
+      "lang": "kk",
+      "visible_language_label": "KZ",
+      "width": 768,
+      "heading": "қазан 2026",
+      "geometry": {
+        "columns": 7,
+        "rows": 6,
+        "no_internal_overflow": true,
+        "all_cells_fit": true,
+        "height": 506
+      },
+      "AA_violations": 0,
+      "no_overflow": true
+    },
+    {
+      "lang": "kk",
+      "visible_language_label": "KZ",
+      "width": 390,
+      "heading": "қазан 2026",
+      "geometry": {
+        "columns": 7,
+        "rows": 6,
+        "no_internal_overflow": true,
+        "all_cells_fit": true,
+        "height": 506
+      },
+      "AA_violations": 0,
+      "no_overflow": true
+    }
+  ],
+  "checks": [
+    {
+      "lang": "en",
+      "timezone_controls_exactly_three": true,
+      "saved_context_survives_refresh": true,
+      "connections_timezone_saved": true,
+      "review_calendar_localized": true,
+      "confirmed_deadline_instant_preserved": true,
+      "source_quote_unchanged": true,
+      "keyboard_escape_focus": true
+    },
+    {
+      "lang": "ru",
+      "timezone_controls_exactly_three": true,
+      "saved_context_survives_refresh": true,
+      "connections_timezone_saved": true,
+      "review_calendar_localized": true,
+      "confirmed_deadline_instant_preserved": true,
+      "source_quote_unchanged": true,
+      "keyboard_escape_focus": true
+    },
+    {
+      "lang": "kk",
+      "timezone_controls_exactly_three": true,
+      "saved_context_survives_refresh": true,
+      "connections_timezone_saved": true,
+      "review_calendar_localized": true,
+      "confirmed_deadline_instant_preserved": true,
+      "source_quote_unchanged": true,
+      "keyboard_escape_focus": true
+    }
+  ],
+  "passed": true
+}

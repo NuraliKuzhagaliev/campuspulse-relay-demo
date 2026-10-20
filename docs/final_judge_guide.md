@@ -1,4 +1,4 @@
-# Independent public evaluation · 0.5.1
+# Independent public evaluation · 0.5.2
 
 Open https://campuspulse-relay-demo.onrender.com/ in a fresh browser session. A workspace starts automatically, without invitation, account or your API key. Use synthetic/non-sensitive permitted documents. Free Gemini requires its processing consent, including the displayed age/region conditions. No payment is required.
 

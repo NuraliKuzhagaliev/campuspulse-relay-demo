@@ -1,0 +1,50 @@
+{
+  "version": "0.5.2",
+  "checked_at": "2026-10-20T16:36:49.230Z",
+  "provider": "Render Free",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "service_id": "srv-dbajs73bc2fs73bm9mfg",
+  "deploy_id": "dep-dbbph7gae00c73ada4l0",
+  "status": "live",
+  "https_certificate_verification": true,
+  "model_calls": 0,
+  "calendar_writes": 0,
+  "passed": true,
+  "health": {
+    "ok": true,
+    "version": "0.5.2",
+    "mode": "alternative_live",
+    "agent_configured": true,
+    "agent_verified": false,
+    "agent": {
+      "configured": true,
+      "verified": false,
+      "resource": "gemini-developer:gemini-3.5-flash-lite",
+      "provider": "gemini_developer",
+      "deployment_mode": "alternative_hosted",
+      "model": "gemini-3.5-flash-lite",
+      "managed_agent_engine": false,
+      "mode": "live_gemini_alternative",
+      "public_access": true
+    },
+    "time": "2026-10-20T16:38:22.079396+00:00",
+    "deployed_commit": "0cb787885df570b4083d0b041e828e14394ed0f0",
+    "demo": {
+      "public": true,
+      "storage": "temporary",
+      "session_seconds": 7200,
+      "max_upload_mib": 2,
+      "max_sources": 12,
+      "github_cache_seconds": 300,
+      "calendar": "illustrative_local_adapter",
+      "gemini": "public_queued",
+      "mandatory_gcp": "unmet_optional_integration_disabled"
+    }
+  },
+  "two_fresh_visitors_distinct": true,
+  "latest_windows_header_verified": true,
+  "brand_assets_match_source": 3,
+  "invalid_timezone_rejected_without_mutation": true,
+  "deploy_observed_live_at": "2026-10-20T16:37:58.444863Z",
+  "control_plane_terminal_status_observed": "live"
+}

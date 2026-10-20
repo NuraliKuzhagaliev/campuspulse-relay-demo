@@ -1,0 +1,10 @@
+{
+  "scope": "Actual public Render HTTPS UI; zero Gemini/Google calls; illustrative receipts only",
+  "passed": true,
+  "checks": [
+    "invalid date corrected by picker; calendar arrow keys select next day",
+    "partial date without time cannot confirm; clearing both keeps deadline unknown",
+    "Moscow plan, what-if baseline preservation and explicitly illustrative receipt",
+    "legacy Passport migration disclosed in UI; new UTC copy carries no Google connection or old approvals"
+  ]
+}

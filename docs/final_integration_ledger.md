@@ -1,4 +1,4 @@
-# Current acceptance ledger · 0.5.1
+# Current acceptance ledger · 0.5.2
 
 Primary route: Render Free / server-side Gemini Developer API / actual signed MCP / real workspace and allowlisted GitHub data. Managed GCP is disabled, original criterion unmet. No organizer credits expected. No official waiver or personal spending.
 
@@ -49,3 +49,14 @@ The native date/time fields were replaced with an application-owned calendar and
 Testing Moscow/UTC uncovered a genuine existing source-review failure: deterministic candidates incorrectly used the workspace timezone for an ISO source deadline with its own offset. Review now carries that explicit cited offset; nine regressions preserve the instant and quote. Strict model offset validation is unchanged. Full local result252 tests+3subtests,8IPC checks;100 simulated-provider sessions still make zero Gemini calls. Early harness navigation/work-completion races and failed checks are retained on D:; they are not recorded as successful runs.
 
 Version0.5.2 adds stable GitHub latest-download links and a full rewritten README. Windows packaging is separate from physical installation; Windows control after Escape remains stopped. Original managed-GCP criterion and real Calendar/native acceptance gates remain unmet/pending. Public release and Render results are appended only after observation.
+
+
+### Observed publication — 0.5.2, 20 October
+
+GitHub release v0.5.2 was published as latest, with 13 assets. Every full SHA-256 matches the GitHub asset API; anonymous strict-HTTPS latest-download checks redirected to v0.5.2 and read matching bounded byte ranges for both Windows executables. The source/tag/runtime commit is 0cb787885df570b4083d0b041e828e14394ed0f0. The source ZIP contains that exact commit; a later documentation-only commit records these publication results.
+
+Render Free deploy dep-dbbph7gae00c73ada4l0 reached terminal live at 2026-10-20T16:37:58Z. Public health reports 0.5.2, the exact commit, public Gemini Developer access and managed Agent Engine disabled. Two fresh visitor sessions were distinct; arbitrary timezone API input returned UNSUPPORTED_TIMEZONE without changing settings; all three branding assets match source; the header points to the latest Windows installer.
+
+Actual public UI rechecks passed nine EN/RU/KZ × desktop/tablet/mobile states with Russian browser locale, translated October/октябрь/қазан, no overflow and no AA violations. Three own-document upload/review/confirm flows preserved quotations and deadline instants; both timezone controls have exactly the three permitted values; saved dates/hours/days survive refresh. Four additional public edge flows passed: invalid-date correction plus rapid keyboard selection; incomplete deadline blocked and clearing unknown allowed; Moscow planning/what-if with baseline preservation and an explicitly illustrative receipt; legacy Passport migration disclosure and a fresh copy without Google consent/old approval authority. No real Calendar writes or new Gemini calls were made by these checks.
+
+Evidence: evidence/public-deployment-0.5.2.json, public-locale-0.5.2.json, public-edges-0.5.2.json, release-distribution-0.5.2.json. Full local suite 252 tests + 3 subtests; 8 IPC checks. Sixteen packaged Windows runtime/branding files match current source/build and actual ProductVersion is 0.5.2.0. Native installation/control was not performed. Prior 14 releases / 112 artifacts were independently rehashed before sealing this release; all matched. Calendar event acceptance, physical current-version Windows checks and original managed-GCP criterion remain separately pending/unmet. NON_GCP_READY=false; no paid resource/upgrade/billing activation.

@@ -21,3 +21,6 @@ Topic 2 GDG Astana CampusPulse AI. NON_GCP_READY=false. The user's chosen archit
 Exact evidence: docs/final_integration_ledger.md. Owner steps: docs/remaining_actions_0.5.2.md.
 
 0.5.2 UI/distribution update: exactly three workspace zones, EN/RU/KZ labels, application-owned translated calendar, original source-offset review preserved, saved context restored after refresh, stable latest Windows links. Local evidence:252 Python tests+3subtests,8IPC checks,9 responsive-language states and3 real UI upload/review/confirm flows. See docs/evidence/locale-release-0.5.2.json. Public deployment/release evidence is recorded separately after observation.
+
+
+Observed 0.5.2 publication: GitHub v0.5.2 latest (13 SHA-verified assets; both actual latest Windows links checked), Render Free runtime/tag/source commit 0cb787885df570b4083d0b041e828e14394ed0f0, public strict-HTTPS 9 language/width states + 4 edge flows and two isolated fresh visitors. No new model/Google calls; historical AI complete/partial evidence remains dated. See docs/evidence/public-deployment-0.5.2.json and release-distribution-0.5.2.json. Native installed acceptance is not implied.
