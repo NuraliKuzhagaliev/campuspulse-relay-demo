@@ -1,6 +1,6 @@
 {
   "version": "0.5.1",
-  "scope": "User-supplied branding replacement; built and locally verified; public deployment pending safe owner Passport export",
+  "scope": "User-supplied branding replacement; built, locally verified and publicly deployed; physical native acceptance separate",
   "original": "assets/branding/CampusPulse_RELAY_app_icon_logo_2K_20261020200832.jpg",
   "original_dimensions": [
     2048,
@@ -170,13 +170,71 @@
         "bytes": 118861006,
         "sha256": "eeeb7af566ed31e7faa4d38197f6b5fd0309b074ea205b1e1fa14b0292d4fd69"
       }
+    ],
+    "actual_executable_embedded_icon_images": [
+      {
+        "width": 16,
+        "height": 16,
+        "embedded_bytes_match": true
+      },
+      {
+        "width": 24,
+        "height": 24,
+        "embedded_bytes_match": true
+      },
+      {
+        "width": 32,
+        "height": 32,
+        "embedded_bytes_match": true
+      },
+      {
+        "width": 48,
+        "height": 48,
+        "embedded_bytes_match": true
+      },
+      {
+        "width": 64,
+        "height": 64,
+        "embedded_bytes_match": true
+      },
+      {
+        "width": 128,
+        "height": 128,
+        "embedded_bytes_match": true
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "embedded_bytes_match": true
+      }
     ]
   },
   "public_deployment": {
-    "completed": false,
-    "reason": "Owner explicitly stated nothing needs saving; publication authorized, now prepared",
+    "completed": true,
     "last_verified_runtime_commit": "7e4098dae61775b5062b2f613192a6abaa3185dc",
-    "owner_export_not_required_confirmed": true
+    "owner_export_not_required_confirmed": true,
+    "status": "live",
+    "deploy_id": "dep-dbbocp0ae00c739g4lf0",
+    "deployed_commit": "0d41e19f3add89dec15499a31bff28b3a0cc153a",
+    "verified_at": "2026-10-20T15:19:47.609629+00:00",
+    "browser_sessions": [
+      {
+        "width": 1440,
+        "isolated_context": true,
+        "logo_loaded": true,
+        "brand_assets_match_source": 3,
+        "no_overflow": true
+      },
+      {
+        "width": 390,
+        "isolated_context": true,
+        "logo_loaded": true,
+        "brand_assets_match_source": 3,
+        "no_overflow": true
+      }
+    ],
+    "actual_AI_calls_during_logo_verification": 0,
+    "google_operations_during_logo_verification": 0
   },
   "prior_sealed_release": "0.5.1-final-r1",
   "personal_spending": 0,
