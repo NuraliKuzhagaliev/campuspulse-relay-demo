@@ -73,7 +73,7 @@ async def lifespan(app):
             await asyncio.gather(*workers,return_exceptions=True)
 
 
-app=FastAPI(title='CampusPulse RELAY',version='0.5.1',lifespan=lifespan,
+app=FastAPI(title='CampusPulse RELAY',version='0.5.2',lifespan=lifespan,
             docs_url=None if TEMPORARY_WEB else '/docs',redoc_url=None if TEMPORARY_WEB else '/redoc',
             openapi_url=None if TEMPORARY_WEB else '/openapi.json')
 expensive_requests=asyncio.Semaphore(2)
@@ -246,8 +246,13 @@ def prepare_source_review(source_id:str,svc=Depends(service)):
     for draft in source.get('drafts',[]):
         for fact in source.get('facts',[]):
             if fact['task_id']==draft['id'] and fact['field'] in ALLOWED:
+                # Structured due facts come from an explicit ISO offset in the
+                # quoted source. Workspace display timezone is not source evidence.
+                cited_zone=source['timezone']
+                if fact['field']=='due' and fact['value']:
+                    cited_zone='UTC' if fact['value'].endswith('Z') else fact['value'][-6:]
                 candidates.append(dict(field=fact['field'],value=fact['value'],page=fact['page'],quote=fact['quote'],entity_id=draft['section_key'],
-                    timezone=source['timezone'],year_explicit=fact['field']=='due' and bool(fact['value'])))
+                    timezone=cited_zone,year_explicit=fact['field']=='due' and bool(fact['value'])))
     if not candidates:raise RelayError('SOURCE_CONFLICT','No structured assignment fields detected. Ask Gemini to propose cited assignments from this document, then review them here.')
     proposal=extraction_proposal(source,candidates);proposal['origin']='deterministic_review'
     proposal['id']=digest([proposal['id'],'explicit_review',secrets.token_hex(12)])[:24]
@@ -430,12 +435,9 @@ class Preferences(BaseModel):
 @app.post('/api/preferences')
 def preferences(body:Preferences,svc=Depends(service)):
     s=svc.settings()
-    if body.timezone:
-        from zoneinfo import ZoneInfo
-        try:
-            ZoneInfo(body.timezone)
-        except Exception:
-            raise RelayError('PARSE_FAILED','Use an IANA timezone, such as Asia/Almaty.')
+    if body.timezone is not None:
+        from .timezones import workspace_timezone
+        workspace_timezone(body.timezone)
     if body.windows is not None:
         from .domain import Interval,instant
         for window in body.windows:
@@ -444,6 +446,7 @@ def preferences(body:Preferences,svc=Depends(service)):
                 raise RelayError('PARSE_FAILED','Availability end must follow start.')
     s.update(body.model_dump(exclude_none=True))
     store.put(svc.tenant,'meta','settings',s)
+    if body.timezone is not None:svc.invalidate_plans()
     return s
 
 

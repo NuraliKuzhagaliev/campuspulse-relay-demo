@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { api } from "./api";
 import { useLocale } from "./i18n";
 import type { Snapshot } from "./types";
+import { TimeZoneSelect } from "./TimeZoneSelect";
+import { LocalizedDateInput, HalfHourSelect } from "./LocalizedDateInput";
 type Field = {
   field: string;
   value: string | number | string[] | null;
@@ -22,7 +24,7 @@ type Proposal = {
   source_id: string;
   source_version: string;
   entities: Entity[];
-  validation_issues?: {field:string;page:number}[];
+  validation_issues?: { field: string; page: number }[];
 };
 type Work = (label: string, fn: () => Promise<void>) => Promise<void>;
 const local = (value: string, zone: string) => {
@@ -70,6 +72,38 @@ function ReviewEntity({
       ? local(due, data.settings.timezone)
       : "",
   );
+  const editingZone = useRef(data.settings.timezone);
+  const timeInput = useRef<HTMLInputElement>(null);
+  useLayoutEffect(() => {
+    timeInput.current?.setCustomValidity("");
+  }, [date]);
+  useEffect(() => {
+    const previous = editingZone.current;
+    editingZone.current = data.settings.timezone;
+    if (previous === data.settings.timezone) return;
+    const offsets: Record<string, number> = {
+      "Asia/Almaty": 300,
+      "Europe/Moscow": 180,
+      UTC: 0,
+    };
+    setDate((current) => {
+      if (
+        !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(current) ||
+        offsets[previous] === undefined
+      )
+        return current;
+      const wallTime = new Date(current + "Z");
+      if (
+        !Number.isFinite(wallTime.getTime()) ||
+        wallTime.toISOString().slice(0, 16) !== current
+      )
+        return current;
+      const instant = new Date(wallTime.getTime() - offsets[previous] * 60_000);
+      return Number.isFinite(instant.getTime())
+        ? local(instant.toISOString(), data.settings.timezone)
+        : current;
+    });
+  }, [data.settings.timezone]);
   const [rubric, setRubric] = useState(
     entity.fields
       .filter((f) => f.field === "rubric")
@@ -111,7 +145,13 @@ function ReviewEntity({
           "Missing information stays unknown. Any correction is recorded as your interpretation; original quotations stay unchanged.",
         )}
       </p>
-      {!!proposal.validation_issues?.length && <p role="status">{tr("Some proposed fields were rejected. Review source quotations and complete missing information; no rejected value was applied.")}</p>}
+      {!!proposal.validation_issues?.length && (
+        <p role="status">
+          {tr(
+            "Some proposed fields were rejected. Review source quotations and complete missing information; no rejected value was applied.",
+          )}
+        </p>
+      )}
       <div className="review-fields">
         {(
           ["title", "course", "term", "assignment_key", "minutes"] as const
@@ -137,14 +177,49 @@ function ReviewEntity({
             />
           </label>
         ))}
-        <label>
-          {tr("Deadline in workspace timezone")} · {data.settings.timezone}
-          <input
-            type="datetime-local"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
+        <fieldset className="review-deadline">
+          <legend>
+            {tr("Deadline in workspace timezone")} · {data.settings.timezone}
+          </legend>
+          <LocalizedDateInput
+            label={tr("Deadline date")}
+            value={date.split("T")[0] || ""}
+            timezone={data.settings.timezone}
+            required={Boolean(date.split("T")[1])}
+            onChange={(value) =>
+              setDate(value ? value + "T" + (date.split("T")[1] || "") : "")
+            }
           />
-        </label>
+          <label>
+            {tr("Deadline time")}
+            <input
+              ref={timeInput}
+              type="text"
+              inputMode="numeric"
+              placeholder="HH:mm"
+              maxLength={5}
+              pattern="([01][0-9]|2[0-3]):[0-5][0-9]"
+              value={date.split("T")[1] || ""}
+              required={Boolean(date.split("T")[0])}
+              onChange={(e) => {
+                const day = date.split("T")[0] || "",
+                  time = e.target.value;
+                setDate(day || time ? day + "T" + time : "");
+                e.target.setCustomValidity("");
+              }}
+              onInvalid={(e) =>
+                e.currentTarget.setCustomValidity(tr("Enter a time as HH:mm."))
+              }
+            />
+          </label>
+          <button
+            type="button"
+            className="text-button"
+            onClick={() => setDate("")}
+          >
+            {tr("Clear deadline")}
+          </button>
+        </fieldset>
         <label>
           {tr("Rubric items, one per line")}
           <textarea
@@ -158,7 +233,31 @@ function ReviewEntity({
         {entity.fields.map((f, i) => (
           <div className="review-quote" key={i}>
             <strong>
-              {f.field} · p.{f.page} · {f.validation_status}
+              {tr(
+                (
+                  {
+                    title: "Assignment title",
+                    course: "Course",
+                    term: "Academic term",
+                    assignment_key: "Assignment key",
+                    due: "Deadline",
+                    minutes: "Exact effort in minutes",
+                    rubric: "Rubric items, one per line",
+                    submission_requirement: "Submission requirement",
+                  } as Record<string, string>
+                )[f.field] || f.field,
+              )}{" "}
+              · {tr("Page")} {f.page} ·{" "}
+              {tr(
+                (
+                  {
+                    needs_confirmation: "Needs confirmation",
+                    unknown: "Unknown",
+                    invalid: "Invalid",
+                    ambiguous: "Ambiguous",
+                  } as Record<string, string>
+                )[f.validation_status] || f.validation_status,
+              )}
             </strong>
             <blockquote>{f.quote}</blockquote>
             <p>
@@ -241,7 +340,11 @@ export function DocumentReview({
           >
             {tr("Review extracted fields")}
           </button>
-          <button className="secondary" disabled={busy} onClick={() => onExtract(s.id)}>
+          <button
+            className="secondary"
+            disabled={busy}
+            onClick={() => onExtract(s.id)}
+          >
             {tr("Propose with Gemini")}
           </button>
         </div>
@@ -290,13 +393,65 @@ export function PlanningContext({
   const [zone, setZone] = useState(data.settings.timezone);
   const [start, setStart] = useState(data.settings.anchor);
   const [end, setEnd] = useState(() => {
+    if (data.settings.range_end) return data.settings.range_end;
     const d = new Date(data.settings.anchor + "T12:00:00Z");
     d.setUTCDate(d.getUTCDate() + 6);
     return d.toISOString().slice(0, 10);
   });
-  const [a, setA] = useState("18:00"),
-    [b, setB] = useState("20:00"),
-    [days, setDays] = useState([0, 1, 2, 3, 4]);
+  const [a, setA] = useState(() =>
+      data.settings.windows[0]
+        ? local(data.settings.windows[0].start, zone).slice(11, 16)
+        : "18:00",
+    ),
+    [b, setB] = useState(() =>
+      data.settings.windows[0]
+        ? local(data.settings.windows[0].end, zone).slice(11, 16)
+        : "20:00",
+    ),
+    [days, setDays] = useState(() =>
+      data.settings.windows.length
+        ? [
+            ...new Set(
+              data.settings.windows.map((window) => {
+                const day = new Date(
+                  local(window.start, zone).slice(0, 10) + "T12:00:00Z",
+                ).getUTCDay();
+                return (day + 6) % 7;
+              }),
+            ),
+          ]
+        : [0, 1, 2, 3, 4],
+    );
+  useEffect(() => {
+    setZone(data.settings.timezone);
+    if (data.settings.windows[0]) {
+      setA(
+        local(data.settings.windows[0].start, data.settings.timezone).slice(
+          11,
+          16,
+        ),
+      );
+      setB(
+        local(data.settings.windows[0].end, data.settings.timezone).slice(
+          11,
+          16,
+        ),
+      );
+      setDays([
+        ...new Set(
+          data.settings.windows.map(
+            (window) =>
+              (new Date(
+                local(window.start, data.settings.timezone).slice(0, 10) +
+                  "T12:00:00Z",
+              ).getUTCDay() +
+                6) %
+              7,
+          ),
+        ),
+      ]);
+    }
+  }, [data.settings.timezone]);
   return (
     <details
       className="panel planning-context"
@@ -322,63 +477,32 @@ export function PlanningContext({
         <div className="review-fields">
           <label>
             {tr("Workspace timezone")}
-            <input
-              aria-label={tr("Workspace timezone")}
+            <TimeZoneSelect
+              label={tr("Workspace timezone")}
               value={zone}
-              onChange={(e) => setZone(e.target.value)}
-              list="planning-zones"
-            />
-            <datalist id="planning-zones">
-              {[
-                "Asia/Almaty",
-                "Asia/Qyzylorda",
-                "Europe/London",
-                "Europe/Berlin",
-                "America/New_York",
-                "UTC",
-              ].map((z) => (
-                <option key={z}>{z}</option>
-              ))}
-            </datalist>
-          </label>
-          <label>
-            {tr("Range starts")}
-            <input
-              type="date"
-              required
-              value={start}
-              onChange={(e) => setStart(e.target.value)}
+              onChange={setZone}
             />
           </label>
-          <label>
-            {tr("Range ends")}
-            <input
-              type="date"
-              required
-              value={end}
-              onChange={(e) => setEnd(e.target.value)}
-            />
-          </label>
-          <label>
-            {tr("Study starts")}
-            <input
-              type="time"
-              required
-              step={1800}
-              value={a}
-              onChange={(e) => setA(e.target.value)}
-            />
-          </label>
-          <label>
-            {tr("Study ends")}
-            <input
-              type="time"
-              required
-              step={1800}
-              value={b}
-              onChange={(e) => setB(e.target.value)}
-            />
-          </label>
+          <LocalizedDateInput
+            label={tr("Range starts")}
+            value={start}
+            onChange={setStart}
+            timezone={zone}
+            required
+          />
+          <LocalizedDateInput
+            label={tr("Range ends")}
+            value={end}
+            onChange={setEnd}
+            timezone={zone}
+            required
+          />
+          <HalfHourSelect
+            label={tr("Study starts")}
+            value={a}
+            onChange={setA}
+          />
+          <HalfHourSelect label={tr("Study ends")} value={b} onChange={setB} />
         </div>
         <fieldset>
           <legend>{tr("Available weekdays")}</legend>

@@ -1288,6 +1288,8 @@ function PassportPanel({
     } | null>(null),
     [staged, setStaged] = useState<{
       id: string;
+      original_timezone?: string;
+      restored_timezone?: string;
       sources: number;
       assignments: number;
       logs: number;
@@ -1420,6 +1422,17 @@ function PassportPanel({
       {staged && (
         <div className="decision-result">
           <h4>{tr("Review restore preview")}</h4>
+          {staged.original_timezone !== staged.restored_timezone && (
+            <p role="status">
+              {tr(
+                "This archive uses {original}. The restored workspace will use {target}; original evidence and absolute timestamps stay unchanged.",
+                {
+                  original: staged.original_timezone || "",
+                  target: staged.restored_timezone || "",
+                },
+              )}
+            </p>
+          )}
           <p>
             {tr(
               "Sources: {sources}; assignments: {tasks}; work logs: {logs}; gates: {gates}",

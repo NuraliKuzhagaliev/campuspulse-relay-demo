@@ -14,3 +14,5 @@ Optional real Calendar needs each owner's Google consent and separate calendar s
 Architecture: Render Free / server-side Gemini Developer API / protected signed MCP. Managed GCP is disabled and the original mandatory criterion is unmet; official permission to substitute this architecture has not been established. NON_GCP_READY remains false until the documented Calendar and physical Windows gates pass. Prior evidence is dated, not a guarantee of current unlimited availability.
 
 Full independent website plan / Полный план проверки сайта: https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/blob/main/docs/independent_website_test_ru.txt
+
+0.5.2: видимые языки EN/RU/KZ (внутренний код казахского языка kk). Часовой пояс выбирается только из Казахстана UTC+5, Москвы UTC+3 и UTC. Даты вводятся YYYY-MM-DD или выбираются в календаре языка приложения; для теста события выберите 2026-10-21, 18:00–18:30, Asia/Almaty. Последние Windows-файлы: https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/latest .

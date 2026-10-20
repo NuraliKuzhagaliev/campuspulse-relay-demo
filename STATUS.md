@@ -1,11 +1,11 @@
-# Current status · 0.5.1
+# Current source/build status · 0.5.2
 
-Primary: public Render Free, server-side Gemini Developer API, actual protected MCP, anonymous isolated temporary visitors. Managed GCP is disabled and its original criterion unmet; no credits are expected.
+Primary route: public Render Free → server-side Gemini Developer API → actual protected MCP → isolated workspace/allowlisted GitHub data. Anonymous visitors need no invitation, account or personal API key. Managed GCP is disabled and its original criterion remains unmet.
 
-219 Python tests + 3 subtests, 8 IPC checks, actual local MCP protocol, full local browser workflow and 100 simulated-provider HTTP sessions passed. Dated public document/GitHub evidence is preserved. Exact source/runtime and current acceptance appear in docs/evidence/final-0.5.1-acceptance.json and release/manifest.json when verified.
+Verified locally for 0.5.2: **252 Python tests + 3 subtests; 8 IPC checks; 9 calendar language/width states with zero AA violations**. The browser used Russian locale while the application displayed October / октябрь / қазан. Three complete upload/review/confirm flows preserved original quotations and deadline instants. Workspace settings accept only Asia/Almaty, Europe/Moscow and UTC; the Kazakh UI label is KZ with standard internal code kk. Old Passport restore previews any supported-zone migration without shifting absolute timestamps.
 
-Changes: typed redacted MCP schema failures; nullable unused literal fields with valid citations; existing-calendar recovery under fresh minimum-scope consent; connected/target/read-back status stages; explicit expired-session recovery; no automatic mutation replay; operational EN/RU/KK labels.
+See docs/evidence/locale-release-0.5.2.json for scope. Actual GitHub release and public runtime are recorded after verification; source/build success alone is not deployment or installation.
 
-NON_GCP_READY=false pending actual Calendar event and physical Windows gates. Completed Google setup and historical connection are preserved. BLOCKERS.md and docs/remaining_actions_0.5.1.md contain the remaining actions.
+NON_GCP_READY=false pending real Calendar event acceptance and current-version physical Windows checks. Historical real Gemini/MCP, Calendar consent/target recovery, installed 0.5.0 native import and original45/95 remain dated evidence, not new acceptance. Windows GUI control after Escape remains stopped. All prior releases are preserved on D:.
 
-Installer correction: the first 0.5.1 NSIS package incorrectly installed on C: while D: retained 0.5.0. The replacement compiled successfully with a fixed D: destination and no LocalAppData installer cache; three structural regression guards passed. Owner installation on D: and physical acceptance remain pending; the agent has not resumed Windows control. See docs/evidence/final-0.5.1-windows-D-install-fix.json.
+Remaining steps: docs/remaining_actions_0.5.2.md. Exact source/runtime/artifact hashes: release/manifest.json.

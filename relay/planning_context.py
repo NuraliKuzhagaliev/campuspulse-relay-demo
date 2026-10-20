@@ -2,6 +2,7 @@
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from .domain import RelayError, instant
+from .timezones import workspace_timezone
 
 def local_timestamp(value,timezone):
     try:
@@ -15,8 +16,8 @@ def local_timestamp(value,timezone):
     except Exception as exc:raise RelayError('AMBIGUOUS_TIME','This local time is invalid or ambiguous in the selected timezone. Choose an unambiguous time; DST is never guessed.') from exc
 
 def update(svc,body):
+    zone=workspace_timezone(body.get('timezone'))
     try:
-        zone=body['timezone'];ZoneInfo(zone)
         start=datetime.strptime(body['start_date'],'%Y-%m-%d').date();end=datetime.strptime(body['end_date'],'%Y-%m-%d').date()
         if not 0<=(end-start).days<=30:raise ValueError()
         days=body['weekdays']

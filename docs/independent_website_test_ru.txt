@@ -1,5 +1,5 @@
 CAMPUSPULSE RELAY — ПОЛНЫЙ ПЛАН НЕЗАВИСИМОЙ ПРОВЕРКИ САЙТА
-Версия маршрута: публичная 0.5.1. Инструкция для другого пользователя.
+Версия маршрута: публичная 0.5.2. Инструкция для другого пользователя.
 
 ОБЫЧНАЯ ССЫЛКА
 https://campuspulse-relay-demo.onrender.com/
@@ -180,3 +180,5 @@ https://raw.githubusercontent.com/NuraliKuzhagaliev/campuspulse-relay-demo/main/
 - Непроверенные пункты и внешние ограничения. Не объявляйте их успешными.
 
 Полные ключи, токены, cookies, OAuth-коды, callback, approval digest, содержимое Passport или Network HAR в отчёт не включать. Проверяющий не должен включать billing, оплачивать тариф, делиться своим ключом или отправлять сообщения/изменять GitHub ради теста.
+
+0.5.2: видимые языки EN/RU/KZ (внутренний код казахского языка kk). Часовой пояс выбирается только из Казахстана UTC+5, Москвы UTC+3 и UTC. Даты вводятся YYYY-MM-DD или выбираются в календаре языка приложения; для теста события выберите 2026-10-21, 18:00–18:30, Asia/Almaty. Последние Windows-файлы: https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/latest .

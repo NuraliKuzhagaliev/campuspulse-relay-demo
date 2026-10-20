@@ -1,3 +1,4 @@
+import { TimeZoneSelect } from "./TimeZoneSelect";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { CalendarRecovery } from "./CalendarRecovery";
 import { LiveAccess } from "./LiveAccess";
@@ -715,7 +716,12 @@ export default function App() {
     return (
       <main className="boot">
         <div className="brand-symbol">
-          <img src="./assets/brand/logo-256.png" alt="CampusPulse RELAY" width="44" height="44" />
+          <img
+            src="./assets/brand/logo-256.png"
+            alt="CampusPulse RELAY"
+            width="44"
+            height="44"
+          />
         </div>
         <h1>CampusPulse RELAY</h1>
         <select
@@ -777,7 +783,12 @@ export default function App() {
           title="CampusPulse RELAY"
           onClick={() => setView("week")}
         >
-          <img src="./assets/brand/logo-256.png" alt="CampusPulse RELAY" width="44" height="44" />
+          <img
+            src="./assets/brand/logo-256.png"
+            alt="CampusPulse RELAY"
+            width="44"
+            height="44"
+          />
         </button>
         <div className="nav-items">
           {(Object.keys(icons) as View[]).map((v) => {
@@ -793,7 +804,7 @@ export default function App() {
                 <Icon size={21} />
                 <span>{t[v]}</span>
                 {v === "evidence" && unresolved.length ? (
-                  <b>{unresolved.length}</b>
+                  <b aria-hidden="true">{unresolved.length}</b>
                 ) : null}
               </button>
             );
@@ -837,6 +848,23 @@ export default function App() {
                       ? tr("Exclusive judge demo")
                       : tr("Connected workspace")}
             </StatusPill>
+            <a
+              className="desktop-download"
+              href="https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/latest/download/CampusPulse-RELAY-Windows-Setup.exe"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={tr("Download latest Windows installer")}
+              title={tr("Download latest Windows installer")}
+              onClick={(e) => {
+                if (window.relay) {
+                  e.preventDefault();
+                  external(e.currentTarget.href);
+                }
+              }}
+            >
+              <Download size={17} />
+              <span>{tr("Windows app")}</span>
+            </a>
             <select
               aria-label={tr("Language")}
               data-testid="language"
@@ -845,14 +873,14 @@ export default function App() {
             >
               <option value="en">EN</option>
               <option value="ru">RU</option>
-              <option value="kk">KK</option>
+              <option value="kk">KZ</option>
             </select>
             <button
               className="avatar"
               onClick={() => setView("connections")}
               aria-label={tr("Workspace connections")}
             >
-              CP
+              <span aria-hidden="true">CP</span>
             </button>
           </div>
         </header>
@@ -2091,19 +2119,40 @@ export default function App() {
                     <h3>{tr("Workspace timezone")}</h3>
                     <p>{tr("Original evidence timestamps are preserved.")}</p>
                   </div>
-                  <input
-                    aria-label={tr("Workspace timezone")}
-                    defaultValue={data.settings.timezone}
-                    onBlur={(e) => {
-                      if (e.target.value !== data.settings.timezone)
+                  <TimeZoneSelect
+                    label={tr("Workspace timezone")}
+                    value={data.settings.timezone}
+                    onChange={(value) => {
+                      if (value !== data.settings.timezone)
                         void work("Setting timezone", async () => {
                           await api("/preferences", "POST", {
-                            timezone: e.target.value,
+                            timezone: value,
                           });
                           await refresh();
                         });
                     }}
                   />
+                </div>
+                <div className="settings-row panel">
+                  <Download size={20} />
+                  <div>
+                    <h3>{tr("Latest Windows release")}</h3>
+                    <p>
+                      {tr(
+                        "Download the latest installer and D-drive launcher from the release page. Existing profiles are preserved; restart the app after installation.",
+                      )}
+                    </p>
+                  </div>
+                  <button
+                    className="secondary"
+                    onClick={() =>
+                      external(
+                        "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/latest",
+                      )
+                    }
+                  >
+                    {tr("Open release downloads")}
+                  </button>
                 </div>
                 <div className="settings-row panel">
                   <Download size={20} />

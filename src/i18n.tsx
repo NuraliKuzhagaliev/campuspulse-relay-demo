@@ -60,6 +60,40 @@ const months = {
 export function weekdayText(date: Date, language: Language) {
   return weekdays[language][date.getUTCDay()];
 }
+const standaloneRussianMonths = [
+  "январь",
+  "февраль",
+  "март",
+  "апрель",
+  "май",
+  "июнь",
+  "июль",
+  "август",
+  "сентябрь",
+  "октябрь",
+  "ноябрь",
+  "декабрь",
+];
+export function calendarMonthName(month: number, language: Language) {
+  return language === "ru"
+    ? standaloneRussianMonths[month]
+    : months[language][month];
+}
+export function calendarDateLabel(date: Date, language: Language) {
+  const day = translate(
+    [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ][date.getUTCDay()],
+    language,
+  );
+  return `${day}, ${date.getUTCDate()} ${months[language][date.getUTCMonth()]} ${date.getUTCFullYear()}`;
+}
 export function weekRange(start: Date, end: Date, language: Language) {
   if (start.getUTCMonth() === end.getUTCMonth())
     return `${start.getUTCDate()}–${end.getUTCDate()} ${months[language][start.getUTCMonth()]}`;
@@ -274,6 +308,8 @@ const errorKeys: Record<string, string> = {
     "Confirm adult access and permitted non-sensitive processing before using free Gemini.",
   AUTH_REQUIRED:
     "The workspace or integration session expired. Start a workspace or reconnect that integration. Restore coursework from a saved Passport; previous approvals are never replayed.",
+  UNSUPPORTED_TIMEZONE:
+    "Choose Kazakhstan (UTC+05:00), Moscow (UTC+03:00), or UTC.",
   TOOL_INPUT_INVALID:
     "The tool input was rejected. Review the source and the indicated fields; no rejected proposal was applied.",
   TOOL_EXECUTION_FAILED:

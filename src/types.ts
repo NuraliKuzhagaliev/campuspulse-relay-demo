@@ -14,7 +14,7 @@ export type Fact = {
   kind: string;
 };
 export type Source = {
-  import_notice?:string;
+  import_notice?: string;
   id: string;
   title: string;
   filename: string;
@@ -56,7 +56,11 @@ export type Block = {
   pinned: boolean;
 };
 export type Plan = {
-  scope?:{included:string[],excluded:{id:string,title:string,gaps:string[]}[],complete:boolean};
+  scope?: {
+    included: string[];
+    excluded: { id: string; title: string; gaps: string[] }[];
+    complete: boolean;
+  };
   id: string;
   blocks: Block[];
   feasible: boolean;
@@ -112,7 +116,7 @@ export type Receipt = {
   }[];
 };
 export type Snapshot = {
-  calendar_error?:{code:string,message:string}|null;
+  calendar_error?: { code: string; message: string } | null;
   workspace_fingerprint?: string;
   additions_revision?: number;
   workspace_id?: string;
@@ -131,6 +135,7 @@ export type Snapshot = {
     mode: string;
     timezone: string;
     anchor: string;
+    range_end?: string;
     calendar_id: string;
     calendar_live: boolean;
     github_repo: string;

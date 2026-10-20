@@ -154,3 +154,5 @@ digest/данные запроса одобрения или полный JSON /
 Сбой, запрет доступа или непроверенный шаг нужно сообщать честно.
 
 Full independent website plan / Полный план проверки сайта: https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/blob/main/docs/independent_website_test_ru.txt
+
+0.5.2: видимые языки EN/RU/KZ (внутренний код казахского языка kk). Часовой пояс выбирается только из Казахстана UTC+5, Москвы UTC+3 и UTC. Даты вводятся YYYY-MM-DD или выбираются в календаре языка приложения; для теста события выберите 2026-10-21, 18:00–18:30, Asia/Almaty. Последние Windows-файлы: https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/releases/latest .

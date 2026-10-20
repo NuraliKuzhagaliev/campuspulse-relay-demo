@@ -1,4 +1,4 @@
-# Criteria and evidence · 0.5.1
+# Criteria and evidence · 0.5.2
 
 Topic 2 GDG Astana CampusPulse AI. NON_GCP_READY=false. The user's chosen architecture is not an official waiver of the original managed-GCP requirement.
 
@@ -18,4 +18,6 @@ Topic 2 GDG Astana CampusPulse AI. NON_GCP_READY=false. The user's chosen archit
 | Samples/presentation/package | Public 13-file synthetic trilingual pack and expected results; dated hashes. New package records actual source/runtime/statuses, preserves releases. |
 | Managed GCP | Original criterion unmet. Optional prepared integration disabled, not a blocker of primary route. No personal expenses or billing activation. |
 
-Exact evidence: docs/final_integration_ledger.md. Owner steps: docs/remaining_actions_0.5.1.md.
+Exact evidence: docs/final_integration_ledger.md. Owner steps: docs/remaining_actions_0.5.2.md.
+
+0.5.2 UI/distribution update: exactly three workspace zones, EN/RU/KZ labels, application-owned translated calendar, original source-offset review preserved, saved context restored after refresh, stable latest Windows links. Local evidence:252 Python tests+3subtests,8IPC checks,9 responsive-language states and3 real UI upload/review/confirm flows. See docs/evidence/locale-release-0.5.2.json. Public deployment/release evidence is recorded separately after observation.

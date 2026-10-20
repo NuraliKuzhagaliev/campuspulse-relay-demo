@@ -11,6 +11,7 @@ from .domain import RelayError, digest, now, instant, Task, Interval
 from .evidence import extract_facts
 from .identity import assignment_id
 from .progress import revision, check_revision
+from .timezones import restored_workspace_timezone
 
 MAX_BYTES=2*1024*1024
 
@@ -228,7 +229,8 @@ def stage(svc, content):
     p=envelope['payload']
     return dict(id=id,revision=record['expected_revision'],sources=len(p['sources']),assignments=len(p['assignments']),logs=len(p['logs']),gates=len(p['gates']),
                 originals_missing=True,observations='archived_untrusted',plans_invalidated=True,reconnections_required=True,
-                current_workspace_preserved=True,bytes=len(content))
+                current_workspace_preserved=True,bytes=len(content),
+                original_timezone=p['preferences']['timezone'],restored_timezone=restored_workspace_timezone(p['preferences']['timezone']))
 
 
 def commit(svc, stage_id):
@@ -281,6 +283,8 @@ def commit(svc, stage_id):
         settings=dict(p['preferences'],mode='own_documents',workspace_kind='own',anchor=min((w['start'][:10] for w in p['preferences']['windows']),default=now()[:10]),
                       calendar_id='local-illustrative-calendar',calendar_live=False,watch_enabled=False,github_repo=svc.settings()['github_repo'],github_ref='main',github_path='coursework.md',
                       portable_origin='untrusted_manual_copy',restored_at=now(),external_revalidation_required=True)
+        settings['timezone']=restored_workspace_timezone(p['preferences']['timezone'])
+        settings['portable_original_timezone']=p['preferences']['timezone']
         target.put('meta','settings',settings)
         target.put('meta','additions',dict(revision=1,schema=1,updated_at=now()))
         for source in sources:

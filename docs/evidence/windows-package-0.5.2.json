@@ -1,0 +1,100 @@
+{
+  "version": "0.5.2",
+  "installed": false,
+  "native_control_resumed": false,
+  "packaged_files": [
+    {
+      "file": "desktop\\icon.ico",
+      "sha256": "c8b47f83c0efd5f490f88082e65b2c27c6362963d2f784e2d31f8216e616496a",
+      "matches_source": true
+    },
+    {
+      "file": "desktop\\icon.png",
+      "sha256": "65f658519c5a53463ee59a0636967455b4894f38c01e9e124ae3c09592ef10e4",
+      "matches_source": true
+    },
+    {
+      "file": "desktop\\locales.cjs",
+      "sha256": "be219f1d7ed568462d68b666aacd03d4a638027b777a8aed9423f2bac0660d9a",
+      "matches_source": true
+    },
+    {
+      "file": "desktop\\main.cjs",
+      "sha256": "cf146e3103568ac4d9410cd4da3104544a1eb56e9e045db95ac458f50181b923",
+      "matches_source": true
+    },
+    {
+      "file": "desktop\\preload.cjs",
+      "sha256": "def16c63fa8563bfefa18ddc535cf952da93b8f388413570eb54daaf7e5994d6",
+      "matches_source": true
+    },
+    {
+      "file": "desktop\\request-policy.cjs",
+      "sha256": "486f5c69601535393558748db8f0a5fb4589421eb0772e67fe8da67ab3ceb677",
+      "matches_source": true
+    },
+    {
+      "file": "dist\\assets\\brand\\apple-touch-icon.png",
+      "sha256": "c1a56a56e70e07c5137ebaf4c08d386b6869394592691db10c650f9b9b2caa4f",
+      "matches_source": true
+    },
+    {
+      "file": "dist\\assets\\brand\\favicon.ico",
+      "sha256": "c8b47f83c0efd5f490f88082e65b2c27c6362963d2f784e2d31f8216e616496a",
+      "matches_source": true
+    },
+    {
+      "file": "dist\\assets\\brand\\logo-256.png",
+      "sha256": "18a2f508c9878aff3b20b7a78ff27677682e02c3a80bdada87c1d211b6835637",
+      "matches_source": true
+    },
+    {
+      "file": "dist\\assets\\index-B-y5pmgM.js",
+      "sha256": "d517314996752a392eba0e318a40b2a01f000a429043a3cf825c7dc1721ca43b",
+      "matches_source": true
+    },
+    {
+      "file": "dist\\assets\\index-CyQovH7M.css",
+      "sha256": "14b49b37a69b4a7187d401c09858302d7ccab709beead132e421213c41039ad1",
+      "matches_source": true
+    },
+    {
+      "file": "dist\\assets\\relay-oauth.css",
+      "sha256": "08ecaab876ad057a8f60261b0da26a505c31bfa190fb1d5f8ad863d2257d1369",
+      "matches_source": true
+    },
+    {
+      "file": "dist\\assets\\relay-pair.js",
+      "sha256": "516eea0fbdd7bea908e088a5b02e80c1c3896d51a48e2ce61cb87ef293c3b7a7",
+      "matches_source": true
+    },
+    {
+      "file": "dist\\index.html",
+      "sha256": "7b2c7292dd6194cc22297848a83b636762f75769b7de380e25d48dddb86ab38e",
+      "matches_source": true
+    },
+    {
+      "file": "dist\\samples\\index.html",
+      "sha256": "491637dca7978eebc66d7817ea3aadb4d4ac9f2259d811d725311e652a278c23",
+      "matches_source": true
+    },
+    {
+      "file": "dist\\samples\\privacy.html",
+      "sha256": "adc7f70004ff6751b2fbcd0baf224dfdf528691c0f664411a7be4e89ceabbd5d",
+      "matches_source": true
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "release/windows/CampusPulse-RELAY-0.5.2-x64-setup.exe",
+      "bytes": 167289413,
+      "sha256": "ec9a7adccd8e988d86b9db13d13d76cec17210c464fe3fea34d77d14d986f4b2"
+    },
+    {
+      "file": "release/windows/CampusPulse-RELAY-0.5.2-x64-portable.exe",
+      "bytes": 118864596,
+      "sha256": "c50d931f1f2d2c32f8e512d21ad1d3798a6ab87e905ac925ea610a9d07f9c40c"
+    }
+  ],
+  "passed": true
+}

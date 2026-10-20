@@ -95,7 +95,7 @@ def test_stale_source_no_partial_changes(tmp_path):
 def test_semantic_passport_reopen_and_plan(tmp_path):
     from relay.passport import export,stage,commit
     svc=service(tmp_path);s,p,b=prepared(svc);confirm(svc,p['id'],p['entities'][0]['id'],b)
-    update(svc,dict(timezone='Asia/Qyzylorda',start_date='2026-10-20',end_date='2026-10-25',weekdays=[0,1,2,3,4,5,6],start_time='18:00',end_time='20:00'))
+    update(svc,dict(timezone='Asia/Almaty',start_date='2026-10-20',end_date='2026-10-25',weekdays=[0,1,2,3,4,5,6],start_time='18:00',end_time='20:00'))
     computed=svc.plan();assert computed['required_minutes']==60
     # Regression: extraction-proposal iteration must not shadow plan(proposal=False).
     reopened=RelayService(Store(svc.store.path),svc.tenant)
@@ -111,15 +111,15 @@ def test_dst_gap_and_fold_rejected(value):
     with pytest.raises(RelayError):local_timestamp(value,'Europe/London')
 
 def test_explicit_offset_and_overnight_weekend_context(tmp_path):
-    svc=service(tmp_path);s=update(svc,dict(timezone='America/New_York',start_date='2026-10-24',end_date='2026-10-25',weekdays=[5,6],start_time='23:00',end_time='01:00'))
+    svc=service(tmp_path);s=update(svc,dict(timezone='Europe/Moscow',start_date='2026-10-24',end_date='2026-10-25',weekdays=[5,6],start_time='23:00',end_time='01:00'))
     assert len(s['windows'])==2 and all(instant(w['end'])>instant(w['start']) for w in s['windows'])
     assert instant('2026-10-23T18:00:00+09:00').hour==9
 
 def test_ics_uses_workspace_zone(tmp_path):
-    svc=service(tmp_path);update(svc,dict(timezone='America/New_York',start_date='2026-10-19',end_date='2026-10-25',weekdays=[0],start_time='18:00',end_time='20:00'))
+    svc=service(tmp_path);update(svc,dict(timezone='Europe/Moscow',start_date='2026-10-19',end_date='2026-10-25',weekdays=[0],start_time='18:00',end_time='20:00'))
     raw=b'BEGIN:VCALENDAR\r\nVERSION:2.0\r\nBEGIN:VEVENT\r\nUID:day-off\r\nDTSTART;VALUE=DATE:20261019\r\nDTEND;VALUE=DATE:20261020\r\nSUMMARY:No study\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n'
     svc.import_source('busy.ics',raw);event=svc.store.list(svc.tenant,'calendar')[0]
-    assert event['start']['dateTime'].endswith('-04:00')
+    assert event['start']['dateTime'].endswith('+03:00')
 
 def test_upload_boundary_and_corrupt_pdf():
     for data in [b'%PDF-corrupt',b'bad\0pdf']:

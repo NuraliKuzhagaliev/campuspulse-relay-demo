@@ -1,6 +1,6 @@
 {
   "name": "campuspulse-relay",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "private": true,
   "type": "module",
   "description": "Evidence-linked academic recovery agent",
@@ -63,7 +63,9 @@
       "deleteAppDataOnUninstall": false,
       "artifactName": "CampusPulse-RELAY-${version}-${arch}-setup.${ext}",
       "script": "desktop/installer.nsi",
-      "installerLanguages": ["en_US"]
+      "installerLanguages": [
+        "en_US"
+      ]
     },
     "portable": {
       "artifactName": "CampusPulse-RELAY-${version}-${arch}-portable.${ext}"

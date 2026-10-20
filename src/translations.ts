@@ -2,9 +2,11 @@ export type Language = "en" | "ru" | "kk";
 import { workshopTranslations } from "./workshop-translations";
 import { fourTranslations } from "./four-translations";
 import { finalTranslations } from "./final-translations";
+import { localeReleaseTranslations } from "./locale-release-translations";
 import {auditTranslations} from './audit-translations';
 // Operational UI only. Course titles, source quotations, original diagnostics and identifiers stay verbatim.
 export const translations = {
+  ...localeReleaseTranslations,
   ...auditTranslations,
   ...workshopTranslations,
   ...fourTranslations,

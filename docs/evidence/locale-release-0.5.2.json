@@ -1,0 +1,248 @@
+{
+  "version": "0.5.2",
+  "scope": "Local full backend suite and real HTTPS frontend, Russian browser locale; no real Gemini/Google calls",
+  "python_tests": 252,
+  "python_subtests": 3,
+  "dependency_warnings": 3,
+  "IPC_checks": 8,
+  "ui": {
+    "version": "0.5.2",
+    "url": "https://127.0.0.1:8038",
+    "browser_locale": "ru-RU",
+    "model_calls": 0,
+    "calendar_writes": 0,
+    "states": [
+      {
+        "lang": "en",
+        "visible_language_label": "EN",
+        "width": 1440,
+        "heading": "October 2026",
+        "geometry": {
+          "columns": 7,
+          "rows": 6,
+          "no_internal_overflow": true,
+          "all_cells_fit": true,
+          "height": 506
+        },
+        "AA_violations": 0,
+        "no_overflow": true
+      },
+      {
+        "lang": "en",
+        "visible_language_label": "EN",
+        "width": 768,
+        "heading": "October 2026",
+        "geometry": {
+          "columns": 7,
+          "rows": 6,
+          "no_internal_overflow": true,
+          "all_cells_fit": true,
+          "height": 506
+        },
+        "AA_violations": 0,
+        "no_overflow": true
+      },
+      {
+        "lang": "en",
+        "visible_language_label": "EN",
+        "width": 390,
+        "heading": "October 2026",
+        "geometry": {
+          "columns": 7,
+          "rows": 6,
+          "no_internal_overflow": true,
+          "all_cells_fit": true,
+          "height": 506
+        },
+        "AA_violations": 0,
+        "no_overflow": true
+      },
+      {
+        "lang": "ru",
+        "visible_language_label": "RU",
+        "width": 1440,
+        "heading": "\u043e\u043a\u0442\u044f\u0431\u0440\u044c 2026",
+        "geometry": {
+          "columns": 7,
+          "rows": 6,
+          "no_internal_overflow": true,
+          "all_cells_fit": true,
+          "height": 506
+        },
+        "AA_violations": 0,
+        "no_overflow": true
+      },
+      {
+        "lang": "ru",
+        "visible_language_label": "RU",
+        "width": 768,
+        "heading": "\u043e\u043a\u0442\u044f\u0431\u0440\u044c 2026",
+        "geometry": {
+          "columns": 7,
+          "rows": 6,
+          "no_internal_overflow": true,
+          "all_cells_fit": true,
+          "height": 506
+        },
+        "AA_violations": 0,
+        "no_overflow": true
+      },
+      {
+        "lang": "ru",
+        "visible_language_label": "RU",
+        "width": 390,
+        "heading": "\u043e\u043a\u0442\u044f\u0431\u0440\u044c 2026",
+        "geometry": {
+          "columns": 7,
+          "rows": 6,
+          "no_internal_overflow": true,
+          "all_cells_fit": true,
+          "height": 506
+        },
+        "AA_violations": 0,
+        "no_overflow": true
+      },
+      {
+        "lang": "kk",
+        "visible_language_label": "KZ",
+        "width": 1440,
+        "heading": "\u049b\u0430\u0437\u0430\u043d 2026",
+        "geometry": {
+          "columns": 7,
+          "rows": 6,
+          "no_internal_overflow": true,
+          "all_cells_fit": true,
+          "height": 506
+        },
+        "AA_violations": 0,
+        "no_overflow": true
+      },
+      {
+        "lang": "kk",
+        "visible_language_label": "KZ",
+        "width": 768,
+        "heading": "\u049b\u0430\u0437\u0430\u043d 2026",
+        "geometry": {
+          "columns": 7,
+          "rows": 6,
+          "no_internal_overflow": true,
+          "all_cells_fit": true,
+          "height": 506
+        },
+        "AA_violations": 0,
+        "no_overflow": true
+      },
+      {
+        "lang": "kk",
+        "visible_language_label": "KZ",
+        "width": 390,
+        "heading": "\u049b\u0430\u0437\u0430\u043d 2026",
+        "geometry": {
+          "columns": 7,
+          "rows": 6,
+          "no_internal_overflow": true,
+          "all_cells_fit": true,
+          "height": 506
+        },
+        "AA_violations": 0,
+        "no_overflow": true
+      }
+    ],
+    "checks": [
+      {
+        "lang": "en",
+        "timezone_controls_exactly_three": true,
+        "saved_context_survives_refresh": true,
+        "connections_timezone_saved": true,
+        "review_calendar_localized": true,
+        "confirmed_deadline_instant_preserved": true,
+        "source_quote_unchanged": true,
+        "keyboard_escape_focus": true
+      },
+      {
+        "lang": "ru",
+        "timezone_controls_exactly_three": true,
+        "saved_context_survives_refresh": true,
+        "connections_timezone_saved": true,
+        "review_calendar_localized": true,
+        "confirmed_deadline_instant_preserved": true,
+        "source_quote_unchanged": true,
+        "keyboard_escape_focus": true
+      },
+      {
+        "lang": "kk",
+        "timezone_controls_exactly_three": true,
+        "saved_context_survives_refresh": true,
+        "connections_timezone_saved": true,
+        "review_calendar_localized": true,
+        "confirmed_deadline_instant_preserved": true,
+        "source_quote_unchanged": true,
+        "keyboard_escape_focus": true
+      }
+    ],
+    "passed": true
+  },
+  "workspace_timezones": [
+    "Asia/Almaty",
+    "Europe/Moscow",
+    "UTC"
+  ],
+  "public_language_labels": [
+    "EN",
+    "RU",
+    "KZ"
+  ],
+  "standard_Kazakh_language_code": "kk",
+  "native_Windows_installed": false,
+  "native_GUI_control_resumed": false,
+  "NON_GCP_READY": false,
+  "managed_GCP": "disabled_original_criterion_unmet",
+  "readme_relative_links_verified": true,
+  "source_deadline_offset_regressions": 9,
+  "legacy_Passport_original_instants_preserved": true,
+  "earlier_failures_preserved": [
+    ".local/logs/0.5.2-targeted-tests.log",
+    ".local/logs/0.5.2-ui-r3.log",
+    ".local/logs/0.5.2-ui-r4.log",
+    ".local/logs/0.5.2-ui-r5.log",
+    ".local/logs/0.5.2-ui-r6.log"
+  ],
+  "log_hashes": [
+    {
+      "file": ".local/logs/0.5.2-full-tests-r2.log",
+      "sha256": "9f1f2da9007c275e264622c1322613db46146b59e140ee07f9b77290ee1c5f4b"
+    },
+    {
+      "file": ".local/logs/0.5.2-ipc-tests.log",
+      "sha256": "608ccebe4e953dd3810aac8725016021044870040605a8fccb5dbeaa1ec17cff"
+    }
+  ],
+  "edge_ui": {
+    "scope": "Real local HTTPS UI; no Gemini or Google calls",
+    "passed": true,
+    "checks": [
+      "invalid date corrected by picker; calendar arrow keys select next day",
+      "partial date without time cannot confirm; clearing both keeps deadline unknown",
+      "Moscow plan, what-if baseline preservation and explicitly illustrative receipt",
+      "legacy Passport migration disclosed in UI; new UTC copy carries no Google connection or old approvals"
+    ]
+  },
+  "calendar_visual_reviewed_languages": [
+    "EN",
+    "RU",
+    "KZ"
+  ],
+  "additional_ui_fixes": [
+    "date-grid CSS isolated from weekly timeline",
+    "Escape restores opener focus",
+    "rapid ArrowRight/Enter focuses the selected day before activation",
+    "clearing an incomplete deadline resets native constraint validity",
+    "field/page/proposal-state labels translated"
+  ],
+  "windows_package_evidence": "docs/evidence/windows-package-0.5.2.json",
+  "complete_web_bundle_evidence": "docs/evidence/final-web-bundle-0.5.2.json",
+  "reproducible_ui_scripts": [
+    "scripts/verify_locale_release.mjs",
+    "scripts/verify_locale_edges.mjs"
+  ]
+}
