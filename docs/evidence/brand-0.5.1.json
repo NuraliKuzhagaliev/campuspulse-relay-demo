@@ -92,13 +92,93 @@
     "narrow_IPC_checks_passed": 8,
     "D_installer_regression_guards_passed": 3,
     "installed": false,
-    "native_GUI_automation_resumed": false
+    "native_GUI_automation_resumed": false,
+    "packaged_files_equal": [
+      {
+        "file": "desktop\\icon.ico",
+        "sha256": "c8b47f83c0efd5f490f88082e65b2c27c6362963d2f784e2d31f8216e616496a"
+      },
+      {
+        "file": "desktop\\icon.png",
+        "sha256": "65f658519c5a53463ee59a0636967455b4894f38c01e9e124ae3c09592ef10e4"
+      },
+      {
+        "file": "desktop\\locales.cjs",
+        "sha256": "be219f1d7ed568462d68b666aacd03d4a638027b777a8aed9423f2bac0660d9a"
+      },
+      {
+        "file": "desktop\\main.cjs",
+        "sha256": "cf146e3103568ac4d9410cd4da3104544a1eb56e9e045db95ac458f50181b923"
+      },
+      {
+        "file": "desktop\\preload.cjs",
+        "sha256": "def16c63fa8563bfefa18ddc535cf952da93b8f388413570eb54daaf7e5994d6"
+      },
+      {
+        "file": "desktop\\request-policy.cjs",
+        "sha256": "486f5c69601535393558748db8f0a5fb4589421eb0772e67fe8da67ab3ceb677"
+      },
+      {
+        "file": "dist\\assets\\brand\\apple-touch-icon.png",
+        "sha256": "c1a56a56e70e07c5137ebaf4c08d386b6869394592691db10c650f9b9b2caa4f"
+      },
+      {
+        "file": "dist\\assets\\brand\\favicon.ico",
+        "sha256": "c8b47f83c0efd5f490f88082e65b2c27c6362963d2f784e2d31f8216e616496a"
+      },
+      {
+        "file": "dist\\assets\\brand\\logo-256.png",
+        "sha256": "18a2f508c9878aff3b20b7a78ff27677682e02c3a80bdada87c1d211b6835637"
+      },
+      {
+        "file": "dist\\assets\\index-BdKGZeqI.css",
+        "sha256": "5713dc2dc6981451032db37a6870d20431d3f60e53fa9455cedc9b8a4c3f8d34"
+      },
+      {
+        "file": "dist\\assets\\index-C7Yb2ebw.js",
+        "sha256": "7bf81835d769c1ce0b112e6d5dbfc2e53fb261737ff087bd1905eb6395b9f136"
+      },
+      {
+        "file": "dist\\assets\\relay-oauth.css",
+        "sha256": "08ecaab876ad057a8f60261b0da26a505c31bfa190fb1d5f8ad863d2257d1369"
+      },
+      {
+        "file": "dist\\assets\\relay-pair.js",
+        "sha256": "516eea0fbdd7bea908e088a5b02e80c1c3896d51a48e2ce61cb87ef293c3b7a7"
+      },
+      {
+        "file": "dist\\index.html",
+        "sha256": "40e43664674a32262d0336a6b8fef03e6e960c291063af00d3565b5e239ed644"
+      },
+      {
+        "file": "dist\\samples\\index.html",
+        "sha256": "491637dca7978eebc66d7817ea3aadb4d4ac9f2259d811d725311e652a278c23"
+      },
+      {
+        "file": "dist\\samples\\privacy.html",
+        "sha256": "adc7f70004ff6751b2fbcd0baf224dfdf528691c0f664411a7be4e89ceabbd5d"
+      }
+    ],
+    "artifacts": [
+      {
+        "file": "release/windows/CampusPulse-RELAY-0.5.1-x64-setup.exe",
+        "bytes": 167284030,
+        "sha256": "8e0c30b46bc067e70b9aff96dbe416a070b74fa83a14c27307d5e4d33760eda2"
+      },
+      {
+        "file": "release/windows/CampusPulse-RELAY-0.5.1-x64-portable.exe",
+        "bytes": 118861006,
+        "sha256": "eeeb7af566ed31e7faa4d38197f6b5fd0309b074ea205b1e1fa14b0292d4fd69"
+      }
+    ]
   },
   "public_deployment": {
     "completed": false,
-    "reason": "Publishing restarts temporary Render service; preserve current owner workspace with Passport first",
-    "last_verified_runtime_commit": "7e4098dae61775b5062b2f613192a6abaa3185dc"
+    "reason": "Owner explicitly stated nothing needs saving; publication authorized, now prepared",
+    "last_verified_runtime_commit": "7e4098dae61775b5062b2f613192a6abaa3185dc",
+    "owner_export_not_required_confirmed": true
   },
   "prior_sealed_release": "0.5.1-final-r1",
-  "personal_spending": 0
+  "personal_spending": 0,
+  "web_bundle_assets_verified": 3
 }
