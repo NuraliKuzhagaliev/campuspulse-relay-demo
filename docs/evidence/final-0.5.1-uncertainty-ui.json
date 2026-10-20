@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-20T13:52:22.966Z",
+  "base": "https://campuspulse-relay-demo.onrender.com",
+  "actual_gemini_calls": 0,
+  "google_calls": 0,
+  "checks": {
+    "own_conflicting_sources_preserved_and_explicit_choice_persisted": true,
+    "conflict_choice_survives_refresh": true
+  },
+  "inputs": [
+    {
+      "file": "fixtures/acceptance-0.5.1/conflict-a.md",
+      "sha256": "fbbf50bf5cf4401a1fb6aa67c797d5aa4608d610430eb0e8b668b67ecbda938b"
+    },
+    {
+      "file": "fixtures/acceptance-0.5.1/conflict-b.md",
+      "sha256": "52766a1f61986820c965941eec4784e313cdc8087a12ac417fb76bfdfa578068"
+    }
+  ],
+  "deployed_commit": "7e4098dae61775b5062b2f613192a6abaa3185dc",
+  "last_review": {
+    "status": 200,
+    "entities": 1
+  },
+  "passed": true
+}

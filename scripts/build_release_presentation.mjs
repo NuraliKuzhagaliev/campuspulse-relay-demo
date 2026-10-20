@@ -1,0 +1,45 @@
+/** Edit the actual preserved PPTX in place in memory, export a new version. */
+import fs from 'node:fs/promises';import path from 'node:path';import crypto from 'node:crypto';
+import {createRequire} from 'node:module';import {pathToFileURL} from 'node:url';import {spawnSync} from 'node:child_process';
+const root=process.cwd(),require=createRequire(import.meta.url),runtime='C:/Users/nural/.cache/codex-runtimes/codex-primary-runtime/dependencies';
+const skill='C:/Users/nural/.codex/plugins/cache/openai-primary-runtime/presentations/26.1017.22136/skills/presentations';
+process.env.RUNTIME_NODE_MODULES=runtime+'/node/node_modules';process.env.RUNTIME_NODE=runtime+'/node/bin/node.exe';process.env.RUNTIME_PYTHON=runtime+'/python/python.exe';
+const {PresentationFile,FileBlob}=await import(pathToFileURL(require.resolve('@oai/artifact-tool',{paths:[process.env.RUNTIME_NODE_MODULES]})).href);
+const proof={deployed_commit:'7e4098dae61775b5062b2f613192a6abaa3185dc',NON_GCP_READY:false,tests:{python_passed:219,ipc_passed:8},documents:{verified_cases:5}};
+const reference=path.join(root,'release/presentation/CampusPulse-RELAY-0.5.0-audit-r3.pptx');
+const deck=await PresentationFile.importPptx(await FileBlob.load(reference));
+const revision=process.env.RELAY_PRESENTATION_REVISION||'final-r1';if(!/^final-r\d+$/.test(revision))throw new Error('Invalid new presentation revision');
+const build=path.join(root,'.local/presentation-final/0.5.1-'+revision),output=path.join(root,'release/presentation'),stem='CampusPulse-RELAY-0.5.1-'+revision;
+await fs.mkdir(build,{recursive:true});
+const inspection=(await deck.inspect({kind:'textbox',maxChars:100000})).ndjson.split('\n').filter(Boolean).map(JSON.parse).filter(x=>x.kind==='textbox');
+function edit(slide,top,value,left=64){
+ const r=inspection.find(q=>q.slideIndex===slide-1&&Math.abs(q.position.top-top)<1&&Math.abs(q.position.left-left)<1);
+ if(!r)throw new Error('Missing exact text anchor '+slide+'/'+top+'/'+left);
+ const target=deck.resolve(r.id);target.text=value;target.text.style={...r.style,insets:0,autoFit:'none',wrap:'square'};
+}
+for(const [i,s] of deck.slides.items.entries())await fs.writeFile(path.join(build,`before-${String(i+1).padStart(2,'0')}.png`),new Uint8Array(await(await deck.export({slide:s,format:'png',scale:1})).arrayBuffer()));
+for(const r of inspection)if(r.position.top===680)deck.resolve(r.id).text.replace('0.5.0','0.5.1');
+edit(1,605,'Web and Windows 0.5.1',68);
+edit(1,664,'Public Gemini and MCP. Calendar and native acceptance gates remain.',68);
+edit(6,238,'5 real document workflows rechecked');
+edit(6,474,'Five complete AI turns and one partial turn retained\nPlan, what-if, illustrative receipt and Passport passed\nSchema errors expose safe field diagnostics');
+edit(7,104,'Public Gemini and protected MCP');
+edit(7,244,'Automatic visitor workspace');
+edit(7,244,'Server-side Gemini API and MCP',682);
+edit(7,566,'Fair per-call queue with provider backoff');
+edit(7,618,'Configured upper bounds can exceed available quota. No paid fallback.');
+edit(9,104,'Windows package and reliability checks');
+edit(9,238,'219');
+edit(9,470,'8 IPC checks and 3 installer regression guards passed.\nD-drive installer corrected; owner reinstall pending.\nOriginal 45/95 preserved. Native acceptance pending.');
+edit(10,326,'Organizers will not provide GCP.\nRender Free and Gemini are the primary route.\nManaged integration remains disabled.\nNo personal billing or paid upgrade.');
+edit(12,104,'Acceptance status and deadline');
+edit(12,241,'Original managed GCP criterion remains unmet.\nCalendar recovered. Target and event checks pending.\nD-drive reinstall and physical native checks pending.\nReal public Gemini, MCP and GitHub reads verified.');
+edit(12,591,'Planning assumption UTC+5. No official architecture waiver established.\nThe owner decides submission. No personal charges are authorized.');
+for(const slide of deck.slides.items)slide.speakerNotes.text='Actual 0.5.1 evidence: docs/evidence/audit-live-mvgqi7ei.json (five workflows, six real turns: five complete, one partial), final-0.5.1-hosted-ui.json, final-0.5.1-mcp.json, final-0.5.1-100-simulated-r3.json, final-0.5.1-recovery.json and final-0.5.1-windows-package.json. Current runtime 7e4098dae61775b5062b2f613192a6abaa3185dc. Full local run219 tests+3subtests;8IPC checks. One previous full run had a minute-boundary test failure; its clock is now fixed and the complete rerun passed. The100-session provider is simulated, zero Gemini calls. Native package equality is not installation or physical acceptance. Prior0.5.0 Open/Cancel/import and preserved45/95 evidence remains separate. Old Calendar session expired. Owner renewed consent, connected=true; previous supplied target returned404. Owner subsequently recovered the existing calendar; target selection and event acceptance pending. The first 0.5.1 installer incorrectly chose C: while D: retained0.5.0; corrected custom NSIS package compiled with fixed D destination and3structural guards. Owner reinstall/physical acceptance pending; no Windows control resumed. Full independent Russian website test plan published in docs/independent_website_test_ru.txt. Organizers will not provide GCP. Managed GCP remains an unmet original criterion and a disabled optional integration, not a blocker of the primary route. No official alternative-architecture waiver or personal spending. Free hosting and quotas can interrupt service. Sources: https://ai.google.dev/gemini-api/docs/rate-limits , https://ai.google.dev/gemini-api/terms , https://render.com/docs/free , https://developers.google.com/workspace/calendar/api/auth .';
+for(const [i,s] of deck.slides.items.entries())await fs.writeFile(path.join(build,`slide-${String(i+1).padStart(2,'0')}.png`),new Uint8Array(await(await deck.export({slide:s,format:'png',scale:1})).arrayBuffer()));
+const candidate=path.join(build,'candidate.pptx');await(await PresentationFile.exportPptx(deck)).save(candidate);
+const {finalizePresentation}=await import(pathToFileURL(path.join(skill,'container_tools/artifact_tool_utils.mjs')).href);
+await finalizePresentation({workspaceDir:root,candidatePath:candidate,finalPath:path.join(output,stem+'.pptx'),pythonExecutable:runtime+'/python/python.exe',integrityValidatorPath:skill+'/container_tools/inspect_presentation_package_integrity.py',layoutValidatorPath:skill+'/container_tools/inspect_presentation_layout_geometry.py',layoutArgs:['--expected-slide-size-emu','12192000,6858000','--validate-heading-fit'],explicitTotalSlideCount:12,requiredNativeTableOwnerSlides:[],fontPolicy:{basis:'reference',families:['Arial'],referencePath:reference,referenceSha256:crypto.createHash('sha256').update(await fs.readFile(reference)).digest('hex')},verifyArtifactToolImport:true,receiptPath:path.join(build,'validation.json')});
+const py=spawnSync(path.join(root,'.venv/Scripts/python.exe'),['scripts/final_slides_to_pdf.py',build,path.join(output,stem+'-verified.pdf')],{cwd:root,env:process.env,encoding:'utf8'});if(py.status!==0)throw new Error(py.stderr);
+const result={version:'0.5.1',slides:12,pptx:path.join(output,stem+'.pptx'),pdf:path.join(output,stem+'-verified.pdf'),renders:build,editable:true,source_reference:reference,public_gemini_verified:proof.documents.verified_cases>0,NON_GCP_READY:proof.NON_GCP_READY,validation:path.join(build,'validation.json'),native_powerpoint_opened:false};
+await fs.writeFile('docs/evidence/presentation-0.5.1.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result));

@@ -1,0 +1,13 @@
+{
+  "version": "0.5.1",
+  "slides": 12,
+  "pptx": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.5.1-final-r4.pptx",
+  "pdf": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.5.1-final-r4-verified.pdf",
+  "renders": "D:\\projects\\CampusPulseRELAY\\.local\\presentation-final\\0.5.1-final-r4",
+  "editable": true,
+  "source_reference": "D:\\projects\\CampusPulseRELAY\\release\\presentation\\CampusPulse-RELAY-0.5.0-audit-r3.pptx",
+  "public_gemini_verified": true,
+  "NON_GCP_READY": false,
+  "validation": "D:\\projects\\CampusPulseRELAY\\.local\\presentation-final\\0.5.1-final-r4\\validation.json",
+  "native_powerpoint_opened": false
+}

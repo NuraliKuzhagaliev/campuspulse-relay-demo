@@ -1,0 +1,36 @@
+{
+  "at": "2026-10-20T13:46:43.764Z",
+  "base": "https://campuspulse-relay-demo.onrender.com",
+  "actual_gemini_calls": 0,
+  "google_calls": 0,
+  "checks": {
+    "en_own_missing_fields_remain_unknown_after_confirmation_and_refresh": true,
+    "ru_own_missing_fields_remain_unknown_after_confirmation_and_refresh": true,
+    "kk_own_missing_fields_remain_unknown_after_confirmation_and_refresh": true
+  },
+  "inputs": [
+    {
+      "file": "fixtures/acceptance-0.5.1/unknown-en.md",
+      "sha256": "dd73f911bd798f79c58ac089b55e501ec3620d9690c26f6e71a3e80bd3f0913f"
+    },
+    {
+      "file": "fixtures/acceptance-0.5.1/unknown-ru.md",
+      "sha256": "3dee5202462c3af9a0ee4d2c73524fabc5d3ba91f7af645537b57c2099a136da"
+    },
+    {
+      "file": "fixtures/acceptance-0.5.1/unknown-kk.md",
+      "sha256": "e5606d24fb785546bbf685a82f5a0b033ea2d48f296da57dbe63ddc2b3e241ee"
+    },
+    {
+      "file": "fixtures/acceptance-0.5.1/conflict-a.md",
+      "sha256": "fbbf50bf5cf4401a1fb6aa67c797d5aa4608d610430eb0e8b668b67ecbda938b"
+    },
+    {
+      "file": "fixtures/acceptance-0.5.1/conflict-b.md",
+      "sha256": "52766a1f61986820c965941eec4784e313cdc8087a12ac417fb76bfdfa578068"
+    }
+  ],
+  "deployed_commit": "7e4098dae61775b5062b2f613192a6abaa3185dc",
+  "passed": false,
+  "error": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Review extracted fields', exact: true }) resolved to 2 elements:\n    1) <button class=\"secondary\">Review extracted fields</button> aka getByRole('button', { name: 'Review extracted fields' }).first()\n    2) <button class=\"secondary\">Review extracted fields</button> aka getByRole('button', { name: 'Review extracted fields' }).nth(1)\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Review extracted fields', exact: true })\u001b[22m\n"
+}

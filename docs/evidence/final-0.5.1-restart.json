@@ -1,0 +1,11 @@
+{
+  "scope": "actual local gateway subprocess restart and empty-store replacement; public Render not restarted",
+  "actual_gemini_calls": 0,
+  "google_calls": 0,
+  "checks": {
+    "actual_process_restart_with_retained_sqlite_preserves_owned_workspace": true,
+    "actual_empty_datastore_replacement_rejects_old_capability": true,
+    "passport_restores_selected_coursework_without_google_or_approval_authority": true
+  },
+  "passed": true
+}

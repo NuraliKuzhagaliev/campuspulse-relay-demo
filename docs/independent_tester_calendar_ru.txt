@@ -152,3 +152,5 @@ digest/данные запроса одобрения или полный JSON /
 Бесплатный хостинг может засыпать; первый запуск может быть медленным.
 Экспорт Passport сохраняет выбранные данные, но не Google-разрешения.
 Сбой, запрет доступа или непроверенный шаг нужно сообщать честно.
+
+Full independent website plan / Полный план проверки сайта: https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/blob/main/docs/independent_website_test_ru.txt

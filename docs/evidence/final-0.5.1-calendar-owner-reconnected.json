@@ -1,0 +1,16 @@
+{
+  "version": "0.5.1",
+  "runtime": "7e4098dae61775b5062b2f613192a6abaa3185dc",
+  "observation_source": "owner response in current conversation",
+  "configured": true,
+  "connected": true,
+  "calendar_live": false,
+  "acceptance": "consent_complete_target_pending",
+  "setup_repetition_required": false,
+  "previous_target_sha256": "070b322ffc3742b422e1b4fdda14fad9a2ba81734dd9c64463f9405b431eea9c",
+  "recovery_google_http_status": 404,
+  "recovery_error_code": "UPSTREAM_UNAVAILABLE",
+  "target_selected": false,
+  "events_written": false,
+  "limitation": "Google did not expose the supplied previous target under the current account/scope; owner checking actual Calendar settings ID. Do not infer deletion or a successful read/write."
+}

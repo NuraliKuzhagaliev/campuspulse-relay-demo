@@ -7,7 +7,7 @@ Primary route: Render Free / server-side Gemini Developer API / actual signed MC
 | Five own documents, six complete real turns | evidence/audit-live-mvfmnry1.json, runtime 2f74bdacf4bab56b96dbd2b3350d388634d95142 | EN/RU/KK prose, continued and table PDFs, full review/plan/what-if/illustrative receipt/progress/Passport/reopen |
 | Later two-visitor recheck | evidence/audit-live-mvfnvite.json, runtime 1718ff340bdb2b40c5d3e796907000bd6720b80f | Two complete, one partial. Valid proposal after a failed tool call does not erase that failure. |
 | Partial diagnosis | evidence/final-0.5.1-partial-diagnosis.json | Historical exact invalid input unavailable. Sticky failed-tool flag explains partial. Typed schema diagnostics and null citation-mode regression added. |
-| Full local tests | .local/logs/final-0.5.1-unit.log | 218 passed, 3 subtests. Provider and Calendar failures simulated where appropriate. |
+| Full local tests | .local/logs/final-0.5.1-unit.log | 219 passed, 3 subtests. Provider and Calendar failures simulated where appropriate. |
 | Actual MCP protocol | evidence/final-0.5.1-mcp.json | Real protected loopback initialize/list/read/propose, typed redacted invalid-schema result and null citation references. Zero model/Google calls. |
 | Full local UI | evidence/final-0.5.1-local-ui.json | Continued PDF, explicit review, own/example separation, plan/what-if/illustrative receipt/Preflight,45/95, Passport/reopen,12 EN/RU/KK-width AA states |
 |100-session queue/isolation | evidence/final-0.5.1-100-simulated.json | Real HTTP session/upload/queue/history; provider simulated, zero real Gemini. Plan isolation fixtures, no actual MCP in this load test. |
@@ -19,3 +19,22 @@ Primary route: Render Free / server-side Gemini Developer API / actual signed MC
 | Managed GCP | prepared guarded scripts, organizer_window_runbook.md | Disabled optional integration. No real Agent Engine/IAM/shared-state acceptance. |
 
 Current publication/runtime results are added to evidence/final-0.5.1-acceptance.json. Older successful, failed and partial evidence stays intact. NON_GCP_READY=false pending actual Calendar and Windows gates. F1–F5 remain locally implemented; real Calendar and full enhancement-level Gemini acceptance are separate. Free storage/quota/latency limits remain visible.
+
+## Final public revision recheck
+
+Runtime7e4098dae61775b5062b2f613192a6abaa3185dc on Render Free, deploy dep-dbbmv949v7es73fov1kg became live2026-10-20T13:43:06Z. Full hosted UI passed (final-0.5.1-hosted-ui.json). Five own-document workflows passed again through the actual UI, six real Gemini/MCP turns:5complete/1partial (audit-live-mvgqi7ei.json). The partial now exposes TOOL_INPUT_INVALID / extra_forbidden: two extra fields in candidate14. The model corrected the call and saved a valid proposal; the original failure remains partial. No additional fake/paid fallback.
+
+EN/RU/KK missing fields survived confirmation/refresh (first/second uncertainty evidence retains those successes), and a separately rerun own conflicting pair preserved both quotes and its explicit decision (final-0.5.1-uncertainty-ui.json). Earlier harness selector/timing failures are retained; the corrected harness waits for the actual review POST response. Supplemental synthetic inputs and trilingual expected instructions are in fixtures/acceptance-0.5.1 and the release sample addendum.
+
+Actual current GitHub manual read and later server observation with test browser closed passed, original source time unchanged (final-0.5.1-hosted-github.json). All13 public files/ZIP/guide hashes passed again. Actual local process restart with retained SQLite and an empty-store replacement/Passport restore passed (final-0.5.1-restart.json); public Render was not restarted to avoid discarding the owner's new Google connection.
+
+Full final suite219passed+3subtests,8IPC checks. A previous full run encountered a minute-boundary race in the quota TEST; freezing its test clock fixed the nondeterminism, and the full rerun passed. This was not a provider or production change. Logs and hashes are in final acceptance metadata.
+
+Owner has now renewed Google consent: configured=true,connected=true,calendar_live=false. Recovery of the supplied previous target returned Google404. No repeated login or calendar creation is requested; owner is checking actual account/Calendar settings ID. No actual event writes claimed. New Windows0.5.1 package11runtime files match source, installer/portable hashes verified; no installation, launch or native GUI control performed. Owner manual acceptance is requested separately.
+
+
+### Installer and independent-guide follow-up, 20 October
+
+Owner reported the 0.5.1 installer chose C: without a D: option. Read-only file inspection confirmed C:0.5.1.0 and D:0.5.0.0. Root cause: default NSIS initMultiUser overwrites early preInit; the owner helper omitted /D, and default NSIS caches the installer in LocalAppData. Replaced with a fixed-D custom NSIS script, guarded exact-path uninstall, separate D registration, no LocalAppData cache; added explicit /D to the helper. Corrected package compiled; 11 runtime files match source; 3 structural regression tests and 5 mocked owner-replay helper checks passed. These are not native installation/Calendar acceptance. The prior bad binaries and failed compile logs are preserved. No Windows control or C cleanup was performed. Owner reinstall and physical checks remain pending.
+
+The full Russian independent website plan is docs/independent_website_test_ru.txt. It covers all agreed non-GCP features, 13 samples, own EN/RU/KK documents and continued/table PDFs, uncertainty, real Gemini/MCP, isolation, recovery and separate voluntary owner Calendar consent/preview/write/read-back/replay/undo. A calendar-connected workspace must not be switched after consent. The guide is a procedure, not evidence of an independent pass.

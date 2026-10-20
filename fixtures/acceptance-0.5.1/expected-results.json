@@ -1,0 +1,46 @@
+{
+  "synthetic": true,
+  "not_runtime_goldens": true,
+  "files": [
+    {
+      "file": "conflict-a.md",
+      "bytes": 196,
+      "sha256": "fbbf50bf5cf4401a1fb6aa67c797d5aa4608d610430eb0e8b668b67ecbda938b"
+    },
+    {
+      "file": "conflict-b.md",
+      "bytes": 196,
+      "sha256": "52766a1f61986820c965941eec4784e313cdc8087a12ac417fb76bfdfa578068"
+    },
+    {
+      "file": "README.md",
+      "bytes": 2258,
+      "sha256": "b430dc7aa03345e1cfbca5582d7b07572e09eda4d70c486017e0dd4e7397dbab"
+    },
+    {
+      "file": "unknown-en.md",
+      "bytes": 191,
+      "sha256": "dd73f911bd798f79c58ac089b55e501ec3620d9690c26f6e71a3e80bd3f0913f"
+    },
+    {
+      "file": "unknown-kk.md",
+      "bytes": 277,
+      "sha256": "e5606d24fb785546bbf685a82f5a0b033ea2d48f296da57dbe63ddc2b3e241ee"
+    },
+    {
+      "file": "unknown-ru.md",
+      "bytes": 302,
+      "sha256": "3dee5202462c3af9a0ee4d2c73524fabc5d3ba91f7af645537b57c2099a136da"
+    }
+  ],
+  "missing_fields": [
+    "due",
+    "minutes"
+  ],
+  "conflict_pair": {
+    "tasks": 1,
+    "source_count": 2,
+    "exact_minutes": 45,
+    "solver_minutes": 60
+  }
+}

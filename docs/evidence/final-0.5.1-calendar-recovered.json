@@ -1,0 +1,15 @@
+{
+  "checked_at": "2026-10-20T14:06:14.533999+00:00",
+  "observation_source": "owner-provided screenshot, not automated GUI control",
+  "screenshot_sha256": "071f140d8c7ad2676a60c43d3c64359bac2e4a37f0ba6ca018e7777726cab30a",
+  "google_connected": true,
+  "existing_calendar_metadata_verified": true,
+  "recovery_message_observed": "Calendar verified. Select it from the authorized list before preparing a preview.",
+  "authorized_target_label": "CampusPulse RELAY Study",
+  "target_selected_at_screenshot": false,
+  "visible_selected_target": "local-illustrative-calendar",
+  "events_written": false,
+  "prior_404_resolved": true,
+  "exact_prior_404_cause": "not established; no backend change between failed and successful recovery",
+  "next_step": "Owner selects returned Calendar, prepares exact one-event preview, and reviews before approving any write."
+}

@@ -1,0 +1,79 @@
+{
+  "version": "0.5.1",
+  "checked_at": "2026-10-20T14:31:24.832Z",
+  "verification": "static packaged-file equality only",
+  "installed": false,
+  "launched": false,
+  "native_picker_checked": false,
+  "notification_visibility_checked": false,
+  "packaged_files": [
+    {
+      "file": "desktop\\locales.cjs",
+      "sha256": "be219f1d7ed568462d68b666aacd03d4a638027b777a8aed9423f2bac0660d9a",
+      "matches_current_source": true
+    },
+    {
+      "file": "desktop\\main.cjs",
+      "sha256": "f4bf805ccce67cd04a226d9fecf8317592e82c7ae58480a2166227a57639f0ab",
+      "matches_current_source": true
+    },
+    {
+      "file": "desktop\\preload.cjs",
+      "sha256": "def16c63fa8563bfefa18ddc535cf952da93b8f388413570eb54daaf7e5994d6",
+      "matches_current_source": true
+    },
+    {
+      "file": "desktop\\request-policy.cjs",
+      "sha256": "486f5c69601535393558748db8f0a5fb4589421eb0772e67fe8da67ab3ceb677",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\assets\\index-B-lRwg8k.css",
+      "sha256": "83c45ba95223b8810de19b5ac5a5cc85cff3618962b76d36e2e4a33758a9d71e",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\assets\\index-CNJIK0Ox.js",
+      "sha256": "2b46444143ae105a09d027dc5bbcde734b96205047f67cbdd57011b1a86a21be",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\assets\\relay-oauth.css",
+      "sha256": "08ecaab876ad057a8f60261b0da26a505c31bfa190fb1d5f8ad863d2257d1369",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\assets\\relay-pair.js",
+      "sha256": "516eea0fbdd7bea908e088a5b02e80c1c3896d51a48e2ce61cb87ef293c3b7a7",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\index.html",
+      "sha256": "d4f23bccc73a0f7051087cf8374e09820a59b4ffe338d5f1fd2e564f3e800715",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\samples\\index.html",
+      "sha256": "491637dca7978eebc66d7817ea3aadb4d4ac9f2259d811d725311e652a278c23",
+      "matches_current_source": true
+    },
+    {
+      "file": "dist\\samples\\privacy.html",
+      "sha256": "adc7f70004ff6751b2fbcd0baf224dfdf528691c0f664411a7be4e89ceabbd5d",
+      "matches_current_source": true
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "release/windows/CampusPulse-RELAY-0.5.1-x64-setup.exe",
+      "bytes": 166897461,
+      "sha256": "08bc75a18f5b9d84f11b9dd64f923af205cbc6219ed48f718fa899062b426c62"
+    },
+    {
+      "file": "release/windows/CampusPulse-RELAY-0.5.1-x64-portable.exe",
+      "bytes": 118582815,
+      "sha256": "5dc57df034a73ca2a7ca6cf5215ef3450248ef2b03eb7e6d61b7e12425a8b263"
+    }
+  ],
+  "passed": true
+}

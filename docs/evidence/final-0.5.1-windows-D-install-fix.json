@@ -1,0 +1,55 @@
+{
+  "version": "0.5.1",
+  "checked_at": "2026-10-20T14:32:51.073902+00:00",
+  "passed": true,
+  "scope": "Compiled package and source regression guards; no interactive installation or native acceptance",
+  "observed_failure": {
+    "owner_reported_install_on_C": true,
+    "read_only_C_product_version": "0.5.1.0",
+    "read_only_D_product_version": "0.5.0.0",
+    "root_cause": "electron-builder initMultiUser overwrote preInit INSTDIR; the owner helper omitted explicit /D; default installer also caches itself in LocalAppData"
+  },
+  "correction": {
+    "custom_script": "desktop/installer.nsi",
+    "destination": "D:/projects/CampusPulseRELAY/installed/CampusPulse RELAY",
+    "exact_destination_reasserted_before_file_writes": true,
+    "helper_explicit_D": true,
+    "default_LocalAppData_installer_cache_removed": true,
+    "dedicated_D_uninstall_registration": true,
+    "old_C_registration_untouched": true,
+    "profiles_preserved": true
+  },
+  "verification": {
+    "build_exit_code": 0,
+    "build_log": ".local/logs/final-0.5.1-windows-D-fix-r5.log",
+    "structural_pytest_passed": 3,
+    "calendar_replay_helper_mock_checks": 5,
+    "package_runtime_files_equal": 11,
+    "owner_reinstalled_corrected_package": false,
+    "gui_automation_resumed": false
+  },
+  "history": "release/windows/history/0.5.1-before-D-install-fix",
+  "unresolved": [
+    "Owner must install the corrected package and verify actual D: version",
+    "Native picker/save/Passport/reopen/banner/click-focus are separate physical checks",
+    "Erroneous C: application and old cache have not been automatically removed"
+  ],
+  "hashes": [
+    {
+      "file": "desktop/installer.nsi",
+      "sha256": "2b9058f520a7887faa2eba786a2a6a970df6ec62895e9aafd6961b54f787cad0"
+    },
+    {
+      "file": "desktop/installer.nsh",
+      "sha256": "1600ea14f049117eaad37c123c739da69fa45d7037286594e11ae1acf8f4bf24"
+    },
+    {
+      "file": "scripts/install_release_native.ps1",
+      "sha256": "c3755bf983b2bc13ca431dd6ede9d05f32b416dc43ac7b3dd74443504ba82520"
+    },
+    {
+      "file": ".local/logs/final-0.5.1-windows-D-fix-r5.log",
+      "sha256": "d76c0b071c9f0cf9ae074e8aa77f4d6da8884a7c945c639404e2d976041acdfb"
+    }
+  ]
+}

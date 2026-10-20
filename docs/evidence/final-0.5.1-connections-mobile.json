@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "language": "en",
+      "width": 390,
+      "no_horizontal_overflow": true,
+      "aa_violations": 0
+    },
+    {
+      "language": "ru",
+      "width": 390,
+      "no_horizontal_overflow": true,
+      "aa_violations": 0
+    },
+    {
+      "language": "kk",
+      "width": 390,
+      "no_horizontal_overflow": true,
+      "aa_violations": 0
+    }
+  ],
+  "google_calls": 0,
+  "model_calls": 0
+}

@@ -1,0 +1,61 @@
+{
+  "verified": true,
+  "provider": "Render",
+  "service_id": "srv-dbajs73bc2fs73bm9mfg",
+  "workspace_id": "tea-d3pt0sbipnbc73a5v810",
+  "plan": "Free",
+  "url": "https://campuspulse-relay-demo.onrender.com/",
+  "deploy_id": "dep-dbbmv949v7es73fov1kg",
+  "deploy_status": "live",
+  "finished_at": "2026-10-20T13:43:06.002002Z",
+  "deployed_commit": "7e4098dae61775b5062b2f613192a6abaa3185dc",
+  "observed_health": {
+    "ok": true,
+    "version": "0.5.1",
+    "mode": "alternative_live",
+    "agent_configured": true,
+    "agent_verified": false,
+    "agent": {
+      "configured": true,
+      "resource": "gemini-developer:gemini-3.5-flash-lite",
+      "verified": false,
+      "evidence": {
+        "resource": "gemini-developer:gemini-3.5-flash-lite",
+        "run_id": "84ff425ef7d32a5c4251c2beff4dd3da",
+        "revision": "7e4098dae61775b5062b2f613192a6abaa3185dc",
+        "observed_at": "2026-10-20T13:50:19.654901+00:00",
+        "expires": 1792504519.654925,
+        "provider": "gemini_developer",
+        "deployment_mode": "alternative_hosted",
+        "model": "gemini-3.5-flash-lite"
+      },
+      "provider": "gemini_developer",
+      "deployment_mode": "alternative_hosted",
+      "model": "gemini-3.5-flash-lite",
+      "managed_agent_engine": false,
+      "mode": "live_gemini_alternative",
+      "public_access": true,
+      "last_failure": {
+        "failed_at": "2026-10-20T13:46:19.563200+00:00",
+        "run_id": "e1d9e99202a4a7bcf7cb3e388f1365fa",
+        "status": "partial",
+        "code": null
+      }
+    },
+    "time": "2026-10-20T14:08:31.639894+00:00",
+    "deployed_commit": "7e4098dae61775b5062b2f613192a6abaa3185dc",
+    "demo": {
+      "public": true,
+      "storage": "temporary",
+      "session_seconds": 7200,
+      "max_upload_mib": 2,
+      "max_sources": 12,
+      "github_cache_seconds": 300,
+      "calendar": "illustrative_local_adapter",
+      "gemini": "public_queued",
+      "mandatory_gcp": "unmet_optional_integration_disabled"
+    }
+  },
+  "verified_at": "2026-10-20T14:07:08.122695+00:00",
+  "no_paid_upgrade": true
+}

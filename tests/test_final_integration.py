@@ -119,6 +119,9 @@ def test_free_consent_and_invitation_do_not_grant_calendar_authority(tmp_path,mo
 
 def test_model_capacity_counts_each_call_and_honors_backoff(tmp_path,monkeypatch):
     from relay.model_usage import reserve_call,throttle
+    # Keep these reservations in one minute even if the real wall clock rolls
+    # over while the suite is running. Bucket transitions are tested separately.
+    monkeypatch.setattr(time,'time',lambda:1792501200.0)
     monkeypatch.setenv('RELAY_MODEL_CALLS_PER_MINUTE','2')
     s=Store(tmp_path/'db')
     reserve_call(s,'judge','r',100,judge=True)

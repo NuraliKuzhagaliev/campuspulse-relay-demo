@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-20T13:43:21.003Z",
+  "url": "https://campuspulse-relay-demo.onrender.com",
+  "version": "0.5.1",
+  "provider_substitution": false,
+  "google_login": false,
+  "invitations": false,
+  "personal_spending": 0,
+  "checks": {},
+  "cases": [],
+  "runs": [],
+  "passed": false,
+  "error": "Acceptance assertion failed; private diagnostics retained on D:."
+}

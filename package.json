@@ -61,7 +61,9 @@
       "include": "desktop/installer.nsh",
       "runAfterFinish": false,
       "deleteAppDataOnUninstall": false,
-      "artifactName": "CampusPulse-RELAY-${version}-${arch}-setup.${ext}"
+      "artifactName": "CampusPulse-RELAY-${version}-${arch}-setup.${ext}",
+      "script": "desktop/installer.nsi",
+      "installerLanguages": ["en_US"]
     },
     "portable": {
       "artifactName": "CampusPulse-RELAY-${version}-${arch}-portable.${ext}"

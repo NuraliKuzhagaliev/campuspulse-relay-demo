@@ -1,0 +1,48 @@
+{
+  "slides": 12,
+  "individually_visually_reviewed": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "all_12_slides_verified": true,
+  "pdf_all_pages_pixel_match": true,
+  "source_deck_preserved": true,
+  "editable_text": true,
+  "retained_font": "Arial",
+  "retained_geometry": true,
+  "native_powerpoint_opened": false,
+  "layout_findings": 0,
+  "accepted_style_warning": {
+    "slide": 12,
+    "kind": "dense_bold_paragraphs_without_spacing",
+    "reason": "Four short pending-gate lines are legible with no clipping or overlap in the preserved layout."
+  },
+  "revision": "final-r4",
+  "changed_slides_individually_reviewed": [
+    9,
+    12
+  ],
+  "unchanged_slides_byte_identical_to_individually_reviewed_r3": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    10,
+    11
+  ],
+  "pdf_verification": "12 fixed-size pages; embedded page-image pixels equal individually reviewed slide renders"
+}

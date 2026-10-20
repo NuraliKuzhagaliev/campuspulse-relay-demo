@@ -12,3 +12,5 @@ Open https://campuspulse-relay-demo.onrender.com/ in a fresh browser session. A 
 Optional real Calendar needs each owner's Google consent and separate calendar selection. Never use the project owner's Calendar ID. Follow independent_tester_calendar_ru.txt. An expired session needs fresh same-browser consent; an existing app-created Calendar can be verified by ID without recreating it. Each real event write and undo needs its own exact owner-reviewed action. Never share callback/cookies/keys/approval JSON.
 
 Architecture: Render Free / server-side Gemini Developer API / protected signed MCP. Managed GCP is disabled and the original mandatory criterion is unmet; official permission to substitute this architecture has not been established. NON_GCP_READY remains false until the documented Calendar and physical Windows gates pass. Prior evidence is dated, not a guarantee of current unlimited availability.
+
+Full independent website plan / Полный план проверки сайта: https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo/blob/main/docs/independent_website_test_ru.txt

@@ -14,7 +14,7 @@ with zipfile.ZipFile(output,'w',zipfile.ZIP_DEFLATED) as z:
             if p.is_file() and '__pycache__' not in p.parts and p.suffix!='.pyc':z.write(p,p.relative_to(root).as_posix())
     for name in ('requirements.public.txt','requirements.public.lock.txt','scripts/run-web-bundle.ps1','LICENSE','docs/workspace_passport.md','docs/final_judge_guide.md'):
         z.write(root/name,name)
-    z.writestr('README.txt','CampusPulse RELAY '+version+' complete React + Python illustrative web application.\nExtract on D:, run scripts/run-web-bundle.ps1 using Python3.13. All environment/cache/data paths stay on D:. No Google account or key needed for illustrative file import, planning or local-adapter Calendar receipts.\nReal Gemini requires the separately configured full server source/dependency/deployment route. Managed GCP and real Calendar acceptance remain pending.\n')
+    z.writestr('README.txt','CampusPulse RELAY '+version+' complete React + Python illustrative web application.\nExtract on D:, run scripts/run-web-bundle.ps1 using Python3.13. All environment/cache/data paths stay on D:. No Google account or key needed for illustrative file import, planning or local-adapter Calendar receipts.\nReal Gemini requires the separately configured full server source/dependency/deployment route. Managed GCP is disabled and the original criterion remains unmet. Real Calendar event acceptance remains pending.\n')
 with zipfile.ZipFile(output) as z:
     assert z.testzip() is None
     z.extractall(stage)

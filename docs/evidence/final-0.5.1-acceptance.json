@@ -1,0 +1,149 @@
+{
+  "version": "0.5.1",
+  "checked_at": "2026-10-20T14:07:08.122695+00:00",
+  "NON_GCP_READY": false,
+  "public_url": "https://campuspulse-relay-demo.onrender.com/",
+  "deployed_commit": "7e4098dae61775b5062b2f613192a6abaa3185dc",
+  "primary_architecture": "Render Free / server-side Gemini Developer API / actual protected MCP / isolated real workspace and allowlisted GitHub data",
+  "public_no_invitation_registration_or_user_key": true,
+  "documents": {
+    "evidence": "docs/evidence/audit-live-mvgqi7ei.json",
+    "verified_cases": 5,
+    "real_turns": 6,
+    "complete_turns": 5,
+    "partial_turns": 1,
+    "failed_turns": 0,
+    "provider_substituted": false,
+    "two_clean_visitors_and_multi_turn_verified": true,
+    "missing_conflict_evidence": [
+      "docs/evidence/final-0.5.1-uncertainty-ui-first.json",
+      "docs/evidence/final-0.5.1-uncertainty-ui.json"
+    ]
+  },
+  "local_tests": {
+    "python_passed": 219,
+    "subtests_passed": 3,
+    "ipc_passed": 8,
+    "full_run_seconds": 33.98,
+    "warnings": 3,
+    "prior_failed_run_preserved": ".local/logs/final-0.5.1-unit-r2.log",
+    "prior_failure": "Quota test crossed real minute boundary; test clock fixed, full rerun passed",
+    "log_hashes": [
+      {
+        "file": ".local/logs/final-0.5.1-unit-r3.log",
+        "sha256": "c6db1e65963e060113905ce088efbcd4e96c2563c99a95d97001b3c981ebdb49"
+      },
+      {
+        "file": ".local/logs/final-0.5.1-ipc.log",
+        "sha256": "2a11d3eb3cc3ef39ffd120fa824f5f9f2b85f0c7b5f906b6c0e5f5007351a04f"
+      },
+      {
+        "file": ".local/logs/final-0.5.1-windows-build-r2.log",
+        "sha256": "4fd98ad213c4269b7665c3e6c6828a51b0637b46248ff86abf33c24068371ad1"
+      }
+    ],
+    "additional_structural_packaging_tests_passed": 3,
+    "calendar_replay_helper_mock_checks_passed": 5
+  },
+  "queue": {
+    "evidence": "docs/evidence/final-0.5.1-100-simulated-r3.json",
+    "sessions": 100,
+    "provider": "simulated_test_only",
+    "actual_gemini_calls": 0,
+    "actual_mcp_protocol_in_load_test": false
+  },
+  "protocol": {
+    "evidence": "docs/evidence/final-0.5.1-mcp.json",
+    "actual_mcp": true,
+    "model_calls": 0
+  },
+  "browser": {
+    "evidence": "docs/evidence/final-0.5.1-hosted-ui.json",
+    "responsive_language_states": 12,
+    "connections_mobile_extra_states": 3,
+    "connections_evidence": "docs/evidence/final-0.5.1-connections-mobile.json",
+    "AA_violations": 0
+  },
+  "recovery": {
+    "expiry_network": "docs/evidence/final-0.5.1-recovery.json",
+    "actual_local_process_restart": "docs/evidence/final-0.5.1-restart.json",
+    "public_render_forced_restart": false,
+    "reason": "Preserve owner connection and public visitors; local empty-store replacement tested separately"
+  },
+  "github": {
+    "evidence": "docs/evidence/final-0.5.1-hosted-github.json",
+    "actual_hosted_read": true,
+    "browser_independent_observation": true
+  },
+  "samples": {
+    "evidence": "docs/evidence/final-0.5.1-public-samples.json",
+    "files": 13,
+    "url": "https://campuspulse-relay-demo.onrender.com/samples/",
+    "synthetic_uncertainty_addendum": "fixtures/acceptance-0.5.1"
+  },
+  "calendar": {
+    "configured": true,
+    "owner_reconsent_observed": true,
+    "existing_calendar_recovery_observed": true,
+    "target_selected_currently_verified": false,
+    "operations_verified": false,
+    "read_back_verified": false,
+    "idempotent_replay_verified": false,
+    "undo_verified": false,
+    "revocation_verified": false,
+    "evidence": [
+      "docs/evidence/final-0.5.1-calendar-owner-reconnected.json",
+      "docs/evidence/final-0.5.1-calendar-recovered.json"
+    ],
+    "note": "Prior404 was followed by successful recovery without code change. Owner preparing target selection and exact preview. No new calendar or event was created by the agent."
+  },
+  "windows": {
+    "package_version": "0.5.1",
+    "package_static_equality_verified": true,
+    "evidence": "docs/evidence/final-0.5.1-windows-package.json",
+    "installed_version_last_read": "0.5.0",
+    "new_installation_verified": false,
+    "full_native_acceptance": false,
+    "windows_control_resumed": false,
+    "previous_open_cancel_import_refresh_0_5_0_verified": true,
+    "original_45_95_preserved": true,
+    "native_save_import_reopen": false,
+    "notification_visibility_click_focus": false,
+    "installed_version_last_read_D": "0.5.0.0",
+    "installed_version_last_read_C": "0.5.1.0",
+    "incorrect_C_install_observed": true,
+    "corrected_D_installer_compiled": true,
+    "corrected_D_installation_owner_verified": false,
+    "D_fix_evidence": "docs/evidence/final-0.5.1-windows-D-install-fix.json"
+  },
+  "managed_gcp": {
+    "enabled": false,
+    "original_mandatory_criterion": "unmet",
+    "organizer_gcp_will_be_provided": false,
+    "official_alternative_waiver_established": false,
+    "prepared_scripts_preserved": true,
+    "main_route_blocked": false,
+    "resources_provisioned": false
+  },
+  "funding": {
+    "personal_spending_authorized_usd": 0,
+    "paid_upgrade_performed": false,
+    "personal_billing_activated": false,
+    "paid_fallback_enabled": false
+  },
+  "presentation": {
+    "metadata": "docs/evidence/presentation-0.5.1.json",
+    "visual": "docs/evidence/presentation-0.5.1-visual.json",
+    "slides": 12,
+    "editable": true,
+    "native_powerpoint_opened": false
+  },
+  "limitations": [
+    "Temporary storage up to2hours and possibly less on sleep/restart/deploy; export Passport without credentials/approvals.",
+    "Free quotas/backoff are shared and finite; no unlimited or latency guarantee.",
+    "Text PDFs only; no OCR. Original source estimates and solver allocation differ.",
+    "Real Calendar write/read-back/replay/undo/revocation and new installed Windows physical acceptance remain owner gates.",
+    "Original managed-GCP criterion unmet; no official substitution waiver established."
+  ],
+  "independent_test_plan": "docs/independent_website_test_ru.txt"
+}
