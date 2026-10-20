@@ -14,6 +14,18 @@ from .service import RelayService
 from .connectors import GitHub
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Literal
+from mcp.server.fastmcp.exceptions import ToolError
+from .tool_diagnostics import schema_failure
+
+
+class RelayMCP(FastMCP):
+    async def call_tool(self, name, arguments):
+        try:
+            return await super().call_tool(name, arguments)
+        except ToolError as exc:
+            # FastMCP validates before the handler. Its default error text may
+            # include submitted values, and cannot provide a typed error code.
+            return schema_failure(exc)
 
 
 class ExtractionCandidate(BaseModel):
@@ -24,8 +36,8 @@ class ExtractionCandidate(BaseModel):
     value:str|int|list[str]|None
     page:int=Field(ge=1,le=100)
     citation_id:str|None=Field(default=None,pattern=r'^[a-f0-9]{24}$',description='Preferred: copy one citation_id from read_course_source.citation_refs for this page. The server copies its exact original span; omit quote and original_expression in this mode.')
-    quote:str=Field(default='',max_length=4000,description='Legacy literal mode only: exact contiguous page substring, unchanged. Prefer citation_id for multiline PDF/table evidence.')
-    original_expression:str=Field(default='',max_length=4000,description='Legacy literal mode: original expression verbatim inside quote. Omit when using citation_id.')
+    quote:str|None=Field(default=None,max_length=4000,description='Legacy literal mode only: exact contiguous page substring, unchanged. Omit or use null with citation_id for multiline PDF/table evidence.')
+    original_expression:str|None=Field(default=None,max_length=4000,description='Legacy literal mode: original expression verbatim inside quote. Omit or use null when using citation_id.')
     context:str=Field(default='',max_length=1000)
     assumptions:str=Field(default='',max_length=1000)
     timezone:str|None=Field(default=None,description='Explicit source timezone for due, otherwise null.')
@@ -33,7 +45,7 @@ class ExtractionCandidate(BaseModel):
     ambiguous:bool=False
 
 store=make_store()
-mcp=FastMCP('CampusPulse RELAY',stateless_http=True,json_response=True,streamable_http_path='/')
+mcp=RelayMCP('CampusPulse RELAY',stateless_http=True,json_response=True,streamable_http_path='/')
 
 
 def svc():

@@ -1,0 +1,15 @@
+{
+  "checked_at": "2026-10-20T13:30:13.323768+00:00",
+  "transport": "actual MCP Streamable HTTP",
+  "model_calls": 0,
+  "cloud_calls": 0,
+  "checks": {
+    "bounded_continuation_search_tail": true,
+    "null_due_grouped_unapplied": true,
+    "actual_protocol_partial_batch_preserves_valid_unapplied_fields": true,
+    "actual_reference_protocol_keeps_exact_unconfirmed_multiline_quote": true,
+    "actual_protocol_redacted_typed_schema_failure": true,
+    "actual_protocol_nullable_reference_mode": true
+  },
+  "passed": true
+}

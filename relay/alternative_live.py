@@ -30,7 +30,7 @@ def route_allowed(path, method):
     if path=='/internal/runtime-state':return method=='POST'
     if path.rstrip('/')=='/managed/mcp':return method in ('POST','GET','DELETE')
     if method=='GET' and path in ('/api/auth/start','/connect','/auth/callback','/api/connections/calendar-list','/api/connections/status'):return True
-    if method=='POST' and path in ('/api/auth/poll','/api/auth/pair/approve','/api/connections/calendar','/api/connections/calendar/create','/api/connections/disconnect'):return True
+    if method=='POST' and path in ('/api/auth/poll','/api/auth/pair/approve','/api/connections/calendar','/api/connections/calendar/create','/api/connections/calendar/recover','/api/connections/disconnect'):return True
     from .public_ai import enabled as public_access
     if public_access() and path in ('/internal/ai-invitations','/api/judge/claim'):
         return False

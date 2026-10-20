@@ -167,9 +167,11 @@ class RelayRuntime:
                                 try: failed |= tool_result_failed(json.loads(item.get('text','')))
                                 except (ValueError,TypeError): pass
                         tool_failed |= failed
-                        observations.append(dict(tool=response.name,status='failed' if failed else 'observed',response_sha256=digest(payload),provenance=safe_provenance(payload),error_codes=safe_error_codes(payload)))
+                        from .tool_diagnostics import safe_issues
+                        codes=safe_error_codes(payload);issues=safe_issues(payload)
+                        observations.append(dict(tool=response.name,status='failed' if failed else 'observed',response_sha256=digest(payload),provenance=safe_provenance(payload),error_codes=codes,validation_issues=issues))
                         duration=round((time.perf_counter()-started.pop(response.id or response.name,time.perf_counter()))*1000)
-                        store.event(tenant,run_id,'tool_failed' if failed else 'tool_finished',tool=response.name,duration_ms=duration,summary='Tool returned an error.' if failed else 'Tool returned an observation. Open the evidence to inspect it.')
+                        store.event(tenant,run_id,'tool_failed' if failed else 'tool_finished',tool=response.name,duration_ms=duration,error_codes=codes,validation_issues=issues,summary='Tool returned an error.' if failed else 'Tool returned an observation. Open the evidence to inspect it.')
                     if part.text and event.is_final_response():
                         output.append(part.text)
             text='\n'.join(output).strip()

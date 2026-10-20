@@ -11,6 +11,8 @@ function permits(apiPath, method) {
     return true;
   if (method === "POST" && apiPath === "/api/connections/calendar/create")
     return true;
+  if (method === "POST" && apiPath === "/api/connections/calendar/recover")
+    return true;
   if (
     method === "POST" &&
     /^\/api\/sources\/[A-Za-z0-9_-]+\/review$/.test(apiPath)

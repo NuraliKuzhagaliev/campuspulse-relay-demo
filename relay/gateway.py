@@ -73,7 +73,7 @@ async def lifespan(app):
             await asyncio.gather(*workers,return_exceptions=True)
 
 
-app=FastAPI(title='CampusPulse RELAY',version='0.5.0',lifespan=lifespan,
+app=FastAPI(title='CampusPulse RELAY',version='0.5.1',lifespan=lifespan,
             docs_url=None if TEMPORARY_WEB else '/docs',redoc_url=None if TEMPORARY_WEB else '/redoc',
             openapi_url=None if TEMPORARY_WEB else '/openapi.json')
 expensive_requests=asyncio.Semaphore(2)
@@ -318,7 +318,7 @@ def health():
     agent=current_availability(store)
     return dict(ok=True,version=app.version,mode='alternative_live' if ALTERNATIVE else 'public_demo' if PUBLIC_DEMO else 'cloud' if CLOUD else 'local',agent_configured=agent['configured'],agent_verified=agent['verified'],agent=agent,time=now(),
                 deployed_commit=os.getenv('RELAY_DEPLOYED_COMMIT') or os.getenv('RENDER_GIT_COMMIT'),
-                demo=dict(public_demo.metadata(),gemini='public_queued' if public_ai_enabled() else 'private_invitation_required',mandatory_gcp='pending_organizer_activation') if ALTERNATIVE else public_demo.metadata() if PUBLIC_DEMO else None)
+                demo=dict(public_demo.metadata(),gemini='public_queued' if public_ai_enabled() else 'private_invitation_required',mandatory_gcp='unmet_optional_integration_disabled') if ALTERNATIVE else public_demo.metadata() if PUBLIC_DEMO else None)
 
 
 @app.get('/api/state')
@@ -703,8 +703,22 @@ def connection_status(svc=Depends(service)):
     try:configuration();configured=True
     except RelayError:configured=False
     connected=bool(store.list(svc.tenant,'private_connections'))
+    settings=svc.settings()
+    verified=any(r.get('mode')=='live' and r.get('status')=='verified' and r.get('calendar_id')==settings.get('calendar_id') and r.get('outcomes') for r in store.list(svc.tenant,'receipts'))
     return dict(configured=bool(configured),connected=connected,calendar_live=svc.settings().get('calendar_live',False),
-                acceptance='pending_live_consent_and_read_back',existing_events_delete_on_disconnect=False)
+                acceptance='write_read_back_verified' if verified and settings.get('calendar_live') else 'target_selected_read_back_pending' if settings.get('calendar_live') else 'consent_complete_target_pending' if connected else 'connection_required',existing_events_delete_on_disconnect=False)
+
+
+class CalendarRecovery(BaseModel):
+    model_config={'extra':'forbid'}
+    calendar_id:str=Field(min_length=1,max_length=240)
+
+
+@app.post('/api/connections/calendar/recover')
+def recover_existing_calendar(body:CalendarRecovery,svc=Depends(service)):
+    if svc.settings().get('mode')=='judge':raise RelayError('ACCESS_DENIED','This workspace cannot change its authorized Calendar target.')
+    from .oauth import recover_app_calendar
+    return recover_app_calendar(store,svc.tenant,body.calendar_id)
 
 @app.post('/api/connections/calendar/create')
 def create_app_calendar(svc=Depends(service)):

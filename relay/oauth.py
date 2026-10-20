@@ -76,6 +76,39 @@ def calendar_list(store,tenant):
     return [{'id':c['id'],'name':c.get('summary','Calendar'),'role':c.get('accessRole'),'primary':c.get('primary',False)} for c in response.json().get('items',[]) if c.get('accessRole') in ('owner','writer')]
 
 
+def recover_app_calendar(store,tenant,calendar_id):
+    """An ID is a hint, never authority. Google verifies the current owner/scope.
+
+    This reads metadata only. Selection and every external write remain separate.
+    No identity-to-calendar map survives the temporary workspace's expiry.
+    """
+    import re
+    from urllib.parse import quote
+    from google.auth.transport.requests import AuthorizedSession
+    from .connectors import upstream_error
+    if not isinstance(calendar_id,str) or not re.fullmatch(r'[a-zA-Z0-9_.-]{1,200}@group\.calendar\.google\.com',calendar_id):
+        raise RelayError('UNSUPPORTED_INPUT','Enter the ID of a separate calendar previously created by this application, not a URL or a primary calendar.')
+    creds=credentials(store,tenant)
+    scopes=creds.scopes or []
+    if 'https://www.googleapis.com/auth/calendar.app.created' not in scopes or any(scope.startswith('https://www.googleapis.com/auth/calendar') and scope!='https://www.googleapis.com/auth/calendar.app.created' for scope in scopes):
+        raise RelayError('ACCESS_DENIED','Reconnect Google using the app-created calendars permission before recovering this calendar.')
+    try:
+        response=AuthorizedSession(creds).get('https://www.googleapis.com/calendar/v3/calendars/'+quote(calendar_id,safe=''),timeout=20)
+    except Exception as exc:
+        raise RelayError('UPSTREAM_UNAVAILABLE','Google Calendar metadata is unavailable. No calendar was created or selected; retry the read later.') from exc
+    if response.status_code!=200:raise upstream_error(response.status_code)
+    actual=response.json()
+    if actual.get('id')!=calendar_id:raise RelayError('ACCESS_DENIED','Google did not verify this exact calendar for the current connection.')
+    try:ZoneInfo(actual['timeZone'])
+    except (KeyError,ValueError):raise RelayError('UNSUPPORTED_INPUT','Google returned a calendar without a supported timezone.')
+    calendar=dict(id=calendar_id,name=str(actual.get('summary','CampusPulse RELAY'))[:250],timezone=actual['timeZone'],primary=False,role='owner')
+    # Re-read after a possible credential refresh. Never overwrite its new cipher.
+    connection=store.get(tenant,'private_connections','google')
+    connection.update(app_calendar=calendar,create_status='complete')
+    store.put(tenant,'private_connections','google',connection)
+    return dict(calendar=calendar,selected=False,events_written=False)
+
+
 def install(store,new_session,identity):
     @router.get('/api/auth/start')
     def start(request:Request,desktop:bool=False,existing:bool=False):

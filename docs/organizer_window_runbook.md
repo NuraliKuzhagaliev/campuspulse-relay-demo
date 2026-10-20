@@ -1,3 +1,7 @@
+# DISABLED OPTIONAL INTEGRATION — 20 October 2026 update
+
+Organizers will not provide GCP. Do not execute provisioning, activate personal billing or assume funding. The primary route is Render Free / Gemini Developer API / MCP. The original managed-GCP criterion remains unmet. The following guarded runbook is preserved as historical preparation only; a future funding authorization would be required before use.
+
 # Organizer GCP window · preparation, not a deployment claim
 
 Latest supplied notice: tutorial20October2026at10:00,12hours after activation; deadline20October23:59. UTC+5 is the planning assumption until organizer confirmation. **T0, exact expiry, eligible project/principal, billing/coverage/balance/model/region are pending.** Do not infer activation from the tutorial start. Existing AI Studio project `gen-lang-client-0595303951` and the closed personal trial are not assumed eligible.

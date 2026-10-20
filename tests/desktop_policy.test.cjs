@@ -2,6 +2,13 @@ const { test } = require("node:test");
 const assert = require("node:assert/strict");
 const { permits, metadata } = require("../desktop/request-policy.cjs");
 
+test("existing-calendar recovery uses only the exact POST route", () => {
+  assert(permits('/api/connections/calendar/recover', 'POST'));
+  for (const method of ['GET', 'DELETE', 'PUT']) assert(!permits('/api/connections/calendar/recover', method));
+  assert(!permits('/api/connections/calendar/recover?calendar=foreign', 'POST'));
+  assert(!permits('/api/connections/calendar/recover/anything', 'POST'));
+});
+
 test('audit review and workspace operations keep exact IPC paths and methods',()=>{
   for(const path of ['/api/workspace/switch','/api/planning-context','/api/sources/source_1/review','/api/extraction-proposals/'+ 'a'.repeat(24)+'/'+ 'b'.repeat(24)+'/confirm','/api/connections/calendar/create','/api/connections/disconnect']){
     assert(permits(path,'POST'));assert(!permits(path,'GET'));assert(!permits(path+'?tenant=other','POST'));

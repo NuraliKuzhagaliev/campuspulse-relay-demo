@@ -37,6 +37,10 @@ async function request<T>(
       ...(method !== "GET" ? { "X-Relay-CSRF": csrf } : {}),
     },
     body: body ? (form ? (body as FormData) : JSON.stringify(body)) : undefined,
+  }).catch(() => {
+    throw new Error(
+      "UPSTREAM_UNAVAILABLE: The gateway did not answer in time or the network is unavailable. No automatic retry was sent. Reconnect and inspect operations before repeating a change; use a saved Passport if the temporary workspace reset.",
+    );
   });
   const value = await response.json().catch(() => {
     throw new Error(

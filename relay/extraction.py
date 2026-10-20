@@ -46,7 +46,8 @@ def extraction_proposal(source,candidates):
         if not isinstance(entity,str) or not 1<=len(entity)<=80:raise RelayError('PARSE_FAILED','Use a bounded entity label.')
         if field not in ALLOWED or not isinstance(quote,str) or not 0<len(quote)<=4000 or not isinstance(page,int) or isinstance(page,bool) or quote not in pages.get(page,''):
             raise RelayError('SOURCE_CONFLICT','Every proposed field must cite an exact quote on its selected source page.',{'field':str(field)[:40],'page':page if type(page) is int else None,'reason':'field_or_exact_page_quote_invalid'})
-        value=c.get('value');status='needs_confirmation';expression=c.get('original_expression',quote)
+        value=c.get('value');status='needs_confirmation';expression=c.get('original_expression')
+        if expression is None:expression=quote
         if not isinstance(expression,str) or expression not in quote:raise RelayError('SOURCE_CONFLICT','The original expression must occur in the exact quote.',{'field':field,'page':page,'reason':'original_expression_not_inside_quote'})
         if value is None:status='unknown'
         elif field=='due':

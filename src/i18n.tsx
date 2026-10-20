@@ -273,12 +273,19 @@ const errorKeys: Record<string, string> = {
   PROCESSING_CONSENT_REQUIRED:
     "Confirm adult access and permitted non-sensitive processing before using free Gemini.",
   AUTH_REQUIRED:
-    "Sign in or reconnect the required service, then retry. Cloud acceptance remains pending.",
+    "The workspace or integration session expired. Start a workspace or reconnect that integration. Restore coursework from a saved Passport; previous approvals are never replayed.",
+  TOOL_INPUT_INVALID:
+    "The tool input was rejected. Review the source and the indicated fields; no rejected proposal was applied.",
+  TOOL_EXECUTION_FAILED:
+    "The tool could not complete. Inspect the operation before retrying; no success is assumed.",
   ACCESS_DENIED:
     "This action is unavailable in this workspace. Check the selected resource and access.",
-  EMPTY_CONTENT:"The selected document has no readable content. Export a non-empty text document and retry.",
-  AMBIGUOUS_TIME:"This local time is ambiguous or invalid. Choose an unambiguous time in the workspace timezone.",
-  AVAILABILITY_REQUIRED:"Add study availability in Planning context before generating a plan.",
+  EMPTY_CONTENT:
+    "The selected document has no readable content. Export a non-empty text document and retry.",
+  AMBIGUOUS_TIME:
+    "This local time is ambiguous or invalid. Choose an unambiguous time in the workspace timezone.",
+  AVAILABILITY_REQUIRED:
+    "Add study availability in Planning context before generating a plan.",
   UPSTREAM_RATE_LIMITED:
     "The service request allowance is exhausted. Wait for its reset before retrying.",
   UPSTREAM_UNAVAILABLE:

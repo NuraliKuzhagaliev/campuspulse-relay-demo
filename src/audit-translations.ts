@@ -1,13 +1,117 @@
 export const auditTranslations: Record<string, [string, string]> = {
- 'Some proposed fields were rejected. Review source quotations and complete missing information; no rejected value was applied.':['Часть предложенных полей отклонена. Проверьте цитаты и уточните недостающие сведения; отклонённые значения не применялись.','Ұсынылған кейбір өрістер қабылданбады. Дәйексөздерді тексеріп, жетіспейтін мәліметтерді толықтырыңыз; қабылданбаған мәндер қолданылған жоқ.'],
- 'The tool-step limit was reached. No final AI answer was produced. Review saved document proposals before retrying.':['Достигнут предел шагов инструментов. Итоговый ответ ИИ не получен. Перед повтором проверьте сохранённые предложения в разделе проверки документа.','Құрал қадамдарының шегіне жетті. ЖИ-дің қорытынды жауабы алынбады. Қайта сұрамас бұрын құжатты тексеру бөліміндегі сақталған ұсыныстарды қарап шығыңыз.'],
- 'Connections':['Подключения','Қосылымдар'],
- 'Public temporary workspace':['Публичная временная рабочая область','Жалпыға ашық уақытша жұмыс кеңістігі'],
- 'Calendar needs reconnection':['Calendar нужно переподключить','Calendar-ды қайта қосу керек'],
- 'Calendar needs reconnection. Your documents and progress remain available; no fresh Calendar availability is assumed.':['Calendar нужно переподключить. Документы и прогресс доступны; актуальное свободное время Calendar не предполагается.','Calendar-ды қайта қосу керек. Құжаттар мен прогресс қолжетімді; Calendar-дың өзекті бос уақыты болжанбайды.'],
- 'Connected to your selected Calendar. Approved actions affect real events; review the exact preview first.':['Подключён выбранный вами Calendar. Одобренные действия меняют реальные события; сначала проверьте точный предпросмотр.','Таңдалған Calendar қосылған. Расталған әрекеттер нақты оқиғаларды өзгертеді; алдымен дәл алдын ала көріністі тексеріңіз.'],
- 'Selected files: PDF, MD, TXT, ICS · up to 2 MiB; text PDFs only.':['Выбранные файлы: PDF, MD, TXT, ICS · до 2 МиБ; только текстовые PDF.','Таңдалған файлдар: PDF, MD, TXT, ICS · 2 МиБ-қа дейін; тек мәтіндік PDF.'],
- 'Public AI access needs no sign-in or invitation. Retry the connection; Calendar consent is a separate optional action in Connections.':['Для публичного ИИ не нужны вход или приглашение. Повторите подключение; согласие Calendar — отдельное добровольное действие в разделе «Подключения».','Ашық ЖИ үшін кіру не шақыру қажет емес. Қосылымды қайталаңыз; Calendar келісімі — қосылымдар бөліміндегі бөлек ерікті әрекет.'],
+  "Reconnect an existing app-created calendar": [
+    "Подключить ранее созданный календарь приложения",
+    "Қолданба бұрын жасаған күнтізбені қайта қосу",
+  ],
+  "After a workspace expires, connect Google again in this browser. Enter your existing app-created Calendar ID to verify it without creating another calendar. This does not select it or authorize event writes.":
+    [
+      "После истечения пространства подключите Google в этом браузере. Введите ID ранее созданного приложением календаря: проверка не создаёт новый календарь, не выбирает цель и не разрешает запись событий.",
+      "Жұмыс кеңістігінің мерзімі аяқталған соң Google-ды осы браузерде қайта қосыңыз. Қолданба бұрын жасаған күнтізбенің ID мәнін енгізіңіз. Тексеру жаңа күнтізбе жасамайды, оны таңдамайды және оқиғаларды жазуға рұқсат бермейді.",
+    ],
+  "Existing app-created Calendar ID": [
+    "ID ранее созданного календаря приложения",
+    "Қолданба бұрын жасаған күнтізбенің ID мәні",
+  ],
+  "Verify existing calendar": [
+    "Проверить существующий календарь",
+    "Бар күнтізбені тексеру",
+  ],
+  "Calendar verified. Select it from the authorized list before preparing a preview.":
+    [
+      "Календарь проверен. Выберите его в списке разрешённых календарей перед предпросмотром.",
+      "Күнтізбе тексерілді. Алдын ала қарауды дайындамас бұрын оны рұқсат етілген тізімнен таңдаңыз.",
+    ],
+  "Google connected. Choose or reconnect your separate calendar; event writes still require approval.":
+    [
+      "Google подключён. Выберите или восстановите отдельный календарь; запись событий требует отдельного одобрения.",
+      "Google қосылды. Жеке күнтізбені таңдаңыз немесе қайта қосыңыз; оқиғаларды жазу үшін бөлек мақұлдау қажет.",
+    ],
+  "This workspace expired. Start a new workspace and import a saved Passport. Google consent must be renewed; previous approvals are never replayed.":
+    [
+      "Срок пространства истёк. Начните новое и импортируйте сохранённый Passport. Согласие Google нужно обновить; прежние одобрения не повторяются.",
+      "Жұмыс кеңістігінің мерзімі аяқталды. Жаңасын бастап, сақталған Passport файлын импорттаңыз. Google келісімін жаңарту қажет; бұрынғы мақұлдаулар қайталанбайды.",
+    ],
+  "Gemini Developer API · server-side MCP": [
+    "Gemini Developer API · серверные MCP-инструменты",
+    "Gemini Developer API · сервердегі MCP құралдары",
+  ],
+  "Managed GCP criterion unmet · optional integration disabled": [
+    "Критерий managed GCP не выполнен · дополнительная интеграция отключена",
+    "Managed GCP талабы орындалмады · қосымша интеграция өшірулі",
+  ],
+  "Public Gemini demo · optional Calendar": [
+    "Публичный Gemini · Calendar по желанию",
+    "Жалпыға ашық Gemini · Calendar ерікті",
+  ],
+  "Server-side Gemini and real MCP are available without an account. Calendar requires your separate consent and approval. Managed GCP is disabled and its original criterion remains unmet.":
+    [
+      "Серверный Gemini и настоящие MCP-инструменты доступны без регистрации. Calendar требует вашего отдельного согласия и одобрения. Managed GCP отключён; исходный критерий не выполнен.",
+      "Сервердегі Gemini мен нақты MCP құралдары тіркелусіз қолжетімді. Calendar үшін бөлек келісім мен мақұлдау қажет. Managed GCP өшірулі; бастапқы талап орындалмады.",
+    ],
+  "Server polling continues while this process is running. Sleeping or restarting hosting interrupts polling; no always-on guarantee.":
+    [
+      "Сервер проверяет изменения, пока процесс работает. Сон или перезапуск хостинга прерывает проверки; постоянная работа не гарантируется.",
+      "Сервер процесс жұмыс істеп тұрғанда өзгерістерді тексереді. Хостингтің ұйқысы немесе қайта іске қосылуы тексерулерді тоқтатады; үздіксіз жұмысқа кепілдік жоқ.",
+    ],
+  "Five enhancements locally implemented. See the acceptance ledger for real Gemini and Calendar verification of each workflow.":
+    [
+      "Пять улучшений реализованы локально. Проверки каждого сценария с настоящими Gemini и Calendar указаны в матрице приёмки.",
+      "Бес жақсарту жергілікті іске асырылды. Әр сценарийдің нақты Gemini және Calendar тексерулері қабылдау матрицасында көрсетілген.",
+    ],
+  "The tool input was rejected. Review the source and the indicated fields; no rejected proposal was applied.":
+    [
+      "Входные данные инструмента отклонены. Проверьте источник и указанные поля; отклонённое предложение не применялось.",
+      "Құралдың кіріс деректері қабылданбады. Дереккөз бен көрсетілген өрістерді тексеріңіз; қабылданбаған ұсыныс қолданылған жоқ.",
+    ],
+  "The tool could not complete. Inspect the operation before retrying; no success is assumed.":
+    [
+      "Инструмент не завершил операцию. Перед повтором проверьте её результат; успех не предполагается.",
+      "Құрал операцияны аяқтай алмады. Қайта сұрамас бұрын нәтижесін тексеріңіз; сәтті аяқталды деп есептелмейді.",
+    ],
+  "The workspace or integration session expired. Start a workspace or reconnect that integration. Restore coursework from a saved Passport; previous approvals are never replayed.":
+    [
+      "Сеанс пространства или подключения истёк. Начните пространство или переподключите сервис. Восстановите работу из сохранённого Passport; прежние одобрения не повторяются.",
+      "Жұмыс кеңістігінің не қосылымның сеансы аяқталды. Жұмыс кеңістігін бастаңыз немесе қызметті қайта қосыңыз. Деректерді сақталған Passport арқылы қалпына келтіріңіз; бұрынғы мақұлдаулар қайталанбайды.",
+    ],
+
+  "Some proposed fields were rejected. Review source quotations and complete missing information; no rejected value was applied.":
+    [
+      "Часть предложенных полей отклонена. Проверьте цитаты и уточните недостающие сведения; отклонённые значения не применялись.",
+      "Ұсынылған кейбір өрістер қабылданбады. Дәйексөздерді тексеріп, жетіспейтін мәліметтерді толықтырыңыз; қабылданбаған мәндер қолданылған жоқ.",
+    ],
+  "The tool-step limit was reached. No final AI answer was produced. Review saved document proposals before retrying.":
+    [
+      "Достигнут предел шагов инструментов. Итоговый ответ ИИ не получен. Перед повтором проверьте сохранённые предложения в разделе проверки документа.",
+      "Құрал қадамдарының шегіне жетті. ЖИ-дің қорытынды жауабы алынбады. Қайта сұрамас бұрын құжатты тексеру бөліміндегі сақталған ұсыныстарды қарап шығыңыз.",
+    ],
+  Connections: ["Подключения", "Қосылымдар"],
+  "Public temporary workspace": [
+    "Публичная временная рабочая область",
+    "Жалпыға ашық уақытша жұмыс кеңістігі",
+  ],
+  "Calendar needs reconnection": [
+    "Calendar нужно переподключить",
+    "Calendar-ды қайта қосу керек",
+  ],
+  "Calendar needs reconnection. Your documents and progress remain available; no fresh Calendar availability is assumed.":
+    [
+      "Calendar нужно переподключить. Документы и прогресс доступны; актуальное свободное время Calendar не предполагается.",
+      "Calendar-ды қайта қосу керек. Құжаттар мен прогресс қолжетімді; Calendar-дың өзекті бос уақыты болжанбайды.",
+    ],
+  "Connected to your selected Calendar. Approved actions affect real events; review the exact preview first.":
+    [
+      "Подключён выбранный вами Calendar. Одобренные действия меняют реальные события; сначала проверьте точный предпросмотр.",
+      "Таңдалған Calendar қосылған. Расталған әрекеттер нақты оқиғаларды өзгертеді; алдымен дәл алдын ала көріністі тексеріңіз.",
+    ],
+  "Selected files: PDF, MD, TXT, ICS · up to 2 MiB; text PDFs only.": [
+    "Выбранные файлы: PDF, MD, TXT, ICS · до 2 МиБ; только текстовые PDF.",
+    "Таңдалған файлдар: PDF, MD, TXT, ICS · 2 МиБ-қа дейін; тек мәтіндік PDF.",
+  ],
+  "Public AI access needs no sign-in or invitation. Retry the connection; Calendar consent is a separate optional action in Connections.":
+    [
+      "Для публичного ИИ не нужны вход или приглашение. Повторите подключение; согласие Calendar — отдельное добровольное действие в разделе «Подключения».",
+      "Ашық ЖИ үшін кіру не шақыру қажет емес. Қосылымды қайталаңыз; Calendar келісімі — қосылымдар бөліміндегі бөлек ерікті әрекет.",
+    ],
   "This action is unavailable in this workspace. Check the selected resource and access.":
     [
       "Это действие недоступно в текущей области. Проверьте выбранный ресурс и права доступа.",

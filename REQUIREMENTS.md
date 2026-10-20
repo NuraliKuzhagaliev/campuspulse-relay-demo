@@ -1,21 +1,21 @@
-# Requirements and acceptance · 0.5.0
+# Criteria and evidence · 0.5.1
 
-Topic2 GDG Astana CampusPulse AI. **NON_GCP_READY=false**; per-check status is not waived by GCP preparation.
+Topic 2 GDG Astana CampusPulse AI. NON_GCP_READY=false. The user's chosen architecture is not an official waiver of the original managed-GCP requirement.
 
-| Requirement | Actual result |
+| Requirement | Actual result and limit |
 |---|---|
-| EN/RU/Kazakh own documents | Five independent prose/PDF full hosted UI workflows and6realGemini/MCP turns passed; frozen inputs and earlier failures retained |
-| Evidence and conflict identity | Cross-page source/version/page citations, explicit per-assignment canonical confirmation, source conflict decisions; missing context remains unknown |
-| Planning and continuity | Hosted plan/what-if/illustrative receipt/Preflight/progress45/95/Passport/reopen passed; exact effort distinct from solver allocation |
-| Five core enhancements | Locally implemented; real Calendar and full enhancement-level Gemini acceptance pending |
-| Public access and isolation | Automatic anonymous workspace, no invitations/registration/Google login/visitor keys; two actual visitors plus100simulated-provider HTTP sessions; zero real model calls in load test |
-| Limits and protection |2MiBraw/3MiBtransport, bounded PDF subprocess, typed errors, CSRF/tenant checks, narrow IPC and protected internal/admin/MCP operations |
-| GitHub change radar | Cache/singleflight/conditional304/backoff tests passed. Real read and browser-independent observation have separately dated evidence; shared upstream429 retained |
-| Samples |13synthetic files, trilingual guide/context/expected results and ZIP. Public hashes and current runtime recorded separately |
-| Calendar | Technical client/API/Production setup done; real owner connection and selected-target live status confirmed; exact target ID/event write/read-back/retry/undo/revocation and independent user acceptance pending |
-| Windows | Installed0.5contracts/source match and original45/95 passed. Actual Open/Cancel/import+refresh passed; Save/reimport/banner/click and real Gemini pending |
-| Managed GCP | Guarded SDK/package/bridge/shared-state/owner-routing preparation only. Actual organizer activation/project/coverage/resources/query still pending |
-| After-window fallback | Existing public state remains authoritative. Actual managed-off/expiry complete-product acceptance pending real window |
-| Package and presentation | Preserve every prior sealed revision; new candidate manifest records exact source/runtime and evidence limitations |
+| Own EN/RU/KK prose and continued/table PDF | Five full hosted workflows/six complete real turns on the dated earlier runtime; current rechecks separately recorded. No OCR. |
+| Citations, missing/conflicting data | Original source/version/page spans, explicit per-assignment confirmation, conflict decisions, unknowns retained. |
+| Planning/what-if/Preflight/continuity | Full browser regressions and prior hosted acceptance; exact effort differs from rounded allocation, logged time is not completion. |
+| F1–F5 core enhancements | Locally implemented; real Calendar and full enhancement-level Gemini acceptance separately pending. No function excluded. |
+| Scoped reliability additions | Existing enhancements preserved, including progress/remaining, Clarify First, Handoff Radar and Workspace Passport, under full tests and dated browser evidence. |
+| Public Gemini/MCP/history | No invitation/account/visitor key. Actual provider and signed MCP, multi-turn history, honest complete/partial/failed. |
+| Isolation and quota queue | 100 provider-simulated HTTP sessions, zero real AI calls; foreign source/run denial, fair quota tickets, two workers; actual MCP protocol separate. |
+| Protection and recovery | CSRF/capability/tenant checks, narrow IPC, bounded parsing; deterministic quota/backoff/timeout/restart tests and actual local expiry/recovery fault test. |
+| GitHub | Actual hosted read and later server observation after browser close recorded; server read-only token, cache/304/backoff, upstream failures retained. |
+| Calendar | Client/API/Production and prior owner consent/target completed. Session expired. Existing-ID recovery implemented; actual event operations pending. |
+| Windows | Historical 0.5.0 actual Open/Cancel/import+refresh and 45/95 retained. New package static equality differs from installation; physical Save/import/reopen/banner/click pending. |
+| Samples/presentation/package | Public 13-file synthetic trilingual pack and expected results; dated hashes. New package records actual source/runtime/statuses, preserves releases. |
+| Managed GCP | Original criterion unmet. Optional prepared integration disabled, not a blocker of primary route. No personal expenses or billing activation. |
 
-See `docs/audit_U1_U16.md`, `docs/final_integration_ledger.md` and `docs/evidence/non-gcp-0.5.0.json`. Temporary Free hosting is not durable or always-on. Personal spending remains0.
+Exact evidence: docs/final_integration_ledger.md. Owner steps: docs/remaining_actions_0.5.1.md.

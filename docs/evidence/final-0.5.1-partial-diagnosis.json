@@ -1,0 +1,19 @@
+{
+  "version": "0.5.1",
+  "historical_evidence": "docs/evidence/audit-live-mvfnvite.json",
+  "historical_runtime": "1718ff340bdb2b40c5d3e796907000bd6720b80f",
+  "failed_tool": "propose_academic_extraction",
+  "failed_response_sha256": "7da2c62afee9e311b742327e671c1898e7d81e149769f9e22905d76e5f309447",
+  "subsequent_valid_proposal_saved": true,
+  "classification": "partial retained because a tool failed within the turn",
+  "exact_historical_invalid_input_retained": false,
+  "historical_error_subtype": "not recoverable from retained hash; no underlying Render diagnostic recovered",
+  "reproduced_schema_failure_class": "nullable unused literal quote fields rejected before handler; unknown finite field name rejected before handler",
+  "claim_reproduced_class_was_exact_historical_cause": false,
+  "fix": "nullable quote/original_expression accepted only when exact reference or strict literal quote validation succeeds; typed redacted schema errors retained in observations/events",
+  "regression_evidence": [
+    "docs/evidence/final-0.5.1-mcp.json",
+    "tests/test_final_recovery.py"
+  ],
+  "raw_tool_arguments_persisted": false
+}

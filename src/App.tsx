@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { CalendarRecovery } from "./CalendarRecovery";
 import { LiveAccess } from "./LiveAccess";
 import {
   Activity,
@@ -293,7 +294,7 @@ function RunRail({
       <div className="resource-state">
         <span className="status-dot" />
         {resource?.startsWith("gemini-developer:")
-          ? tr("Gemini · alternative host")
+          ? tr("Gemini Developer API · server-side MCP")
           : resource
             ? tr("Managed resource configured")
             : tr("Agent Engine not connected")}
@@ -346,6 +347,10 @@ function RunRail({
 }
 
 export default function App() {
+  const [sessionExpired, setSessionExpired] = useState(false);
+  const [connectionStatus, setConnectionStatus] = useState<{
+    connected: boolean;
+  } | null>(null);
   const [calendars, setCalendars] = useState<
     { id: string; name: string; role: string; primary: boolean }[]
   >([]);
@@ -386,7 +391,10 @@ export default function App() {
   );
   const eventCursor = useRef(0);
   async function refresh() {
-    const s = await api<Snapshot>("/state");
+    const [s, connection] = await Promise.all([
+      api<Snapshot>("/state"),
+      api<{ connected: boolean }>("/connections/status").catch(() => null),
+    ]);
     if (
       s.workspace_id &&
       tenantRef.current &&
@@ -405,6 +413,8 @@ export default function App() {
       conversationId.current = null;
     }
     setData(s);
+    setSessionExpired(false);
+    setConnectionStatus(connection);
     eventCursor.current = s.events.at(-1)?.sequence || 0;
     setOffline(false);
     tenantRef.current = s.workspace_id || tenantRef.current;
@@ -438,6 +448,11 @@ export default function App() {
       await fn();
     } catch (e) {
       setError((e as Error).message);
+      if (String(e).includes("AUTH_REQUIRED")) {
+        setSessionExpired(true);
+        setOffline(true);
+        chatGeneration.current++;
+      }
     } finally {
       if (generation === workGeneration.current) {
         workLock.current = false;
@@ -575,9 +590,15 @@ export default function App() {
                 : d,
             );
           }
-        } catch {
-          if (!retired && requestedTenant === tenantRef.current)
+        } catch (e) {
+          if (!retired && requestedTenant === tenantRef.current) {
             setOffline(true);
+            if (String(e).includes("AUTH_REQUIRED")) {
+              setSessionExpired(true);
+              setConnectionStatus(null);
+              chatGeneration.current++;
+            }
+          }
         } finally {
           polling = false;
         }
@@ -718,7 +739,11 @@ export default function App() {
               <RefreshCw size={16} />
               {tr("Retry connection")}
             </button>
-            <p>{tr('Public AI access needs no sign-in or invitation. Retry the connection; Calendar consent is a separate optional action in Connections.')}</p>
+            <p>
+              {tr(
+                "Public AI access needs no sign-in or invitation. Retry the connection; Calendar consent is a separate optional action in Connections.",
+              )}
+            </p>
             <p>
               {tr(
                 "Start the local gateway with scripts/dev.ps1, or configure the deployed gateway.",
@@ -834,10 +859,13 @@ export default function App() {
         {offline ? (
           <div className="offline-banner">
             <WifiOff size={16} />
-            {t.offline}
+            {sessionExpired
+              ? tr(
+                  "This workspace expired. Start a new workspace and import a saved Passport. Google consent must be renewed; previous approvals are never replayed.",
+                )
+              : t.offline}
             <button
               onClick={() => {
-                setOffline(false);
                 void work(
                   "Revalidating",
                   async () => {
@@ -872,7 +900,7 @@ export default function App() {
               <small>
                 {data.agent.provider === "gemini_developer"
                   ? tr(
-                      "Alternative Gemini is configured; Agent Engine and real Calendar acceptance remain pending.",
+                      "Server-side Gemini and real MCP are available without an account. Calendar requires your separate consent and approval. Managed GCP is disabled and its original criterion remains unmet.",
                     )
                   : tr(
                       "Calendar actions are simulated. Gemini/Agent Engine and real Google Calendar remain pending.",
@@ -914,8 +942,26 @@ export default function App() {
         ) : null}
         <div className="content-wrap">
           <main id="main" className="main-content">
-            {data.calendar_error&&<div className="offline-banner" role="status"><p>{tr('Calendar needs reconnection. Your documents and progress remain available; no fresh Calendar availability is assumed.')}</p><button className="secondary" onClick={()=>setView('connections')}>{tr('Connections')}</button></div>}
-            <p className="fine-print">{tr('Selected files: PDF, MD, TXT, ICS · up to 2 MiB; text PDFs only.')}</p>
+            {data.calendar_error && (
+              <div className="offline-banner" role="status">
+                <p>
+                  {tr(
+                    "Calendar needs reconnection. Your documents and progress remain available; no fresh Calendar availability is assumed.",
+                  )}
+                </p>
+                <button
+                  className="secondary"
+                  onClick={() => setView("connections")}
+                >
+                  {tr("Connections")}
+                </button>
+              </div>
+            )}
+            <p className="fine-print">
+              {tr(
+                "Selected files: PDF, MD, TXT, ICS · up to 2 MiB; text PDFs only.",
+              )}
+            </p>
             {data.demo?.public && (
               <section
                 className="panel workspace-choice"
@@ -952,7 +998,25 @@ export default function App() {
                     {tr(kind === "own" ? "Use my own data" : "Open example")}
                   </button>
                 ))}
-                <a href={window.relay ? "https://campuspulse-relay-demo.onrender.com/samples/" : "/samples/"} target="_blank" rel="noreferrer" onClick={window.relay ? (e)=>{e.preventDefault();void external("https://campuspulse-relay-demo.onrender.com/samples/");} : undefined}>
+                <a
+                  href={
+                    window.relay
+                      ? "https://campuspulse-relay-demo.onrender.com/samples/"
+                      : "/samples/"
+                  }
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={
+                    window.relay
+                      ? (e) => {
+                          e.preventDefault();
+                          void external(
+                            "https://campuspulse-relay-demo.onrender.com/samples/",
+                          );
+                        }
+                      : undefined
+                  }
+                >
                   {tr("Sample documents and instructions")}
                 </a>
               </section>
@@ -1702,13 +1766,13 @@ export default function App() {
                     </StatusPill>
                     <h2>
                       {data.agent.provider === "gemini_developer"
-                        ? tr("Gemini · alternative host")
+                        ? tr("Gemini Developer API · server-side MCP")
                         : tr("Gemini + Agent Engine")}
                     </h2>
                     <p>
                       {data.agent.provider === "gemini_developer"
                         ? tr(
-                            "Alternative Gemini is configured; Agent Engine and real Calendar acceptance remain pending.",
+                            "Server-side Gemini and real MCP are available without an account. Calendar requires your separate consent and approval. Managed GCP is disabled and its original criterion remains unmet.",
                           )
                         : tr(
                             "The managed reasoningEngine is the actual agent query path. Its live deployment is not verified yet.",
@@ -1783,7 +1847,7 @@ export default function App() {
                             "Server polling works while the free service is awake. Shared public observations keep their original fetch time. Sleeping or restarting hosting stops polling; no always-on guarantee.",
                           )
                         : tr(
-                            "Local server polling continues without a chat prompt. Hosted scheduled execution requires GCP deployment.",
+                            "Server polling continues while this process is running. Sleeping or restarting hosting interrupts polling; no always-on guarantee.",
                           )}
                     </small>
                   </section>
@@ -1792,25 +1856,43 @@ export default function App() {
                       <CalendarDays size={24} />
                     </span>
                     <StatusPill
-                      tone={data.settings.calendar_live&&data.calendar_mode!=='unavailable' ? "success" : "warning"}
+                      tone={
+                        data.settings.calendar_live &&
+                        data.calendar_mode !== "unavailable"
+                          ? "success"
+                          : "warning"
+                      }
                     >
-                      {data.calendar_mode==='unavailable'?tr('Calendar needs reconnection'):data.settings.calendar_live
-                        ? tr("Live connection")
-                        : tr("Illustrative local adapter")}
+                      {data.calendar_mode === "unavailable"
+                        ? tr("Calendar needs reconnection")
+                        : data.settings.calendar_live
+                          ? tr("Live connection")
+                          : tr("Illustrative local adapter")}
                     </StatusPill>
                     <h2>{tr("Study calendar")}</h2>
+                    {connectionStatus?.connected &&
+                    !data.settings.calendar_live ? (
+                      <p role="status">
+                        {tr(
+                          "Google connected. Choose or reconnect your separate calendar; event writes still require approval.",
+                        )}
+                      </p>
+                    ) : null}
                     <button
                       className="text-button"
-                      disabled={
-                        !!data.demo?.public &&
-                        !data.agent.configured
-                      }
+                      disabled={!!data.demo?.public && !data.agent.configured}
                       onClick={() => void connectGoogle()}
                     >
                       {tr("Connect Google in system browser")}
                       <ArrowUpRight size={14} />
                     </button>
-                    {data.settings.calendar_live?<p>{tr('Connected to your selected Calendar. Approved actions affect real events; review the exact preview first.')}</p>:data.demo?.public ? (
+                    {data.settings.calendar_live ? (
+                      <p>
+                        {tr(
+                          "Connected to your selected Calendar. Approved actions affect real events; review the exact preview first.",
+                        )}
+                      </p>
+                    ) : data.demo?.public ? (
                       <p>
                         {tr(
                           "Real Google consent and Calendar writes are pending. Review and approve simulated actions in Recovery.",
@@ -1829,10 +1911,7 @@ export default function App() {
                     </code>
                     <button
                       className="text-button"
-                      disabled={
-                        !!data.demo?.public &&
-                        !data.agent.configured
-                      }
+                      disabled={!!data.demo?.public && !data.agent.configured}
                       onClick={() =>
                         void work("Listing authorized calendars", async () =>
                           setCalendars(
@@ -1876,10 +1955,7 @@ export default function App() {
                     ))}
                     <button
                       className="secondary"
-                      disabled={
-                        !!data.demo?.public &&
-                        !data.agent.configured
-                      }
+                      disabled={!!data.demo?.public && !data.agent.configured}
                       onClick={() =>
                         void work(
                           tr("Create a separate study calendar"),
@@ -1905,7 +1981,7 @@ export default function App() {
                     </button>
                     <button
                       className="text-button"
-                      disabled={!data.settings.calendar_live}
+                      disabled={!connectionStatus?.connected}
                       onClick={() =>
                         void work(tr("Disconnect Calendar"), async () => {
                           await api("/connections/disconnect", "POST");
@@ -1916,6 +1992,19 @@ export default function App() {
                     >
                       {tr("Disconnect Calendar")}
                     </button>
+                    <CalendarRecovery
+                      key={data.workspace_id}
+                      onRecovered={async () => {
+                        setCalendars(
+                          (
+                            await api<{ calendars: typeof calendars }>(
+                              "/connections/calendar-list",
+                            )
+                          ).calendars,
+                        );
+                        await refresh();
+                      }}
+                    />
                     <p>
                       {tr(
                         "Calendar connection is optional. Consent does not authorize study writes. Create or choose a separate calendar, then review and approve exact actions. Disconnect preserves existing events.",
@@ -2093,7 +2182,7 @@ export default function App() {
             )}
             <p className="fine-print local-acceptance">
               {tr(
-                "Five enhancements locally implemented · real Calendar and Gemini acceptance pending.",
+                "Five enhancements locally implemented. See the acceptance ledger for real Gemini and Calendar verification of each workflow.",
               )}
             </p>
             <section className="assistant">
@@ -2114,7 +2203,7 @@ export default function App() {
                 <strong>{t.assistant}</strong>
                 <span>
                   {data.agent.provider === "gemini_developer"
-                    ? tr("Gemini · alternative host")
+                    ? tr("Gemini Developer API · server-side MCP")
                     : data.agent.configured
                       ? tr("Managed Gemini agent")
                       : tr("Connect Agent Engine for live AI")}
@@ -2658,12 +2747,12 @@ export default function App() {
             <p>
               <strong>
                 {data.demo?.public
-                  ? tr("Public demo · mandatory GCP acceptance pending")
+                  ? tr("Public Gemini demo · optional Calendar")
                   : tr("Live demo: cloud setup required")}
               </strong>
               {data.agent.provider === "gemini_developer"
                 ? tr(
-                    "Alternative Gemini is configured; Agent Engine and real Calendar acceptance remain pending.",
+                    "Server-side Gemini and real MCP are available without an account. Calendar requires your separate consent and approval. Managed GCP is disabled and its original criterion remains unmet.",
                   )
                 : data.demo?.public
                   ? tr(

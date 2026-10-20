@@ -1,11 +1,7 @@
-# Actual remaining gates · 0.5.0
+# Remaining external gates · 0.5.1
 
-- Calendar Console/client/API/Production setup is completed. Real consent now completed: the owner provided a screenshot of actual configured=true, connected=true. No event operation is implied. Owner copied an authorization link into another browser/window; restart from the ordinary homepage in the working browser. Keep private cookie/state/PKCE binding. Actual selected target/write/read-back/retry/undo/revocation and independent-user acceptance remain unverified.
-- Native Open/Cancel/owner-selected import and both import/refresh200 are recorded. Save/reimport/reopen and notification visibility/click-focus remain human checks. Owner stopped Windows control using Escape; no further control attempted. Windows real Gemini acceptance also remains pending.
-- Actual organizer T0, principal/project, coverage/expiry/model/quotas are unknown. Agent Engine, authenticated cloud-to-MCP/shared state, remote multi-turn/Windows and managed-off/expiry acceptance require that real window. No personal payment/trial/billing change is authorized.
+1. Calendar setup and prior consent/selected target are recorded. The old two-hour session now returns AUTH_REQUIRED. Fresh same-browser owner consent and recovery of the existing app-created Calendar ID are required; no Console setup or new calendar. Exact one-event owner approval/write/read-back/retry without duplicates/undo/revocation remain unverified.
+2. Historical 0.5.0 native Open/Cancel/import/refresh and original 45/95 are verified. New 0.5.1 packages do not imply installation. Native Passport Save/import/reopen and real notification/banner/click-focus need owner interaction. Windows automation stopped through Escape remains stopped.
+3. Original managed GCP criterion is unmet. Organizers will provide no GCP. Prepared Agent Engine/IAM/shared-state scripts remain disabled and do not block Render/Gemini/MCP. No official alternative-architecture waiver, personal billing, paid trial activation or resources are assumed.
 
-Exact steps: `docs/remaining_actions_0.5.0.md`. Machine-readable truth: `docs/evidence/non-gcp-0.5.0.json`. Do not mark NON_GCP_READY or either managed status true while their gates remain.
-
-GitHub gate passed: actual hosted read and a later server observation after closing the test browser; original immutable fetch time retained. Free hosting sleep/restart limits remain.
-
-Owner connection update: actual status screenshot confirms configured=true, connected=true, calendar_live=false at that observation. The owner subsequently reports selecting the created calendar; exact returned target/live status and actual event operations remain to verify. No additional browser transfer/reconnect is needed. Evidence: audit-calendar-owner-connected.json (image hash only, no credentials).
+NON_GCP_READY=false while gates 1–2 remain. See docs/remaining_actions_0.5.1.md. Free quotas and temporary hosting remain operational limits.

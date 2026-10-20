@@ -20,8 +20,8 @@ export function LiveAccess({
   return (
     <aside className="live-access" aria-label={tr("Gemini access and privacy")}>
       <p>
-        <strong>{tr("Gemini · alternative host")}</strong> ·{" "}
-        {tr("Agent Engine criterion pending")}
+        <strong>{tr("Gemini Developer API · server-side MCP")}</strong> ·{" "}
+        {tr("Managed GCP criterion unmet · optional integration disabled")}
       </p>
       <p className="fine-print">
         {tr(
