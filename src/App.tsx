@@ -715,7 +715,7 @@ export default function App() {
     return (
       <main className="boot">
         <div className="brand-symbol">
-          R<span>/</span>
+          <img src="./assets/brand/logo-256.png" alt="CampusPulse RELAY" width="44" height="44" />
         </div>
         <h1>CampusPulse RELAY</h1>
         <select
@@ -777,7 +777,7 @@ export default function App() {
           title="CampusPulse RELAY"
           onClick={() => setView("week")}
         >
-          R<span>/</span>
+          <img src="./assets/brand/logo-256.png" alt="CampusPulse RELAY" width="44" height="44" />
         </button>
         <div className="nav-items">
           {(Object.keys(icons) as View[]).map((v) => {

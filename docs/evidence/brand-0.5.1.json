@@ -1,0 +1,104 @@
+{
+  "version": "0.5.1",
+  "scope": "User-supplied branding replacement; built and locally verified; public deployment pending safe owner Passport export",
+  "original": "assets/branding/CampusPulse_RELAY_app_icon_logo_2K_20261020200832.jpg",
+  "original_dimensions": [
+    2048,
+    2048
+  ],
+  "original_content_unchanged": true,
+  "assets": [
+    {
+      "file": "assets/branding/CampusPulse_RELAY_app_icon_logo_2K_20261020200832.jpg",
+      "bytes": 937609,
+      "sha256": "74ff6b715cafeb5b6a9747b091b4d3e28e78a704c0eeddf847ca2e7b5cd3b940"
+    },
+    {
+      "file": "public/assets/brand/logo-256.png",
+      "bytes": 34680,
+      "sha256": "18a2f508c9878aff3b20b7a78ff27677682e02c3a80bdada87c1d211b6835637"
+    },
+    {
+      "file": "public/assets/brand/favicon.ico",
+      "bytes": 54124,
+      "sha256": "c8b47f83c0efd5f490f88082e65b2c27c6362963d2f784e2d31f8216e616496a"
+    },
+    {
+      "file": "public/assets/brand/apple-touch-icon.png",
+      "bytes": 18262,
+      "sha256": "c1a56a56e70e07c5137ebaf4c08d386b6869394592691db10c650f9b9b2caa4f"
+    },
+    {
+      "file": "desktop/icon.png",
+      "bytes": 137575,
+      "sha256": "65f658519c5a53463ee59a0636967455b4894f38c01e9e124ae3c09592ef10e4"
+    },
+    {
+      "file": "desktop/icon.ico",
+      "bytes": 54124,
+      "sha256": "c8b47f83c0efd5f490f88082e65b2c27c6362963d2f784e2d31f8216e616496a"
+    }
+  ],
+  "ui": {
+    "scope": "local real frontend/backend; no AI or Google calls",
+    "checks": [
+      "actual boot logo loaded",
+      {
+        "width": 1440,
+        "logo_loaded": true,
+        "no_page_overflow": true,
+        "logo_AA_violations": 0,
+        "page_AA_findings_outside_changed_logo": [
+          {
+            "id": "label-content-name-mismatch",
+            "targets": [
+              [
+                "button[aria-label=\"Evidence\"]"
+              ],
+              [
+                ".avatar"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "width": 390,
+        "logo_loaded": true,
+        "no_page_overflow": true,
+        "logo_AA_violations": 0,
+        "page_AA_findings_outside_changed_logo": [
+          {
+            "id": "label-content-name-mismatch",
+            "targets": [
+              [
+                "button[aria-label=\"Evidence\"]"
+              ],
+              [
+                ".avatar"
+              ]
+            ]
+          }
+        ]
+      },
+      "./assets/brand/favicon.ico served",
+      "./assets/brand/apple-touch-icon.png served"
+    ],
+    "passed": true
+  },
+  "desktop": {
+    "build_exit_code": 0,
+    "build_log": ".local/logs/brand-0.5.1-windows-build-r2.log",
+    "narrow_IPC_checks_passed": 8,
+    "D_installer_regression_guards_passed": 3,
+    "installed": false,
+    "native_GUI_automation_resumed": false
+  },
+  "public_deployment": {
+    "completed": false,
+    "reason": "Publishing restarts temporary Render service; preserve current owner workspace with Passport first",
+    "last_verified_runtime_commit": "7e4098dae61775b5062b2f613192a6abaa3185dc"
+  },
+  "prior_sealed_release": "0.5.1-final-r1",
+  "personal_spending": 0
+}

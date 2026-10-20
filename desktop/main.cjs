@@ -487,7 +487,7 @@ function showNativeNotification(title, body, kind) {
     record("unsupported");
     return { id, supported: false, dispatched: false };
   }
-  const notification = new Notification({ title, body, silent: true });
+  const notification = new Notification({ title, body, silent: true, icon: path.join(__dirname, "icon.png") });
   activeNotifications.set(id, notification);
   notification.on("show", () => record("os-show-event"));
   notification.on("failed", () => {
@@ -514,6 +514,7 @@ async function createWindow() {
     minWidth: 720,
     minHeight: 600,
     title: "CampusPulse RELAY",
+    icon: path.join(__dirname, "icon.png"),
     backgroundColor: "#F5F4EF",
     autoHideMenuBar: true,
     webPreferences: {
