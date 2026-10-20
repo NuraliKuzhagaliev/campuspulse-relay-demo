@@ -2,12 +2,12 @@
   "schema_version": 8,
   "product": "CampusPulse RELAY",
   "version": "0.5.1",
-  "release_revision": "0.5.1-final-r1",
-  "status": "PUBLIC_PRIMARY_ROUTE_VERIFIED_OWNER_CALENDAR_NATIVE_GATES_PENDING",
-  "created_at": "2026-10-20T14:35:40.297637+00:00",
-  "source_commit": "d8c61dc3d432841085ef1b9dc38888e426920e88",
-  "deployed_commit": "7e4098dae61775b5062b2f613192a6abaa3185dc",
-  "source_commit_semantics": "Exact clean pushed archived source; manifest may be committed later. Web/Electron runtime unchanged since deployed commit; Windows NSIS installer and owner launch helpers corrected separately.",
+  "release_revision": "0.5.1-brand-r1",
+  "status": "PUBLIC_BRAND_UPDATE_VERIFIED_OWNER_CALENDAR_NATIVE_GATES_PENDING",
+  "created_at": "2026-10-20T15:20:35.409170+00:00",
+  "source_commit": "6bee79eb1a5003721f3d148c2f4a52c1a8d23c09",
+  "deployed_commit": "0d41e19f3add89dec15499a31bff28b3a0cc153a",
+  "source_commit_semantics": "Exact clean pushed archived source. Public runtime is prior code-identical commit; later changes record verification only.",
   "project_root": "D:\\projects\\CampusPulseRELAY",
   "repository": {
     "url": "https://github.com/NuraliKuzhagaliev/campuspulse-relay-demo",
@@ -22,16 +22,13 @@
   },
   "public_deployment": {
     "verified": true,
-    "provider": "Render",
+    "provider": "Render Free",
+    "url": "https://campuspulse-relay-demo.onrender.com",
     "service_id": "srv-dbajs73bc2fs73bm9mfg",
-    "workspace_id": "tea-d3pt0sbipnbc73a5v810",
-    "plan": "Free",
-    "url": "https://campuspulse-relay-demo.onrender.com/",
-    "deploy_id": "dep-dbbmv949v7es73fov1kg",
-    "deploy_status": "live",
-    "finished_at": "2026-10-20T13:43:06.002002Z",
-    "deployed_commit": "7e4098dae61775b5062b2f613192a6abaa3185dc",
-    "observed_health": {
+    "deploy_id": "dep-dbbocp0ae00c739g4lf0",
+    "status": "live",
+    "deployed_commit": "0d41e19f3add89dec15499a31bff28b3a0cc153a",
+    "health": {
       "ok": true,
       "version": "0.5.1",
       "mode": "alternative_live",
@@ -39,33 +36,17 @@
       "agent_verified": false,
       "agent": {
         "configured": true,
-        "resource": "gemini-developer:gemini-3.5-flash-lite",
         "verified": false,
-        "evidence": {
-          "resource": "gemini-developer:gemini-3.5-flash-lite",
-          "run_id": "84ff425ef7d32a5c4251c2beff4dd3da",
-          "revision": "7e4098dae61775b5062b2f613192a6abaa3185dc",
-          "observed_at": "2026-10-20T13:50:19.654901+00:00",
-          "expires": 1792504519.654925,
-          "provider": "gemini_developer",
-          "deployment_mode": "alternative_hosted",
-          "model": "gemini-3.5-flash-lite"
-        },
+        "resource": "gemini-developer:gemini-3.5-flash-lite",
         "provider": "gemini_developer",
         "deployment_mode": "alternative_hosted",
         "model": "gemini-3.5-flash-lite",
         "managed_agent_engine": false,
         "mode": "live_gemini_alternative",
-        "public_access": true,
-        "last_failure": {
-          "failed_at": "2026-10-20T13:46:19.563200+00:00",
-          "run_id": "e1d9e99202a4a7bcf7cb3e388f1365fa",
-          "status": "partial",
-          "code": null
-        }
+        "public_access": true
       },
-      "time": "2026-10-20T14:08:31.639894+00:00",
-      "deployed_commit": "7e4098dae61775b5062b2f613192a6abaa3185dc",
+      "time": "2026-10-20T15:20:35.359216+00:00",
+      "deployed_commit": "0d41e19f3add89dec15499a31bff28b3a0cc153a",
       "demo": {
         "public": true,
         "storage": "temporary",
@@ -78,15 +59,14 @@
         "mandatory_gcp": "unmet_optional_integration_disabled"
       }
     },
-    "verified_at": "2026-10-20T14:07:08.122695+00:00",
-    "no_paid_upgrade": true
+    "verification": "Two fresh browser contexts; logo/assets/favicon/mobile; no new Gemini calls"
   },
   "acceptance": {
     "version": "0.5.1",
     "checked_at": "2026-10-20T14:07:08.122695+00:00",
     "NON_GCP_READY": false,
     "public_url": "https://campuspulse-relay-demo.onrender.com/",
-    "deployed_commit": "7e4098dae61775b5062b2f613192a6abaa3185dc",
+    "deployed_commit": "0d41e19f3add89dec15499a31bff28b3a0cc153a",
     "primary_architecture": "Render Free / server-side Gemini Developer API / actual protected MCP / isolated real workspace and allowlisted GitHub data",
     "public_no_invitation_registration_or_user_key": true,
     "documents": {
@@ -178,12 +158,13 @@
         "docs/evidence/final-0.5.1-calendar-owner-reconnected.json",
         "docs/evidence/final-0.5.1-calendar-recovered.json"
       ],
-      "note": "Prior404 was followed by successful recovery without code change. Owner preparing target selection and exact preview. No new calendar or event was created by the agent."
+      "note": "Prior404 was followed by successful recovery without code change. Owner preparing target selection and exact preview. No new calendar or event was created by the agent.",
+      "connection_recheck_required_after_brand_restart": true
     },
     "windows": {
       "package_version": "0.5.1",
       "package_static_equality_verified": true,
-      "evidence": "docs/evidence/final-0.5.1-windows-package.json",
+      "evidence": "docs/evidence/brand-0.5.1.json",
       "installed_version_last_read": "0.5.0",
       "new_installation_verified": false,
       "full_native_acceptance": false,
@@ -197,7 +178,10 @@
       "incorrect_C_install_observed": true,
       "corrected_D_installer_compiled": true,
       "corrected_D_installation_owner_verified": false,
-      "D_fix_evidence": "docs/evidence/final-0.5.1-windows-D-install-fix.json"
+      "D_fix_evidence": "docs/evidence/final-0.5.1-windows-D-install-fix.json",
+      "brand_packaged_files_verified": 16,
+      "actual_executable_icon_sizes_verified": 7,
+      "installed_brand_update": false
     },
     "managed_gcp": {
       "enabled": false,
@@ -228,13 +212,14 @@
       "Real Calendar write/read-back/replay/undo/revocation and new installed Windows physical acceptance remain owner gates.",
       "Original managed-GCP criterion unmet; no official substitution waiver established."
     ],
-    "independent_test_plan": "docs/independent_website_test_ru.txt"
+    "independent_test_plan": "docs/independent_website_test_ru.txt",
+    "branding": "docs/evidence/brand-0.5.1.json"
   },
   "core_enhancements": "F1-F5 locally implemented; real Calendar and full enhancement-level Gemini acceptance remain separate",
   "windows": {
     "package_version": "0.5.1",
     "package_static_equality_verified": true,
-    "evidence": "docs/evidence/final-0.5.1-windows-package.json",
+    "evidence": "docs/evidence/brand-0.5.1.json",
     "installed_version_last_read": "0.5.0",
     "new_installation_verified": false,
     "full_native_acceptance": false,
@@ -248,7 +233,10 @@
     "incorrect_C_install_observed": true,
     "corrected_D_installer_compiled": true,
     "corrected_D_installation_owner_verified": false,
-    "D_fix_evidence": "docs/evidence/final-0.5.1-windows-D-install-fix.json"
+    "D_fix_evidence": "docs/evidence/final-0.5.1-windows-D-install-fix.json",
+    "brand_packaged_files_verified": 16,
+    "actual_executable_icon_sizes_verified": 7,
+    "installed_brand_update": false
   },
   "managed_gcp": {
     "enabled": false,
@@ -270,36 +258,37 @@
     "Free quotas/backoff are shared and finite; no unlimited or latency guarantee.",
     "Text PDFs only; no OCR. Original source estimates and solver allocation differ.",
     "Real Calendar write/read-back/replay/undo/revocation and new installed Windows physical acceptance remain owner gates.",
-    "Original managed-GCP criterion unmet; no official substitution waiver established."
+    "Original managed-GCP criterion unmet; no official substitution waiver established.",
+    "Branding verified locally and publicly; two local example controls have WCAG label-content-name-mismatch outside the changed logo. Current cosmetic rollout made zero new Gemini/Calendar acceptance calls."
   ],
   "artifacts": [
     {
       "kind": "windows_installer",
       "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.5.1-x64-setup.exe",
       "relative_path": "windows/CampusPulse-RELAY-0.5.1-x64-setup.exe",
-      "bytes": 166897461,
-      "sha256": "08bc75a18f5b9d84f11b9dd64f923af205cbc6219ed48f718fa899062b426c62"
+      "bytes": 167284030,
+      "sha256": "8e0c30b46bc067e70b9aff96dbe416a070b74fa83a14c27307d5e4d33760eda2"
     },
     {
       "kind": "windows_portable",
       "path": "D:\\projects\\CampusPulseRELAY\\release\\windows\\CampusPulse-RELAY-0.5.1-x64-portable.exe",
       "relative_path": "windows/CampusPulse-RELAY-0.5.1-x64-portable.exe",
-      "bytes": 118582815,
-      "sha256": "5dc57df034a73ca2a7ca6cf5215ef3450248ef2b03eb7e6d61b7e12425a8b263"
+      "bytes": 118861006,
+      "sha256": "eeeb7af566ed31e7faa4d38197f6b5fd0309b074ea205b1e1fa14b0292d4fd69"
     },
     {
       "kind": "complete_local_illustrative_web",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\web\\CampusPulseRELAY-0.5.1-final-r1-web-app.zip",
-      "relative_path": "web/CampusPulseRELAY-0.5.1-final-r1-web-app.zip",
-      "bytes": 1247278,
-      "sha256": "3c14258a4377a1210211eed0019764ca743c89d2bb593ad0702ef25aee03b91f"
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\web\\CampusPulseRELAY-0.5.1-brand-r1-web-app.zip",
+      "relative_path": "web/CampusPulseRELAY-0.5.1-brand-r1-web-app.zip",
+      "bytes": 1354748,
+      "sha256": "2561d73696e33a5d2b1d1ce7b168160b2f61ffc26b94069a943300d3afc51522"
     },
     {
       "kind": "source_archive",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\source\\CampusPulseRELAY-0.5.1-final-r1-source.zip",
-      "relative_path": "source/CampusPulseRELAY-0.5.1-final-r1-source.zip",
-      "bytes": 62372479,
-      "sha256": "0742da46eed8ed8f9d6d4a95fe0efb469a629d60c65b146c84430a4aaf4ea933"
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\source\\CampusPulseRELAY-0.5.1-brand-r1-source.zip",
+      "relative_path": "source/CampusPulseRELAY-0.5.1-brand-r1-source.zip",
+      "bytes": 63568378,
+      "sha256": "6ca720a5ec22ba74cf1ee1d4be9612f392d6f6f8314dae15361ef60ae113c2ed"
     },
     {
       "kind": "editable_presentation",
@@ -317,10 +306,10 @@
     },
     {
       "kind": "acceptance_evidence",
-      "path": "D:\\projects\\CampusPulseRELAY\\release\\evidence\\CampusPulseRELAY-0.5.1-final-r1-evidence.zip",
-      "relative_path": "evidence/CampusPulseRELAY-0.5.1-final-r1-evidence.zip",
-      "bytes": 55440,
-      "sha256": "7d4f762826178f33160331af21cb28a6902dbcdf0e8fb67c9383d5d0b1866dd5"
+      "path": "D:\\projects\\CampusPulseRELAY\\release\\evidence\\CampusPulseRELAY-0.5.1-brand-r1-evidence.zip",
+      "relative_path": "evidence/CampusPulseRELAY-0.5.1-brand-r1-evidence.zip",
+      "bytes": 57844,
+      "sha256": "07fd3ca0d8a66efc55d0d551f586cda15dc9639099464a16b69dd72e8da30140"
     },
     {
       "kind": "synthetic_uncertainty_addendum",
@@ -413,6 +402,253 @@
     {
       "revision": "0.5.0-audit-r1",
       "verified_artifacts": 11
+    },
+    {
+      "revision": "0.5.1-final-r1",
+      "verified_artifacts": 13
     }
-  ]
+  ],
+  "branding": {
+    "version": "0.5.1",
+    "scope": "User-supplied branding replacement; built, locally verified and publicly deployed; physical native acceptance separate",
+    "original": "assets/branding/CampusPulse_RELAY_app_icon_logo_2K_20261020200832.jpg",
+    "original_dimensions": [
+      2048,
+      2048
+    ],
+    "original_content_unchanged": true,
+    "assets": [
+      {
+        "file": "assets/branding/CampusPulse_RELAY_app_icon_logo_2K_20261020200832.jpg",
+        "bytes": 937609,
+        "sha256": "74ff6b715cafeb5b6a9747b091b4d3e28e78a704c0eeddf847ca2e7b5cd3b940"
+      },
+      {
+        "file": "public/assets/brand/logo-256.png",
+        "bytes": 34680,
+        "sha256": "18a2f508c9878aff3b20b7a78ff27677682e02c3a80bdada87c1d211b6835637"
+      },
+      {
+        "file": "public/assets/brand/favicon.ico",
+        "bytes": 54124,
+        "sha256": "c8b47f83c0efd5f490f88082e65b2c27c6362963d2f784e2d31f8216e616496a"
+      },
+      {
+        "file": "public/assets/brand/apple-touch-icon.png",
+        "bytes": 18262,
+        "sha256": "c1a56a56e70e07c5137ebaf4c08d386b6869394592691db10c650f9b9b2caa4f"
+      },
+      {
+        "file": "desktop/icon.png",
+        "bytes": 137575,
+        "sha256": "65f658519c5a53463ee59a0636967455b4894f38c01e9e124ae3c09592ef10e4"
+      },
+      {
+        "file": "desktop/icon.ico",
+        "bytes": 54124,
+        "sha256": "c8b47f83c0efd5f490f88082e65b2c27c6362963d2f784e2d31f8216e616496a"
+      }
+    ],
+    "ui": {
+      "scope": "local real frontend/backend; no AI or Google calls",
+      "checks": [
+        "actual boot logo loaded",
+        {
+          "width": 1440,
+          "logo_loaded": true,
+          "no_page_overflow": true,
+          "logo_AA_violations": 0,
+          "page_AA_findings_outside_changed_logo": [
+            {
+              "id": "label-content-name-mismatch",
+              "targets": [
+                [
+                  "button[aria-label=\"Evidence\"]"
+                ],
+                [
+                  ".avatar"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "logo_loaded": true,
+          "no_page_overflow": true,
+          "logo_AA_violations": 0,
+          "page_AA_findings_outside_changed_logo": [
+            {
+              "id": "label-content-name-mismatch",
+              "targets": [
+                [
+                  "button[aria-label=\"Evidence\"]"
+                ],
+                [
+                  ".avatar"
+                ]
+              ]
+            }
+          ]
+        },
+        "./assets/brand/favicon.ico served",
+        "./assets/brand/apple-touch-icon.png served"
+      ],
+      "passed": true
+    },
+    "desktop": {
+      "build_exit_code": 0,
+      "build_log": ".local/logs/brand-0.5.1-windows-build-r2.log",
+      "narrow_IPC_checks_passed": 8,
+      "D_installer_regression_guards_passed": 3,
+      "installed": false,
+      "native_GUI_automation_resumed": false,
+      "packaged_files_equal": [
+        {
+          "file": "desktop\\icon.ico",
+          "sha256": "c8b47f83c0efd5f490f88082e65b2c27c6362963d2f784e2d31f8216e616496a"
+        },
+        {
+          "file": "desktop\\icon.png",
+          "sha256": "65f658519c5a53463ee59a0636967455b4894f38c01e9e124ae3c09592ef10e4"
+        },
+        {
+          "file": "desktop\\locales.cjs",
+          "sha256": "be219f1d7ed568462d68b666aacd03d4a638027b777a8aed9423f2bac0660d9a"
+        },
+        {
+          "file": "desktop\\main.cjs",
+          "sha256": "cf146e3103568ac4d9410cd4da3104544a1eb56e9e045db95ac458f50181b923"
+        },
+        {
+          "file": "desktop\\preload.cjs",
+          "sha256": "def16c63fa8563bfefa18ddc535cf952da93b8f388413570eb54daaf7e5994d6"
+        },
+        {
+          "file": "desktop\\request-policy.cjs",
+          "sha256": "486f5c69601535393558748db8f0a5fb4589421eb0772e67fe8da67ab3ceb677"
+        },
+        {
+          "file": "dist\\assets\\brand\\apple-touch-icon.png",
+          "sha256": "c1a56a56e70e07c5137ebaf4c08d386b6869394592691db10c650f9b9b2caa4f"
+        },
+        {
+          "file": "dist\\assets\\brand\\favicon.ico",
+          "sha256": "c8b47f83c0efd5f490f88082e65b2c27c6362963d2f784e2d31f8216e616496a"
+        },
+        {
+          "file": "dist\\assets\\brand\\logo-256.png",
+          "sha256": "18a2f508c9878aff3b20b7a78ff27677682e02c3a80bdada87c1d211b6835637"
+        },
+        {
+          "file": "dist\\assets\\index-BdKGZeqI.css",
+          "sha256": "5713dc2dc6981451032db37a6870d20431d3f60e53fa9455cedc9b8a4c3f8d34"
+        },
+        {
+          "file": "dist\\assets\\index-C7Yb2ebw.js",
+          "sha256": "7bf81835d769c1ce0b112e6d5dbfc2e53fb261737ff087bd1905eb6395b9f136"
+        },
+        {
+          "file": "dist\\assets\\relay-oauth.css",
+          "sha256": "08ecaab876ad057a8f60261b0da26a505c31bfa190fb1d5f8ad863d2257d1369"
+        },
+        {
+          "file": "dist\\assets\\relay-pair.js",
+          "sha256": "516eea0fbdd7bea908e088a5b02e80c1c3896d51a48e2ce61cb87ef293c3b7a7"
+        },
+        {
+          "file": "dist\\index.html",
+          "sha256": "40e43664674a32262d0336a6b8fef03e6e960c291063af00d3565b5e239ed644"
+        },
+        {
+          "file": "dist\\samples\\index.html",
+          "sha256": "491637dca7978eebc66d7817ea3aadb4d4ac9f2259d811d725311e652a278c23"
+        },
+        {
+          "file": "dist\\samples\\privacy.html",
+          "sha256": "adc7f70004ff6751b2fbcd0baf224dfdf528691c0f664411a7be4e89ceabbd5d"
+        }
+      ],
+      "artifacts": [
+        {
+          "file": "release/windows/CampusPulse-RELAY-0.5.1-x64-setup.exe",
+          "bytes": 167284030,
+          "sha256": "8e0c30b46bc067e70b9aff96dbe416a070b74fa83a14c27307d5e4d33760eda2"
+        },
+        {
+          "file": "release/windows/CampusPulse-RELAY-0.5.1-x64-portable.exe",
+          "bytes": 118861006,
+          "sha256": "eeeb7af566ed31e7faa4d38197f6b5fd0309b074ea205b1e1fa14b0292d4fd69"
+        }
+      ],
+      "actual_executable_embedded_icon_images": [
+        {
+          "width": 16,
+          "height": 16,
+          "embedded_bytes_match": true
+        },
+        {
+          "width": 24,
+          "height": 24,
+          "embedded_bytes_match": true
+        },
+        {
+          "width": 32,
+          "height": 32,
+          "embedded_bytes_match": true
+        },
+        {
+          "width": 48,
+          "height": 48,
+          "embedded_bytes_match": true
+        },
+        {
+          "width": 64,
+          "height": 64,
+          "embedded_bytes_match": true
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "embedded_bytes_match": true
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "embedded_bytes_match": true
+        }
+      ]
+    },
+    "public_deployment": {
+      "completed": true,
+      "last_verified_runtime_commit": "7e4098dae61775b5062b2f613192a6abaa3185dc",
+      "owner_export_not_required_confirmed": true,
+      "status": "live",
+      "deploy_id": "dep-dbbocp0ae00c739g4lf0",
+      "deployed_commit": "0d41e19f3add89dec15499a31bff28b3a0cc153a",
+      "verified_at": "2026-10-20T15:19:47.609629+00:00",
+      "browser_sessions": [
+        {
+          "width": 1440,
+          "isolated_context": true,
+          "logo_loaded": true,
+          "brand_assets_match_source": 3,
+          "no_overflow": true
+        },
+        {
+          "width": 390,
+          "isolated_context": true,
+          "logo_loaded": true,
+          "brand_assets_match_source": 3,
+          "no_overflow": true
+        }
+      ],
+      "actual_AI_calls_during_logo_verification": 0,
+      "google_operations_during_logo_verification": 0
+    },
+    "prior_sealed_release": "0.5.1-final-r1",
+    "personal_spending": 0,
+    "web_bundle_assets_verified": 3
+  },
+  "parent_complete_release": "0.5.1-final-r1"
 }
